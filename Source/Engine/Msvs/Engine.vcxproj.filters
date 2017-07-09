@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Src">
+      <UniqueIdentifier>{9fed1b46-d8c3-4d59-9c81-e420b2c2ece2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Main">
+      <UniqueIdentifier>{202e27de-3ffe-4d54-8ff8-000124fcc3fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application">
+      <UniqueIdentifier>{9e01e7fd-e18d-46e8-8ddb-738942fd056f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Utils">
+      <UniqueIdentifier>{1cf84165-d8e1-4b58-96b9-aaf59b949e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Utils\GameTimer">
+      <UniqueIdentifier>{c115b14e-d84a-4cfa-a491-82eed54ad57a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics">
+      <UniqueIdentifier>{e50f110a-07b2-4089-a4f6-8babcaf9a3c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Config">
+      <UniqueIdentifier>{aa0a4e36-46de-4e53-a751-0736d5414f9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Win32">
+      <UniqueIdentifier>{d1f6bf8c-0647-42d6-a357-02623365cd93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Debug">
+      <UniqueIdentifier>{89c77d83-7144-43cf-a5cb-3ac50a0f107b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Debug\Log">
+      <UniqueIdentifier>{6445d5da-54d6-40bf-a64a-aab0d830d03e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\OSWindow">
+      <UniqueIdentifier>{2562fa0d-6943-443c-9bd6-cc851fca91d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\OSWindow\Win32">
+      <UniqueIdentifier>{6e138a38-d601-44fb-8533-3052e1538775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Rendering">
+      <UniqueIdentifier>{de7b93c8-d802-4fc2-bc19-d73b467f2c47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Geometry">
+      <UniqueIdentifier>{3b1b2047-d2f3-4272-88b1-33751e74ceea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Includes">
+      <UniqueIdentifier>{f41ecde8-b268-4638-b8d8-379945c6bac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Statics">
+      <UniqueIdentifier>{48f0701c-46b4-43bd-a57b-83fa4f29cd75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\3rdParty">
+      <UniqueIdentifier>{b1910c79-cc8d-4fe2-8855-b491ab57ffff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\3rdParty\LodePNG">
+      <UniqueIdentifier>{ad10e84a-92ab-4c93-bbd5-2c02fa67c1b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Gameplay">
+      <UniqueIdentifier>{3a14c2c6-802c-4b21-811c-e503f7293b2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Gameplay\Scene">
+      <UniqueIdentifier>{1720890d-73e0-4bc0-949b-4e86917f4ae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Gameplay\SceneManager">
+      <UniqueIdentifier>{63e5ce7f-1110-4ae0-87ce-1e043b767119}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Gameplay\GameObject">
+      <UniqueIdentifier>{aa13118b-4549-415d-946b-c7093de9ef64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Components">
+      <UniqueIdentifier>{1adca17c-610d-45d6-b49c-1fbc66585c15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Components\StaticMeshRenderComponent">
+      <UniqueIdentifier>{68a08352-282d-41c6-bb61-efff8876d698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Components\BaseComponent">
+      <UniqueIdentifier>{811a605e-c20d-4f04-9be8-ca2da77f8263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\GraphicsManager">
+      <UniqueIdentifier>{e3c81961-aea1-4300-bd9f-b6363424e1a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\GraphicsManager\D3D11">
+      <UniqueIdentifier>{9dfed7cc-e0b3-4143-aa77-688d2c5ebcd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\GraphicsDevice">
+      <UniqueIdentifier>{e9fc13b3-4997-4e4c-96c4-a4ed8b245e5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\GraphicsSwapchain">
+      <UniqueIdentifier>{35825287-6458-4ad8-88e8-220e127bf532}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\GraphicsDevice\D3D11">
+      <UniqueIdentifier>{2aebabb3-da4b-4ac4-a49c-9bb2462486fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\GraphicsSwapchain\D3D11">
+      <UniqueIdentifier>{79c35268-8fb1-4635-94f4-0b9f0c900a37}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Main\EngineMain.cpp">
+      <Filter>Src\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Utils\GameTimer\GameTimer.cpp">
+      <Filter>Src\Utils\GameTimer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Application\Win32\Win32Application.cpp">
+      <Filter>Src\Application\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Debug\Log\DebugLog.cpp">
+      <Filter>Src\Debug\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OSWindow\Win32\Win32OSWindow.cpp">
+      <Filter>Src\OSWindow\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\LodePNG\lodepng.cpp">
+      <Filter>Src\3rdParty\LodePNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Gameplay\SceneManager\SceneManager.cpp">
+      <Filter>Src\Gameplay\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Gameplay\Scene\Scene.cpp">
+      <Filter>Src\Gameplay\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Gameplay\GameObject\GameObject.cpp">
+      <Filter>Src\Gameplay\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\BaseComponent\BaseComponent.cpp">
+      <Filter>Src\Components\BaseComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\GraphicsManager\D3D11\D3D11GraphicsManager.cpp">
+      <Filter>Src\Graphics\GraphicsManager\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\GraphicsManager\GraphicsManager.cpp">
+      <Filter>Src\Graphics\GraphicsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\GraphicsDevice\D3D11\D3D11GraphicsDevice.cpp">
+      <Filter>Src\Graphics\GraphicsDevice\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\GraphicsSwapchain\D3D11\D3D11GraphicsSwapchain.cpp">
+      <Filter>Src\Graphics\GraphicsSwapchain\D3D11</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Main\EngineStd.h">
+      <Filter>Src\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Application\Application.h">
+      <Filter>Src\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utils\GameTimer\GameTimer.h">
+      <Filter>Src\Utils\GameTimer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Config\EngineConfig.h">
+      <Filter>Engine Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Application\Win32\Win32Application.h">
+      <Filter>Src\Application\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Debug\Log\DebugLog.h">
+      <Filter>Src\Debug\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Config\Win32Config.h">
+      <Filter>Engine Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OSWindow\Win32\Win32OSWindow.h">
+      <Filter>Src\OSWindow\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Includes\GraphicsIncludes.h">
+      <Filter>Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Config\GraphicsConfig.h">
+      <Filter>Engine Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OSWindow\OSWindow.h">
+      <Filter>Src\OSWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Includes\RenderingIncludes.h">
+      <Filter>Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\LodePNG\lodepng.h">
+      <Filter>Src\3rdParty\LodePNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gameplay\SceneManager\SceneManager.h">
+      <Filter>Src\Gameplay\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gameplay\Scene\Scene.h">
+      <Filter>Src\Gameplay\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gameplay\GameObject\GameObject.h">
+      <Filter>Src\Gameplay\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\BaseComponent\BaseComponent.h">
+      <Filter>Src\Components\BaseComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Config\D3D11Config.h">
+      <Filter>Engine Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\GraphicsManager\D3D11\D3D11GraphicsManager.h">
+      <Filter>Src\Graphics\GraphicsManager\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\GraphicsManager\GraphicsManager.h">
+      <Filter>Src\Graphics\GraphicsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\GraphicsDevice\D3D11\D3D11GraphicsDevice.h">
+      <Filter>Src\Graphics\GraphicsDevice\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\GraphicsDevice\GraphicsDevice.h">
+      <Filter>Src\Graphics\GraphicsDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\GraphicsSwapchain\D3D11\D3D11GraphicsSwapchain.h">
+      <Filter>Src\Graphics\GraphicsSwapchain\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\GraphicsSwapchain\GraphicsSwapchain.h">
+      <Filter>Src\Graphics\GraphicsSwapchain</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

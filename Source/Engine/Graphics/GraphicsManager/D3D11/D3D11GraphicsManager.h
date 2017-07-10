@@ -16,7 +16,7 @@
 #include "../../../Debug/Log/DebugLog.h"
 
 //OS window info - so the graphics API can talk to the OS windowing system.
-#include "../../../OSWindow/OSWindow.h"
+#include "../../../OS/OSWindow/OSWindow.h"
 
 //classes that this manager manages
 #include "../../GraphicsDevice/GraphicsDevice.h"

@@ -2,7 +2,7 @@
 
 //Complete forward declarations 
 #include "../../GraphicsDevice/GraphicsDevice.h"
-#include "../../OSWindow/OSWindow.h"
+#include "../../OS/OSWindow/OSWindow.h"
 
 using namespace EngineAPI::Graphics::Platform;
 

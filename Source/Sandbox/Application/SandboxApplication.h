@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../../Engine/Application/Application.h" //Base class
+#include "../../Engine/OS/Application/Application.h" //Base class
 
 class SandboxApplication : public EngineAPI::OS::Application
 { 

@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\LodePNG\lodepng.cpp" />
-    <ClCompile Include="..\Application\Win32\Win32Application.cpp" />
     <ClCompile Include="..\Components\BaseComponent\BaseComponent.cpp" />
     <ClCompile Include="..\Core\CoreObject\CoreObject.cpp" />
     <ClCompile Include="..\Debug\Log\DebugLog.cpp" />
@@ -40,13 +39,12 @@
     <ClCompile Include="..\Graphics\TextureResource\D3D11\D3D11TextureResource.cpp" />
     <ClCompile Include="..\Graphics\ViewResource\D3D11\D3D11ViewResource.cpp" />
     <ClCompile Include="..\Main\EngineMain.cpp" />
-    <ClCompile Include="..\OSWindow\Win32\Win32OSWindow.cpp" />
+    <ClCompile Include="..\OS\Application\Win32\Win32Application.cpp" />
+    <ClCompile Include="..\OS\OSWindow\Win32\Win32OSWindow.cpp" />
     <ClCompile Include="..\Utils\GameTimer\GameTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\LodePNG\lodepng.h" />
-    <ClInclude Include="..\Application\Application.h" />
-    <ClInclude Include="..\Application\Win32\Win32Application.h" />
     <ClInclude Include="..\Components\BaseComponent\BaseComponent.h" />
     <ClInclude Include="..\Config\D3D11Config.h" />
     <ClInclude Include="..\Config\EngineConfig.h" />
@@ -82,8 +80,10 @@
     <ClInclude Include="..\Includes\GraphicsIncludes.h" />
     <ClInclude Include="..\Includes\RenderingIncludes.h" />
     <ClInclude Include="..\Main\EngineStd.h" />
-    <ClInclude Include="..\OSWindow\OSWindow.h" />
-    <ClInclude Include="..\OSWindow\Win32\Win32OSWindow.h" />
+    <ClInclude Include="..\OS\Application\Application.h" />
+    <ClInclude Include="..\OS\Application\Win32\Win32Application.h" />
+    <ClInclude Include="..\OS\OSWindow\OSWindow.h" />
+    <ClInclude Include="..\OS\OSWindow\Win32\Win32OSWindow.h" />
     <ClInclude Include="..\Utils\GameTimer\GameTimer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

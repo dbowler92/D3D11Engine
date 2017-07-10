@@ -7,9 +7,6 @@
     <Filter Include="Src\Main">
       <UniqueIdentifier>{202e27de-3ffe-4d54-8ff8-000124fcc3fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application">
-      <UniqueIdentifier>{9e01e7fd-e18d-46e8-8ddb-738942fd056f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Utils">
       <UniqueIdentifier>{1cf84165-d8e1-4b58-96b9-aaf59b949e0c}</UniqueIdentifier>
     </Filter>
@@ -22,20 +19,11 @@
     <Filter Include="Engine Config">
       <UniqueIdentifier>{aa0a4e36-46de-4e53-a751-0736d5414f9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Win32">
-      <UniqueIdentifier>{d1f6bf8c-0647-42d6-a357-02623365cd93}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Debug">
       <UniqueIdentifier>{89c77d83-7144-43cf-a5cb-3ac50a0f107b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Debug\Log">
       <UniqueIdentifier>{6445d5da-54d6-40bf-a64a-aab0d830d03e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\OSWindow">
-      <UniqueIdentifier>{2562fa0d-6943-443c-9bd6-cc851fca91d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\OSWindow\Win32">
-      <UniqueIdentifier>{6e138a38-d601-44fb-8533-3052e1538775}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Rendering">
       <UniqueIdentifier>{de7b93c8-d802-4fc2-bc19-d73b467f2c47}</UniqueIdentifier>
@@ -148,6 +136,21 @@
     <Filter Include="Src\Core\CoreObject">
       <UniqueIdentifier>{d63ca38d-64a2-4411-ac94-c707c356639c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\OS">
+      <UniqueIdentifier>{d7ab8b22-b55b-45bc-a626-339546ee6629}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\OS\Application">
+      <UniqueIdentifier>{c45d05d1-44ee-46a4-9942-6522d231a2f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\OS\Application\Win32">
+      <UniqueIdentifier>{4e549a71-82e8-46d6-bd28-9bb2bb397cf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\OS\OSWindow">
+      <UniqueIdentifier>{f111e6d9-f608-4fa4-92dd-819b4dc08a77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\OS\OSWindow\Win32">
+      <UniqueIdentifier>{550a47a1-9beb-4b4a-8365-1fc2cafff529}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -156,14 +159,8 @@
     <ClCompile Include="..\Utils\GameTimer\GameTimer.cpp">
       <Filter>Src\Utils\GameTimer</Filter>
     </ClCompile>
-    <ClCompile Include="..\Application\Win32\Win32Application.cpp">
-      <Filter>Src\Application\Win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\Debug\Log\DebugLog.cpp">
       <Filter>Src\Debug\Log</Filter>
-    </ClCompile>
-    <ClCompile Include="..\OSWindow\Win32\Win32OSWindow.cpp">
-      <Filter>Src\OSWindow\Win32</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\LodePNG\lodepng.cpp">
       <Filter>Src\3rdParty\LodePNG</Filter>
@@ -219,13 +216,16 @@
     <ClCompile Include="..\Graphics\BufferResource\D3D11\D3D11BufferResource.cpp">
       <Filter>Src\Graphics\BufferResource\D3D11</Filter>
     </ClCompile>
+    <ClCompile Include="..\OS\Application\Win32\Win32Application.cpp">
+      <Filter>Src\OS\Application\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OS\OSWindow\Win32\Win32OSWindow.cpp">
+      <Filter>Src\OS\OSWindow\Win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Main\EngineStd.h">
       <Filter>Src\Main</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\Application.h">
-      <Filter>Src\Application</Filter>
     </ClInclude>
     <ClInclude Include="..\Utils\GameTimer\GameTimer.h">
       <Filter>Src\Utils\GameTimer</Filter>
@@ -233,26 +233,17 @@
     <ClInclude Include="..\Config\EngineConfig.h">
       <Filter>Engine Config</Filter>
     </ClInclude>
-    <ClInclude Include="..\Application\Win32\Win32Application.h">
-      <Filter>Src\Application\Win32</Filter>
-    </ClInclude>
     <ClInclude Include="..\Debug\Log\DebugLog.h">
       <Filter>Src\Debug\Log</Filter>
     </ClInclude>
     <ClInclude Include="..\Config\Win32Config.h">
       <Filter>Engine Config</Filter>
     </ClInclude>
-    <ClInclude Include="..\OSWindow\Win32\Win32OSWindow.h">
-      <Filter>Src\OSWindow\Win32</Filter>
-    </ClInclude>
     <ClInclude Include="..\Includes\GraphicsIncludes.h">
       <Filter>Includes</Filter>
     </ClInclude>
     <ClInclude Include="..\Config\GraphicsConfig.h">
       <Filter>Engine Config</Filter>
-    </ClInclude>
-    <ClInclude Include="..\OSWindow\OSWindow.h">
-      <Filter>Src\OSWindow</Filter>
     </ClInclude>
     <ClInclude Include="..\Includes\RenderingIncludes.h">
       <Filter>Includes</Filter>
@@ -343,6 +334,18 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\BufferResource\BufferResource.h">
       <Filter>Src\Graphics\BufferResource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OS\Application\Win32\Win32Application.h">
+      <Filter>Src\OS\Application\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OS\Application\Application.h">
+      <Filter>Src\OS\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OS\OSWindow\Win32\Win32OSWindow.h">
+      <Filter>Src\OS\OSWindow\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OS\OSWindow\OSWindow.h">
+      <Filter>Src\OS\OSWindow</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

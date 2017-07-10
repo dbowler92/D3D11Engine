@@ -1,7 +1,7 @@
 #include "D3D11GraphicsDevice.h"
 
 //Forward declarations
-#include "../../OSWindow/OSWindow.h"
+#include "../../OS/OSWindow/OSWindow.h"
 
 using namespace EngineAPI::Graphics::Platform;
 

@@ -14,6 +14,15 @@
 #include "D3D11\D3D11CommonResource.h"
 #endif
 
+//Same as D3D11_USAGE
+enum ResourceUsage
+{
+	RESOURCE_USAGE_DEFAULT = 0,			//GPU read-write
+	RESOURCE_USAGE_IMMUTABLE = 1,	    //GPU read-only -> Data set at init time
+	RESOURCE_USAGE_DYNAMIC = 2,	        //CPU write -> Via Map()
+	RESOUCE_USAGE_STAGING = 3,			//CPU read.
+};
+
 namespace EngineAPI
 {
 	namespace Graphics

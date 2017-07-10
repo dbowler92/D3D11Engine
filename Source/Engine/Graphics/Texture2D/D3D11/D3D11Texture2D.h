@@ -18,15 +18,6 @@
 //Device used to create texture && views
 #include "../../Graphics/GraphicsDevice/GraphicsDevice.h"
 
-//D3D11_USAGE
-enum ResourceUsage
-{
-	RESOURCE_USAGE_DEFAULT = 0,
-	RESOURCE_USAGE_IMMUTABLE = 1,
-	RESOURCE_USAGE_DYNAMIC = 2,
-	RESOUCE_USAGE_STAGING = 3,
-};
-
 namespace EngineAPI
 {
 	namespace Graphics
@@ -44,7 +35,7 @@ namespace EngineAPI
 					D3D11_SUBRESOURCE_DATA* textureInitData, std::string debugName = "");
 
 				//Shutsdown the underlying texture object
-				void Shutdown();
+				virtual void Shutdown() = 0;
 
 			public:
 				//Getters 
@@ -62,6 +53,6 @@ namespace EngineAPI
 				//Texture handle
 				ID3D11Texture2D* texture2DHandle = nullptr;
 			};
-		}
+		};
 	};
 };

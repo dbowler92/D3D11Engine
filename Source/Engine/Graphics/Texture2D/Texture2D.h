@@ -20,7 +20,7 @@ namespace EngineAPI
 		{
 		public:
 			Texture2D() {};
-			~Texture2D() {};
+			virtual ~Texture2D() {};
 		};
 	};
 };

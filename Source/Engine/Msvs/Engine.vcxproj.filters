@@ -151,6 +151,12 @@
     <Filter Include="Src\OS\OSWindow\Win32">
       <UniqueIdentifier>{550a47a1-9beb-4b4a-8365-1fc2cafff529}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\VertexBuffer">
+      <UniqueIdentifier>{5ffcf55e-3186-45b1-b4e3-4afa0d550417}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\VertexBuffer\D3D11">
+      <UniqueIdentifier>{3f211834-5b1a-4b1d-953e-6ffbfd88dd13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -221,6 +227,9 @@
     </ClCompile>
     <ClCompile Include="..\OS\OSWindow\Win32\Win32OSWindow.cpp">
       <Filter>Src\OS\OSWindow\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\VertexBuffer\D3D11\D3D11VertexBuffer.cpp">
+      <Filter>Src\Graphics\VertexBuffer\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -346,6 +355,12 @@
     </ClInclude>
     <ClInclude Include="..\OS\OSWindow\OSWindow.h">
       <Filter>Src\OS\OSWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\VertexBuffer\D3D11\D3D11VertexBuffer.h">
+      <Filter>Src\Graphics\VertexBuffer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\VertexBuffer\VertexBuffer.h">
+      <Filter>Src\Graphics\VertexBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

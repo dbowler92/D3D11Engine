@@ -6,8 +6,11 @@
 
 #pragma once
 
-//Common includes
+//Common system includes
 #include <string>
+
+//Common engine includes
+#include "../../Debug/Log/DebugLog.h"
 
 namespace EngineAPI
 {
@@ -17,18 +20,18 @@ namespace EngineAPI
 		{
 		public:
 			CoreObject() {};
-			virtual ~CoreObject() = 0 {};
+			virtual ~CoreObject() = 0 {  };
 
 			//Get the debug name
-			std::string GetDebugName() { return debugNameString; };
-
-		protected:
-			//Debug string. 
-			std::string debugNameString;
+			std::string GetDebugName() { return _debugNameString; };
 
 		protected:
 			//Internally sets the debug name
-			void SetDebugName(std::string s) { debugNameString = s; };
+			void SetDebugName(std::string s) { _debugNameString = s; };
+
+		private:
+			//Debug string. 
+			std::string _debugNameString = "";
 		};
 	};
 };

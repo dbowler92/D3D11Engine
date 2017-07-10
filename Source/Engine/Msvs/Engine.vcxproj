@@ -37,6 +37,7 @@
     <ClCompile Include="..\Graphics\RenderTargetView\D3D11\D3D11RenderTargetView.cpp" />
     <ClCompile Include="..\Graphics\Texture2D\D3D11\D3D11Texture2D.cpp" />
     <ClCompile Include="..\Graphics\TextureResource\D3D11\D3D11TextureResource.cpp" />
+    <ClCompile Include="..\Graphics\VertexBuffer\D3D11\D3D11VertexBuffer.cpp" />
     <ClCompile Include="..\Graphics\ViewResource\D3D11\D3D11ViewResource.cpp" />
     <ClCompile Include="..\Main\EngineMain.cpp" />
     <ClCompile Include="..\OS\Application\Win32\Win32Application.cpp" />
@@ -75,6 +76,8 @@
     <ClInclude Include="..\Graphics\Texture2D\Texture2D.h" />
     <ClInclude Include="..\Graphics\TextureResource\D3D11\D3D11TextureResource.h" />
     <ClInclude Include="..\Graphics\TextureResource\TextureResource.h" />
+    <ClInclude Include="..\Graphics\VertexBuffer\D3D11\D3D11VertexBuffer.h" />
+    <ClInclude Include="..\Graphics\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="..\Graphics\ViewResource\D3D11\D3D11ViewResource.h" />
     <ClInclude Include="..\Graphics\ViewResource\ViewResource.h" />
     <ClInclude Include="..\Includes\GraphicsIncludes.h" />

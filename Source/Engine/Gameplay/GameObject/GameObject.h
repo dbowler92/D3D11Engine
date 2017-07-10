@@ -18,7 +18,7 @@ namespace EngineAPI
 		{
 		public:
 			GameObject();
-			~GameObject();
+			virtual ~GameObject();
 
 		};
 	};

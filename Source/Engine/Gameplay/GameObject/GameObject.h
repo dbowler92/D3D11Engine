@@ -7,11 +7,14 @@
 
 #pragma once
 
+//Parent
+#include "../../Core/CoreObject/CoreObject.h"
+
 namespace EngineAPI
 {
 	namespace Gameplay
 	{
-		class GameObject
+		class GameObject : public EngineAPI::Core::CoreObject
 		{
 		public:
 			GameObject();

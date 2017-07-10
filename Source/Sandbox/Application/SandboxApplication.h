@@ -9,7 +9,7 @@
 
 #include "../../Engine/Application/Application.h" //Base class
 
-class SandboxApplication : public EngineAPI::Core::Application
+class SandboxApplication : public EngineAPI::OS::Application
 { 
 	HIDE_COPY_ASSIGNMENT(SandboxApplication)
 public:  

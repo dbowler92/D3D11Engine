@@ -6,6 +6,9 @@
 
 #pragma once
 
+//Parent class
+#include "../../Graphics/TextureResource/TextureResource.h"
+
 //Graphics includes - inc D3D11
 #include "../../Includes/GraphicsIncludes.h"
 
@@ -30,7 +33,7 @@ namespace EngineAPI
 	{
 		namespace Platform
 		{
-			class D3D11Texture2D
+			class D3D11Texture2D : public EngineAPI::Graphics::TextureResource
 			{
 			public:
 				D3D11Texture2D() {};
@@ -47,16 +50,12 @@ namespace EngineAPI
 				//Getters 
 				ID3D11Texture2D* GetD3D11Texture2DHandle() { return texture2DHandle ;};
 				const D3D11_TEXTURE2D_DESC& GetD3D11Texture2DDescData() { return textureDesc; };
-				std::string GetDebugName() { return debugIDString; };
-
+			
 				//Specific getters
 				DXGI_FORMAT GetD3D11Texture2DResourceFormat() { return textureDesc.Format; };
 				bool IsMSAATexture() { return textureDesc.SampleDesc.Count > 1; };
 
 			protected:
-				//Debug name
-				std::string debugIDString = "";
-
 				//Texture description
 				D3D11_TEXTURE2D_DESC textureDesc = {};
 

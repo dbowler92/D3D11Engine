@@ -6,7 +6,8 @@
 
 #pragma once
 
-#include <string>	
+//Parent
+#include "../../Core/CoreObject/CoreObject.h"
 
 //Debug log
 #include "../../Debug/Log/DebugLog.h"
@@ -15,7 +16,7 @@ namespace EngineAPI
 {
 	namespace Gameplay
 	{
-		class Scene
+		class Scene : public EngineAPI::Core::CoreObject
 		{
 			friend class SceneManager;
 

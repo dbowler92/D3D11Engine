@@ -2,9 +2,9 @@
 #include <sstream>
 
 //Init global reference to the app. 
-EngineAPI::Core::Platform::Win32Application *g_App = NULL;
+EngineAPI::OS::Platform::Win32Application *g_App = NULL;
 
-using namespace EngineAPI::Core::Platform;
+using namespace EngineAPI::OS::Platform;
 
 LRESULT WINAPI GlobalWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {

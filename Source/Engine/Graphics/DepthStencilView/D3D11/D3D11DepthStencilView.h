@@ -6,6 +6,9 @@
 
 #pragma once
 
+//Parent class
+#include "../../Graphics/ViewResource/ViewResource.h"
+
 //Graphics includes - inc D3D11
 #include "../../Includes/GraphicsIncludes.h"
 
@@ -19,7 +22,7 @@ namespace EngineAPI
 {
 	namespace Graphics
 	{
-		class DepthTexture;
+		class DepthTexture2D;
 	};
 };
 
@@ -29,7 +32,7 @@ namespace EngineAPI
 	{
 		namespace Platform
 		{
-			class D3D11DepthStencilView
+			class D3D11DepthStencilView : public EngineAPI::Graphics::ViewResource
 			{
 			public:
 				D3D11DepthStencilView() {};
@@ -37,7 +40,7 @@ namespace EngineAPI
 
 				//Inits the D3D11 DSV
 				bool InitDepthStencilView(EngineAPI::Graphics::GraphicsDevice* device,
-					class EngineAPI::Graphics::DepthTexture* depthTextureResource,
+					class EngineAPI::Graphics::DepthTexture2D* depthTextureResource,
 					bool isReadOnlyDSV = false,
 					std::string debugName = std::string(""));
 
@@ -60,9 +63,6 @@ namespace EngineAPI
 				bool IsReadOnlyDSV() { return (dsvDesc.Flags & D3D11_DSV_READ_ONLY_DEPTH); };
 
 			protected:
-				//Debug name
-				std::string debugIDString = "";
-
 				//Description
 				D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 

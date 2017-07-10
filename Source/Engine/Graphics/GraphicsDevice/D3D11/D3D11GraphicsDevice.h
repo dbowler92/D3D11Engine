@@ -6,6 +6,9 @@
 
 #pragma once
 
+//Parent
+#include "../../Core/CoreObject/CoreObject.h"
+
 //Graphics includes - inc D3D11
 #include "../../Includes/GraphicsIncludes.h"
 
@@ -26,7 +29,7 @@ namespace EngineAPI
 	{
 		namespace Platform
 		{
-			class D3D11GraphicsDevice
+			class D3D11GraphicsDevice : public EngineAPI::Core::CoreObject
 			{
 			public:
 				D3D11GraphicsDevice() {};

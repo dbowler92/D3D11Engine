@@ -7,6 +7,9 @@
 
 #pragma once
 
+//Parent
+#include "../../Core/CoreObject/CoreObject.h"
+
 //Graphics includes - inc D3D11
 #include "../../Includes/GraphicsIncludes.h"
 
@@ -17,7 +20,7 @@
 #include "../../RenderTargetView/RenderTargetView.h"
 
 //Manages a depth texture
-#include "../../DepthTexture/DepthTexture.h"
+#include "../../DepthTexture2D/DepthTexture2D.h"
 #include "../../DepthStencilView/DepthStencilView.h"
 
 namespace EngineAPI
@@ -39,7 +42,7 @@ namespace EngineAPI
 	{
 		namespace Platform
 		{
-			class D3D11GraphicsSwapchain
+			class D3D11GraphicsSwapchain : public EngineAPI::Core::CoreObject
 			{
 			public:
 				D3D11GraphicsSwapchain() {};
@@ -114,7 +117,7 @@ namespace EngineAPI
 				//Depth texture created alongside the swapchain. TODO: Add way of not creating one
 				//of these automatically (not 100% necessary in deferred rendering - you can create one and manage
 				//it yourself when initing a GBuffer)
-				EngineAPI::Graphics::DepthTexture swpachainDepthTexture;
+				EngineAPI::Graphics::DepthTexture2D swpachainDepthTexture;
 				EngineAPI::Graphics::DepthStencilView swapchainDepthStencilViewReadWrite; //Normal use
 				EngineAPI::Graphics::DepthStencilView swapchainDepthStencilViewReadOnly;  //Want to sample from depth buffer but use depth test. 
 

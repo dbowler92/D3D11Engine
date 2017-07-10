@@ -6,6 +6,8 @@
 
 #pragma once
 
+//Parent class
+#include "../../Graphics/ViewResource/ViewResource.h"
 
 //Graphics includes - inc D3D11
 #include "../../Includes/GraphicsIncludes.h"
@@ -35,7 +37,7 @@ namespace EngineAPI
 	{
 		namespace Platform
 		{
-			class D3D11RenderTargetView
+			class D3D11RenderTargetView : public EngineAPI::Graphics::ViewResource
 			{
 				//Swpachain is a friend so it can access the protected/private
 				//InitRenderTargetViewDirectFromD3D11Texture2D() function.
@@ -69,9 +71,6 @@ namespace EngineAPI
 				ID3D11RenderTargetView* GetD3D11RenderTargetView() { return rtv; };
 
 			protected:
-				//Debug name
-				std::string debugIDString = "";
-
 				//Description. NOTE: Empty if this was inited though InitRenderTargetViewDirectFromD3D11Texture2D
 				//since we use a null description when calling device->CreateRenderTargetView(...)
 				D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};

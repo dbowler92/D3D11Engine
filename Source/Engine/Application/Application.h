@@ -17,7 +17,7 @@
 
 namespace EngineAPI 
 {
-	namespace Core
+	namespace OS
 	{
 		class Application : public OS_PLATFORM_IMPLEMENTATION(Application)
 		{

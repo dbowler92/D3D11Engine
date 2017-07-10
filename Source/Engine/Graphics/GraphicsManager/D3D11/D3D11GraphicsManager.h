@@ -6,6 +6,9 @@
 
 #pragma once
 
+//Parent
+#include "../../Core/CoreObject/CoreObject.h"
+
 //Graphics includes - inc D3D11
 #include "../../Includes/GraphicsIncludes.h"
 
@@ -22,7 +25,7 @@
 //Forward declarations
 namespace EngineAPI
 {
-	namespace Core
+	namespace OS
 	{
 		namespace Platform
 		{
@@ -37,11 +40,11 @@ namespace EngineAPI
 	{
 		namespace Platform
 		{
-			class D3D11GraphicsManager
+			class D3D11GraphicsManager : EngineAPI::Core::CoreObject
 			{
 				//Only application should be able to create/destroy this
 				//subsystem + pass events. 
-				friend class EngineAPI::Core::Platform::OS_PLATFORM_IMPLEMENTATION_CLASS_NAME(Application);
+				friend class EngineAPI::OS::Platform::OS_PLATFORM_IMPLEMENTATION_CLASS_NAME(Application);
 				
 			public:
 				//

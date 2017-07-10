@@ -1,11 +1,11 @@
 #include "D3D11DepthStencilView.h"
 
-#include "../../DepthTexture/DepthTexture.h"
+#include "../../DepthTexture2D/DepthTexture2D.h"
 
 using namespace EngineAPI::Graphics::Platform;
 
 bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDevice* device,
-	EngineAPI::Graphics::DepthTexture* depthTextureResource,
+	EngineAPI::Graphics::DepthTexture2D* depthTextureResource,
 	bool isReadOnlyDSV,
 	std::string debugName)
 {
@@ -14,7 +14,7 @@ bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDe
 	//Clear old DSV
 	if (dsv)
 	{
-		std::string o = std::string(__FUNCTION__) + ": " + "Releasing old DepthStencilView: " + debugIDString;
+		std::string o = std::string(__FUNCTION__) + ": " + "Releasing old DepthStencilView: " + GetDebugName();
 		EngineAPI::Debug::DebugLog::PrintWarningMessage(o.c_str());
 		ReleaseCOM(dsv);
 	}
@@ -47,8 +47,8 @@ bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDe
 		dsvDesc.Flags = D3D11_DSV_READ_ONLY_DEPTH;
 
 	//Create
-	debugIDString = debugName;
-	std::string o = std::string(__FUNCTION__) + ": " + "Creating DepthStencilView: " + debugIDString;
+	SetDebugName(debugName);
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating DepthStencilView: " + GetDebugName();
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create DSV
@@ -56,7 +56,7 @@ bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDe
 		&dsvDesc, &dsv));
 
 	//Debug name
-	dsv->SetPrivateData(WKPDID_D3DDebugObjectName, debugIDString.size(), debugIDString.c_str());
+	dsv->SetPrivateData(WKPDID_D3DDebugObjectName, GetDebugName().size(), GetDebugName().c_str());
 
 	//Done
 	return true;

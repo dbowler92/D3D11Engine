@@ -6,6 +6,9 @@
 
 #pragma once
 
+//Parent
+#include "../../Core/CoreObject/CoreObject.h"
+
 #include <Windows.h>
 
 #include "../../Config/EngineConfig.h" //Engine settings
@@ -21,11 +24,11 @@
 
 namespace EngineAPI
 {
-	namespace Core
+	namespace OS
 	{
 		namespace Platform
 		{
-			class Win32Application
+			class Win32Application : public EngineAPI::Core::CoreObject
 			{
 				HIDE_COPY_ASSIGNMENT(Win32Application)
 			public:
@@ -99,4 +102,4 @@ namespace EngineAPI
 };
 
 //Global application pointer. 
-extern EngineAPI::Core::Platform::Win32Application* g_App;
+extern EngineAPI::OS::Platform::Win32Application* g_App;

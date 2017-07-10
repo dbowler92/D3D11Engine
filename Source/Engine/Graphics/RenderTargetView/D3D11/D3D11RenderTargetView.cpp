@@ -23,7 +23,7 @@ bool D3D11RenderTargetView::InitRenderTargetViewDirectFromD3D11Texture2D(EngineA
 	//Release old data
 	if (rtv)
 	{
-		std::string o = std::string(__FUNCTION__) + ": " + "Releasing old RenderTargetView: " + debugIDString;
+		std::string o = std::string(__FUNCTION__) + ": " + "Releasing old RenderTargetView: " + GetDebugName();
 		EngineAPI::Debug::DebugLog::PrintWarningMessage(o.c_str());
 		ReleaseCOM(rtv);
 	}
@@ -32,15 +32,15 @@ bool D3D11RenderTargetView::InitRenderTargetViewDirectFromD3D11Texture2D(EngineA
 	rtvDesc = {};
 
 	//Create
-	debugIDString = debugName;
-	std::string o = std::string(__FUNCTION__) + ": " + "Creating RenderTargetView: " + debugIDString;
+	SetDebugName(debugName);
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating RenderTargetView: " + GetDebugName();
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create RTV
 	HR(device->GetD3D11Device()->CreateRenderTargetView(d3d11TextureResource, nullptr, &rtv));
 
 	//Debug name
-	rtv->SetPrivateData(WKPDID_D3DDebugObjectName, debugIDString.size(), debugIDString.c_str());
+	rtv->SetPrivateData(WKPDID_D3DDebugObjectName, GetDebugName().size(), GetDebugName().c_str());
 
 	//Done
 	return true;

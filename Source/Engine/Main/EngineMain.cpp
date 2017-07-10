@@ -57,7 +57,7 @@ int EngineMain(HINSTANCE hInstance,
 	LPWSTR     lpCmdLine,
 	int       nCmdShow, 
 	int appVersionMajor, int appVersionMinor, int appVersionPatch,
-	EngineAPI::Core::Application* gameAppInstance)
+	EngineAPI::OS::Application* gameAppInstance)
 {    
 	//Set up checks for memory leaks.  
 #if defined(DEBUG) | defined(_DEBUG)
@@ -73,7 +73,7 @@ int EngineMain(HINSTANCE hInstance,
 		EngineAPI::Debug::DebugLog::PrintErrorMessage("EngineMain: gameAppInstance == NULL. Make sure to create a project specific Application instance.\n");
 	
 	//Set app global pointer & init the engine. 
-	g_App = (EngineAPI::Core::Application*)gameAppInstance;
+	g_App = (EngineAPI::OS::Application*)gameAppInstance;
 	if (!g_App->InitEngine(hInstance, lpCmdLine, NULL, appVersionMajor, appVersionMinor, appVersionPatch, 960, 540)) //Win32
 		return -1;
 

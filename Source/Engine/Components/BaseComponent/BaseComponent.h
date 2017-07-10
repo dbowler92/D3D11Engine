@@ -6,17 +6,18 @@
 
 #pragma once
 
+//Parent
+#include "../../Core/CoreObject/CoreObject.h"
+
 namespace EngineAPI
 {
 	namespace Component
 	{
-		class BaseComponent
+		class BaseComponent : public EngineAPI::Core::CoreObject
 		{
 		public:
-			BaseComponent();
-			~BaseComponent();
-
-
+			BaseComponent() {};
+			virtual ~BaseComponent() = 0 {};
 		};
 	}
 };

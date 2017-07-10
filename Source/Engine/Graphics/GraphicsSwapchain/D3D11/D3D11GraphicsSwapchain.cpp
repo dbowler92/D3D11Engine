@@ -197,7 +197,7 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainDepthBuffer(EngineAPI::Graphics::
 {
 	if (doesManageADepthBuffer)
 	{
-		if (!swpachainDepthTexture.InitDepthTexture(device, 
+		if (!swpachainDepthTexture.InitDepthTexture2D(device, 
 			swapchainBuffersWidth, swapchainBuffersHeight, 
 			DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, msaaCount, true,
 			std::string("SwapchainDepthStencil")))

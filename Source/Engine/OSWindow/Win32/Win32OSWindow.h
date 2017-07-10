@@ -9,6 +9,9 @@
 
 #pragma once
 
+//Parent
+#include "../../Core/CoreObject/CoreObject.h"
+
 //Windows
 #include <Windows.h>
 
@@ -18,7 +21,7 @@ namespace EngineAPI
 	{
 		namespace Platform
 		{
-			class Win32OSWindow
+			class Win32OSWindow : public EngineAPI::Core::CoreObject
 			{
 			public:
 				Win32OSWindow() {};

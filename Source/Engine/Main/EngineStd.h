@@ -27,7 +27,7 @@
 //Forward declare the base application class. 
 namespace EngineAPI
 {
-	namespace Core
+	namespace OS
 	{
 		class Application;
 	};
@@ -132,5 +132,5 @@ typedef EUINT_32 EFlag;
 #ifdef ENGINE_CONFIG_PLATFORM_WIN32
 extern int EngineMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow,
 	int appVersionMajor, int appVersionMinor, int appVersionPatch, 
-	EngineAPI::Core::Application* gameAppInstance);
+	EngineAPI::OS::Application* gameAppInstance);
 #endif

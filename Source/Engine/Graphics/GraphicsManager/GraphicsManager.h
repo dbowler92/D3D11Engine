@@ -15,7 +15,7 @@
 //Forward declarations
 namespace EngineAPI
 {
-	namespace Core
+	namespace OS
 	{
 		namespace Platform
 		{
@@ -32,7 +32,7 @@ namespace EngineAPI
 		{
 			//Only application should be able to create/destroy this
 			//subsystem + pass events. 
-			friend class EngineAPI::Core::Platform::OS_PLATFORM_IMPLEMENTATION_CLASS_NAME(Application);
+			friend class EngineAPI::OS::Platform::OS_PLATFORM_IMPLEMENTATION_CLASS_NAME(Application);
 			
 		public:
 			//Graphics manager is a singleton

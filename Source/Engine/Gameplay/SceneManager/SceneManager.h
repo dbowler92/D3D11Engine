@@ -6,7 +6,10 @@
 
 #pragma once
 
-#include <string>
+//Parent
+#include "../../Core/CoreObject/CoreObject.h"
+
+//Container
 #include <list>
 
 //Scene
@@ -18,7 +21,7 @@
 //Forward declarations
 namespace EngineAPI
 {
-	namespace Core
+	namespace OS
 	{
 		namespace Platform
 		{
@@ -31,11 +34,11 @@ namespace EngineAPI
 {
 	namespace Gameplay
 	{
-		class SceneManager
+		class SceneManager : public EngineAPI::Core::CoreObject
 		{
 			//Application should be the only one able to 
 			//create and destroy the scene manager
-			friend EngineAPI::Core::Platform::OS_PLATFORM_IMPLEMENTATION_CLASS_NAME(Application);
+			friend EngineAPI::OS::Platform::OS_PLATFORM_IMPLEMENTATION_CLASS_NAME(Application);
 
 		public:
 			//Singleton class

@@ -6,11 +6,15 @@ bool D3D11GraphicsManager::InitSubsystem(EngineAPI::OS::OSWindow* osWindow)
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(__FUNCTION__);
 
-	//Create the device && context
-	assert(device.InitD3D11DeviceAndContext(osWindow));
+	//Create the device && context(TODO: s -. Deferred context)
+	assert(device.InitD3D11DeviceAndImmediateContext(osWindow));
 
 	//Create swapchain + depth buffer
+#ifdef GRAPHICS_CONFIG_DO_USE_4XMSAA
+	assert(swapchain.InitD3D11Swapchain(&device, osWindow, 1, 4, true));
+#else
 	assert(swapchain.InitD3D11Swapchain(&device, osWindow, 1, 1, true));
+#endif
 
 	return true;
 }

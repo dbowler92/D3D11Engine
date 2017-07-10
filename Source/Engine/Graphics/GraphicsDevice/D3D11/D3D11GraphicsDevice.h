@@ -33,12 +33,12 @@ namespace EngineAPI
 				virtual ~D3D11GraphicsDevice() = 0 {};
 
 				//Inits && shutdown the D3D11 device
-				bool InitD3D11DeviceAndContext(EngineAPI::OS::OSWindow* osWindow); //TODO: Allow user to create deferred context + separate device and context creation + classes
+				bool InitD3D11DeviceAndImmediateContext(EngineAPI::OS::OSWindow* osWindow); //TODO: Allow user to create deferred context + separate device and context creation + classes
 				void ShutdownD3D11DeviceAndContext();
 
 				//Returns the device and context
-				ID3D11Device* GetID3D11Device() { return d3dDevice; };
-				ID3D11DeviceContext* GetID3D11Context() { return d3dImmediateContext; };
+				ID3D11Device* GetD3D11Device() { return d3dDevice; };
+				ID3D11DeviceContext* GetD3D11ImmediateContext() { return d3dImmediateContext; };
 
 			protected:
 				//D3D11 resources

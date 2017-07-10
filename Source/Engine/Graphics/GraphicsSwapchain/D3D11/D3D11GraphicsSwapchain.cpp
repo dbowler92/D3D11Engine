@@ -38,7 +38,7 @@ bool D3D11GraphicsSwapchain::InitD3D11Swapchain(EngineAPI::Graphics::GraphicsDev
 	//Init depth buffer?
 	if (doesManageADepthBuffer)
 	{
-		if (!InitD3D11SwapchainDepthBuffer(device, osWindow))
+		if (!InitD3D11SwapchainDepthBuffer(device, osWindow, msaaSampleCount))
 		{
 			EngineAPI::Debug::DebugLog::PrintErrorMessage("D3D11GraphicsSwapchain::InitD3D11SwapchainBuffers() Error - Failed to create depth buffer");
 			return false;
@@ -52,9 +52,13 @@ bool D3D11GraphicsSwapchain::InitD3D11Swapchain(EngineAPI::Graphics::GraphicsDev
 void D3D11GraphicsSwapchain::ShutdownD3D11Swapchain()
 {
 	if (doesManageADepthBuffer)
-		swpachainDepthTexture.ShutdownD3D11DepthTexture();
+	{
+		swapchainDepthStencilViewReadWrite.Shutdown();
+		swapchainDepthStencilViewReadOnly.Shutdown();
+		swpachainDepthTexture.Shutdown();
+	}
 
-	ReleaseCOM(backBufferRenderTargetView);
+	swapchainBackbufferRenderTargetView.Shutdown();
 	ReleaseCOM(swapchain);
 }
 
@@ -73,7 +77,7 @@ bool D3D11GraphicsSwapchain::OnResize(EngineAPI::Graphics::GraphicsDevice* devic
 	//ReInit depth buffer
 	if (doesManageADepthBuffer)
 	{
-		if (!InitD3D11SwapchainDepthBuffer(device, osWindow))
+		if (!InitD3D11SwapchainDepthBuffer(device, osWindow, msaaSampleCount))
 		{
 			EngineAPI::Debug::DebugLog::PrintErrorMessage("D3D11GraphicsSwapchain::OnResize() Error - Failed to resize depth buffer");
 			return false;
@@ -110,7 +114,7 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainHandle(EngineAPI::Graphics::Graph
 	else
 	{
 		uint32_t maxMSAAQuality = 0;
-		device->GetID3D11Device()->CheckMultisampleQualityLevels(swapchainBuffersFormat, msaaSampleCount, &maxMSAAQuality);
+		device->GetD3D11Device()->CheckMultisampleQualityLevels(swapchainBuffersFormat, msaaSampleCount, &maxMSAAQuality);
 		assert(maxMSAAQuality > 0);
 
 		//Enable MSAA
@@ -133,12 +137,12 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainHandle(EngineAPI::Graphics::Graph
 	IDXGIAdapter* dgxiAdapter = NULL;
 	IDXGIFactory* dxgiFactory = NULL;
 
-	HR(device->GetID3D11Device()->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice));
+	HR(device->GetD3D11Device()->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice));
 	HR(dxgiDevice->GetParent(__uuidof(IDXGIAdapter), (void**)&dgxiAdapter));
 	HR(dgxiAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&dxgiFactory));
 
 	//Create swapchain
-	HR(dxgiFactory->CreateSwapChain(device->GetID3D11Device(), &sc, &swapchain));
+	HR(dxgiFactory->CreateSwapChain(device->GetD3D11Device(), &sc, &swapchain));
 
 	//Clean up afterourselves - ReleaseCOM is a macro found in D3dUtil.
 	ReleaseCOM(dxgiDevice);
@@ -152,8 +156,8 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainHandle(EngineAPI::Graphics::Graph
 bool D3D11GraphicsSwapchain::InitD3D11SwapchainBuffers(EngineAPI::Graphics::GraphicsDevice* device,
 	EngineAPI::OS::OSWindow* osWindow)
 {
-	//Release old data
-	ReleaseCOM(backBufferRenderTargetView);
+	//Destroy old RTV to backbuffer
+	swapchainBackbufferRenderTargetView.Shutdown();
 
 	//New client size?
 	swapchainBuffersWidth = osWindow->GetWindowWidth();
@@ -169,9 +173,12 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainBuffers(EngineAPI::Graphics::Grap
 	//back buffer. 
 	ID3D11Texture2D* backBuffer;
 	HR(swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer)));
-	HR(device->GetID3D11Device()->CreateRenderTargetView(backBuffer, 0, &backBufferRenderTargetView));
+	
+	//Create the RTV via protected method in D3D11RenderTargetView class
+	assert(swapchainBackbufferRenderTargetView.InitRenderTargetViewDirectFromD3D11Texture2D(device, backBuffer, std::string("SwapchainBackbufferRenderTargetView")));
+	
+	//Don't need a reference to the texture - just the view.
 	ReleaseCOM(backBuffer); //Don't need a reference to the texture - just the view.
-
 
 	//Full viewport struct
 	swapchainFullViewport.TopLeftX = 0;
@@ -186,15 +193,23 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainBuffers(EngineAPI::Graphics::Grap
 }
 
 bool D3D11GraphicsSwapchain::InitD3D11SwapchainDepthBuffer(EngineAPI::Graphics::GraphicsDevice* device,
-	EngineAPI::OS::OSWindow* osWindow)
+	EngineAPI::OS::OSWindow* osWindow, uint32_t msaaCount)
 {
 	if (doesManageADepthBuffer)
 	{
-		if (!swpachainDepthTexture.InitD3D11DepthTexture())
+		if (!swpachainDepthTexture.InitDepthTexture(device, 
+			swapchainBuffersWidth, swapchainBuffersHeight, 
+			DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, msaaCount, true,
+			std::string("SwapchainDepthStencil")))
 		{
 			EngineAPI::Debug::DebugLog::PrintErrorMessage("D3D11GraphicsSwapchain::InitD3D11SwapchainDepthBuffer() Error - Could not create depth texture");
 			return false;
 		}
+
+		//DSVs
+		assert(swapchainDepthStencilViewReadWrite.InitDepthStencilView(device,&swpachainDepthTexture, false, std::string("SwapchainDepthStencilViewReadWrite")));
+		assert(swapchainDepthStencilViewReadOnly.InitDepthStencilView(device, &swpachainDepthTexture, true, std::string("SwapchainDepthStencilViewReadOnly")));
+
 	}
 	else
 	{

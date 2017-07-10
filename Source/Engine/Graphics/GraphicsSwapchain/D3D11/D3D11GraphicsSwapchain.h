@@ -13,8 +13,12 @@
 //Debug
 #include "../../Debug/Log/DebugLog.h"
 
+//Creates an RTV to the backbuffer / texture
+#include "../../Rendering/RenderTargetView/RenderTargetView.h"
+
 //Manages a depth texture
 #include "../../Rendering/DepthTexture/DepthTexture.h"
+#include "../../Rendering/DepthStencilView/DepthStencilView.h"
 
 namespace EngineAPI
 {
@@ -77,12 +81,14 @@ namespace EngineAPI
 
 				//Render target view to the backbuffer - used to bind the backbuffer
 				//for rendering in to
-				ID3D11RenderTargetView* backBufferRenderTargetView = nullptr; //TODO: Abstract resource views!
+				EngineAPI::Rendering::RenderTargetView swapchainBackbufferRenderTargetView;
 
 				//Depth texture created alongside the swapchain. TODO: Add way of not creating one
 				//of these automatically (not 100% necessary in deferred rendering - you can create one and manage
 				//it yourself when initing a GBuffer)
 				EngineAPI::Rendering::DepthTexture swpachainDepthTexture;
+				EngineAPI::Rendering::DepthStencilView swapchainDepthStencilViewReadWrite; //Normal use
+				EngineAPI::Rendering::DepthStencilView swapchainDepthStencilViewReadOnly;  //Want to sample from depth buffer but use depth test. 
 
 			protected:
 				//Internal init functions
@@ -101,7 +107,8 @@ namespace EngineAPI
 
 				//Manages creation and resizing of the depth (stencil) buffer
 				bool InitD3D11SwapchainDepthBuffer(EngineAPI::Graphics::GraphicsDevice* device,
-					EngineAPI::OS::OSWindow* osWindow);
+					EngineAPI::OS::OSWindow* osWindow, 
+					uint32_t msaaCount);
 			};
 		};
 	};

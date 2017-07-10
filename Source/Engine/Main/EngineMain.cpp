@@ -25,6 +25,7 @@
 #if defined(DEBUG) | defined(_DEBUG)
 #pragma comment (lib, "d3dx11d.lib")
 #pragma comment (lib, "Effects11d.lib")
+#pragma comment (lib, "dxguid.lib") //Debug names
 #else
 #pragma comment (lib, "d3dx11.lib")
 #pragma comment (lib, "Effects11.lib")

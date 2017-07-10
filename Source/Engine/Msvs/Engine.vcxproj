@@ -32,7 +32,10 @@
     <ClCompile Include="..\Graphics\GraphicsSwapchain\D3D11\D3D11GraphicsSwapchain.cpp" />
     <ClCompile Include="..\Main\EngineMain.cpp" />
     <ClCompile Include="..\OSWindow\Win32\Win32OSWindow.cpp" />
+    <ClCompile Include="..\Rendering\DepthStencilView\D3D11\D3D11DepthStencilView.cpp" />
     <ClCompile Include="..\Rendering\DepthTexture\D3D11\D3D11DepthTexture.cpp" />
+    <ClCompile Include="..\Rendering\RenderTargetView\D3D11\D3D11RenderTargetView.cpp" />
+    <ClCompile Include="..\Rendering\Texture2D\D3D11\D3D11Texture2D.cpp" />
     <ClCompile Include="..\Utils\GameTimer\GameTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -59,8 +62,14 @@
     <ClInclude Include="..\Main\EngineStd.h" />
     <ClInclude Include="..\OSWindow\OSWindow.h" />
     <ClInclude Include="..\OSWindow\Win32\Win32OSWindow.h" />
+    <ClInclude Include="..\Rendering\DepthStencilView\D3D11\D3D11DepthStencilView.h" />
+    <ClInclude Include="..\Rendering\DepthStencilView\DepthStencilView.h" />
     <ClInclude Include="..\Rendering\DepthTexture\D3D11\D3D11DepthTexture.h" />
     <ClInclude Include="..\Rendering\DepthTexture\DepthTexture.h" />
+    <ClInclude Include="..\Rendering\RenderTargetView\D3D11\D3D11RenderTargetView.h" />
+    <ClInclude Include="..\Rendering\RenderTargetView\RenderTargetView.h" />
+    <ClInclude Include="..\Rendering\Texture2D\D3D11\D3D11Texture2D.h" />
+    <ClInclude Include="..\Rendering\Texture2D\Texture2D.h" />
     <ClInclude Include="..\Utils\GameTimer\GameTimer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

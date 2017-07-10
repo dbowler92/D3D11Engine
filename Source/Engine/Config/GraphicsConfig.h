@@ -5,3 +5,6 @@
 //Some shared graphics settings - for all APIs whenever they get implemented!
 
 #pragma once
+
+//4XMSAA???
+#define GRAPHICS_CONFIG_DO_USE_4XMSAA 0

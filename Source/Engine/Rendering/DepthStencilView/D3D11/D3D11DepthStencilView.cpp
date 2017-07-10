@@ -66,3 +66,15 @@ void D3D11DepthStencilView::Shutdown()
 {
 	ReleaseCOM(dsv);
 }
+
+bool D3D11DepthStencilView::ClearDepthStencil(EngineAPI::Graphics::GraphicsDevice* device,
+	UINT clearFlag, float depthClear, uint8_t stencilClear)
+{
+	if (dsv)
+	{
+		ID3D11DeviceContext* immediateContext = device->GetD3D11ImmediateContext();
+		immediateContext->ClearDepthStencilView(dsv, clearFlag, depthClear, stencilClear);
+	}
+	else
+		return false; 	//Error - DSV has been released.
+}

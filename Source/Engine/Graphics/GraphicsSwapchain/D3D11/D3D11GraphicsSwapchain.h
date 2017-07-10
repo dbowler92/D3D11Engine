@@ -60,6 +60,34 @@ namespace EngineAPI
 				bool OnResize(EngineAPI::Graphics::GraphicsDevice* device,
 					EngineAPI::OS::OSWindow* osWindow);
 
+			public:
+				//Clears the backbuffer RTV
+				void ClearSwapchainBackbufferRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,
+					const float* col);
+
+				//Clears the depth stencil buffer
+				void ClearDepthStencilBuffer(EngineAPI::Graphics::GraphicsDevice* device,
+					bool doClearDepth = true, bool doClearStencil = true,
+					float depthClearValue = 1.0f, uint8_t stencilClearValue = 0);
+
+				//Binds the swapchain back buffer (and depth buffer if we manage it - pass false for shouldBindReadWriteDSV to
+				//bind the read only DSV - this allows a SRV to the depth buffer to be bound for pixel shader reads. Eg: Deferred rendering)
+				//to the pipeline for rendering
+				void BindSwapchainBackbufferAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device, 
+					bool shouldBindReadWriteDSV = true);
+
+				//Binds the swapchain backbuffer to the pipeline with supplied DSV. Pass null to bind
+				//no depth buffer. 
+				void BindSwpachainBackbufferAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,
+					EngineAPI::Rendering::DepthStencilView* depthStencilView);
+
+				//Sets the viewport for full screen rendering - this viewport matches the size of the
+				//swapchain render target + depth buffer
+				void SetFullResolutionViewport(EngineAPI::Graphics::GraphicsDevice* device);
+
+				//Presents the contents rendered in to the swapchain backbuffer to the monitor && user
+				void PresentSwapchainBackbuffer();
+
 			protected:
 				//Swapchain 
 				IDXGISwapChain* swapchain = nullptr;

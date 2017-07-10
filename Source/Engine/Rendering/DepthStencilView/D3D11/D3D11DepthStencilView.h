@@ -45,6 +45,11 @@ namespace EngineAPI
 				void Shutdown();
 
 			public:
+				//Clears the depth/stencil view/buffer
+				bool ClearDepthStencil(EngineAPI::Graphics::GraphicsDevice* device, 
+					UINT clearFlag, float depthClear = 1.0f, uint8_t stencilClear = 0);
+
+			public:
 				//Getters
 				ID3D11DepthStencilView* GetD3D11DepthStencilView() { return dsv; };
 

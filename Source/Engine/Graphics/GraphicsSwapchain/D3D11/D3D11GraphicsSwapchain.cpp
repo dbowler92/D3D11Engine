@@ -210,6 +210,7 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainDepthBuffer(EngineAPI::Graphics::
 		assert(swapchainDepthStencilViewReadWrite.InitDepthStencilView(device,&swpachainDepthTexture, false, std::string("SwapchainDepthStencilViewReadWrite")));
 		assert(swapchainDepthStencilViewReadOnly.InitDepthStencilView(device, &swpachainDepthTexture, true, std::string("SwapchainDepthStencilViewReadOnly")));
 
+		//TODO: SRV to the depth buffer
 	}
 	else
 	{
@@ -220,4 +221,60 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainDepthBuffer(EngineAPI::Graphics::
 
 	//Done
 	return true;
+}
+
+void D3D11GraphicsSwapchain::ClearSwapchainBackbufferRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,
+	const float* col)
+{
+	swapchainBackbufferRenderTargetView.ClearRenderTargetView(device, col);
+}
+
+void D3D11GraphicsSwapchain::ClearDepthStencilBuffer(EngineAPI::Graphics::GraphicsDevice* device,
+	bool doClearDepth, bool doClearStencil,
+	float depthClearValue, uint8_t stencilClearValue)
+{
+	//Only clear if we manage the depth stencil buffer. 
+	if (doesManageADepthBuffer)
+	{
+		//What to clear?
+		UINT clearFlag = 0;
+		if (doClearDepth)
+			clearFlag |= D3D11_CLEAR_DEPTH;
+		if (doClearStencil)
+			clearFlag |= D3D11_CLEAR_STENCIL;
+
+		assert(swapchainDepthStencilViewReadWrite.ClearDepthStencil(device, clearFlag, 1.0f, 0));
+	}
+}
+
+void D3D11GraphicsSwapchain::BindSwapchainBackbufferAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,
+	bool shouldBindReadWriteDSV)
+{
+	//Bind backbuffer and our managed DSV
+	if (doesManageADepthBuffer)
+	{
+		if (shouldBindReadWriteDSV)
+			swapchainBackbufferRenderTargetView.BindAsRenderTarget(device, &swapchainDepthStencilViewReadWrite);
+		else
+			swapchainBackbufferRenderTargetView.BindAsRenderTarget(device, &swapchainDepthStencilViewReadOnly);
+	}
+	else
+		swapchainBackbufferRenderTargetView.BindAsRenderTarget(device, nullptr);
+}
+
+void D3D11GraphicsSwapchain::BindSwpachainBackbufferAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,
+	EngineAPI::Rendering::DepthStencilView* depthStencilView)
+{
+	//Bind backbuffer && supplied DSV
+	swapchainBackbufferRenderTargetView.BindAsRenderTarget(device, depthStencilView);
+}
+
+void D3D11GraphicsSwapchain::SetFullResolutionViewport(EngineAPI::Graphics::GraphicsDevice* device)
+{
+	device->GetD3D11ImmediateContext()->RSSetViewports(1, &swapchainFullViewport);
+}
+
+void D3D11GraphicsSwapchain::PresentSwapchainBackbuffer()
+{
+	swapchain->Present(0, 0);
 }

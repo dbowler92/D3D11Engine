@@ -25,6 +25,10 @@ namespace EngineAPI
 			class D3D11GraphicsSwapchain;
 		}
 	};
+	namespace Rendering
+	{
+		class DepthStencilView;
+	}
 };
 
 namespace EngineAPI
@@ -50,11 +54,28 @@ namespace EngineAPI
 				//Shutdown the RTV
 				void Shutdown();
 
+			public:
+				//Clears this RTV
+				void ClearRenderTargetView(EngineAPI::Graphics::GraphicsDevice* device, const float* col);
+
+				//Binds this RTV to the output merger (OM) stage of the pipeline. Will also bind
+				//a depth stencil view if provided. 
+				//
+				//Note: Doesnt bind an array of RTV's (eg: Geometry pass in deferred rendering) - this
+				//is comming later. 
+				void BindAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device, 
+					EngineAPI::Rendering::DepthStencilView* optionalDSV);
+
+			public:
+				//Getters
+				ID3D11RenderTargetView* GetD3D11RenderTargetView() { return rtv; };
+
 			protected:
 				//Debug name
 				std::string debugIDString = "";
 
-				//Description
+				//Description. NOTE: Empty if this was inited though InitRenderTargetViewDirectFromD3D11Texture2D
+				//since we use a null description when calling device->CreateRenderTargetView(...)
 				D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
 
 				//RTV handle

@@ -3,7 +3,7 @@
 //Needs to get D3D11 DSV from depth stencil view when binding
 #include "../../DepthStencilView/DepthStencilView.h"
 
-using namespace EngineAPI::Rendering::Platform;
+using namespace EngineAPI::Graphics::Platform;
 
 bool D3D11RenderTargetView::InitRenderTargetView(EngineAPI::Graphics::GraphicsDevice* device,
 	std::string debugName)
@@ -57,7 +57,7 @@ void D3D11RenderTargetView::ClearRenderTargetView(EngineAPI::Graphics::GraphicsD
 }
 
 void D3D11RenderTargetView::BindAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,
-	EngineAPI::Rendering::DepthStencilView* optionalDSV)
+	EngineAPI::Graphics::DepthStencilView* optionalDSV)
 {
 	ID3D11DeviceContext* immediateContext = device->GetD3D11ImmediateContext();
 

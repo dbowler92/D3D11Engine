@@ -26,7 +26,7 @@ enum ResourceUsage
 
 namespace EngineAPI
 {
-	namespace Rendering
+	namespace Graphics
 	{
 		namespace Platform
 		{

@@ -1,6 +1,6 @@
 #include "D3D11DepthTexture.h"
 
-using namespace EngineAPI::Rendering::Platform;
+using namespace EngineAPI::Graphics::Platform;
 
 bool D3D11DepthTexture::InitDepthTexture(EngineAPI::Graphics::GraphicsDevice* device,
 	uint32_t textureWidth, uint32_t textureHeight, 

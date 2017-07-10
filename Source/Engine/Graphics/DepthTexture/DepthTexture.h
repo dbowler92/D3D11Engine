@@ -15,7 +15,7 @@
 
 namespace EngineAPI
 {
-	namespace Rendering
+	namespace Graphics
 	{
 		class DepthTexture : public RENDERING_PLATFORM_IMPLEMENTATION(DepthTexture)
 		{

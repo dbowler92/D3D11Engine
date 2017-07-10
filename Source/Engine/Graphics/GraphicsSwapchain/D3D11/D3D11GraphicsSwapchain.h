@@ -14,11 +14,11 @@
 #include "../../Debug/Log/DebugLog.h"
 
 //Creates an RTV to the backbuffer / texture
-#include "../../Rendering/RenderTargetView/RenderTargetView.h"
+#include "../../RenderTargetView/RenderTargetView.h"
 
 //Manages a depth texture
-#include "../../Rendering/DepthTexture/DepthTexture.h"
-#include "../../Rendering/DepthStencilView/DepthStencilView.h"
+#include "../../DepthTexture/DepthTexture.h"
+#include "../../DepthStencilView/DepthStencilView.h"
 
 namespace EngineAPI
 {
@@ -79,7 +79,7 @@ namespace EngineAPI
 				//Binds the swapchain backbuffer to the pipeline with supplied DSV. Pass null to bind
 				//no depth buffer. 
 				void BindSwpachainBackbufferAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,
-					EngineAPI::Rendering::DepthStencilView* depthStencilView);
+					EngineAPI::Graphics::DepthStencilView* depthStencilView);
 
 				//Sets the viewport for full screen rendering - this viewport matches the size of the
 				//swapchain render target + depth buffer
@@ -109,14 +109,14 @@ namespace EngineAPI
 
 				//Render target view to the backbuffer - used to bind the backbuffer
 				//for rendering in to
-				EngineAPI::Rendering::RenderTargetView swapchainBackbufferRenderTargetView;
+				EngineAPI::Graphics::RenderTargetView swapchainBackbufferRenderTargetView;
 
 				//Depth texture created alongside the swapchain. TODO: Add way of not creating one
 				//of these automatically (not 100% necessary in deferred rendering - you can create one and manage
 				//it yourself when initing a GBuffer)
-				EngineAPI::Rendering::DepthTexture swpachainDepthTexture;
-				EngineAPI::Rendering::DepthStencilView swapchainDepthStencilViewReadWrite; //Normal use
-				EngineAPI::Rendering::DepthStencilView swapchainDepthStencilViewReadOnly;  //Want to sample from depth buffer but use depth test. 
+				EngineAPI::Graphics::DepthTexture swpachainDepthTexture;
+				EngineAPI::Graphics::DepthStencilView swapchainDepthStencilViewReadWrite; //Normal use
+				EngineAPI::Graphics::DepthStencilView swapchainDepthStencilViewReadOnly;  //Want to sample from depth buffer but use depth test. 
 
 			protected:
 				//Internal init functions

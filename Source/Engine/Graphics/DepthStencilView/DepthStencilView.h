@@ -14,7 +14,7 @@
 
 namespace EngineAPI
 {
-	namespace Rendering
+	namespace Graphics
 	{
 		class DepthStencilView : public RENDERING_PLATFORM_IMPLEMENTATION(DepthStencilView)
 		{

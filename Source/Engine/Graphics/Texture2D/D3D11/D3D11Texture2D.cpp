@@ -1,6 +1,6 @@
 #include "D3D11Texture2D.h"
 
-using namespace EngineAPI::Rendering::Platform;
+using namespace EngineAPI::Graphics::Platform;
 
 bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
 	D3D11_SUBRESOURCE_DATA* textureInitData, std::string debugName)

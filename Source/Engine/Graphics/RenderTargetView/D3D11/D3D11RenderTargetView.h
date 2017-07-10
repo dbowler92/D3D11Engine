@@ -20,20 +20,18 @@ namespace EngineAPI
 {
 	namespace Graphics
 	{
+		class DepthStencilView;
 		namespace Platform
 		{
 			class D3D11GraphicsSwapchain;
-		}
+
+		};
 	};
-	namespace Rendering
-	{
-		class DepthStencilView;
-	}
 };
 
 namespace EngineAPI
 {
-	namespace Rendering
+	namespace Graphics
 	{
 		namespace Platform
 		{
@@ -64,7 +62,7 @@ namespace EngineAPI
 				//Note: Doesnt bind an array of RTV's (eg: Geometry pass in deferred rendering) - this
 				//is comming later. 
 				void BindAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device, 
-					EngineAPI::Rendering::DepthStencilView* optionalDSV);
+					EngineAPI::Graphics::DepthStencilView* optionalDSV);
 
 			public:
 				//Getters

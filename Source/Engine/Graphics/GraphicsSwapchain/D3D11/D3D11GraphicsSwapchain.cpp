@@ -263,7 +263,7 @@ void D3D11GraphicsSwapchain::BindSwapchainBackbufferAsRenderTarget(EngineAPI::Gr
 }
 
 void D3D11GraphicsSwapchain::BindSwpachainBackbufferAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,
-	EngineAPI::Rendering::DepthStencilView* depthStencilView)
+	EngineAPI::Graphics::DepthStencilView* depthStencilView)
 {
 	//Bind backbuffer && supplied DSV
 	swapchainBackbufferRenderTargetView.BindAsRenderTarget(device, depthStencilView);

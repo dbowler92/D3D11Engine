@@ -14,7 +14,7 @@
 
 namespace EngineAPI
 {
-	namespace Rendering
+	namespace Graphics
 	{
 		class RenderTargetView : public RENDERING_PLATFORM_IMPLEMENTATION(RenderTargetView)
 		{

@@ -2,10 +2,10 @@
 
 #include "../../DepthTexture/DepthTexture.h"
 
-using namespace EngineAPI::Rendering::Platform;
+using namespace EngineAPI::Graphics::Platform;
 
 bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDevice* device,
-	EngineAPI::Rendering::DepthTexture* depthTextureResource,
+	EngineAPI::Graphics::DepthTexture* depthTextureResource,
 	bool isReadOnlyDSV,
 	std::string debugName)
 {

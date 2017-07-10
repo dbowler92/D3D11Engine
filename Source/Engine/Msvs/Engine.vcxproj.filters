@@ -94,29 +94,29 @@
     <Filter Include="Src\Graphics\GraphicsSwapchain\D3D11">
       <UniqueIdentifier>{79c35268-8fb1-4635-94f4-0b9f0c900a37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Rendering\DepthTexture">
-      <UniqueIdentifier>{181c82cb-55e7-4993-89d0-f29e055accc0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Rendering\DepthTexture\D3D11">
-      <UniqueIdentifier>{56ef115c-5cc9-4d34-944c-02b288564e02}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Rendering\Texture2D">
-      <UniqueIdentifier>{ca151639-16be-433d-9639-8a34b8bfe671}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Rendering\Texture2D\D3D11">
-      <UniqueIdentifier>{8eae44f4-56f0-4ffd-8de5-91fab5dc76bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Rendering\DepthStencilView">
+    <Filter Include="Src\Graphics\DepthStencilView">
       <UniqueIdentifier>{cd3c5a7d-c26d-4897-a6e5-4208d00fae9b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Rendering\DepthStencilView\D3D11">
+    <Filter Include="Src\Graphics\DepthStencilView\D3D11">
       <UniqueIdentifier>{12938db4-0b19-48eb-9893-4424be841857}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Rendering\RenderTargetView">
+    <Filter Include="Src\Graphics\DepthTexture">
+      <UniqueIdentifier>{181c82cb-55e7-4993-89d0-f29e055accc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\DepthTexture\D3D11">
+      <UniqueIdentifier>{56ef115c-5cc9-4d34-944c-02b288564e02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\RenderTargetView">
       <UniqueIdentifier>{7dcd9267-c456-497f-96b5-3b731e4a5425}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Rendering\RenderTargetView\D3D11">
+    <Filter Include="Src\Graphics\RenderTargetView\D3D11">
       <UniqueIdentifier>{058c5413-c58a-4674-9146-afcb8b05edd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Texture2D">
+      <UniqueIdentifier>{ca151639-16be-433d-9639-8a34b8bfe671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\Texture2D\D3D11">
+      <UniqueIdentifier>{8eae44f4-56f0-4ffd-8de5-91fab5dc76bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -162,17 +162,17 @@
     <ClCompile Include="..\Graphics\GraphicsSwapchain\D3D11\D3D11GraphicsSwapchain.cpp">
       <Filter>Src\Graphics\GraphicsSwapchain\D3D11</Filter>
     </ClCompile>
-    <ClCompile Include="..\Rendering\DepthTexture\D3D11\D3D11DepthTexture.cpp">
-      <Filter>Src\Rendering\DepthTexture\D3D11</Filter>
+    <ClCompile Include="..\Graphics\Texture2D\D3D11\D3D11Texture2D.cpp">
+      <Filter>Src\Graphics\Texture2D\D3D11</Filter>
     </ClCompile>
-    <ClCompile Include="..\Rendering\Texture2D\D3D11\D3D11Texture2D.cpp">
-      <Filter>Src\Rendering\Texture2D\D3D11</Filter>
+    <ClCompile Include="..\Graphics\RenderTargetView\D3D11\D3D11RenderTargetView.cpp">
+      <Filter>Src\Graphics\RenderTargetView\D3D11</Filter>
     </ClCompile>
-    <ClCompile Include="..\Rendering\DepthStencilView\D3D11\D3D11DepthStencilView.cpp">
-      <Filter>Src\Rendering\DepthStencilView\D3D11</Filter>
+    <ClCompile Include="..\Graphics\DepthTexture\D3D11\D3D11DepthTexture.cpp">
+      <Filter>Src\Graphics\DepthTexture\D3D11</Filter>
     </ClCompile>
-    <ClCompile Include="..\Rendering\RenderTargetView\D3D11\D3D11RenderTargetView.cpp">
-      <Filter>Src\Rendering\RenderTargetView\D3D11</Filter>
+    <ClCompile Include="..\Graphics\DepthStencilView\D3D11\D3D11DepthStencilView.cpp">
+      <Filter>Src\Graphics\DepthStencilView\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -248,29 +248,29 @@
     <ClInclude Include="..\Graphics\GraphicsSwapchain\GraphicsSwapchain.h">
       <Filter>Src\Graphics\GraphicsSwapchain</Filter>
     </ClInclude>
-    <ClInclude Include="..\Rendering\DepthTexture\D3D11\D3D11DepthTexture.h">
-      <Filter>Src\Rendering\DepthTexture\D3D11</Filter>
+    <ClInclude Include="..\Graphics\Texture2D\D3D11\D3D11Texture2D.h">
+      <Filter>Src\Graphics\Texture2D\D3D11</Filter>
     </ClInclude>
-    <ClInclude Include="..\Rendering\DepthTexture\DepthTexture.h">
-      <Filter>Src\Rendering\DepthTexture</Filter>
+    <ClInclude Include="..\Graphics\Texture2D\Texture2D.h">
+      <Filter>Src\Graphics\Texture2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\Rendering\Texture2D\D3D11\D3D11Texture2D.h">
-      <Filter>Src\Rendering\Texture2D\D3D11</Filter>
+    <ClInclude Include="..\Graphics\RenderTargetView\D3D11\D3D11RenderTargetView.h">
+      <Filter>Src\Graphics\RenderTargetView\D3D11</Filter>
     </ClInclude>
-    <ClInclude Include="..\Rendering\Texture2D\Texture2D.h">
-      <Filter>Src\Rendering\Texture2D</Filter>
+    <ClInclude Include="..\Graphics\RenderTargetView\RenderTargetView.h">
+      <Filter>Src\Graphics\RenderTargetView</Filter>
     </ClInclude>
-    <ClInclude Include="..\Rendering\DepthStencilView\D3D11\D3D11DepthStencilView.h">
-      <Filter>Src\Rendering\DepthStencilView\D3D11</Filter>
+    <ClInclude Include="..\Graphics\DepthTexture\D3D11\D3D11DepthTexture.h">
+      <Filter>Src\Graphics\DepthTexture\D3D11</Filter>
     </ClInclude>
-    <ClInclude Include="..\Rendering\DepthStencilView\DepthStencilView.h">
-      <Filter>Src\Rendering\DepthStencilView</Filter>
+    <ClInclude Include="..\Graphics\DepthTexture\DepthTexture.h">
+      <Filter>Src\Graphics\DepthTexture</Filter>
     </ClInclude>
-    <ClInclude Include="..\Rendering\RenderTargetView\D3D11\D3D11RenderTargetView.h">
-      <Filter>Src\Rendering\RenderTargetView\D3D11</Filter>
+    <ClInclude Include="..\Graphics\DepthStencilView\DepthStencilView.h">
+      <Filter>Src\Graphics\DepthStencilView</Filter>
     </ClInclude>
-    <ClInclude Include="..\Rendering\RenderTargetView\RenderTargetView.h">
-      <Filter>Src\Rendering\RenderTargetView</Filter>
+    <ClInclude Include="..\Graphics\DepthStencilView\D3D11\D3D11DepthStencilView.h">
+      <Filter>Src\Graphics\DepthStencilView\D3D11</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

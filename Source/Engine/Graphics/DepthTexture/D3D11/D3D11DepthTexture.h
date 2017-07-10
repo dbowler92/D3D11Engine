@@ -18,11 +18,11 @@ enum DepthStencilTextureFormat
 
 namespace EngineAPI
 {
-	namespace Rendering
+	namespace Graphics
 	{
 		namespace Platform
 		{
-			class D3D11DepthTexture : public EngineAPI::Rendering::Texture2D
+			class D3D11DepthTexture : public EngineAPI::Graphics::Texture2D
 			{
 			public:
 				D3D11DepthTexture() {};

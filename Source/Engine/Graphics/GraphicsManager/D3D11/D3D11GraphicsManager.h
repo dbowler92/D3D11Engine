@@ -61,6 +61,11 @@ namespace EngineAPI
 				//need to resize render targets. 
 				bool OnResize(EngineAPI::OS::OSWindow* osWindow);
 
+				//Called when we are begining rendering & finishing rendering by the 
+				//main game loop
+				bool OnBeginRender();
+				bool OnEndRender();
+
 			protected:
 				//D3D11 resources
 				EngineAPI::Graphics::GraphicsDevice device;

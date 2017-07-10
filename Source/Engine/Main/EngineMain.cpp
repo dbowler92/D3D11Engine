@@ -12,6 +12,24 @@
 #include "../Debug/Log/DebugLog.h"
 #include <iostream>
 
+//
+//Libs - D3D11
+//
+#ifdef ENGINE_CONFIG_GRAPHICS_API_D3D11
+#pragma comment (lib, "d3d11.lib")
+#pragma comment (lib, "D3DCompiler.lib")
+#pragma comment (lib, "dxerr.lib")
+#pragma comment (lib, "legacy_stdio_definitions.lib") //TODO: Remove dependancy on this for dxerr to work!
+#pragma comment (lib, "dxgi.lib")
+
+#if defined(DEBUG) | defined(_DEBUG)
+#pragma comment (lib, "d3dx11d.lib")
+#pragma comment (lib, "Effects11d.lib")
+#else
+#pragma comment (lib, "d3dx11.lib")
+#pragma comment (lib, "Effects11.lib")
+#endif
+#endif
 
 #ifdef ENGINE_CONFIG_PLATFORM_WIN32
 void ShowConsoleW32()

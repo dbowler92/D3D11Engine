@@ -1,8 +1,11 @@
 #include "D3D11GraphicsDevice.h"
 
+//Forward declarations
+#include "../../OSWindow/OSWindow.h"
+
 using namespace EngineAPI::Graphics::Platform;
 
-bool D3D11GraphicsDevice::InitD3D11DeviceAndContext()
+bool D3D11GraphicsDevice::InitD3D11DeviceAndContext(EngineAPI::OS::OSWindow* osWindow)
 {
 	//If debug mode, set the D3D11_CREATE_DEVICE_DEBUG flag
 	UINT createDeviceFlags = 0;

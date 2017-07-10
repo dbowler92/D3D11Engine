@@ -14,6 +14,14 @@
 
 namespace EngineAPI
 {
+	namespace OS
+	{
+		class OSWindow;
+	}
+}
+
+namespace EngineAPI
+{
 	namespace Graphics
 	{
 		namespace Platform
@@ -25,7 +33,7 @@ namespace EngineAPI
 				virtual ~D3D11GraphicsDevice() = 0 {};
 
 				//Inits && shutdown the D3D11 device
-				bool InitD3D11DeviceAndContext(); //TODO: Allow user to create deferred context + separate device and context creation + classes
+				bool InitD3D11DeviceAndContext(EngineAPI::OS::OSWindow* osWindow); //TODO: Allow user to create deferred context + separate device and context creation + classes
 				void ShutdownD3D11DeviceAndContext();
 
 				//Returns the device and context

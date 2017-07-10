@@ -94,6 +94,12 @@
     <Filter Include="Src\Graphics\GraphicsSwapchain\D3D11">
       <UniqueIdentifier>{79c35268-8fb1-4635-94f4-0b9f0c900a37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Rendering\DepthTexture">
+      <UniqueIdentifier>{181c82cb-55e7-4993-89d0-f29e055accc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Rendering\DepthTexture\D3D11">
+      <UniqueIdentifier>{56ef115c-5cc9-4d34-944c-02b288564e02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -137,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\GraphicsSwapchain\D3D11\D3D11GraphicsSwapchain.cpp">
       <Filter>Src\Graphics\GraphicsSwapchain\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Rendering\DepthTexture\D3D11\D3D11DepthTexture.cpp">
+      <Filter>Src\Rendering\DepthTexture\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\GraphicsSwapchain\GraphicsSwapchain.h">
       <Filter>Src\Graphics\GraphicsSwapchain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Rendering\DepthTexture\D3D11\D3D11DepthTexture.h">
+      <Filter>Src\Rendering\DepthTexture\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Rendering\DepthTexture\DepthTexture.h">
+      <Filter>Src\Rendering\DepthTexture</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

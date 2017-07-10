@@ -9,23 +9,8 @@
 //Global graphics settings
 #include "GraphicsConfig.h"
 
-//
-//Libs - D3D11
-//
-#ifdef ENGINE_CONFIG_GRAPHICS_API_D3D11
-#pragma comment (lib, "d3d11.lib")
-#pragma comment (lib, "D3DCompiler.lib")
-#pragma comment (lib, "dxerr.lib")
-#pragma comment (lib, "dxgi.lib")
-
-#if defined(DEBUG) | defined(_DEBUG)
-#pragma comment (lib, "d3dx11d.lib")
-#pragma comment (lib, "Effects11d.lib")
-#else
-#pragma comment (lib, "d3dx11.lib")
-#pragma comment (lib, "Effects11.lib")
-#endif
-#endif
+#include <windows.h>
+#include <stdio.h>
 
 //Macro which will select the correct subclass to inherit from for graphics classes
 #define RENDERING_PLATFORM_IMPLEMENTATION(TYPE) Platform::##D3D11##TYPE

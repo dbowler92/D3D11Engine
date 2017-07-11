@@ -166,6 +166,24 @@
     <Filter Include="EngineAssets">
       <UniqueIdentifier>{d6d0af0c-ff72-4d6e-b326-702347b3aa9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\VertexShader">
+      <UniqueIdentifier>{bccbe8af-5068-4188-b7ef-6d738bd7d4d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\ShaderResource">
+      <UniqueIdentifier>{3893dcac-cdc7-4616-86ff-1b1d05862411}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\ShaderResource\D3D11">
+      <UniqueIdentifier>{ed4c631c-8e35-4761-aefb-d53cf94ee677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\VertexShader\D3D11">
+      <UniqueIdentifier>{be4dab83-8469-4eb1-8833-50cddf0a6b39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\PixelShader">
+      <UniqueIdentifier>{43c3afba-fbfd-48dc-86c3-6aaee3ef59e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\PixelShader\D3D11">
+      <UniqueIdentifier>{b6e1b969-2708-4134-bdbe-60c8bb217498}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -242,6 +260,15 @@
     </ClCompile>
     <ClCompile Include="..\Statics\D3D11Statics\D3D11Statics.cpp">
       <Filter>Src\Statics\D3D11Statics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\ShaderResource\D3D11\D3D11ShaderResource.cpp">
+      <Filter>Src\Graphics\ShaderResource\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\VertexShader\D3D11\D3D11VertexShader.cpp">
+      <Filter>Src\Graphics\VertexShader\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\PixelShader\D3D11\D3D11PixelShader.cpp">
+      <Filter>Src\Graphics\PixelShader\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -379,6 +406,24 @@
     </ClInclude>
     <ClInclude Include="..\Globals\GraphicsGlobals.h">
       <Filter>Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\ShaderResource\D3D11\D3D11ShaderResource.h">
+      <Filter>Src\Graphics\ShaderResource\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\ShaderResource\ShaderResource.h">
+      <Filter>Src\Graphics\ShaderResource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\VertexShader\D3D11\D3D11VertexShader.h">
+      <Filter>Src\Graphics\VertexShader\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\VertexShader\VertexShader.h">
+      <Filter>Src\Graphics\VertexShader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\PixelShader\D3D11\D3D11PixelShader.h">
+      <Filter>Src\Graphics\PixelShader\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\PixelShader\PixelShader.h">
+      <Filter>Src\Graphics\PixelShader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -24,7 +24,7 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	HR(device->GetD3D11Device()->CreateTexture2D(&textureDesc, textureInitData, &texture2DHandle));
 	
 	//Debug name
-	texture2DHandle->SetPrivateData(WKPDID_D3DDebugObjectName, GetDebugName().size(), GetDebugName().c_str());
+	SetD3D11ResourceDebugName(texture2DHandle);
 
 	//Done
 	return true;

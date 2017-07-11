@@ -73,7 +73,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\Lib\$(PlatformName)$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)..\..\..\GameOutput\</OutDir>
     <IntDir>$(SolutionDir)..\..\Temp\$(ProjectName)$(PlatformName)$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)$(PlatformName)$(Configuration)</TargetName>
     <LibraryPath>$(SolutionDir)..\..\Lib\$(PlatformName)$(Configuration);C:\VulkanSDK\1.0.46.0\Lib32;$(SolutionDir)..\..\Lib;$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>

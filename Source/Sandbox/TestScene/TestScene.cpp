@@ -19,7 +19,7 @@ bool TestScene::OnSceneBecomeActive()
 	//Test resources here
 	//
 	TestVB();
-
+	TestShaders();
 
 	//Done
 	return true;
@@ -46,11 +46,28 @@ void TestScene::TestVB()
 		std::string("DebugVB")));
 }
 
+void TestScene::TestShaders()
+{
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
+
+	assert(vs.InitCompiledVertexShaderFromFile(device, 
+		SHADER_COMPILED_ASSETS_FOLDER"TestVS.cso", 
+		std::string("TestVertexShader")));
+
+	assert(ps.InitCompiledPixelShaderFromFile(device,
+		SHADER_COMPILED_ASSETS_FOLDER"TestPS.cso",
+		std::string("TestPixelShader")));
+}
+
 bool TestScene::OnSceneBecomeDeactive()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("TestScene::OnSceneBecomeDeactive()\n");
 
 	vb.Shutdown();
+
+	vs.Shutdown();
+	ps.Shutdown();
 
 	//Done
 	return true;

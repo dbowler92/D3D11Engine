@@ -56,7 +56,7 @@ bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDe
 		&dsvDesc, &dsv));
 
 	//Debug name
-	dsv->SetPrivateData(WKPDID_D3DDebugObjectName, GetDebugName().size(), GetDebugName().c_str());
+	SetD3D11ResourceDebugName(dsv);
 
 	//Done
 	return true;

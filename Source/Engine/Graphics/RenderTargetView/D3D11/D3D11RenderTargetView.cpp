@@ -40,7 +40,7 @@ bool D3D11RenderTargetView::InitRenderTargetViewDirectFromD3D11Texture2D(EngineA
 	HR(device->GetD3D11Device()->CreateRenderTargetView(d3d11TextureResource, nullptr, &rtv));
 
 	//Debug name
-	rtv->SetPrivateData(WKPDID_D3DDebugObjectName, GetDebugName().size(), GetDebugName().c_str());
+	SetD3D11ResourceDebugName(rtv);
 
 	//Done
 	return true;

@@ -11,6 +11,8 @@
 
 //Test includes
 #include "../../../Engine/Graphics/VertexBuffer/VertexBuffer.h"
+#include "../../../Engine/Graphics/VertexShader/VertexShader.h"
+#include "../../../Engine/Graphics/PixelShader/PixelShader.h"
 
 class TestScene : public EngineAPI::Gameplay::Scene
 {
@@ -34,6 +36,11 @@ private:
 	//Test resources
 	EngineAPI::Graphics::VertexBuffer vb;
 
+	EngineAPI::Graphics::VertexShader vs;
+	EngineAPI::Graphics::PixelShader ps;
+
 private:
 	void TestVB();
+
+	void TestShaders();
 };

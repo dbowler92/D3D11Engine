@@ -25,8 +25,8 @@ bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device
 	HR(device->GetD3D11Device()->CreateBuffer(&bufferDesc, initialData, &buffer));
 
 	//Debug name
-	buffer->SetPrivateData(WKPDID_D3DDebugObjectName, GetDebugName().size(), GetDebugName().c_str());
-	
+	SetD3D11ResourceDebugName(buffer);
+
 	//Done
 	return true;
 }

@@ -28,7 +28,7 @@
 //Platform - not really used for now?
 #define PLATFORM_IDX_WIN32 0
 
-//Graphics APIs
+//Graphics APIs 
 #define GRAPHICS_API_IDX_D3D11 0
 
 //Current platform to build & grpahics API to use - this should really be set

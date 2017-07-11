@@ -54,11 +54,17 @@ namespace EngineAPI
 				//
 				//Interface to the pipeline
 				//
+				//Input Assembly
+				void IASetTopology(PrimitiveTopology topology);
 
+				//
 
 				//Shaders
-				void BindVertexShader(EngineAPI::Graphics::VertexShader* vs);
-				void BindPixelShader(EngineAPI::Graphics::PixelShader* ps);
+				void VSBindShader(EngineAPI::Graphics::VertexShader* vs);
+				void PSBindShader(EngineAPI::Graphics::PixelShader* ps);
+				
+				//Drawing
+				void Draw(UINT count, UINT startIndex);
 
 			protected:
 				//D3D11 resources

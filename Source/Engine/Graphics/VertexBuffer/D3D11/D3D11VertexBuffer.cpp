@@ -67,7 +67,5 @@ bool D3D11VertexBuffer::InitVertexBuffer(EngineAPI::Graphics::GraphicsDevice* de
 void D3D11VertexBuffer::BindVertexBufferToPipeline(EngineAPI::Graphics::GraphicsDevice* device, 
 	UINT stride, UINT offset)
 {
-	UINT strides = stride;
-	UINT offsets = offset;
-	device->GetD3D11ImmediateContext()->IASetVertexBuffers(0, 1, &buffer, &strides, &offsets);
+	device->GetD3D11ImmediateContext()->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
 }

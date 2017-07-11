@@ -13,9 +13,12 @@
 #include "../Globals/GraphicsGlobals.h"
 
 #ifdef ENGINE_CONFIG_GRAPHICS_API_D3D11
-#include <Windows.h>
-#include <d3dx11.h>
+#include <dxgi.h>
+#include <d3d11.h>
+//#include <d3dx11.h>
 //#include "../3rdParty/d3dx11Effect.h"
-#include <xnamath.h>
 #include <dxerr.h>
 #endif
+
+//Also include the math headers
+#include "MathIncludes.h"

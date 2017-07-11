@@ -46,9 +46,9 @@ void TestScene::TestVB()
 	};
 
 	Vertex triVBData[3];
-	triVBData[0] = Vertex(1, 1, 0, 1, 0, 0); //TL
-	triVBData[1] = Vertex(1, -1, 0, 0, 0, 1); //BL
-	triVBData[2] = Vertex(-1, -1, 0, 0, 1, 0); //BR
+	triVBData[0] = Vertex(1, 1, 0, 1, 0, 0); //TR
+	triVBData[1] = Vertex(1, -1, 0, 0, 1, 0); //BR
+	triVBData[2] = Vertex(-1, -1, 0, 1, 1, 0); //BL
 
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
@@ -121,18 +121,14 @@ bool TestScene::OnSceneRender()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
-	device->BindVertexShader(&vs);
-	device->BindPixelShader(&ps);
+	device->VSBindShader(&vs);
+	device->PSBindShader(&ps);
 
-	//Draw????
 	vb.BindVertexBufferToPipeline(device, 24, 0);
 	
-	device->GetD3D11ImmediateContext()->OMSetDepthStencilState(NULL, 0);
-	device->GetD3D11ImmediateContext()->RSSetState(NULL);
-
-	device->GetD3D11ImmediateContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	device->GetD3D11ImmediateContext()->Draw(3, 0);
-
+	device->IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	device->Draw(3, 0);
+	
 	//Done
 	return true;
 }

@@ -64,14 +64,24 @@ void D3D11GraphicsDevice::ShutdownD3D11DeviceAndContext()
 	ReleaseCOM(d3dDevice);
 }
 
-void D3D11GraphicsDevice::BindVertexShader(EngineAPI::Graphics::VertexShader* vs)
+void D3D11GraphicsDevice::IASetTopology(PrimitiveTopology topology)
+{
+	GetD3D11ImmediateContext()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)topology);
+}
+
+void D3D11GraphicsDevice::VSBindShader(EngineAPI::Graphics::VertexShader* vs)
 {
 	if (vs)
 		vs->BindVertexShaderToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);
 }
 
-void D3D11GraphicsDevice::BindPixelShader(EngineAPI::Graphics::PixelShader* ps)
+void D3D11GraphicsDevice::PSBindShader(EngineAPI::Graphics::PixelShader* ps)
 {
 	if (ps)
 		ps->BindPixelShaderToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);
+}
+
+void D3D11GraphicsDevice::Draw(UINT count, UINT startIndex)
+{
+	GetD3D11ImmediateContext()->Draw(count, startIndex);
 }

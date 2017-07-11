@@ -443,5 +443,8 @@
     <ClInclude Include="..\Graphics\VertexInputSignature\VertexInputSignature.h">
       <Filter>Src\Graphics\VertexInputSignature</Filter>
     </ClInclude>
+    <ClInclude Include="..\Includes\MathIncludes.h">
+      <Filter>Includes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

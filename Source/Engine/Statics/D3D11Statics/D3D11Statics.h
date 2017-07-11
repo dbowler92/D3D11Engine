@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include "../../Main/EngineStd.h"
-
 //Graphics
 #include "../../Includes/GraphicsIncludes.h"
 

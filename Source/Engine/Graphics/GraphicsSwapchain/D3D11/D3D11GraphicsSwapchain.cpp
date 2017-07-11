@@ -83,6 +83,8 @@ bool D3D11GraphicsSwapchain::OnResize(EngineAPI::Graphics::GraphicsDevice* devic
 			return false;
 		}
 	}
+
+	return true;
 }
 
 bool D3D11GraphicsSwapchain::InitD3D11SwapchainHandle(EngineAPI::Graphics::GraphicsDevice* device,

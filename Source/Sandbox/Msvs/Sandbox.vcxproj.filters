@@ -16,6 +16,15 @@
     <Filter Include="Src\TestScene">
       <UniqueIdentifier>{b618c303-741a-4035-b03c-1515cbeac507}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{63d57c61-b929-482c-a107-15022b9bca00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\HLSLShaders">
+      <UniqueIdentifier>{8270ca57-fd77-48c8-aaaa-48cfb29f15f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\HLSLShaders\TestShader">
+      <UniqueIdentifier>{a8f774fb-6119-4d07-959e-04cef2eb7b44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\SandboxMain.cpp">
@@ -38,5 +47,13 @@
     <ClInclude Include="..\TestScene\TestScene.h">
       <Filter>Src\TestScene</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestVS.hlsl">
+      <Filter>Resources\HLSLShaders\TestShader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestPS.hlsl">
+      <Filter>Resources\HLSLShaders\TestShader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

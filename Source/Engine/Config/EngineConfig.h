@@ -19,7 +19,10 @@
 
 //Assets folders 
 #define ASSETS_FOLDER "../Assets/"
+
 #define SHADER_ASSETS_FOLDER ASSETS_FOLDER"Shaders/"
+#define SHADER_COMPILED_ASSETS_FOLDER SHADER_ASSETS_FOLDER"Compiled/"
+
 #define TEXTURE_ASSETS_FOLDER ASSETS_FOLDER"Textures/"
 
 //Platform - not really used for now?

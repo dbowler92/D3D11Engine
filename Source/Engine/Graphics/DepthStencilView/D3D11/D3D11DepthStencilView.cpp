@@ -74,6 +74,8 @@ bool D3D11DepthStencilView::ClearDepthStencil(EngineAPI::Graphics::GraphicsDevic
 	{
 		ID3D11DeviceContext* immediateContext = device->GetD3D11ImmediateContext();
 		immediateContext->ClearDepthStencilView(dsv, clearFlag, depthClear, stencilClear);
+	
+		return true;
 	}
 	else
 		return false; 	//Error - DSV has been released.

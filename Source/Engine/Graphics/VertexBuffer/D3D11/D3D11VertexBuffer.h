@@ -25,7 +25,18 @@ namespace EngineAPI
 			{
 			public:
 				D3D11VertexBuffer() {};
-				~D3D11VertexBuffer() = 0 {};
+				virtual ~D3D11VertexBuffer() = 0 {};
+
+				//Init the VB
+				bool InitVertexBuffer(EngineAPI::Graphics::GraphicsDevice* device, 
+					uint32_t bufferSizeBytes, void* initialData,
+					ResourceUsage usage = RESOURCE_USAGE_IMMUTABLE, 
+					ResourceCPUAccessFlag cpuAccess = 0, 
+					ResourceBindFlag resourceBinding = RESOURCE_BIND_VERTEX_BUFFER_BIT,
+					std::string debugName = std::string(""));
+
+				//Shutsdown the VB and super classes
+				virtual void Shutdown() override;
 			};
 		};
 	};

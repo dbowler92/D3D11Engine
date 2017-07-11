@@ -6,8 +6,11 @@
 
 #pragma once
 
-//Globals
+//Engine Globals
 #include "../../Main/EngineStd.h"
+
+//Graphics globals
+#include "../Globals/GraphicsGlobals.h"
 
 #ifdef ENGINE_CONFIG_GRAPHICS_API_D3D11
 #include <Windows.h>

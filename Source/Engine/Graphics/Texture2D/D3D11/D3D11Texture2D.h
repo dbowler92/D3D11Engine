@@ -9,14 +9,8 @@
 //Parent class
 #include "../../Graphics/TextureResource/TextureResource.h"
 
-//Graphics includes - inc D3D11
-#include "../../Includes/GraphicsIncludes.h"
-
 //Debug
 #include "../../Debug/Log/DebugLog.h"
-
-//Device used to create texture && views
-#include "../../Graphics/GraphicsDevice/GraphicsDevice.h"
 
 namespace EngineAPI
 {

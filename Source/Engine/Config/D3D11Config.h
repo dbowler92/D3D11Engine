@@ -11,6 +11,7 @@
 
 #include <windows.h>
 #include <stdio.h>
+#include <string>
 
 //Macro which will select the correct subclass to inherit from for graphics classes
 #define RENDERING_PLATFORM_IMPLEMENTATION(TYPE) Platform::##D3D11##TYPE
@@ -31,7 +32,9 @@
 	{                                                          \
 		HRESULT hr = (x);                                      \
 		if(FAILED(hr))                                         \
-		{                                                      \
+		{													   \
+			std::string str = "D3D11 HR() Macro Failed. Object Debug Name: " + GetDebugName(); \
+			EngineAPI::Debug::DebugLog::PrintInfoMessage(str.c_str()); \
 			DXTrace(__FILE__, (DWORD)__LINE__, hr, L#x, true); \
 		}                                                      \
 	}

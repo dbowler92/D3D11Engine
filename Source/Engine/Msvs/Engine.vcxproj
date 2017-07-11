@@ -42,6 +42,7 @@
     <ClCompile Include="..\Main\EngineMain.cpp" />
     <ClCompile Include="..\OS\Application\Win32\Win32Application.cpp" />
     <ClCompile Include="..\OS\OSWindow\Win32\Win32OSWindow.cpp" />
+    <ClCompile Include="..\Statics\D3D11Statics\D3D11Statics.cpp" />
     <ClCompile Include="..\Utils\GameTimer\GameTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +57,7 @@
     <ClInclude Include="..\Gameplay\GameObject\GameObject.h" />
     <ClInclude Include="..\Gameplay\SceneManager\SceneManager.h" />
     <ClInclude Include="..\Gameplay\Scene\Scene.h" />
+    <ClInclude Include="..\Globals\GraphicsGlobals.h" />
     <ClInclude Include="..\Graphics\BufferResource\BufferResource.h" />
     <ClInclude Include="..\Graphics\BufferResource\D3D11\D3D11BufferResource.h" />
     <ClInclude Include="..\Graphics\CommonResource\CommonResource.h" />
@@ -87,6 +89,7 @@
     <ClInclude Include="..\OS\Application\Win32\Win32Application.h" />
     <ClInclude Include="..\OS\OSWindow\OSWindow.h" />
     <ClInclude Include="..\OS\OSWindow\Win32\Win32OSWindow.h" />
+    <ClInclude Include="..\Statics\D3D11Statics\D3D11Statics.h" />
     <ClInclude Include="..\Utils\GameTimer\GameTimer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

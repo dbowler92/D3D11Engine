@@ -10,6 +10,12 @@
 //Parent class
 #include "../../Core/CoreObject/CoreObject.h"
 
+//Graphics includes - inc D3D11
+#include "../../Includes/GraphicsIncludes.h"
+
+//Device used to create texture, buffers && views
+#include "../../Graphics/GraphicsDevice/GraphicsDevice.h"
+
 namespace EngineAPI
 {
 	namespace Graphics

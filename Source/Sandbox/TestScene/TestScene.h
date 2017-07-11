@@ -9,6 +9,9 @@
 //Parent class
 #include "../../../Engine/Gameplay/Scene/Scene.h"
 
+//Test includes
+#include "../../../Engine/Graphics/VertexBuffer/VertexBuffer.h"
+
 class TestScene : public EngineAPI::Gameplay::Scene
 {
 public:
@@ -26,4 +29,8 @@ public:
 	//an update/render loop thats used internally. 
 	bool OnSceneUpdate(float dt) override;
 	bool OnSceneRender() override;
+
+private:
+	//Test resources
+	EngineAPI::Graphics::VertexBuffer vb;
 };

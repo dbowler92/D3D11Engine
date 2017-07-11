@@ -50,7 +50,7 @@ namespace EngineAPI
 				//
 				//Public interface
 				//
-
+				EngineAPI::Graphics::GraphicsDevice* GetDevice() { return &device; };
 
 			protected:
 				D3D11GraphicsManager() {};

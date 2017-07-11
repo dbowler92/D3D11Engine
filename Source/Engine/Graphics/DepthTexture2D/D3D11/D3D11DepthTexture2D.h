@@ -37,7 +37,7 @@ namespace EngineAPI
 					std::string debugName = std::string(""));
 
 				//Shutsdown the depth texture
-				virtual void Shutdown();
+				virtual void Shutdown() override;
 
 			public:
 				//Getters

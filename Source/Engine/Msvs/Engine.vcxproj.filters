@@ -157,6 +157,12 @@
     <Filter Include="Src\Graphics\VertexBuffer\D3D11">
       <UniqueIdentifier>{3f211834-5b1a-4b1d-953e-6ffbfd88dd13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Statics\D3D11Statics">
+      <UniqueIdentifier>{84441dce-cee9-4440-ba48-b7b5bec0a63a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Globals">
+      <UniqueIdentifier>{e353e360-00ec-4705-a2a7-f0e8189f0166}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -230,6 +236,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\VertexBuffer\D3D11\D3D11VertexBuffer.cpp">
       <Filter>Src\Graphics\VertexBuffer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Statics\D3D11Statics\D3D11Statics.cpp">
+      <Filter>Src\Statics\D3D11Statics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +370,12 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\VertexBuffer\VertexBuffer.h">
       <Filter>Src\Graphics\VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Statics\D3D11Statics\D3D11Statics.h">
+      <Filter>Src\Statics\D3D11Statics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Globals\GraphicsGlobals.h">
+      <Filter>Globals</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

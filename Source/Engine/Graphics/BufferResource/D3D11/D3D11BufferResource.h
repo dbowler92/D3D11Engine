@@ -20,6 +20,21 @@ namespace EngineAPI
 			public:
 				D3D11BufferResource() {};
 				virtual ~D3D11BufferResource() = 0 {};
+
+				//Inits the ID3D11Buffer
+				bool InitBuffer(EngineAPI::Graphics::GraphicsDevice* device,
+					const D3D11_SUBRESOURCE_DATA* initialData,
+					std::string debugName);
+
+				//Cleansup the buffer resource
+				virtual void Shutdown() = 0;
+
+			protected:
+				//Buffer description
+				D3D11_BUFFER_DESC bufferDesc = {};
+
+				//Each buffer resource creates an ID3D11Buffer*
+				ID3D11Buffer* buffer = nullptr;
 			};
 		};
 	};

@@ -25,7 +25,7 @@ bool D3D11VertexInputSignature::InitVertexInputSignature(EngineAPI::Graphics::Gr
 
 	//For each input, generate a D3D11_INPUT_LAYOUT_DESC
 	inputElementsArray.resize(inputsCount);
-	for (int i = 0; i < inputsCount; ++i)
+	for (int i = 0; i < (int)inputsCount; ++i)
 	{
 		inputElementsArray[i].SemanticName = inputs[i].SemanticName.c_str();
 		inputElementsArray[i].SemanticIndex = inputs[i].SemanticIndex;

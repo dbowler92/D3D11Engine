@@ -193,6 +193,9 @@
     <Filter Include="Src\Graphics\VertexInputSignature\D3D11">
       <UniqueIdentifier>{e0a82f4a-97e2-4085-bd6a-43611e9aa7a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\3rdParty\dxerr">
+      <UniqueIdentifier>{e27bf84d-d3b8-49fa-b858-3848b1605f82}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -281,6 +284,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\VertexInputSignature\D3D11\D3D11VertexInputSignature.cpp">
       <Filter>Src\Graphics\VertexInputSignature\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\dxerr\dxerr.cpp">
+      <Filter>Src\3rdParty\dxerr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +451,9 @@
     </ClInclude>
     <ClInclude Include="..\Includes\MathIncludes.h">
       <Filter>Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\dxerr\dxerr.h">
+      <Filter>Src\3rdParty\dxerr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

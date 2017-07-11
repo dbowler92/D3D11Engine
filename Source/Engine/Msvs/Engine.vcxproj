@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\3rdParty\dxerr\dxerr.cpp" />
     <ClCompile Include="..\3rdParty\LodePNG\lodepng.cpp" />
     <ClCompile Include="..\Components\BaseComponent\BaseComponent.cpp" />
     <ClCompile Include="..\Core\CoreObject\CoreObject.cpp" />
@@ -50,6 +51,7 @@
     <ClCompile Include="..\Utils\GameTimer\GameTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\3rdParty\dxerr\dxerr.h" />
     <ClInclude Include="..\3rdParty\LodePNG\lodepng.h" />
     <ClInclude Include="..\Components\BaseComponent\BaseComponent.h" />
     <ClInclude Include="..\Config\D3D11Config.h" />
@@ -160,8 +162,8 @@
     <IntDir>$(SolutionDir)..\..\Temp\$(ProjectName)$(PlatformName)$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\..\Lib\$(PlatformName)$(Configuration)\</OutDir>
     <TargetExt>.lib</TargetExt>
-    <IncludePath>C:\Users\Dan\Documents\Programming\3DGameEngine\Game_Engine\3DGCCEngine\Source\Engine\3rdParty\DXUT\Optional;C:\Users\Dan\Documents\Programming\3DGameEngine\Game_Engine\3DGCCEngine\Source\Engine\3rdParty\DXUT\Core;$(DXSDK_DIR)Include;C:\VulkanSDK\1.0.46.0\Include;C:\VulkanSDK\1.0.46.0\glslang;..\3rdParty\glm\;..\3rdParty\gli;..\3rdParty\lodePNG;C:\Program Files %28x86%29\Windows Kits\8.0\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x86;C:\VulkanSDK\1.0.46.0\Lib32;$(SolutionDir)..\..\Lib;C:\Program Files %28x86%29\Windows Kits\8.0\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Dan\Documents\Programming\3DGameEngine\Game_Engine\3DGCCEngine\Source\Engine\3rdParty\DXUT\Optional;C:\Users\Dan\Documents\Programming\3DGameEngine\Game_Engine\3DGCCEngine\Source\Engine\3rdParty\DXUT\Core;C:\VulkanSDK\1.0.46.0\Include;C:\VulkanSDK\1.0.46.0\glslang;..\3rdParty\glm\;..\3rdParty\gli;..\3rdParty\lodePNG;C:\Program Files %28x86%29\Windows Kits\8.0\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\VulkanSDK\1.0.46.0\Lib32;$(SolutionDir)..\..\Lib;C:\Program Files %28x86%29\Windows Kits\8.0\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetExt>.lib</TargetExt>

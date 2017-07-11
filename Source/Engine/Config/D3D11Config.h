@@ -35,7 +35,7 @@
 		{													   \
 			std::string str = "D3D11 HR() Macro Failed. Object Debug Name: " + GetDebugName(); \
 			EngineAPI::Debug::DebugLog::PrintInfoMessage(str.c_str()); \
-			DXTrace(__FILE__, (DWORD)__LINE__, hr, L#x, true); \
+			DXTrace(__FILEW__, (DWORD)__LINE__, hr, L#x, true); \
 		}                                                      \
 	}
 #endif

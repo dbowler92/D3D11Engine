@@ -11,7 +11,7 @@
 #pragma once
 
 //Rendering/primitive topology
-enum PrimitiveTopology
+enum PrimitiveTopology 
 {
 	PRIMITIVE_TOPOLOGY_UNDEFINED = 0,
 	PRIMITIVE_TOPOLOGY_POINTLIST = 1,  

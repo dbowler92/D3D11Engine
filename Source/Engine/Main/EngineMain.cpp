@@ -18,18 +18,13 @@
 #ifdef ENGINE_CONFIG_GRAPHICS_API_D3D11
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "D3DCompiler.lib")
-#pragma comment (lib, "dxerr.lib")
-#pragma comment (lib, "legacy_stdio_definitions.lib") //TODO: Remove dependancy on this for dxerr to work!
 #pragma comment (lib, "dxgi.lib")
+#pragma comment (lib, "dxguid.lib") //Debug names
 
 #if defined(DEBUG) | defined(_DEBUG)
-#pragma comment (lib, "d3dx11d.lib")
-#pragma comment (lib, "Effects11d.lib")
-#pragma comment (lib, "dxguid.lib") //Debug names
-#else
-#pragma comment (lib, "d3dx11.lib")
-#pragma comment (lib, "Effects11.lib")
+	//...
 #endif
+
 #endif
 
 #ifdef ENGINE_CONFIG_PLATFORM_WIN32

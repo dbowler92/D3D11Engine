@@ -17,7 +17,8 @@
 #include <d3d11.h>
 //#include <d3dx11.h>
 //#include "../3rdParty/d3dx11Effect.h"
-#include <dxerr.h>
+//#include <dxerr.h>
+#include "../3rdParty/dxerr/dxerr.h"
 #endif
 
 //Also include the math headers

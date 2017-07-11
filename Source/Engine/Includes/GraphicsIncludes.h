@@ -15,11 +15,5 @@
 #ifdef ENGINE_CONFIG_GRAPHICS_API_D3D11
 #include <dxgi.h>
 #include <d3d11.h>
-//#include <d3dx11.h>
-//#include "../3rdParty/d3dx11Effect.h"
-//#include <dxerr.h>
 #include "../3rdParty/dxerr/dxerr.h"
 #endif
-
-//Also include the math headers
-#include "MathIncludes.h"

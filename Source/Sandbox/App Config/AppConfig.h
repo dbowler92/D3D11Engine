@@ -8,5 +8,5 @@
 
 //Should really be done automatically via a build process...
 #define APPLICATION_VERSION_MAJOR 0
-#define APPLICATION_VERSION_MINOR 1
+#define APPLICATION_VERSION_MINOR 2
 #define APPLICATION_VERSION_PATCH 0

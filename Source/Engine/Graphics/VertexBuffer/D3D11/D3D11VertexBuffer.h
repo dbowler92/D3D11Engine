@@ -32,9 +32,10 @@ namespace EngineAPI
 				//Shutsdown the VB and super classes
 				virtual void Shutdown() override;
 
-			protected:
-				//D3D11 vertex input description
-				ID3D11InputLayout* vertexBufferInputLayout = nullptr;
+			public:
+				//Bind this vertex buffer to the pipeline (on its own)
+				void BindVertexBufferToPipeline(EngineAPI::Graphics::GraphicsDevice* device, 
+					UINT stride, UINT offset = 0);
 			};
 		};
 	};

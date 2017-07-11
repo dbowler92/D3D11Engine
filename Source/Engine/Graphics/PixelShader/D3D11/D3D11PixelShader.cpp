@@ -2,6 +2,15 @@
 
 using namespace EngineAPI::Graphics::Platform;
 
+void D3D11PixelShader::Shutdown()
+{
+	//Delete PS
+	ReleaseCOM(pixelShader);
+
+	//Cleanup super
+	__super::Shutdown();
+}
+
 bool D3D11PixelShader::InitCompiledPixelShaderFromFile(EngineAPI::Graphics::GraphicsDevice* device,
 	const char* compiledShaderFile,
 	std::string debugName)
@@ -24,11 +33,11 @@ bool D3D11PixelShader::InitCompiledPixelShaderFromFile(EngineAPI::Graphics::Grap
 		CleanupBytecodeBuffer();
 
 		std::string o = std::string(__FUNCTION__) + " Error: Could not read file: " + compiledShaderFile + ". Shader Debug Name: " + GetDebugName();
-		EngineAPI::Debug::DebugLog::PrintWarningMessage(o.c_str());
+		EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
 		return false;
 	}
 
-	const void* shaderByteCode = GetShaderBytecodeBuffer();
+	const char* shaderByteCode = GetShaderBytecodeBuffer();
 	SIZE_T byteCodeLength = GetShaderBytecodeBufferSize();
 
 	//Class linkage - TODO??
@@ -54,11 +63,15 @@ bool D3D11PixelShader::InitCompiledPixelShaderFromFile(EngineAPI::Graphics::Grap
 	return true;
 }
 
-void D3D11PixelShader::Shutdown()
+bool D3D11PixelShader::BindPixelShaderToPipeline(EngineAPI::Graphics::GraphicsDevice* device)
 {
-	//Delete PS
-	ReleaseCOM(pixelShader);
+	//
+	//TODO: Shader interfaces (ID3D11ClassInstance**)
+	//
 
-	//Cleanup super
-	__super::Shutdown();
+	//Bind PS
+	device->GetD3D11ImmediateContext()->PSSetShader(pixelShader, nullptr, 0);
+
+	//Done
+	return true;
 }

@@ -3,6 +3,9 @@
 //Forward declarations
 #include "../../OS/OSWindow/OSWindow.h"
 
+#include "../../VertexShader/VertexShader.h"
+#include "../../PixelShader/PixelShader.h"
+
 using namespace EngineAPI::Graphics::Platform;
 
 bool D3D11GraphicsDevice::InitD3D11DeviceAndImmediateContext(EngineAPI::OS::OSWindow* osWindow)
@@ -59,4 +62,16 @@ void D3D11GraphicsDevice::ShutdownD3D11DeviceAndContext()
 {
 	ReleaseCOM(d3dImmediateContext);
 	ReleaseCOM(d3dDevice);
+}
+
+void D3D11GraphicsDevice::BindVertexShader(EngineAPI::Graphics::VertexShader* vs)
+{
+	if (vs)
+		vs->BindVertexShaderToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);
+}
+
+void D3D11GraphicsDevice::BindPixelShader(EngineAPI::Graphics::PixelShader* ps)
+{
+	if (ps)
+		ps->BindPixelShaderToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);
 }

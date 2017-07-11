@@ -20,6 +20,13 @@ namespace EngineAPI
 	namespace OS
 	{
 		class OSWindow;
+	};
+	namespace Graphics
+	{
+
+
+		class VertexShader;
+		class PixelShader;
 	}
 }
 
@@ -42,6 +49,16 @@ namespace EngineAPI
 				//Returns the device and context
 				ID3D11Device* GetD3D11Device() { return d3dDevice; };
 				ID3D11DeviceContext* GetD3D11ImmediateContext() { return d3dImmediateContext; };
+
+			public:
+				//
+				//Interface to the pipeline
+				//
+
+
+				//Shaders
+				void BindVertexShader(EngineAPI::Graphics::VertexShader* vs);
+				void BindPixelShader(EngineAPI::Graphics::PixelShader* ps);
 
 			protected:
 				//D3D11 resources

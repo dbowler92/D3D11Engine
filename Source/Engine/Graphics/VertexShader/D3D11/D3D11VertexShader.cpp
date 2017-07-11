@@ -2,8 +2,21 @@
 
 using namespace EngineAPI::Graphics::Platform;
 
+void D3D11VertexShader::Shutdown()
+{
+	//release the input layout
+	inputLayout.Shutdown();
+
+	//Release shader
+	ReleaseCOM(vertexShader);
+
+	//Cleanup super
+	__super::Shutdown();
+}
+
 bool D3D11VertexShader::InitCompiledVertexShaderFromFile(EngineAPI::Graphics::GraphicsDevice* device,
 	const char* compiledShaderFile,
+	VertexInputSignatureElementDescription* inputSignature, uint32_t inputsCount,
 	std::string debugName)
 {
 	//Destroy old shader
@@ -24,11 +37,11 @@ bool D3D11VertexShader::InitCompiledVertexShaderFromFile(EngineAPI::Graphics::Gr
 		CleanupBytecodeBuffer();
 
 		std::string o = std::string(__FUNCTION__) + " Error: Could not read file: " + compiledShaderFile + ". Shader Debug Name: " + GetDebugName();
-		EngineAPI::Debug::DebugLog::PrintWarningMessage(o.c_str());
+		EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
 		return false;
 	}
 
-	const void* shaderByteCode = GetShaderBytecodeBuffer();
+	const char* shaderByteCode = GetShaderBytecodeBuffer();
 	SIZE_T byteCodeLength = GetShaderBytecodeBufferSize();
 
 	//Class linkage - TODO??
@@ -45,20 +58,33 @@ bool D3D11VertexShader::InitCompiledVertexShaderFromFile(EngineAPI::Graphics::Gr
 	//Debug name
 	SetD3D11ResourceDebugName(vertexShader);
 
-	//
-	//Done with the VS bytecode (We could extract some info such as inputs here???)
-	//
+	//Generate the input signature.
+	if (!inputLayout.InitVertexInputSignature(device, inputSignature, inputsCount, shaderByteCode, byteCodeLength, GetDebugName()))
+	{
+		std::string o = std::string(__FUNCTION__) + ": " + "Failed to init the input layout/signature: " + GetDebugName();
+		EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
+		return false;
+	}
+
+	//Finished with bytecode data
 	CleanupBytecodeBuffer();
 
 	//Done
 	return true;
 }
 
-void D3D11VertexShader::Shutdown()
+bool D3D11VertexShader::BindVertexShaderToPipeline(EngineAPI::Graphics::GraphicsDevice* device)
 {
-	//Release shader
-	ReleaseCOM(vertexShader);
+	//
+	//TODO: Shader interfaces (ID3D11ClassInstance**)
+	//
 
-	//Cleanup super
-	__super::Shutdown();
+	//Set input layout
+	device->GetD3D11ImmediateContext()->IASetInputLayout(inputLayout.GetD3D11InputLayout());
+
+	//Bind vs
+	device->GetD3D11ImmediateContext()->VSSetShader(vertexShader, nullptr, 0);
+
+	//Done
+	return true;
 }

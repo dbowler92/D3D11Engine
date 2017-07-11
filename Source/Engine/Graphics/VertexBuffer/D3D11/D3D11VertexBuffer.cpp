@@ -5,6 +5,12 @@
 
 using namespace EngineAPI::Graphics::Platform;
 
+void D3D11VertexBuffer::Shutdown()
+{
+	//Cleanup buffer
+	__super::Shutdown();
+}
+
 bool D3D11VertexBuffer::InitVertexBuffer(EngineAPI::Graphics::GraphicsDevice* device,
 	uint32_t bufferSizeBytes, void* initialData,
 	ResourceUsage usage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBinding,
@@ -58,8 +64,10 @@ bool D3D11VertexBuffer::InitVertexBuffer(EngineAPI::Graphics::GraphicsDevice* de
 	return true;
 }
 
-void D3D11VertexBuffer::Shutdown()
+void D3D11VertexBuffer::BindVertexBufferToPipeline(EngineAPI::Graphics::GraphicsDevice* device, 
+	UINT stride, UINT offset)
 {
-	//Cleanup buffer
-	__super::Shutdown();
+	UINT strides = stride;
+	UINT offsets = offset;
+	device->GetD3D11ImmediateContext()->IASetVertexBuffers(0, 1, &buffer, &strides, &offsets);
 }

@@ -184,6 +184,15 @@
     <Filter Include="Src\Graphics\PixelShader\D3D11">
       <UniqueIdentifier>{b6e1b969-2708-4134-bdbe-60c8bb217498}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\Program">
+      <UniqueIdentifier>{8191cdbe-28da-4e9f-9b11-c6e21cfc704c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\VertexInputSignature">
+      <UniqueIdentifier>{00f0d5c5-bef7-4586-adce-bd730e9cdde4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\VertexInputSignature\D3D11">
+      <UniqueIdentifier>{e0a82f4a-97e2-4085-bd6a-43611e9aa7a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -269,6 +278,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\PixelShader\D3D11\D3D11PixelShader.cpp">
       <Filter>Src\Graphics\PixelShader\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\VertexInputSignature\D3D11\D3D11VertexInputSignature.cpp">
+      <Filter>Src\Graphics\VertexInputSignature\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,6 +436,12 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\PixelShader\PixelShader.h">
       <Filter>Src\Graphics\PixelShader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\VertexInputSignature\D3D11\D3D11VertexInputSignature.h">
+      <Filter>Src\Graphics\VertexInputSignature\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\VertexInputSignature\VertexInputSignature.h">
+      <Filter>Src\Graphics\VertexInputSignature</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

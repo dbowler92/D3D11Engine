@@ -9,6 +9,9 @@
 //Parent class
 #include "../../Graphics/ShaderResource/ShaderResource.h"
 
+//Input layout/signature
+#include "../../Graphics/VertexInputSignature/VertexInputSignature.h"
+
 namespace EngineAPI
 {
 	namespace Graphics
@@ -25,14 +28,22 @@ namespace EngineAPI
 				//we can compile our HLSL files using FXC (included as part of VS2015)
 				bool InitCompiledVertexShaderFromFile(EngineAPI::Graphics::GraphicsDevice* device,
 					const char* compiledShaderFile,
+					VertexInputSignatureElementDescription* inputSignature, uint32_t inputsCount,
 					std::string debugName = std::string(""));
 
 				//Shutsdown the VS
 				virtual void Shutdown() override;
 
+			public:
+				//Binds the vertex shader to the pipeline
+				bool BindVertexShaderToPipeline(EngineAPI::Graphics::GraphicsDevice* device);
+
 			protected:
 				//Creates and manages a ID3D11VertexShader*
 				ID3D11VertexShader* vertexShader = nullptr;
+
+				//Input signature - creates and manages a ID3D11InputLayout*
+				EngineAPI::Graphics::VertexInputSignature inputLayout;
 			};
 		};
 	};

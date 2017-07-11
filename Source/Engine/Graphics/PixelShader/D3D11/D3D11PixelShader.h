@@ -30,6 +30,10 @@ namespace EngineAPI
 				//Shutsdown the PS
 				virtual void Shutdown() override;
 
+			public:
+				//Binds the pixel shader to the pipeline
+				bool BindPixelShaderToPipeline(EngineAPI::Graphics::GraphicsDevice* device);
+
 			protected:
 				//Creates and manages a ID3D11PixelShader*
 				ID3D11PixelShader* pixelShader = nullptr;

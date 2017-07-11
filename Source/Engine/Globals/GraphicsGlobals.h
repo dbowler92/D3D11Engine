@@ -163,14 +163,14 @@ typedef UINT ResourceCPUAccessFlag;
 //Structure which, as a set, describes the layout of a vertex buffer. Same
 //as D3D11_INPUT_ELEMENT_DESC struct. For OpenGL (if we get to it), some of this
 //will be ignored!
-struct VertexStreamDescription
+struct VertexInputSignatureElementDescription
 {
-	static VertexStreamDescription GeneratePerVertexDataStreamDescription(
+	static VertexInputSignatureElementDescription PerVertex(
 		const char* semanticName, UINT semanticIndex, 
 		ResourceFormat inputFormat, UINT bufferInputSlot,
 		UINT alignedByteOffset)
 	{
-		VertexStreamDescription o;
+		VertexInputSignatureElementDescription o;
 
 		o.SemanticName = semanticName;
 		o.SemanticIndex = semanticIndex;
@@ -183,13 +183,14 @@ struct VertexStreamDescription
 
 		return o;
 	}
-	static VertexStreamDescription GeneratePerInstanceDataStreamDescription(
+
+	static VertexInputSignatureElementDescription PerInstance(
 		const char* semanticName, UINT semanticIndex,
 		ResourceFormat inputFormat, UINT bufferInputSlot,
 		UINT alignedByteOffset, 
 		UINT instanceDataStepRate)
 	{
-		VertexStreamDescription o;
+		VertexInputSignatureElementDescription o;
 
 		o.SemanticName = semanticName;
 		o.SemanticIndex = semanticIndex;

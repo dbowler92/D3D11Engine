@@ -27,19 +27,34 @@ bool TestScene::OnSceneBecomeActive()
 
 void TestScene::TestVB()
 {
+	struct Vertex
+	{
+		Vertex() {};
+		Vertex(float px, float py, float pz, float cr, float cg, float cb)
+		{
+			p[0] = px;
+			p[1] = py;
+			p[2] = pz;
+
+			c[0] = cr;
+			c[1] = cg;
+			c[2] = cb;
+		}
+
+		float p[3];
+		float c[3];
+	};
+
+	Vertex triVBData[3];
+	triVBData[0] = Vertex(1, 1, 0, 1, 0, 0); //TL
+	triVBData[1] = Vertex(1, -1, 0, 0, 0, 1); //BL
+	triVBData[2] = Vertex(-1, -1, 0, 0, 1, 0); //BR
+
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
-	VertexStreamDescription vbDesc[2];
-
-	vbDesc[0] = VertexStreamDescription::GeneratePerVertexDataStreamDescription("POSITION", 0, RESOURCE_FORMAT_R32G32B32_FLOAT, 0, 0);
-	vbDesc[1] = VertexStreamDescription::GeneratePerVertexDataStreamDescription("COLOUR", 0, RESOURCE_FORMAT_R32G32B32_FLOAT, 0, 12);
-	
-	float someData[1024 / 4];
-	void* pData = (void*)someData;
-
 	assert(vb.InitVertexBuffer(device,
-		1024, pData,
+		sizeof(Vertex) * 3, triVBData,
 		RESOURCE_USAGE_IMMUTABLE,
 		NULL,
 		RESOURCE_BIND_VERTEX_BUFFER_BIT,
@@ -51,8 +66,14 @@ void TestScene::TestShaders()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
+	//Vertex input layout 
+	VertexInputSignatureElementDescription vbDesc[2];
+	vbDesc[0] = VertexInputSignatureElementDescription::PerVertex("POSITION", 0, RESOURCE_FORMAT_R32G32B32_FLOAT, 0, 0);
+	vbDesc[1] = VertexInputSignatureElementDescription::PerVertex("COLOUR", 0, RESOURCE_FORMAT_R32G32B32_FLOAT, 0, 12);
+	
 	assert(vs.InitCompiledVertexShaderFromFile(device, 
 		SHADER_COMPILED_ASSETS_FOLDER"TestVS.cso", 
+		&vbDesc[0], 2,
 		std::string("TestVertexShader")));
 
 	assert(ps.InitCompiledPixelShaderFromFile(device,
@@ -97,6 +118,21 @@ bool TestScene::OnSceneUpdate(float dt)
 
 bool TestScene::OnSceneRender()
 {
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
+
+	device->BindVertexShader(&vs);
+	device->BindPixelShader(&ps);
+
+	//Draw????
+	vb.BindVertexBufferToPipeline(device, 24, 0);
+	
+	device->GetD3D11ImmediateContext()->OMSetDepthStencilState(NULL, 0);
+	device->GetD3D11ImmediateContext()->RSSetState(NULL);
+
+	device->GetD3D11ImmediateContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	device->GetD3D11ImmediateContext()->Draw(3, 0);
+
 	//Done
 	return true;
 }

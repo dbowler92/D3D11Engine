@@ -33,4 +33,7 @@ public:
 private:
 	//Test resources
 	EngineAPI::Graphics::VertexBuffer vb;
+
+private:
+	void TestVB();
 };

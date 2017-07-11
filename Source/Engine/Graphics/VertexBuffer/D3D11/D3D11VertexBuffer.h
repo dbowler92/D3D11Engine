@@ -37,6 +37,10 @@ namespace EngineAPI
 
 				//Shutsdown the VB and super classes
 				virtual void Shutdown() override;
+
+			protected:
+				//D3D11 vertex input description
+				ID3D11InputLayout* vertexBufferInputLayout = nullptr;
 			};
 		};
 	};

@@ -21,6 +21,36 @@ struct Vertex
 	float c[3];
 };
 
+const UINT CUBE_VERT_COUNT = 8;
+const UINT CUBE_INDS_COUNT = 36;
+
+const Vertex CUBE_VERTS[CUBE_VERT_COUNT]
+{
+	{ -1.0f, 1.0f, -1.0f, 1, 0, 1, },    // vertex 0
+	{ 1.0f, 1.0f, -1.0f, 0, 1, 0, },     // vertex ...
+	{ -1.0f, -1.0f, -1.0f, 1, 0, 0, },  
+	{ 1.0f, -1.0f, -1.0f, 0, 1, 1, },  
+	{ -1.0f, 1.0f, 1.0f, 1, 1, 0, },    
+	{ 1.0f, 1.0f, 1.0f, 1, 0, 0, },
+	{ -1.0f, -1.0f, 1.0f, 0, 1, 0, },
+	{ 1.0f, -1.0f, 1.0f, 0, 1, 1 },
+};
+
+const UINT16 CUBE_INDICES[CUBE_INDS_COUNT]
+{
+	0, 1, 2,    // side 1
+	2, 1, 3,
+	4, 0, 6,    // side 2
+	6, 0, 2,
+	7, 5, 6,    // side 3
+	6, 5, 4,
+	3, 1, 7,    // side 4
+	7, 1, 5,
+	4, 5, 0,    // side 5
+	0, 5, 1,
+	3, 7, 2,    // side 6
+	2, 7, 6,
+};
 
 bool TestScene::OnAddToSceneManagerList()
 {
@@ -187,22 +217,35 @@ void TestScene::TestConstantBuffers()
 	//
 	//Cube VB && IB
 	//
+	assert(cbVB.InitVertexBuffer(device,
+		sizeof(Vertex), CUBE_VERT_COUNT, (void*)CUBE_VERTS,
+		RESOURCE_USAGE_IMMUTABLE, NULL, RESOURCE_BIND_VERTEX_BUFFER_BIT,
+		std::string("Cube_CB_VB")));
+
+	assert(cbIB.InitIndexBuffer(device,
+		INDEX_BUFFER_FORMAT_UINT16, CUBE_INDS_COUNT, (void*)CUBE_INDICES,
+		RESOURCE_USAGE_IMMUTABLE, NULL, RESOURCE_BIND_INDEX_BUFFER_BIT,
+		std::string("Cube_CB_IB")));
 
 	//
 	//CBuffer
 	//
-	XMVECTOR eyeV = XMLoadFloat3(&(XMFLOAT3(0.0f, 0.0f, -5.0f)));;
-	XMVECTOR lookV = XMLoadFloat3(&(XMFLOAT3(0.0f, 0.0f, 0.0f)));;
-	XMVECTOR upV = XMLoadFloat3(&(XMFLOAT3(0.0f, 1.0f, 0.0f)));
+	XMFLOAT3 eye = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	XMFLOAT3 look = XMFLOAT3(0.0f, 0.0f, -1.0f);
+	XMFLOAT3 up = XMFLOAT3(0.0f, 1.0f, 0.0f);
+
+	XMVECTOR eyeV = XMLoadFloat3(&eye);
+	XMVECTOR lookV = XMLoadFloat3(&look);
+	XMVECTOR upV = XMLoadFloat3(&up);
 	cbView = XMMatrixLookAtLH(eyeV, lookV, upV);
 
 	float screenW = 960.0f; //TODO: Get actual window dimensions
 	float screenH = 540.0f; //TODO: Get actual window dimensions
-	cbProj = XMMatrixPerspectiveFovLH(0.25f, (screenH / screenW), 0.1f, 100.0f);
+	cbProj = XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45.0f), (screenW / screenH), 0.1f, 100.0f);
 	
 	cbWorld = XMMatrixIdentity();
 
-	XMMATRIX wvp = cbWorld * (cbView * cbProj);
+	XMMATRIX wvp = (cbWorld * cbView) * cbProj;
 	XMFLOAT4X4 wvp4x4;
 	XMStoreFloat4x4(&wvp4x4, wvp);
 
@@ -259,7 +302,7 @@ bool TestScene::OnEngineShutdown()
 bool TestScene::OnResize(uint32_t newWidth, uint32_t newHeight)
 {
 	//Recreate proj matrix
-	cbProj = XMMatrixPerspectiveFovLH(0.25f, ((float)newHeight / (float)newWidth), 0.1f, 100.0f);
+	cbProj = XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45.0f), ((float)newWidth / (float)newHeight), 0.1f, 100.0f);
 
 	//Done
 	return true;
@@ -268,12 +311,27 @@ bool TestScene::OnResize(uint32_t newWidth, uint32_t newHeight)
 bool TestScene::OnSceneUpdate(float dt)
 {
 	static float rot = 0.0f;
+	static float rotX = 0.0f;
 	rot += 0.25f * dt;
-	XMMATRIX world = XMMatrixRotationY(rot);
-	XMMATRIX wvp = world * (cbView * cbProj);
+	rotX += 0.25f * dt;
+	XMMATRIX world = XMMatrixRotationY(rot) * XMMatrixRotationX(rotX);
+	//world = XMMatrixIdentity();
+	world *= XMMatrixTranslation(0.0f, 0.0f, -5.0f);
+	XMMATRIX wvp = (world * cbView) * cbProj;
+
+	wvp = XMMatrixTranspose(wvp);
+
+	XMFLOAT4X4 wvp4x4;
+	XMStoreFloat4x4(&wvp4x4, wvp);
 
 	//Update CBuffer
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
+	MappedResourceData mrd;
+	if (device->MapBufferResource(&constantBuffer, 0, RESOURCE_MAP_WRITE_DISCARD, &mrd))
+		memcpy(mrd.MappedData, (void*)&wvp4x4, constantBuffer.GetConstantBufferSizeBytes());
+	device->UnmapBufferResource(&constantBuffer);
 
 	//Done
 	return true;
@@ -284,16 +342,28 @@ bool TestScene::OnSceneRender()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
-	device->VSBindShader(&vs);
-	device->PSBindShader(&ps);
-	
 	device->IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	
-	device->IASetVertexBuffer(&stateVB, 0);
-	device->IASetIndexBuffer(&stateIB, 0);
+
+	device->VSBindShader(&cbVS);
+	device->PSBindShader(&cbPS);
+
+	device->IASetVertexBuffer(&cbVB, 0);
+	device->IASetIndexBuffer(&cbIB, 0);
+
 	device->RSSetState(&rss);
 	device->OMSetDepthStencilState(&dss, 0);
-	device->DrawIndexed(ib.GetIndexCount(), 0, 0);
+
+	device->VSBindConstantBuffer(&constantBuffer, 0);
+	device->DrawIndexed(cbIB.GetIndexCount(), 0, 0);
+
+	//device->VSBindShader(&vs);
+	//device->PSBindShader(&ps);
+		
+	//device->IASetVertexBuffer(&stateVB, 0);
+	//device->IASetIndexBuffer(&stateIB, 0);
+	//device->RSSetState(&rss);
+	//device->OMSetDepthStencilState(&dss, 0);
+	//device->DrawIndexed(stateIB.GetIndexCount(), 0, 0);
 	
 	//device->IASetVertexBuffer(&indexedVB, 0);
 	//device->IASetIndexBuffer(&ib, 0);

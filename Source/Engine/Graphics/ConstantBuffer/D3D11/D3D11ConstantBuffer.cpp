@@ -73,3 +73,8 @@ bool D3D11ConstantBuffer::InitConstantBuffer(EngineAPI::Graphics::GraphicsDevice
 	//Done
 	return true;
 }
+
+void D3D11ConstantBuffer::BindConstantBufferToVertexShaderStage(EngineAPI::Graphics::GraphicsDevice* device, UINT bufferSlot)
+{
+	device->GetD3D11ImmediateContext()->VSSetConstantBuffers(bufferSlot, 1, &buffer);
+}

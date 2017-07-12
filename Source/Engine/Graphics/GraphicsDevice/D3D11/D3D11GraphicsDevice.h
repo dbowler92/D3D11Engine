@@ -23,8 +23,13 @@ namespace EngineAPI
 	};
 	namespace Graphics
 	{
+		class BufferResource;
+		class TextureResource;
+
 		class VertexBuffer;
 		class IndexBuffer;
+
+		class ConstantBuffer;
 
 		class VertexShader;
 		class PixelShader;
@@ -70,13 +75,24 @@ namespace EngineAPI
 				//Ouput Merger (OM)
 				void OMSetDepthStencilState(EngineAPI::Graphics::DepthStencilState* dss, UINT stencilRef);
 
-				//Shaders
+				//VS
 				void VSBindShader(EngineAPI::Graphics::VertexShader* vs);
+				void VSBindConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot);
+
+				//PS
 				void PSBindShader(EngineAPI::Graphics::PixelShader* ps);
 				
 				//Drawing
 				void Draw(UINT count, UINT startIndex);
 				void DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation);
+
+				//Mapping
+				bool MapBufferResource(EngineAPI::Graphics::BufferResource* resource, 
+					UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut);
+				//MappedResourceData MapTextureResource(EngineAPI::Graphics::TextureResource* resource);
+
+				void UnmapBufferResource(EngineAPI::Graphics::BufferResource* resource);
+				//void UnmapTextureResource(EngineAPI::Graphics::TextureResource* resource);
 
 			protected:
 				//D3D11 resources

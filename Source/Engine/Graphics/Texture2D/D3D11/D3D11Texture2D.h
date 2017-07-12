@@ -24,10 +24,6 @@ namespace EngineAPI
 				D3D11Texture2D() {};
 				virtual ~D3D11Texture2D() = 0 {};
 
-				//Inits the underlying texture object
-				bool InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
-					D3D11_SUBRESOURCE_DATA* textureInitData, std::string debugName = "");
-
 				//Shutsdown the underlying texture object
 				virtual void Shutdown() = 0;
 
@@ -46,6 +42,11 @@ namespace EngineAPI
 
 				//Texture handle
 				ID3D11Texture2D* texture2DHandle = nullptr;
+
+			protected:
+				//Inits the underlying texture object
+				bool InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
+					D3D11_SUBRESOURCE_DATA* textureInitData, std::string debugName = "");
 			};
 		};
 	};

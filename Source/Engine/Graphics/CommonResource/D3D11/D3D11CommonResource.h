@@ -27,10 +27,7 @@ namespace EngineAPI
 			public:
 				D3D11CommonResource() {};
 				virtual ~D3D11CommonResource() = 0 {};
-
-				//Maps the resource for writing
-				//virtual void* MapResource(EngineAPI::Graphics::GraphicsDevice* device) = 0;
-
+	
 			protected:
 				//Use this function to set the debug name of a D3D11 resource - sets
 				//it the same string as CoreObject::_debugNameString

@@ -32,6 +32,13 @@ namespace EngineAPI
 				//Shutsdown the CB and super classes
 				virtual void Shutdown() override;
 
+				//Binds the constant buffer to the pipeline
+				void BindConstantBufferToVertexShaderStage(EngineAPI::Graphics::GraphicsDevice* device, UINT bufferSlot);
+
+			public:
+				//Gets the cbuffer size in bytes
+				uint32_t GetConstantBufferSizeBytes() { return cBufferSizeBytes; };
+
 			protected:
 				//Cached data
 				uint32_t cBufferSizeBytes = 0;

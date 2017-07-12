@@ -6,6 +6,8 @@
 #include "../../VertexBuffer/VertexBuffer.h"
 #include "../../IndexBuffer/IndexBuffer.h"
 
+#include "../../ConstantBuffer/ConstantBuffer.h"
+
 #include "../../VertexShader/VertexShader.h"
 #include "../../PixelShader/PixelShader.h"
 
@@ -87,13 +89,6 @@ void D3D11GraphicsDevice::IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* v
 		GetD3D11ImmediateContext()->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
 }
 
-/*
-void D3D11GraphicsDevice::IASetVertexBuffers(EngineAPI::Graphics::VertexBuffer* vbs, uint32_t buffCount)
-{
-//TODO
-}
-*/
-
 void D3D11GraphicsDevice::IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib, UINT offset)
 {
 	if (ib)
@@ -138,6 +133,12 @@ void D3D11GraphicsDevice::VSBindShader(EngineAPI::Graphics::VertexShader* vs)
 		GetD3D11ImmediateContext()->VSSetShader(nullptr, nullptr, 0);
 }
 
+void D3D11GraphicsDevice::VSBindConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot)
+{
+	if (cBuffer)
+		cBuffer->BindConstantBufferToVertexShaderStage((EngineAPI::Graphics::GraphicsDevice*)this, bufferSlot);
+}
+
 //
 //PS
 //
@@ -162,4 +163,45 @@ void D3D11GraphicsDevice::Draw(UINT count, UINT startIndex)
 void D3D11GraphicsDevice::DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation)
 {
 	GetD3D11ImmediateContext()->DrawIndexed(indexCount, startIndexLocation, baseVertexLocation);
+}
+
+//
+//Mapping
+//
+
+bool D3D11GraphicsDevice::MapBufferResource(EngineAPI::Graphics::BufferResource* resource, 
+	UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut)
+{
+	assert(resource);
+
+	//From api agnostic to D3D11:;
+	D3D11_MAP mode = (D3D11_MAP)mapMode;
+
+	//TODO:
+	D3D11_MAP_FLAG mapFlag = (D3D11_MAP_FLAG)0;
+
+	//
+	//Check if possible
+	//
+
+	//Map
+	D3D11_MAPPED_SUBRESOURCE mappedRes = {};
+	HR(GetD3D11ImmediateContext()->Map(resource->GetD3D11BufferAsResource(), subresourceIndex, mode, mapFlag, &mappedRes));
+	if (mappedRes.pData == nullptr)
+		return false;
+
+	//Return 
+	*mappedResourceOut = {};
+	mappedResourceOut->MappedData = mappedRes.pData;
+	mappedResourceOut->RowPitch = mappedRes.RowPitch;
+	mappedResourceOut->DepthPitch = mappedRes.DepthPitch;
+	
+	return true;
+}
+
+void D3D11GraphicsDevice::UnmapBufferResource(EngineAPI::Graphics::BufferResource* resource)
+{
+	assert(resource);
+
+	GetD3D11ImmediateContext()->Unmap(resource->GetD3D11BufferAsResource(), 0);
 }

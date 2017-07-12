@@ -428,3 +428,29 @@ struct RasterizerPipelineStateDescription
 	BOOL  MultisampleEnabled;
 	BOOL  AntialiasedLineEnabled;
 };
+
+//Mapping
+//
+enum ResourceMappingMode
+{
+	RESOURCE_MAP_READ = 1,
+	RESOURCE_MAP_WRITE = 2,
+	RESOURCE_MAP_READ_WRITE = 3,
+	RESOURCE_MAP_WRITE_DISCARD = 4,
+	RESOURCE_MAP_WRITE_NO_OVERWRITE = 5
+};
+
+//Returned when we map a resource
+struct MappedResourceData
+{
+	MappedResourceData()
+	{
+		MappedData = nullptr;
+		RowPitch = 0;
+		DepthPitch = 0;
+	}
+
+	void* MappedData;
+	UINT RowPitch;
+	UINT DepthPitch;
+};

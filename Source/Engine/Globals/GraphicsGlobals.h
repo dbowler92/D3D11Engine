@@ -359,3 +359,64 @@ struct DepthStencilPipelineStateDescription
 	DepthStencilResultOp FrontFaceOp;
 	DepthStencilResultOp BackFaceOp;
 };
+
+//polygone fill mode
+enum PolygonFillMode
+{
+	POLYGON_FILL_WIREFRAME = 2,
+	POLYGON_FILL_SOLID = 3
+};
+
+//Face culling
+enum PolygonFaceCullingMode 
+{
+	POLYGON_FACE_CULL_NONE = 1,
+	POLYGON_FACE_CULL_FRONT = 2,
+	POLYGON_FACE_CULL_BACK = 3
+};
+
+//Winding order setup
+enum PolygonWindingOrderMode
+{
+	POLYGON_WINDING_ORDER_FRONT_CLOCKWISE = 1,
+	POLYGON_WINDING_ORDER_FRONT_COUNTER_CLOCKWISE = 2
+};
+
+//Rasterizer state desc
+struct RasterizerPipelineStateDescription
+{
+	RasterizerPipelineStateDescription()
+	{
+		//Default settings
+		FillMode = PolygonFillMode::POLYGON_FILL_SOLID;
+		FaceCullingMode = PolygonFaceCullingMode::POLYGON_FACE_CULL_BACK;
+		WindingOrder = PolygonWindingOrderMode::POLYGON_WINDING_ORDER_FRONT_CLOCKWISE;
+	
+		//TODO: Verify these defaults:
+		DepthBias = 0;
+		DepthBiasClamp = 0;
+		SlopeScaledDepthBias = 0;
+
+		DepthClipEnabled = TRUE;
+
+		ScissorEnabled = FALSE;
+
+		MultisampleEnabled = FALSE;
+		AntialiasedLineEnabled = FALSE;
+	}
+
+	PolygonFillMode FillMode;
+	PolygonFaceCullingMode FaceCullingMode;
+	PolygonWindingOrderMode WindingOrder;
+
+	INT   DepthBias;
+	FLOAT DepthBiasClamp;
+	FLOAT SlopeScaledDepthBias;
+
+	BOOL  DepthClipEnabled;
+
+	BOOL  ScissorEnabled;
+
+	BOOL  MultisampleEnabled;
+	BOOL  AntialiasedLineEnabled;
+};

@@ -17,6 +17,7 @@
 #include "../../../Engine/Graphics/PixelShader/PixelShader.h"
 
 #include "../../../Engine/Graphics/DepthStencilState/DepthStencilState.h"
+#include "../../../Engine/Graphics/RasterizerState/RasterizerState.h"
 
 class TestScene : public EngineAPI::Gameplay::Scene
 {
@@ -49,6 +50,7 @@ private:
 	EngineAPI::Graphics::VertexBuffer stateVB;
 	EngineAPI::Graphics::IndexBuffer stateIB;
 	EngineAPI::Graphics::DepthStencilState dss;
+	EngineAPI::Graphics::RasterizerState rss;
 
 private:
 	void TestVB();

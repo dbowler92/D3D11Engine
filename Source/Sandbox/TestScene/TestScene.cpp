@@ -153,8 +153,11 @@ void TestScene::TestStates()
 	dssState.StencilTestEnabled = false;
 	dssState.StencilReadMask = 0;
 	dssState.StencilWriteMask = 0;
-
 	assert(dss.InitDepthStencilState(device, &dssState, std::string("TestDSS")));
+
+	RasterizerPipelineStateDescription rssState = {};
+	//rssState.FillMode = POLYGON_FILL_WIREFRAME;
+	assert(rss.InitRasterizerState(device, &rssState, std::string("TestRSS")));
 }
 
 bool TestScene::OnSceneBecomeDeactive()
@@ -172,6 +175,7 @@ bool TestScene::OnSceneBecomeDeactive()
 	stateVB.Shutdown();
 	stateIB.Shutdown();
 	dss.Shutdown();
+	rss.Shutdown();
 
 	//Done
 	return true;
@@ -211,10 +215,11 @@ bool TestScene::OnSceneRender()
 	
 	device->IASetVertexBuffer(&stateVB, 0);
 	device->IASetIndexBuffer(&stateIB, 0);
+	device->RSSetState(&rss);
+	//device->RSSetState(NULL);
 	device->OMSetDepthStencilState(&dss, 0);
 	device->DrawIndexed(ib.GetIndexCount(), 0, 0);
-
-
+	
 	//device->IASetVertexBuffer(&indexedVB, 0);
 	//device->IASetIndexBuffer(&ib, 0);
 	//device->DrawIndexed(ib.GetIndexCount(), 0, 0);

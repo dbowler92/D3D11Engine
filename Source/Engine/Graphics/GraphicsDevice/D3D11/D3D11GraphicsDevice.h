@@ -29,6 +29,7 @@ namespace EngineAPI
 		class VertexShader;
 		class PixelShader;
 
+		class RasterizerState;
 		class DepthStencilState;
 	}
 }
@@ -62,6 +63,9 @@ namespace EngineAPI
 				void IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset);
 				//void IASetVertexBuffers(EngineAPI::Graphics::VertexBuffer* vbs, uint32_t buffCount); //TOOD
 				void IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib, UINT offset);
+
+				//Rasterizer (RS)
+				void RSSetState(EngineAPI::Graphics::RasterizerState* rss);
 
 				//Ouput Merger (OM)
 				void OMSetDepthStencilState(EngineAPI::Graphics::DepthStencilState* dss, UINT stencilRef);

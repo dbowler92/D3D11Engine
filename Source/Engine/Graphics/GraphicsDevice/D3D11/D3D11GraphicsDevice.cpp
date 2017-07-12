@@ -9,6 +9,7 @@
 #include "../../VertexShader/VertexShader.h"
 #include "../../PixelShader/PixelShader.h"
 
+#include "../../RasterizerState/RasterizerState.h"
 #include "../../DepthStencilState/DepthStencilState.h"
 
 using namespace EngineAPI::Graphics::Platform;
@@ -100,6 +101,18 @@ void D3D11GraphicsDevice::IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib,
 	else
 		GetD3D11ImmediateContext()->IASetIndexBuffer(nullptr, DXGI_FORMAT_R16_UINT, 0);
 }
+
+//
+//RS
+//
+void D3D11GraphicsDevice::RSSetState(EngineAPI::Graphics::RasterizerState* rss)
+{
+	if (rss)
+		rss->BindRasterizerStateToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);
+	else
+		GetD3D11ImmediateContext()->RSSetState(nullptr);
+}
+
 
 //
 //OM

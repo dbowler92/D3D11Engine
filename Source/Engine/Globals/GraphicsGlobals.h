@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include "../Config/GraphicsConfig.h"
+
 //Rendering/primitive topology
 enum PrimitiveTopology 
 {
@@ -390,7 +392,13 @@ struct RasterizerPipelineStateDescription
 		//Default settings
 		FillMode = PolygonFillMode::POLYGON_FILL_SOLID;
 		FaceCullingMode = PolygonFaceCullingMode::POLYGON_FACE_CULL_BACK;
+
+		//Default winding order is an engine setting...
+#if GRAPHICS_CONFIG_DEFAULT_FRONT_FACE_WINDING_ORDER_IS_CLOCKWISE
 		WindingOrder = PolygonWindingOrderMode::POLYGON_WINDING_ORDER_FRONT_CLOCKWISE;
+#else
+		WindingOrder = PolygonWindingOrderMode::POLYGON_WINDING_ORDER_FRONT_COUNTER_CLOCKWISE;
+#endif
 	
 		//TODO: Verify these defaults:
 		DepthBias = 0;

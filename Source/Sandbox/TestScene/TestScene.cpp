@@ -216,7 +216,6 @@ bool TestScene::OnSceneRender()
 	device->IASetVertexBuffer(&stateVB, 0);
 	device->IASetIndexBuffer(&stateIB, 0);
 	device->RSSetState(&rss);
-	//device->RSSetState(NULL);
 	device->OMSetDepthStencilState(&dss, 0);
 	device->DrawIndexed(ib.GetIndexCount(), 0, 0);
 	
@@ -226,9 +225,7 @@ bool TestScene::OnSceneRender()
 
 	//device->IASetVertexBuffer(&vb, 0);
 	//device->Draw(3, 0);
-
-
-
+	
 	//Done
 	return true;
 }

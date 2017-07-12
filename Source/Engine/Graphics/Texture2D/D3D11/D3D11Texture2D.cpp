@@ -22,7 +22,9 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 
 	//Create the texture object
 	HR(device->GetD3D11Device()->CreateTexture2D(&textureDesc, textureInitData, &texture2DHandle));
-	
+	if (texture2DHandle == nullptr)
+		return false;
+
 	//Debug name
 	SetD3D11ResourceDebugName(texture2DHandle);
 

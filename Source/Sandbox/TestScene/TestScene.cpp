@@ -40,6 +40,7 @@ bool TestScene::OnSceneBecomeActive()
 	TestVB();
 	TestShaders();
 	TestIB();
+	TestStates();
 
 	//Done
 	return true;
@@ -114,6 +115,48 @@ void TestScene::TestIB()
 		std::string("DebugIndexedIB")));
 }
 
+void TestScene::TestStates()
+{
+	//VB and IB
+	Vertex quadVBData[4];
+	quadVBData[0] = Vertex(1, 1, 0, 1, 0, 0); //TR
+	quadVBData[1] = Vertex(1, -1, 0, 0, 1, 0); //BR
+	quadVBData[2] = Vertex(-1, -1, 0, 1, 1, 0); //BL
+	quadVBData[3] = Vertex(-1, 1, 0, 1, 1, 0); //TL
+
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
+
+	assert(stateVB.InitVertexBuffer(device,
+		sizeof(Vertex), 4, quadVBData,
+		RESOURCE_USAGE_IMMUTABLE, NULL, RESOURCE_BIND_VERTEX_BUFFER_BIT,
+		std::string("StateVB")));
+
+	uint16_t inds[6];
+	inds[0] = 0;
+	inds[1] = 1;
+	inds[2] = 2;
+
+	inds[3] = 3;
+	inds[4] = 0;
+	inds[5] = 2;
+
+	assert(stateIB.InitIndexBuffer(device,
+		INDEX_BUFFER_FORMAT_UINT16, 6, inds,
+		RESOURCE_USAGE_IMMUTABLE, NULL, RESOURCE_BIND_INDEX_BUFFER_BIT,
+		std::string("StateIB")));
+
+	//
+	//States
+	//
+	DepthStencilPipelineStateDescription dssState = {};
+	dssState.StencilTestEnabled = false;
+	dssState.StencilReadMask = 0;
+	dssState.StencilWriteMask = 0;
+
+	assert(dss.InitDepthStencilState(device, &dssState, std::string("TestDSS")));
+}
+
 bool TestScene::OnSceneBecomeDeactive()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("TestScene::OnSceneBecomeDeactive()\n");
@@ -125,6 +168,10 @@ bool TestScene::OnSceneBecomeDeactive()
 
 	indexedVB.Shutdown();
 	ib.Shutdown();
+
+	stateVB.Shutdown();
+	stateIB.Shutdown();
+	dss.Shutdown();
 
 	//Done
 	return true;
@@ -161,13 +208,21 @@ bool TestScene::OnSceneRender()
 	device->PSBindShader(&ps);
 	
 	device->IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	device->IASetVertexBuffer(&indexedVB, 0);
-	device->IASetIndexBuffer(&ib, 0);
+	
+	device->IASetVertexBuffer(&stateVB, 0);
+	device->IASetIndexBuffer(&stateIB, 0);
+	device->OMSetDepthStencilState(&dss, 0);
 	device->DrawIndexed(ib.GetIndexCount(), 0, 0);
+
+
+	//device->IASetVertexBuffer(&indexedVB, 0);
+	//device->IASetIndexBuffer(&ib, 0);
+	//device->DrawIndexed(ib.GetIndexCount(), 0, 0);
 
 	//device->IASetVertexBuffer(&vb, 0);
 	//device->Draw(3, 0);
+
+
 
 	//Done
 	return true;

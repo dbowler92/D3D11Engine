@@ -16,6 +16,8 @@
 #include "../../../Engine/Graphics/VertexShader/VertexShader.h"
 #include "../../../Engine/Graphics/PixelShader/PixelShader.h"
 
+#include "../../../Engine/Graphics/DepthStencilState/DepthStencilState.h"
+
 class TestScene : public EngineAPI::Gameplay::Scene
 {
 public:
@@ -44,10 +46,13 @@ private:
 	EngineAPI::Graphics::VertexShader vs;
 	EngineAPI::Graphics::PixelShader ps;
 
+	EngineAPI::Graphics::VertexBuffer stateVB;
+	EngineAPI::Graphics::IndexBuffer stateIB;
+	EngineAPI::Graphics::DepthStencilState dss;
+
 private:
 	void TestVB();
-
 	void TestShaders();
-
 	void TestIB();
+	void TestStates();
 };

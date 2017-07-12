@@ -52,8 +52,9 @@ bool D3D11VertexShader::InitCompiledVertexShaderFromFile(EngineAPI::Graphics::Gr
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create shader
-	HR(device->GetD3D11Device()->CreateVertexShader(shaderByteCode, byteCodeLength,
-		linkage, &vertexShader));
+	HR(device->GetD3D11Device()->CreateVertexShader(shaderByteCode, byteCodeLength, linkage, &vertexShader));
+	if (vertexShader == nullptr)
+		return false;
 
 	//Debug name
 	SetD3D11ResourceDebugName(vertexShader);

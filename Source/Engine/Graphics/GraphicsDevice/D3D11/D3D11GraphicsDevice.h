@@ -28,6 +28,8 @@ namespace EngineAPI
 
 		class VertexShader;
 		class PixelShader;
+
+		class DepthStencilState;
 	}
 }
 
@@ -55,15 +57,14 @@ namespace EngineAPI
 				//
 				//Interface to the pipeline
 				//
-				//Input Assembly
+				//Input Assembly (IA)
 				void IASetTopology(PrimitiveTopology topology);
-				
 				void IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset);
 				//void IASetVertexBuffers(EngineAPI::Graphics::VertexBuffer* vbs, uint32_t buffCount); //TOOD
-				
 				void IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib, UINT offset);
 
-				//
+				//Ouput Merger (OM)
+				void OMSetDepthStencilState(EngineAPI::Graphics::DepthStencilState* dss, UINT stencilRef);
 
 				//Shaders
 				void VSBindShader(EngineAPI::Graphics::VertexShader* vs);

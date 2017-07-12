@@ -266,3 +266,96 @@ struct VertexInputSignatureElementDescription
 	ResourceInputType InputType;
 	UINT InstanceDataStepRate;
 };
+
+//General comparison function - fixed function stuff eg: depth test func
+enum PipelineComparisonFunction
+{
+	COMPARISON_FUNCTION_NEVER = 1,
+	COMPARISON_FUNCTION_LESS = 2,
+	COMPARISON_FUNCTION_EQUAL = 3,
+	COMPARISON_FUNCTION_LESS_EQUAL = 4,
+	COMPARISON_FUNCTION_GREATER = 5,
+	COMPARISON_FUNCTION_NOT_EQUAL = 6,
+	COMPARISON_FUNCTION_GREATER_EQUAL = 7,
+	COMPARISON_FUNCTION_ALWAYS = 8
+};
+
+//Depth state -> Can we write to the depth buffer?
+enum DepthTextureWriteMask
+{
+	DEPTH_TEXTURE_WRITE_MASK_ZERO = 0,
+	DEPTH_TEXTURE_WRITE_MASK_ALL = 1
+};
+
+//Stencil op
+enum StencilPipelineStateOp
+{
+	STENCIL_OP_KEEP = 1,
+	STENCIL_OP_ZERO = 2,
+	STENCIL_OP_REPLACE = 3,
+	STENCIL_OP_INCREMENT_AND_SATURATE = 4,
+	STENCIL_OP_DECREMENT_AND_SATURATE = 5,
+	STENCIL_OP_INVERT = 6,
+	STENCIL_OP_INCREMENT = 7,
+	STENCIL_OP_DECREMENT = 8
+};
+
+//Operation to perform based on the result of the depth and/or stencil
+//test (should they be enabled).
+struct DepthStencilResultOp
+{
+	DepthStencilResultOp()
+	{
+		//Default state - disabled
+		OnStencilFail = StencilPipelineStateOp::STENCIL_OP_KEEP;
+		OnStencilPassDepthFail = StencilPipelineStateOp::STENCIL_OP_KEEP;
+		OnStencilPassDepthPass = StencilPipelineStateOp::STENCIL_OP_KEEP;
+		StencilComparisonFunction = PipelineComparisonFunction::COMPARISON_FUNCTION_NEVER;
+	}
+
+	//Operation to perform (per face)
+	StencilPipelineStateOp OnStencilFail;
+	StencilPipelineStateOp OnStencilPassDepthFail;
+	StencilPipelineStateOp OnStencilPassDepthPass;
+
+	//Stencil test comparison function (per face)
+	PipelineComparisonFunction StencilComparisonFunction;
+};
+
+//Depth && stencil state
+struct DepthStencilPipelineStateDescription
+{
+	DepthStencilPipelineStateDescription()
+	{
+		//
+		//Default setting
+		//
+		//Depth - on
+		DepthTestEnabled = true;
+		DepthWriteMask = DepthTextureWriteMask::DEPTH_TEXTURE_WRITE_MASK_ALL;
+		DepthTestFunction = PipelineComparisonFunction::COMPARISON_FUNCTION_LESS;
+
+		//Stencil - off
+		StencilTestEnabled = false;
+		StencilReadMask = 0;
+		StencilWriteMask = 0;
+
+		//Op - Set to its own default state
+		FrontFaceOp = DepthStencilResultOp();
+		BackFaceOp = DepthStencilResultOp();
+	}
+
+	//Depth test
+	bool DepthTestEnabled;
+	DepthTextureWriteMask DepthWriteMask;
+	PipelineComparisonFunction DepthTestFunction;
+
+	//Stencil test
+	bool StencilTestEnabled;
+	UINT8 StencilReadMask;
+	UINT8 StencilWriteMask;
+
+	//Op based on result of depth and/or stencil testing
+	DepthStencilResultOp FrontFaceOp;
+	DepthStencilResultOp BackFaceOp;
+};

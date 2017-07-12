@@ -23,6 +23,8 @@ bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device
 
 	//Create the buffer
 	HR(device->GetD3D11Device()->CreateBuffer(&bufferDesc, initialData, &buffer));
+	if (buffer == nullptr)
+		return false;
 
 	//Debug name
 	SetD3D11ResourceDebugName(buffer);

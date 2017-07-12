@@ -48,8 +48,9 @@ bool D3D11PixelShader::InitCompiledPixelShaderFromFile(EngineAPI::Graphics::Grap
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create shader
-	HR(device->GetD3D11Device()->CreatePixelShader(shaderByteCode, byteCodeLength,
-		linkage, &pixelShader));
+	HR(device->GetD3D11Device()->CreatePixelShader(shaderByteCode, byteCodeLength, linkage, &pixelShader));
+	if (pixelShader == nullptr)
+		return false;
 
 	//Debug name
 	SetD3D11ResourceDebugName(pixelShader);

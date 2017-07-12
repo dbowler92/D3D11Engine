@@ -208,6 +208,30 @@
     <Filter Include="Src\Graphics\IndexBuffer\D3D11">
       <UniqueIdentifier>{af627a1c-ccb6-4c76-b5f4-267e96b9717e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\PipelineStateResource">
+      <UniqueIdentifier>{33003465-3917-4b68-a9ef-55f2a18b9a7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\PipelineStateResource\D3D11">
+      <UniqueIdentifier>{473ae161-87f1-49c0-8875-fbb18b850853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\DepthStencilState">
+      <UniqueIdentifier>{c6a41fb7-6c54-4638-8afc-ad8437793299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\DepthStencilState\D3D11">
+      <UniqueIdentifier>{bb476afc-df19-4fbe-b9e7-873fb854590d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\BlendState">
+      <UniqueIdentifier>{13b6d820-cc64-4958-afaa-9f3dd321662e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\RasterizerState">
+      <UniqueIdentifier>{f62b7a5e-864f-41e2-a26a-b50a3462a167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\RasterizerState\D3D11">
+      <UniqueIdentifier>{eed4f0a9-d212-4bbd-a835-569782058ee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\BlendState\D3D11">
+      <UniqueIdentifier>{51c106e7-acaf-4730-98e4-7c940fefa04b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -308,6 +332,18 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\IndexBuffer\D3D11\D3D11IndexBuffer.cpp">
       <Filter>Src\Graphics\IndexBuffer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\PipelineStateResource\D3D11\D3D11PipelineStateResource.cpp">
+      <Filter>Src\Graphics\PipelineStateResource\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\DepthStencilState\D3D11\D3D11DepthStencilState.cpp">
+      <Filter>Src\Graphics\DepthStencilState\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\RasterizerState\D3D11\D3D11RasterizerState.cpp">
+      <Filter>Src\Graphics\RasterizerState\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\BlendState\D3D11\D3D11BlendState.cpp">
+      <Filter>Src\Graphics\BlendState\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -490,6 +526,30 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\IndexBuffer\IndexBuffer.h">
       <Filter>Src\Graphics\IndexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\PipelineStateResource\D3D11\D3D11PipelineStateResource.h">
+      <Filter>Src\Graphics\PipelineStateResource\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\PipelineStateResource\PipelineStateResource.h">
+      <Filter>Src\Graphics\PipelineStateResource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\DepthStencilState\D3D11\D3D11DepthStencilState.h">
+      <Filter>Src\Graphics\DepthStencilState\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\DepthStencilState\DepthStencilState.h">
+      <Filter>Src\Graphics\DepthStencilState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\RasterizerState\D3D11\D3D11RasterizerState.h">
+      <Filter>Src\Graphics\RasterizerState\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\RasterizerState\RasterizerState.h">
+      <Filter>Src\Graphics\RasterizerState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\BlendState\BlendState.h">
+      <Filter>Src\Graphics\BlendState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\BlendState\D3D11\D3D11BlendState.h">
+      <Filter>Src\Graphics\BlendState\D3D11</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

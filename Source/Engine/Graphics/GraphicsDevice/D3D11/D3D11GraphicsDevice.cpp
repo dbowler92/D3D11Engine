@@ -9,6 +9,8 @@
 #include "../../VertexShader/VertexShader.h"
 #include "../../PixelShader/PixelShader.h"
 
+#include "../../DepthStencilState/DepthStencilState.h"
+
 using namespace EngineAPI::Graphics::Platform;
 
 bool D3D11GraphicsDevice::InitD3D11DeviceAndImmediateContext(EngineAPI::OS::OSWindow* osWindow)
@@ -80,12 +82,14 @@ void D3D11GraphicsDevice::IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* v
 {
 	if (vb)
 		vb->BindVertexBufferToPipeline((EngineAPI::Graphics::GraphicsDevice*)this, offset);
+	else
+		GetD3D11ImmediateContext()->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
 }
 
 /*
 void D3D11GraphicsDevice::IASetVertexBuffers(EngineAPI::Graphics::VertexBuffer* vbs, uint32_t buffCount)
 {
-	//TODO
+//TODO
 }
 */
 
@@ -93,6 +97,20 @@ void D3D11GraphicsDevice::IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib,
 {
 	if (ib)
 		ib->BindIndexBufferToPipeline((EngineAPI::Graphics::GraphicsDevice*)this, offset);
+	else
+		GetD3D11ImmediateContext()->IASetIndexBuffer(nullptr, DXGI_FORMAT_R16_UINT, 0);
+}
+
+//
+//OM
+//
+
+void D3D11GraphicsDevice::OMSetDepthStencilState(EngineAPI::Graphics::DepthStencilState* dss, UINT stencilRef)
+{
+	if (dss)
+		dss->BindDepthStencilStateToPipeline((EngineAPI::Graphics::GraphicsDevice*)this, stencilRef);
+	else
+		GetD3D11ImmediateContext()->OMSetDepthStencilState(nullptr, 0);
 }
 
 //
@@ -103,6 +121,8 @@ void D3D11GraphicsDevice::VSBindShader(EngineAPI::Graphics::VertexShader* vs)
 {
 	if (vs)
 		vs->BindVertexShaderToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);
+	else
+		GetD3D11ImmediateContext()->VSSetShader(nullptr, nullptr, 0);
 }
 
 //
@@ -113,6 +133,8 @@ void D3D11GraphicsDevice::PSBindShader(EngineAPI::Graphics::PixelShader* ps)
 {
 	if (ps)
 		ps->BindPixelShaderToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);
+	else
+		GetD3D11ImmediateContext()->PSSetShader(nullptr, nullptr, 0);
 }
 
 //

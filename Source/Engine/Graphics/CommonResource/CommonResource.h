@@ -23,6 +23,26 @@ namespace EngineAPI
 		public:
 			CommonResource() {};
 			virtual ~CommonResource() = 0 {};
+
+			//Virtual mapping functions - implemented by BufferResource
+			//and TextureResource
+			virtual void MapResource() = 0;
+			virtual void UnmapResource() = 0;
+
+		public:
+			//Get resource usage data
+			ResourceUsage GetResourceUsage() { return resourceUsage; };
+			ResourceCPUAccessFlag GetResourceCPUAccessFlag() { return resourceCPUAccessFlag; };
+			ResourceBindFlag GetResourceBindingFlag() { return resourceBindingFlag; };
+
+		protected:
+			//Inits the common resource data
+			void InitCommonResource(ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag, std::string debugName);
+		
+		private:
+			ResourceUsage resourceUsage;
+			ResourceCPUAccessFlag resourceCPUAccessFlag;
+			ResourceBindFlag resourceBindingFlag;
 		};
 	};
 };

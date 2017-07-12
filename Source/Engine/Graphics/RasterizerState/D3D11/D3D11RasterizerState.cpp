@@ -40,7 +40,7 @@ bool D3D11RasterizerState::InitRasterizerState(EngineAPI::Graphics::GraphicsDevi
 		return false;
 
 	//Debug name
-	SetD3D11ResourceDebugName(rss);
+	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(rss, debugName);
 
 	//Done
 	return true;

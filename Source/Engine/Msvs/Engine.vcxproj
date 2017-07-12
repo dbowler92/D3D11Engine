@@ -31,6 +31,7 @@
     <ClCompile Include="..\Gameplay\Scene\Scene.cpp" />
     <ClCompile Include="..\Graphics\BlendState\D3D11\D3D11BlendState.cpp" />
     <ClCompile Include="..\Graphics\BufferResource\D3D11\D3D11BufferResource.cpp" />
+    <ClCompile Include="..\Graphics\CommonResource\CommonResource.cpp" />
     <ClCompile Include="..\Graphics\CommonResource\D3D11\D3D11CommonResource.cpp" />
     <ClCompile Include="..\Graphics\ConstantBuffer\D3D11\D3D11ConstantBuffer.cpp" />
     <ClCompile Include="..\Graphics\DepthStencilState\D3D11\D3D11DepthStencilState.cpp" />

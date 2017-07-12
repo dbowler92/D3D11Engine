@@ -354,6 +354,9 @@
     <ClCompile Include="..\Graphics\ConstantBuffer\D3D11\D3D11ConstantBuffer.cpp">
       <Filter>Src\Graphics\ConstandBuffer\D3D11</Filter>
     </ClCompile>
+    <ClCompile Include="..\Graphics\CommonResource\CommonResource.cpp">
+      <Filter>Src\Graphics\CommonResource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Main\EngineStd.h">

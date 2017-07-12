@@ -26,7 +26,7 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 		return false;
 
 	//Debug name
-	SetD3D11ResourceDebugName(texture2DHandle);
+	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(texture2DHandle, debugName);
 
 	//Done
 	return true;

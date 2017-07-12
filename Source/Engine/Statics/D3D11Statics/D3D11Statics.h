@@ -24,6 +24,9 @@ namespace EngineAPI
 			//Returns false on error
 			static bool CalculateD3D11UsageFlags(ResourceUsage usage, ResourceCPUAccessFlag cpuAccess, 
 				D3D11_USAGE& d3d11UsageOut, UINT& d3d11CPUAccessFlagOut);
+
+			//Sets the debug name of an ID3D11Resource
+			static void SetD3D11ResourceDebugName(ID3D11DeviceChild* child, std::string name);
 		};
 	};
 };

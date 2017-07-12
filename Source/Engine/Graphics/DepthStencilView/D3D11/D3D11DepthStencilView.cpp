@@ -57,7 +57,7 @@ bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDe
 		return false;
 
 	//Debug name
-	SetD3D11ResourceDebugName(dsv);
+	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(dsv, debugName);
 
 	//Done
 	return true;

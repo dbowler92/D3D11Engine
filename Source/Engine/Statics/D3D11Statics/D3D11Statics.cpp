@@ -25,3 +25,9 @@ bool D3D11ResourceStatics::CalculateD3D11UsageFlags(ResourceUsage usage, Resourc
 
 	return true;
 }
+
+void D3D11ResourceStatics::SetD3D11ResourceDebugName(ID3D11DeviceChild* child, std::string name)
+{
+	if (child)
+		child->SetPrivateData(WKPDID_D3DDebugObjectName, name.size(), name.c_str());
+}

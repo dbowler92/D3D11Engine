@@ -57,7 +57,7 @@ bool D3D11VertexShader::InitCompiledVertexShaderFromFile(EngineAPI::Graphics::Gr
 		return false;
 
 	//Debug name
-	SetD3D11ResourceDebugName(vertexShader);
+	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(vertexShader, debugName);
 
 	//Generate the input signature.
 	if (!inputLayout.InitVertexInputSignature(device, inputSignature, inputsCount, shaderByteCode, byteCodeLength, GetDebugName()))

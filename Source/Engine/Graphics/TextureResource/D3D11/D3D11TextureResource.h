@@ -23,6 +23,10 @@ namespace EngineAPI
 			public:
 				D3D11TextureResource() {};
 				virtual ~D3D11TextureResource() = 0 {};
+
+				//Texture mapping
+				virtual void MapResource() override;
+				virtual void UnmapResource() override;
 			};
 		};
 	};

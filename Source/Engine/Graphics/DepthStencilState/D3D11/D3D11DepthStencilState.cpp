@@ -41,7 +41,7 @@ bool D3D11DepthStencilState::InitDepthStencilState(EngineAPI::Graphics::Graphics
 		return false;
 
 	//Debug name
-	SetD3D11ResourceDebugName(dss);
+	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(dss, debugName);
 
 	//Done
 	return true;

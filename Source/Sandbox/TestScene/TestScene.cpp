@@ -246,12 +246,14 @@ void TestScene::TestConstantBuffers()
 	cbWorld = XMMatrixIdentity();
 
 	XMMATRIX wvp = (cbWorld * cbView) * cbProj;
+	wvp = XMMatrixTranspose(wvp);
+
 	XMFLOAT4X4 wvp4x4;
 	XMStoreFloat4x4(&wvp4x4, wvp);
 
 	assert(constantBuffer.InitConstantBuffer(device,
 		sizeof(XMFLOAT4X4), &wvp4x4,
-		RESOURCE_USAGE_DYNAMIC, RESOURCE_CPU_ACCESS_WRITE_BIT, 
+		RESOURCE_USAGE_DYNAMIC, RESOURCE_CPU_ACCESS_WRITE_BIT,
 		RESOURCE_BIND_CONSTANT_BUFFER_BIT,
 		std::string("TestConstantBuffer_WVP")));
 }

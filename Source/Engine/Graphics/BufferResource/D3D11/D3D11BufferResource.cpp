@@ -2,6 +2,11 @@
 
 using namespace EngineAPI::Graphics::Platform;
 
+void D3D11BufferResource::Shutdown()
+{
+	ReleaseCOM(buffer);
+}
+
 bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device,
 	const D3D11_SUBRESOURCE_DATA* initialData,
 	std::string debugName)
@@ -27,13 +32,18 @@ bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device
 		return false;
 
 	//Debug name
-	SetD3D11ResourceDebugName(buffer);
+	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(buffer, debugName);
 
 	//Done
 	return true;
 }
 
-void D3D11BufferResource::Shutdown()
+void D3D11BufferResource::MapResource()
 {
-	ReleaseCOM(buffer);
+	EngineAPI::Debug::DebugLog::PrintInfoMessage(__FUNCTION__);
+}
+
+void D3D11BufferResource::UnmapResource()
+{
+
 }

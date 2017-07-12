@@ -53,7 +53,7 @@ bool D3D11PixelShader::InitCompiledPixelShaderFromFile(EngineAPI::Graphics::Grap
 		return false;
 
 	//Debug name
-	SetD3D11ResourceDebugName(pixelShader);
+	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(pixelShader, debugName);
 
 	//
 	//Done with the PS bytecode (We could extract some info such as inputs here???)

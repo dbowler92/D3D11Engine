@@ -8,7 +8,16 @@
 #pragma once
 
 //Parent class
-#include "../../Graphics/CommonResource/CommonResource.h"
+#include "../../../Core/CoreObject/CoreObject.h"
+
+//Graphics includes - inc D3D11
+#include "../../Includes/GraphicsIncludes.h"
+
+//Device used to create texture, buffers && views
+#include "../../Graphics/GraphicsDevice/GraphicsDevice.h"
+
+//Statics (D3D11)
+#include "../../../Statics/D3D11Statics/D3D11Statics.h"
 
 namespace EngineAPI 
 {
@@ -16,7 +25,7 @@ namespace EngineAPI
 	{
 		namespace Platform
 		{
-			class D3D11ShaderResource : public EngineAPI::Graphics::CommonResource
+			class D3D11ShaderResource : public EngineAPI::Core::CoreObject
 			{
 			public:
 				D3D11ShaderResource() {};

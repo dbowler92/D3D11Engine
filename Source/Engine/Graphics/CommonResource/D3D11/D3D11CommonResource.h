@@ -16,6 +16,9 @@
 //Device used to create texture, buffers && views
 #include "../../Graphics/GraphicsDevice/GraphicsDevice.h"
 
+//Statics
+#include "../../Statics/D3D11Statics/D3D11Statics.h"
+
 namespace EngineAPI
 {
 	namespace Graphics
@@ -27,11 +30,6 @@ namespace EngineAPI
 			public:
 				D3D11CommonResource() {};
 				virtual ~D3D11CommonResource() = 0 {};
-	
-			protected:
-				//Use this function to set the debug name of a D3D11 resource - sets
-				//it the same string as CoreObject::_debugNameString
-				void SetD3D11ResourceDebugName(ID3D11DeviceChild* resource);
 			};
 		};
 	};

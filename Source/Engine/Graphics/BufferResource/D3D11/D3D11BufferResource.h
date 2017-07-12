@@ -24,6 +24,10 @@ namespace EngineAPI
 				//Cleansup the buffer resource
 				virtual void Shutdown() = 0;
 
+				//Override the map and unmap resource functions
+				virtual void MapResource() override;
+				virtual void UnmapResource() override;
+
 			public:
 				//Gets the buffer object
 				ID3D11Buffer* GetD3D11Buffer() { return buffer; };

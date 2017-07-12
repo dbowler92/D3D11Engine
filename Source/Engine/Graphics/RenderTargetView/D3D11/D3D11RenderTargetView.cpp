@@ -42,7 +42,7 @@ bool D3D11RenderTargetView::InitRenderTargetViewDirectFromD3D11Texture2D(EngineA
 		return false;
 
 	//Debug name
-	SetD3D11ResourceDebugName(rtv);
+	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(rtv, debugName);
 
 	//Done
 	return true;

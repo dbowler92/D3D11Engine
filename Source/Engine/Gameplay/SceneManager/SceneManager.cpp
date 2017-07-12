@@ -56,6 +56,15 @@ bool SceneManager::InitSubsystem()
 	return true;
 }
 
+bool SceneManager::OnResize(uint32_t newWidth, uint32_t newHeight)
+{
+	if (currentScene)
+		return currentScene->OnResize(newWidth, newHeight);
+
+	//Done
+	return true;
+}
+
 bool SceneManager::OnUpdate(float dt)
 {
 	//Update current scene

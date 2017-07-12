@@ -306,6 +306,10 @@ bool Win32Application::OnResize()
 			return false;
 	}
 
+	//Tell other subsystems of the resize event
+	if (sceneManagerSubsystem)
+		sceneManagerSubsystem->OnResize(osWindow.GetWindowWidth(), osWindow.GetWindowHeight());
+
 	//Done
 	return true;
 }

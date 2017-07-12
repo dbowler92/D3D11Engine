@@ -75,6 +75,9 @@ namespace EngineAPI
 			bool InitSubsystem();
 			void ShutdownSubsystem();
 
+			//Events
+			bool OnResize(uint32_t newWidth, uint32_t newHeight);
+
 			//Update and render loops
 			bool OnUpdate(float dt);
 			bool OnRender();

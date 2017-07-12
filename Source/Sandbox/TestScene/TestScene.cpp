@@ -41,6 +41,7 @@ bool TestScene::OnSceneBecomeActive()
 	TestShaders();
 	TestIB();
 	TestStates();
+	TestConstantBuffers();
 
 	//Done
 	return true;
@@ -160,6 +161,58 @@ void TestScene::TestStates()
 	assert(rss.InitRasterizerState(device, &rssState, std::string("TestRSS")));
 }
 
+void TestScene::TestConstantBuffers()
+{
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
+
+	//
+	//Shaders
+	//
+
+	//Vertex input layout 
+	VertexInputSignatureElementDescription vbDesc[2];
+	vbDesc[0] = VertexInputSignatureElementDescription::PerVertex("POSITION", 0, RESOURCE_FORMAT_R32G32B32_FLOAT, 0, 0);
+	vbDesc[1] = VertexInputSignatureElementDescription::PerVertex("COLOUR", 0, RESOURCE_FORMAT_R32G32B32_FLOAT, 0, 12);
+
+	assert(cbVS.InitCompiledVertexShaderFromFile(device,
+		SHADER_COMPILED_ASSETS_FOLDER"TestCBufferVS.cso",
+		&vbDesc[0], 2,
+		std::string("TestConstantBufferVertexShader")));
+
+	assert(cbPS.InitCompiledPixelShaderFromFile(device,
+		SHADER_COMPILED_ASSETS_FOLDER"TestCBufferPS.cso",
+		std::string("TestConstantBufferPixelShader")));
+
+	//
+	//Cube VB && IB
+	//
+
+	//
+	//CBuffer
+	//
+	XMVECTOR eyeV = XMLoadFloat3(&(XMFLOAT3(0.0f, 0.0f, -5.0f)));;
+	XMVECTOR lookV = XMLoadFloat3(&(XMFLOAT3(0.0f, 0.0f, 0.0f)));;
+	XMVECTOR upV = XMLoadFloat3(&(XMFLOAT3(0.0f, 1.0f, 0.0f)));
+	cbView = XMMatrixLookAtLH(eyeV, lookV, upV);
+
+	float screenW = 960.0f; //TODO: Get actual window dimensions
+	float screenH = 540.0f; //TODO: Get actual window dimensions
+	cbProj = XMMatrixPerspectiveFovLH(0.25f, (screenH / screenW), 0.1f, 100.0f);
+	
+	cbWorld = XMMatrixIdentity();
+
+	XMMATRIX wvp = cbWorld * (cbView * cbProj);
+	XMFLOAT4X4 wvp4x4;
+	XMStoreFloat4x4(&wvp4x4, wvp);
+
+	assert(constantBuffer.InitConstantBuffer(device,
+		sizeof(XMFLOAT4X4), &wvp4x4,
+		RESOURCE_USAGE_DYNAMIC, RESOURCE_CPU_ACCESS_WRITE_BIT, 
+		RESOURCE_BIND_CONSTANT_BUFFER_BIT,
+		std::string("TestConstantBuffer_WVP")));
+}
+
 bool TestScene::OnSceneBecomeDeactive()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("TestScene::OnSceneBecomeDeactive()\n");
@@ -176,6 +229,12 @@ bool TestScene::OnSceneBecomeDeactive()
 	stateIB.Shutdown();
 	dss.Shutdown();
 	rss.Shutdown();
+
+	cbVS.Shutdown();
+	cbPS.Shutdown();
+	cbVB.Shutdown();
+	cbIB.Shutdown();
+	constantBuffer.Shutdown();
 
 	//Done
 	return true;
@@ -197,8 +256,25 @@ bool TestScene::OnEngineShutdown()
 	return true;
 }
 
+bool TestScene::OnResize(uint32_t newWidth, uint32_t newHeight)
+{
+	//Recreate proj matrix
+	cbProj = XMMatrixPerspectiveFovLH(0.25f, ((float)newHeight / (float)newWidth), 0.1f, 100.0f);
+
+	//Done
+	return true;
+}
+
 bool TestScene::OnSceneUpdate(float dt)
 {
+	static float rot = 0.0f;
+	rot += 0.25f * dt;
+	XMMATRIX world = XMMatrixRotationY(rot);
+	XMMATRIX wvp = world * (cbView * cbProj);
+
+	//Update CBuffer
+
+
 	//Done
 	return true;
 }

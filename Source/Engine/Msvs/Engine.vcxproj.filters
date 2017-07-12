@@ -232,6 +232,12 @@
     <Filter Include="Src\Graphics\BlendState\D3D11">
       <UniqueIdentifier>{51c106e7-acaf-4730-98e4-7c940fefa04b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\ConstandBuffer">
+      <UniqueIdentifier>{014977cb-85ef-45f7-8ff5-e3915977bde1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\ConstandBuffer\D3D11">
+      <UniqueIdentifier>{becb89d8-12cc-4bd5-986c-18d8091d1b8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -344,6 +350,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\BlendState\D3D11\D3D11BlendState.cpp">
       <Filter>Src\Graphics\BlendState\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\ConstantBuffer\D3D11\D3D11ConstantBuffer.cpp">
+      <Filter>Src\Graphics\ConstandBuffer\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -550,6 +559,12 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\BlendState\D3D11\D3D11BlendState.h">
       <Filter>Src\Graphics\BlendState\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\ConstantBuffer\D3D11\D3D11ConstantBuffer.h">
+      <Filter>Src\Graphics\ConstandBuffer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\ConstantBuffer\ConstantBuffer.h">
+      <Filter>Src\Graphics\ConstandBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

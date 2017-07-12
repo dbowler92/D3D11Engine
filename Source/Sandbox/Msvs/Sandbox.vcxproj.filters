@@ -25,6 +25,9 @@
     <Filter Include="Resources\HLSLShaders\TestShader">
       <UniqueIdentifier>{a8f774fb-6119-4d07-959e-04cef2eb7b44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\HLSLShaders\TestCBufferShader">
+      <UniqueIdentifier>{b2e9b2ba-2c78-411e-bf55-12dbcb023494}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\SandboxMain.cpp">
@@ -54,6 +57,12 @@
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestPS.hlsl">
       <Filter>Resources\HLSLShaders\TestShader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestCBufferPS.hlsl">
+      <Filter>Resources\HLSLShaders\TestCBufferShader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestCBufferVS.hlsl">
+      <Filter>Resources\HLSLShaders\TestCBufferShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

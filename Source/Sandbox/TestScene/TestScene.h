@@ -19,6 +19,8 @@
 #include "../../../Engine/Graphics/DepthStencilState/DepthStencilState.h"
 #include "../../../Engine/Graphics/RasterizerState/RasterizerState.h"
 
+#include "../../../Engine/Graphics/ConstantBuffer/ConstantBuffer.h"
+
 class TestScene : public EngineAPI::Gameplay::Scene
 {
 public:
@@ -31,6 +33,9 @@ public:
 	bool OnSceneBecomeDeactive() override;
 	bool OnRemoveFromSceneManagerList() override;
 	bool OnEngineShutdown() override;
+
+	//Engine events
+	bool OnResize(uint32_t newWidth, uint32_t newHeight) override;
 
 	//Rendering and updating the scene - NOTE: I will add
 	//an update/render loop thats used internally. 
@@ -52,9 +57,20 @@ private:
 	EngineAPI::Graphics::DepthStencilState dss;
 	EngineAPI::Graphics::RasterizerState rss;
 
+
+	EngineAPI::Graphics::VertexShader cbVS;
+	EngineAPI::Graphics::PixelShader cbPS;
+	EngineAPI::Graphics::VertexBuffer cbVB;
+	EngineAPI::Graphics::IndexBuffer cbIB;
+	EngineAPI::Graphics::ConstantBuffer constantBuffer;
+	XMMATRIX cbWorld;
+	XMMATRIX cbView;
+	XMMATRIX cbProj;
+
 private:
 	void TestVB();
 	void TestShaders();
 	void TestIB();
 	void TestStates();
+	void TestConstantBuffers();
 };

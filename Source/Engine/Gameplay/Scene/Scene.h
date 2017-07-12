@@ -9,8 +9,13 @@
 //Parent
 #include "../../Core/CoreObject/CoreObject.h"
 
-//Debug log
-#include "../../Debug/Log/DebugLog.h"
+//Shared includes
+//
+//Debugging
+#include "../../Includes/DebugIncludes.h"
+
+//Math
+#include "../../Includes/MathIncludes.h"
 
 namespace EngineAPI
 {
@@ -35,11 +40,14 @@ namespace EngineAPI
 			virtual bool OnRemoveFromSceneManagerList() = 0;
 			virtual bool OnEngineShutdown() = 0;
 
+			//Engine events
+			virtual bool OnResize(uint32_t newWidth, uint32_t newHeight) = 0;
+
 			//Update and rendering events that we override
 			virtual bool OnSceneUpdate(float dt) = 0;
 			virtual bool OnSceneRender() = 0;
 
-		protected:
+		private:
 			//Scene title - called by scene manager when added to the managers
 			//list
 			void SetSceneTitle(std::string title) { sceneTitle = title; };

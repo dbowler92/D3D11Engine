@@ -43,7 +43,8 @@ namespace EngineAPI
 				//Inits your game - called after engine and subsystems have been 
 				//inited. Here, you would create your game specific subsystems and
 				//assets etc. 
-				virtual bool InitApplication() = 0;
+				virtual bool InitApplicationPreEngineInit() = 0;
+				virtual bool InitApplicationPostEngineInit() = 0;
 
 				//Called when the engine is shutdown before closing the actual engine. 
 				virtual bool ShutdownApplication() = 0;
@@ -72,6 +73,15 @@ namespace EngineAPI
 
 				//Inits the engine subsystems - eg: Graphics, physics, etc
 				bool InitEngineSubsystems();
+
+			private:
+				//Engine events
+				//
+				//Called when the engine has loaded the systems correctly
+				//
+				//Can load some static engine assets now. This is called before
+				//we initialise the user specific application
+				bool EngineDidFinishInitialisation();
 
 				//Called when the window is resized
 				bool OnResize();

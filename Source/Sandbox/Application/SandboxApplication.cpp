@@ -14,10 +14,18 @@ ECHAR* SandboxApplication::GetGameTitle()
 	return "SandboxApplication";
 };
 
-bool SandboxApplication::InitApplication()
+bool SandboxApplication::InitApplicationPreEngineInit()
 {
 	//Debug
-	EngineAPI::Debug::DebugLog::PrintInfoMessage("SandboxApplication::InitApplication()\n");
+	EngineAPI::Debug::DebugLog::PrintInfoMessage("SandboxApplication::InitApplicationPreEngineInit()\n");
+
+	return true;
+}
+
+bool SandboxApplication::InitApplicationPostEngineInit()
+{
+	//Debug
+	EngineAPI::Debug::DebugLog::PrintInfoMessage("SandboxApplication::InitApplicationPostEngineInit()\n");
 
 	//Inform scene manager of scenes && set first scene
 	EngineAPI::Gameplay::SceneManager::GetInstance()->AddNewSceneToManager<TestScene>("Test Scene");

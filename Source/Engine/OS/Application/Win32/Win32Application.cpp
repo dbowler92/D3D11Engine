@@ -171,7 +171,18 @@ bool Win32Application::InitEngine(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hW
 
 	//Init engine subsystems - eg: Graphics
 	if (success)
-		return InitEngineSubsystems();
+	{
+		//Init Engine subsytems
+		if (!InitEngineSubsystems())
+			return false;
+
+		//Inform the engine that we have finished initialisation 
+		if (!EngineDidFinishInitialisation())
+			return false;
+
+		//Done
+		return true;
+	}
 	else
 		return success; //False
 }
@@ -294,6 +305,15 @@ bool Win32Application::OnResize()
 		if (!graphicsSubsystem->OnResize(&osWindow))
 			return false;
 	}
+
+	//Done
+	return true;
+}
+
+bool Win32Application::EngineDidFinishInitialisation()
+{
+	//TODO: Load static engine data now. Eg: Fonts, textures for
+	//loading screen. Shaders, etc. 
 
 	//Done
 	return true;

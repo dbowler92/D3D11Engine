@@ -199,6 +199,15 @@
     <Filter Include="Src\3rdParty\DDSTextureLoader">
       <UniqueIdentifier>{2da0c1eb-8803-46b5-a2ce-bdb044df1c1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Debug\Rendering">
+      <UniqueIdentifier>{4e65a6f7-bbc6-45df-acc3-85c4628486ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\IndexBuffer">
+      <UniqueIdentifier>{f55ca140-5dec-4fa9-91c1-3cb94173f600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\IndexBuffer\D3D11">
+      <UniqueIdentifier>{af627a1c-ccb6-4c76-b5f4-267e96b9717e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -293,6 +302,12 @@
     </ClCompile>
     <ClCompile Include="..\3rdParty\DDSTextureLoader\DDSTextureLoader.cpp">
       <Filter>Src\3rdParty\DDSTextureLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Debug\Rendering\DebugRendering.cpp">
+      <Filter>Src\Debug\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\IndexBuffer\D3D11\D3D11IndexBuffer.cpp">
+      <Filter>Src\Graphics\IndexBuffer\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -463,6 +478,18 @@
     </ClInclude>
     <ClInclude Include="..\3rdParty\DDSTextureLoader\DDSTextureLoader.h">
       <Filter>Src\3rdParty\DDSTextureLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Debug\Rendering\DebugRendering.h">
+      <Filter>Src\Debug\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Includes\DebugIncludes.h">
+      <Filter>Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\IndexBuffer\D3D11\D3D11IndexBuffer.h">
+      <Filter>Src\Graphics\IndexBuffer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\IndexBuffer\IndexBuffer.h">
+      <Filter>Src\Graphics\IndexBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

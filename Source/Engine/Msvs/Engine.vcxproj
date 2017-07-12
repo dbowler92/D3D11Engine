@@ -25,6 +25,7 @@
     <ClCompile Include="..\Components\BaseComponent\BaseComponent.cpp" />
     <ClCompile Include="..\Core\CoreObject\CoreObject.cpp" />
     <ClCompile Include="..\Debug\Log\DebugLog.cpp" />
+    <ClCompile Include="..\Debug\Rendering\DebugRendering.cpp" />
     <ClCompile Include="..\Gameplay\GameObject\GameObject.cpp" />
     <ClCompile Include="..\Gameplay\SceneManager\SceneManager.cpp" />
     <ClCompile Include="..\Gameplay\Scene\Scene.cpp" />
@@ -36,6 +37,7 @@
     <ClCompile Include="..\Graphics\GraphicsManager\D3D11\D3D11GraphicsManager.cpp" />
     <ClCompile Include="..\Graphics\GraphicsManager\GraphicsManager.cpp" />
     <ClCompile Include="..\Graphics\GraphicsSwapchain\D3D11\D3D11GraphicsSwapchain.cpp" />
+    <ClCompile Include="..\Graphics\IndexBuffer\D3D11\D3D11IndexBuffer.cpp" />
     <ClCompile Include="..\Graphics\PixelShader\D3D11\D3D11PixelShader.cpp" />
     <ClCompile Include="..\Graphics\RenderTargetView\D3D11\D3D11RenderTargetView.cpp" />
     <ClCompile Include="..\Graphics\ShaderResource\D3D11\D3D11ShaderResource.cpp" />
@@ -62,6 +64,7 @@
     <ClInclude Include="..\Config\Win32Config.h" />
     <ClInclude Include="..\Core\CoreObject\CoreObject.h" />
     <ClInclude Include="..\Debug\Log\DebugLog.h" />
+    <ClInclude Include="..\Debug\Rendering\DebugRendering.h" />
     <ClInclude Include="..\Gameplay\GameObject\GameObject.h" />
     <ClInclude Include="..\Gameplay\SceneManager\SceneManager.h" />
     <ClInclude Include="..\Gameplay\Scene\Scene.h" />
@@ -80,6 +83,8 @@
     <ClInclude Include="..\Graphics\GraphicsManager\GraphicsManager.h" />
     <ClInclude Include="..\Graphics\GraphicsSwapchain\D3D11\D3D11GraphicsSwapchain.h" />
     <ClInclude Include="..\Graphics\GraphicsSwapchain\GraphicsSwapchain.h" />
+    <ClInclude Include="..\Graphics\IndexBuffer\D3D11\D3D11IndexBuffer.h" />
+    <ClInclude Include="..\Graphics\IndexBuffer\IndexBuffer.h" />
     <ClInclude Include="..\Graphics\PixelShader\D3D11\D3D11PixelShader.h" />
     <ClInclude Include="..\Graphics\PixelShader\PixelShader.h" />
     <ClInclude Include="..\Graphics\RenderTargetView\D3D11\D3D11RenderTargetView.h" />
@@ -98,6 +103,7 @@
     <ClInclude Include="..\Graphics\VertexShader\VertexShader.h" />
     <ClInclude Include="..\Graphics\ViewResource\D3D11\D3D11ViewResource.h" />
     <ClInclude Include="..\Graphics\ViewResource\ViewResource.h" />
+    <ClInclude Include="..\Includes\DebugIncludes.h" />
     <ClInclude Include="..\Includes\GraphicsIncludes.h" />
     <ClInclude Include="..\Includes\MathIncludes.h" />
     <ClInclude Include="..\Includes\RenderingIncludes.h" />

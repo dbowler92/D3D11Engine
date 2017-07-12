@@ -29,13 +29,16 @@ bool D3D11VertexBuffer::InitVertexBuffer(EngineAPI::Graphics::GraphicsDevice* de
 		//need initial data -> My view is that this kind of buffer could be
 		//used as, say, a stream out buffer and have its data allocated like so
 		//
-		//EngineAPI::Debug::DebugLog::PrintErrorMessage("D3D11VertexBuffer::InitVertexBuffer(): Default (GPU access only) buffer created without any initial data");
-		//return false;
+		EngineAPI::Debug::DebugLog::PrintErrorMessage("VERIFY THIS ERROR: D3D11VertexBuffer::InitVertexBuffer(): Default (GPU access only) buffer created without any initial data");
+		return false;
 	}
 	if ( (resourceBinding & RESOURCE_BIND_VERTEX_BUFFER_BIT) == false )
 	{
-		EngineAPI::Debug::DebugLog::PrintErrorMessage("D3D11VertexBuffer::InitVertexBuffer(): Vertex buffer created without the vertex buffer bind flag.");
-		return false;
+		//Append vertex buffer usage
+		resourceBinding |= RESOURCE_BIND_VERTEX_BUFFER_BIT;
+
+		//EngineAPI::Debug::DebugLog::PrintErrorMessage("D3D11VertexBuffer::InitVertexBuffer(): Vertex buffer created without the vertex buffer bind flag.");
+		//return false;
 	}
 	
 	//Calculate the usage flag and cpu access flag in D3D11 world

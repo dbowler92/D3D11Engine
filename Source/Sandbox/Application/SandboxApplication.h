@@ -22,7 +22,8 @@ public:
 	virtual ECHAR* GetGameTitle();
 
 	//Inits sandbox game
-	virtual bool InitApplication();
+	virtual bool InitApplicationPreEngineInit();
+	virtual bool InitApplicationPostEngineInit();
 
 	//Closes the sandbox game
 	virtual bool ShutdownApplication();

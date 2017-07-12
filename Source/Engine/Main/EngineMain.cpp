@@ -67,14 +67,20 @@ int EngineMain(HINSTANCE hInstance,
 	if (gameAppInstance == NULL)
 		EngineAPI::Debug::DebugLog::PrintErrorMessage("EngineMain: gameAppInstance == NULL. Make sure to create a project specific Application instance.\n");
 	
-	//Set app global pointer & init the engine. 
+	//Set global pointer to the users app class. 
 	g_App = (EngineAPI::OS::Application*)gameAppInstance;
-	if (!g_App->InitEngine(hInstance, lpCmdLine, NULL, appVersionMajor, appVersionMinor, appVersionPatch, 960, 540)) //Win32
+
+	//Init app *before* engine has started
+	if (!g_App->InitApplicationPreEngineInit())
 		return -1;
 
-	//Init the game / application
-	if (!g_App->InitApplication())
+	//Init the engine. 
+	if (!g_App->InitEngine(hInstance, lpCmdLine, NULL, appVersionMajor, appVersionMinor, appVersionPatch, 960, 540)) //Win32
 		return -2;
+
+	//Init the game / application *after* engine has been fully inited. 
+	if (!g_App->InitApplicationPostEngineInit())
+		return -3;
 
 	//Enter loop. Loops until the engine decides it needs to quit (be it an error or 
 	//whatever)
@@ -82,9 +88,9 @@ int EngineMain(HINSTANCE hInstance,
 
 	//Once game loop exits, shutdown the game followed by the engine & its subsystems
 	if (!g_App->ShutdownApplication())
-		return -3;
-	if (!g_App->ShutdownEngine())
 		return -4;
+	if (!g_App->ShutdownEngine())
+		return -5;
 
 	//Done. No errors it seems
 	return 0;

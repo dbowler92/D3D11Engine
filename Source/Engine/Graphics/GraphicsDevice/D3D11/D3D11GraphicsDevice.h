@@ -23,7 +23,8 @@ namespace EngineAPI
 	};
 	namespace Graphics
 	{
-
+		class VertexBuffer;
+		class IndexBuffer;
 
 		class VertexShader;
 		class PixelShader;
@@ -56,6 +57,11 @@ namespace EngineAPI
 				//
 				//Input Assembly
 				void IASetTopology(PrimitiveTopology topology);
+				
+				void IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT stride, UINT offset);
+				//void IASetVertexBuffers(EngineAPI::Graphics::VertexBuffer* vbs, uint32_t buffCount); //TOOD
+				
+				void IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib, UINT offset);
 
 				//
 

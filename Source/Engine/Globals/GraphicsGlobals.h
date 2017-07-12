@@ -194,8 +194,15 @@ enum ResourceFormat
 	RESOURCE_FORMAT_BC7_UNORM = 98,
 	RESOURCE_FORMAT_BC7_UNORM_SRGB = 99,
 	RESOURCE_FORMAT_FORCE_UINT = 0xffffffff
+}; 
+
+enum IndexBufferFormat
+{
+	INDEX_BUFFER_FORMAT_UINT16 = ResourceFormat::RESOURCE_FORMAT_R16_UINT,
+	INDEX_BUFFER_FORMAT_UINT32 = ResourceFormat::RESOURCE_FORMAT_R32_UINT
 };
 
+// Can | things together + pass NULL/0 if not applicable
 typedef UINT ResourceBindFlag;
 typedef UINT ResourceCPUAccessFlag;
 

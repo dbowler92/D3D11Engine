@@ -25,7 +25,7 @@ namespace EngineAPI
 				bool InitVertexBuffer(EngineAPI::Graphics::GraphicsDevice* device, 
 					uint32_t bufferSizeBytes, void* initialData,
 					ResourceUsage usage = RESOURCE_USAGE_IMMUTABLE, 
-					ResourceCPUAccessFlag cpuAccess = 0, 
+					ResourceCPUAccessFlag cpuAccess = NULL,
 					ResourceBindFlag resourceBinding = RESOURCE_BIND_VERTEX_BUFFER_BIT,
 					std::string debugName = std::string(""));
 

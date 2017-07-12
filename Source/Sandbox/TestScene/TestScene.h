@@ -11,6 +11,8 @@
 
 //Test includes
 #include "../../../Engine/Graphics/VertexBuffer/VertexBuffer.h"
+#include "../../../Engine/Graphics/IndexBuffer/IndexBuffer.h"
+
 #include "../../../Engine/Graphics/VertexShader/VertexShader.h"
 #include "../../../Engine/Graphics/PixelShader/PixelShader.h"
 
@@ -36,6 +38,9 @@ private:
 	//Test resources
 	EngineAPI::Graphics::VertexBuffer vb;
 
+	EngineAPI::Graphics::VertexBuffer indexedVB;
+	EngineAPI::Graphics::IndexBuffer ib;
+
 	EngineAPI::Graphics::VertexShader vs;
 	EngineAPI::Graphics::PixelShader ps;
 
@@ -43,4 +48,6 @@ private:
 	void TestVB();
 
 	void TestShaders();
+
+	void TestIB();
 };

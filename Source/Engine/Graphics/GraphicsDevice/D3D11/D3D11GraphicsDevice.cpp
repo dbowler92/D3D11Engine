@@ -3,6 +3,9 @@
 //Forward declarations
 #include "../../OS/OSWindow/OSWindow.h"
 
+#include "../../VertexBuffer/VertexBuffer.h"
+#include "../../IndexBuffer/IndexBuffer.h"
+
 #include "../../VertexShader/VertexShader.h"
 #include "../../PixelShader/PixelShader.h"
 
@@ -64,10 +67,38 @@ void D3D11GraphicsDevice::ShutdownD3D11DeviceAndContext()
 	ReleaseCOM(d3dDevice);
 }
 
+//
+//IA
+//
+
 void D3D11GraphicsDevice::IASetTopology(PrimitiveTopology topology)
 {
 	GetD3D11ImmediateContext()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)topology);
 }
+
+void D3D11GraphicsDevice::IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb,
+	UINT stride, UINT offset)
+{
+	if (vb)
+		vb->BindVertexBufferToPipeline((EngineAPI::Graphics::GraphicsDevice*)this, stride, offset);
+}
+
+/*
+void D3D11GraphicsDevice::IASetVertexBuffers(EngineAPI::Graphics::VertexBuffer* vbs, uint32_t buffCount)
+{
+	//TODO
+}
+*/
+
+void D3D11GraphicsDevice::IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib, UINT offset)
+{
+	if (ib)
+		ib->BindIndexBufferToPipeline((EngineAPI::Graphics::GraphicsDevice*)this, offset);
+}
+
+//
+//VS
+//
 
 void D3D11GraphicsDevice::VSBindShader(EngineAPI::Graphics::VertexShader* vs)
 {
@@ -75,11 +106,19 @@ void D3D11GraphicsDevice::VSBindShader(EngineAPI::Graphics::VertexShader* vs)
 		vs->BindVertexShaderToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);
 }
 
+//
+//PS
+//
+
 void D3D11GraphicsDevice::PSBindShader(EngineAPI::Graphics::PixelShader* ps)
 {
 	if (ps)
 		ps->BindPixelShaderToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);
 }
+
+//
+//Draw commands
+//
 
 void D3D11GraphicsDevice::Draw(UINT count, UINT startIndex)
 {

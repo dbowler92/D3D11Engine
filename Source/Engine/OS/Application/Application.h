@@ -31,10 +31,11 @@ namespace EngineAPI
 			//
 			virtual ECHAR* GetGameTitle() = 0;
 			
-			//Inits your game - called after engine and subsystems have been 
+			//Inits your game - called before and after engine and subsystems have been 
 			//inited. Here, you would create your game specific subsystems and
 			//assets etc. 
-			virtual bool InitApplication() = 0;
+			virtual bool InitApplicationPreEngineInit() = 0;
+			virtual bool InitApplicationPostEngineInit() = 0;
 
 			//Called when the engine is shutdown before closing the actual engine. 
 			virtual bool ShutdownApplication() = 0;

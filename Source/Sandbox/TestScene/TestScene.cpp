@@ -81,6 +81,12 @@ void TestScene::TestShaders()
 		std::string("TestPixelShader")));
 }
 
+void TestScene::TestIB()
+{
+	//indexedVB
+	//ib
+}
+
 bool TestScene::OnSceneBecomeDeactive()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("TestScene::OnSceneBecomeDeactive()\n");
@@ -89,6 +95,9 @@ bool TestScene::OnSceneBecomeDeactive()
 
 	vs.Shutdown();
 	ps.Shutdown();
+
+	indexedVB.Shutdown();
+	ib.Shutdown();
 
 	//Done
 	return true;
@@ -123,12 +132,13 @@ bool TestScene::OnSceneRender()
 
 	device->VSBindShader(&vs);
 	device->PSBindShader(&ps);
-
-	vb.BindVertexBufferToPipeline(device, 24, 0);
 	
 	device->IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	device->IASetVertexBuffer(&vb, 24, 0);
+
 	device->Draw(3, 0);
-	
+
 	//Done
 	return true;
 }

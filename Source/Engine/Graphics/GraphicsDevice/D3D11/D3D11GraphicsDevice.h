@@ -58,7 +58,7 @@ namespace EngineAPI
 				//Input Assembly
 				void IASetTopology(PrimitiveTopology topology);
 				
-				void IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT stride, UINT offset);
+				void IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset);
 				//void IASetVertexBuffers(EngineAPI::Graphics::VertexBuffer* vbs, uint32_t buffCount); //TOOD
 				
 				void IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib, UINT offset);
@@ -71,6 +71,7 @@ namespace EngineAPI
 				
 				//Drawing
 				void Draw(UINT count, UINT startIndex);
+				void DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation);
 
 			protected:
 				//D3D11 resources

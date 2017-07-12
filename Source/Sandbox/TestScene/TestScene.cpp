@@ -3,6 +3,25 @@
 //Subsystems
 #include "../../../Engine/Graphics/GraphicsManager/GraphicsManager.h"
 
+struct Vertex
+{
+	Vertex() {};
+	Vertex(float px, float py, float pz, float cr, float cg, float cb)
+	{
+		p[0] = px;
+		p[1] = py;
+		p[2] = pz;
+
+		c[0] = cr;
+		c[1] = cg;
+		c[2] = cb;
+	}
+
+	float p[3];
+	float c[3];
+};
+
+
 bool TestScene::OnAddToSceneManagerList()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("TestScene::OnAddToSceneManagerList()\n");
@@ -20,6 +39,7 @@ bool TestScene::OnSceneBecomeActive()
 	//
 	TestVB();
 	TestShaders();
+	TestIB();
 
 	//Done
 	return true;
@@ -27,24 +47,6 @@ bool TestScene::OnSceneBecomeActive()
 
 void TestScene::TestVB()
 {
-	struct Vertex
-	{
-		Vertex() {};
-		Vertex(float px, float py, float pz, float cr, float cg, float cb)
-		{
-			p[0] = px;
-			p[1] = py;
-			p[2] = pz;
-
-			c[0] = cr;
-			c[1] = cg;
-			c[2] = cb;
-		}
-
-		float p[3];
-		float c[3];
-	};
-
 	Vertex triVBData[3];
 	triVBData[0] = Vertex(1, 1, 0, 1, 0, 0); //TR
 	triVBData[1] = Vertex(1, -1, 0, 0, 1, 0); //BR
@@ -54,7 +56,7 @@ void TestScene::TestVB()
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
 	assert(vb.InitVertexBuffer(device,
-		sizeof(Vertex) * 3, triVBData,
+		sizeof(Vertex), 3, triVBData,
 		RESOURCE_USAGE_IMMUTABLE,
 		NULL,
 		RESOURCE_BIND_VERTEX_BUFFER_BIT,
@@ -83,8 +85,33 @@ void TestScene::TestShaders()
 
 void TestScene::TestIB()
 {
-	//indexedVB
-	//ib
+	Vertex quadVBData[4];
+	quadVBData[0] = Vertex(1, 1, 0, 1, 0, 0); //TR
+	quadVBData[1] = Vertex(1, -1, 0, 0, 1, 0); //BR
+	quadVBData[2] = Vertex(-1, -1, 0, 1, 1, 0); //BL
+	quadVBData[3] = Vertex(-1, 1, 0, 1, 1, 0); //TL
+
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
+
+	assert(indexedVB.InitVertexBuffer(device,
+		sizeof(Vertex), 4, quadVBData,
+		RESOURCE_USAGE_IMMUTABLE, NULL, RESOURCE_BIND_VERTEX_BUFFER_BIT,
+		std::string("DebugIndexedVB")));
+
+	uint16_t inds[6];
+	inds[0] = 0;
+	inds[1] = 1;
+	inds[2] = 2;
+
+	inds[3] = 3;
+	inds[4] = 0;
+	inds[5] = 2;
+
+	assert(ib.InitIndexBuffer(device, 
+		INDEX_BUFFER_FORMAT_UINT16, 6, inds, 
+		RESOURCE_USAGE_IMMUTABLE, NULL, RESOURCE_BIND_INDEX_BUFFER_BIT, 
+		std::string("DebugIndexedIB")));
 }
 
 bool TestScene::OnSceneBecomeDeactive()
@@ -135,9 +162,12 @@ bool TestScene::OnSceneRender()
 	
 	device->IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	device->IASetVertexBuffer(&vb, 24, 0);
+	device->IASetVertexBuffer(&indexedVB, 0);
+	device->IASetIndexBuffer(&ib, 0);
+	device->DrawIndexed(ib.GetIndexCount(), 0, 0);
 
-	device->Draw(3, 0);
+	//device->IASetVertexBuffer(&vb, 0);
+	//device->Draw(3, 0);
 
 	//Done
 	return true;

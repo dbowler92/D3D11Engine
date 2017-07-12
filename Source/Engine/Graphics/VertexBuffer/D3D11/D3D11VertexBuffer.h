@@ -23,7 +23,8 @@ namespace EngineAPI
 
 				//Init the VB
 				bool InitVertexBuffer(EngineAPI::Graphics::GraphicsDevice* device, 
-					uint32_t bufferSizeBytes, void* initialData,
+					uint32_t bufferElementSize, uint32_t bufferElementCount, 
+					void* initialData,
 					ResourceUsage usage = RESOURCE_USAGE_IMMUTABLE, 
 					ResourceCPUAccessFlag cpuAccess = NULL,
 					ResourceBindFlag resourceBinding = RESOURCE_BIND_VERTEX_BUFFER_BIT,
@@ -32,10 +33,20 @@ namespace EngineAPI
 				//Shutsdown the VB and super classes
 				virtual void Shutdown() override;
 
+				//Getters
+				inline uint32_t GetPerElementSize() { return bufferElementSize; };
+				inline uint32_t GetElementsCount() { return bufferElementCount; };
+				inline uint32_t CalculateBufferSizeBytes() { return (bufferElementCount * bufferElementSize); };
+
 			public:
 				//Bind this vertex buffer to the pipeline (on its own)
-				void BindVertexBufferToPipeline(EngineAPI::Graphics::GraphicsDevice* device, 
-					UINT stride, UINT offset = 0);
+				void BindVertexBufferToPipeline(EngineAPI::Graphics::GraphicsDevice* device, UINT offset = 0);
+
+			protected: 
+				//Size of each individual vertex (stride) && number of elements
+				//stored in this buffer
+				uint32_t bufferElementSize;
+				uint32_t bufferElementCount;
 			};
 		};
 	};

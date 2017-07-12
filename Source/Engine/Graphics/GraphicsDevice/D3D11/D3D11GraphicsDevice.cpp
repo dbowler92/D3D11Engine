@@ -76,11 +76,10 @@ void D3D11GraphicsDevice::IASetTopology(PrimitiveTopology topology)
 	GetD3D11ImmediateContext()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)topology);
 }
 
-void D3D11GraphicsDevice::IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb,
-	UINT stride, UINT offset)
+void D3D11GraphicsDevice::IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset)
 {
 	if (vb)
-		vb->BindVertexBufferToPipeline((EngineAPI::Graphics::GraphicsDevice*)this, stride, offset);
+		vb->BindVertexBufferToPipeline((EngineAPI::Graphics::GraphicsDevice*)this, offset);
 }
 
 /*
@@ -123,4 +122,9 @@ void D3D11GraphicsDevice::PSBindShader(EngineAPI::Graphics::PixelShader* ps)
 void D3D11GraphicsDevice::Draw(UINT count, UINT startIndex)
 {
 	GetD3D11ImmediateContext()->Draw(count, startIndex);
+}
+
+void D3D11GraphicsDevice::DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation)
+{
+	GetD3D11ImmediateContext()->DrawIndexed(indexCount, startIndexLocation, baseVertexLocation);
 }

@@ -12,7 +12,8 @@ void D3D11VertexBuffer::Shutdown()
 }
 
 bool D3D11VertexBuffer::InitVertexBuffer(EngineAPI::Graphics::GraphicsDevice* device,
-	uint32_t bufferSizeBytes, void* initialData,
+	uint32_t bufferElementSize, uint32_t bufferElementCount,
+	void* initialData,
 	ResourceUsage usage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBinding,
 	std::string debugName)
 {
@@ -41,11 +42,18 @@ bool D3D11VertexBuffer::InitVertexBuffer(EngineAPI::Graphics::GraphicsDevice* de
 		//return false;
 	}
 	
+	//Cache element size (stride) & number of elements
+	this->bufferElementSize = bufferElementSize;
+	this->bufferElementCount = bufferElementCount;
+
 	//Calculate the usage flag and cpu access flag in D3D11 world
 	D3D11_USAGE d3d11Usage = D3D11_USAGE_DEFAULT;
 	UINT d3d11CpuAccess = NULL;
 	assert(EngineAPI::Statics::D3D11ResourceStatics::CalculateD3D11UsageFlags(usage, cpuAccess,
 		d3d11Usage, d3d11CpuAccess));
+
+	//Calculate buffer size in bytes
+	UINT bufferSizeBytes = bufferElementSize * bufferElementCount;
 
 	//Fill buffer desc. 
 	bufferDesc.ByteWidth = bufferSizeBytes;
@@ -67,8 +75,7 @@ bool D3D11VertexBuffer::InitVertexBuffer(EngineAPI::Graphics::GraphicsDevice* de
 	return true;
 }
 
-void D3D11VertexBuffer::BindVertexBufferToPipeline(EngineAPI::Graphics::GraphicsDevice* device, 
-	UINT stride, UINT offset)
+void D3D11VertexBuffer::BindVertexBufferToPipeline(EngineAPI::Graphics::GraphicsDevice* device, UINT offset)
 {
-	device->GetD3D11ImmediateContext()->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
+	device->GetD3D11ImmediateContext()->IASetVertexBuffers(0, 1, &buffer, &bufferElementSize, &offset);
 }

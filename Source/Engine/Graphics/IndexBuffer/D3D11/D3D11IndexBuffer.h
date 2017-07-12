@@ -33,6 +33,13 @@ namespace EngineAPI
 				//Shutsdown the IB and super classes
 				virtual void Shutdown() override;
 
+				//Getters
+				inline uint32_t GetIndexCount() { return indexCount; };
+				inline IndexBufferFormat GetIndexBufferFormat() { return indexBufferFormat; };
+				inline uint8_t  CalculateIndexBufferElementBitsSize() { return (indexBufferFormat == INDEX_BUFFER_FORMAT_UINT16) ? 16 : 32; };
+				inline uint8_t  CalculateIndexBufferElementBytesSize() { return (indexBufferFormat == INDEX_BUFFER_FORMAT_UINT16) ? 2 : 4; };
+				inline uint32_t CalculateIndexBufferSizeBytes() { return (CalculateIndexBufferElementBytesSize() * GetIndexCount()); };
+
 			public:
 				//Bind this index buffer to the pipeline
 				void BindIndexBufferToPipeline(EngineAPI::Graphics::GraphicsDevice* device, 

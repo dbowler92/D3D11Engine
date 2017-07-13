@@ -331,10 +331,15 @@ bool TestScene::OnSceneUpdate(float dt)
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
 	MappedResourceData mrd;
-	if (device->MapBufferResource(&constantBuffer, 0, RESOURCE_MAP_WRITE_DISCARD, &mrd))
-		memcpy(mrd.MappedData, (void*)&wvp4x4, constantBuffer.GetConstantBufferSizeBytes());
-	device->UnmapBufferResource(&constantBuffer);
+	//if (device->MapBufferResource(&constantBuffer, 0, RESOURCE_MAP_WRITE_DISCARD, &mrd))
+	//	memcpy(mrd.MappedData, (void*)&wvp4x4, constantBuffer.GetConstantBufferSizeBytes());
+	//device->UnmapBufferResource(&constantBuffer);
 
+	bool didMap = constantBuffer.MapResource(device, 0, RESOURCE_MAP_WRITE_DISCARD, &mrd);
+	if (didMap)
+		memcpy(mrd.MappedData, (void*)&wvp4x4, constantBuffer.GetConstantBufferSizeBytes());
+	constantBuffer.UnmapResource(device, 0);
+	
 	//Done
 	return true;
 }

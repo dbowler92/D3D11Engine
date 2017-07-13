@@ -172,7 +172,7 @@ void D3D11GraphicsDevice::DrawIndexed(UINT indexCount, UINT startIndexLocation, 
 //Mapping
 //
 
-bool D3D11GraphicsDevice::MapBufferResource(EngineAPI::Graphics::BufferResource* resource, 
+bool D3D11GraphicsDevice::MapBufferResource(EngineAPI::Graphics::BufferResource* resource,
 	UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut)
 {
 	assert(resource);

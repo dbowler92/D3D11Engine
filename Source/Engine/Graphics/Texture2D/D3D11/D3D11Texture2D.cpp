@@ -13,7 +13,7 @@ void D3D11Texture2D::Shutdown()
 }
 
 bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
-	bool doInitWitInitialData,
+	bool doInitWitInitialData, ResourceType resourceType,
 	ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
 	std::string debugName)
 {
@@ -42,7 +42,7 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	SetDebugName(debugName);
 
 	//Init common resource with API agnostic usage data
-	CommonResource::InitCommonResourceUsageData(resourceUsage, cpuAccess, resourceBindingFlag);
+	CommonResource::InitCommonResourceUsageData(resourceType, resourceUsage, cpuAccess, resourceBindingFlag);
 
 	//Done
 	return true;
@@ -56,4 +56,52 @@ void D3D11Texture2D::SetDebugName(std::string s)
 	//Set resource debug name
 	if (texture2DHandle)
 		texture2DHandle->SetPrivateData(WKPDID_D3DDebugObjectName, s.size(), s.c_str());
+}
+
+bool D3D11Texture2D::MapResource(EngineAPI::Graphics::GraphicsDevice* device,
+	UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut)
+{
+	//Verify if we can map this resource?
+	if (!CanPerformMapOperation(mapMode))
+		return false;
+
+	ID3D11DeviceContext* context = device->GetD3D11ImmediateContext();
+
+	//Init output
+	*mappedResourceOut = {};
+
+	//From api agnostic to D3D11:
+	D3D11_MAP mode = (D3D11_MAP)mapMode;
+	D3D11_MAP_FLAG mapFlag = (D3D11_MAP_FLAG)0; //TODO
+
+	//Map the buffer
+	D3D11_MAPPED_SUBRESOURCE mappedRes = {};
+	HR(context->Map(texture2DHandle, subresourceIndex, mode, mapFlag, &mappedRes));
+	if (mappedRes.pData == nullptr)
+		return false;
+
+	//Return data
+	mappedResourceOut->MappedData = mappedRes.pData;
+	mappedResourceOut->RowPitch = mappedRes.RowPitch;
+	mappedResourceOut->DepthPitch = mappedRes.DepthPitch;
+
+	//Texture is now mapped
+	isResourceCurrentlyMapped = true;
+
+	//Done
+	return true;
+}
+
+void D3D11Texture2D::UnmapResource(EngineAPI::Graphics::GraphicsDevice* device, 
+	UINT subresourceIndex)
+{
+	//Verify if we can unmap
+	if (isResourceCurrentlyMapped)
+	{
+		//Unmap texture
+		device->GetD3D11ImmediateContext()->Unmap(texture2DHandle, subresourceIndex);
+
+		//Update internal is mapped flag 
+		isResourceCurrentlyMapped = false;
+	}
 }

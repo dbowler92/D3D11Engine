@@ -29,8 +29,10 @@ namespace EngineAPI
 				virtual void SetDebugName(std::string s) override;
 
 				//Override the map and unmap resource functions
-				virtual void MapResource() override;
-				virtual void UnmapResource() override;
+				virtual bool MapResource(EngineAPI::Graphics::GraphicsDevice* device,
+					UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut) override;
+				virtual void UnmapResource(EngineAPI::Graphics::GraphicsDevice* device, 
+					UINT subresourceIndex) override;
 
 			public:
 				//Gets the buffer object
@@ -48,7 +50,7 @@ namespace EngineAPI
 			protected:
 				//Inits the ID3D11Buffer
 				bool InitBuffer(EngineAPI::Graphics::GraphicsDevice* device, bool doInitWitInitialData,
-					ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
+					ResourceType resourceType, ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
 					std::string debugName);
 			};
 		};

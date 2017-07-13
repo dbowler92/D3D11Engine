@@ -12,6 +12,18 @@
 
 #include "../Config/GraphicsConfig.h"
 
+enum ResourceType
+{
+	RESOURCE_TYPE_UNDEFINED = 0,
+
+	RESOURCE_TYPE_VERTEX_BUFFER,
+	RESOURCE_TYPE_INDEX_BUFFER,
+	RESOURCE_TYPE_CONSTANT_BUFFER,
+	
+	RESOURCE_TYPE_DEPTH_STENCIL_TEXTURE2D,
+	RESOURCE_TYPE_SAMPLER_2D,
+};
+
 //Rendering/primitive topology
 enum PrimitiveTopology 
 {

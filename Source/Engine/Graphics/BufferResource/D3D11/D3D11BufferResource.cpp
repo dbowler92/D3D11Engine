@@ -11,7 +11,7 @@ void D3D11BufferResource::Shutdown()
 }
 
 bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device, 
-	bool doInitWitInitialData, 
+	bool doInitWitInitialData, ResourceType resourceType,
 	ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
 	std::string debugName)
 {
@@ -41,7 +41,7 @@ bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device
 	SetDebugName(debugName);
 
 	//Init the common resource - stores api agnostic data on the buffer usage
-	CommonResource::InitCommonResourceUsageData(resourceUsage, cpuAccess, resourceBindingFlag);
+	CommonResource::InitCommonResourceUsageData(resourceType, resourceUsage, cpuAccess, resourceBindingFlag);
 
 	//Done
 	return true;
@@ -57,12 +57,50 @@ void D3D11BufferResource::SetDebugName(std::string s)
 		buffer->SetPrivateData(WKPDID_D3DDebugObjectName, s.size(), s.c_str());
 }
 
-void D3D11BufferResource::MapResource()
+bool D3D11BufferResource::MapResource(EngineAPI::Graphics::GraphicsDevice* device,
+	UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut)
 {
-	EngineAPI::Debug::DebugLog::PrintInfoMessage(__FUNCTION__);
+	//Verify if we can map this resource?
+	if (!CanPerformMapOperation(mapMode))
+		return false;
+
+	ID3D11DeviceContext* context = device->GetD3D11ImmediateContext();
+
+	//Init output
+	*mappedResourceOut = {};
+
+	//From api agnostic to D3D11:;
+	D3D11_MAP mode = (D3D11_MAP)mapMode;
+	D3D11_MAP_FLAG mapFlag = (D3D11_MAP_FLAG)0; //TODO
+
+	//Map the buffer
+	D3D11_MAPPED_SUBRESOURCE mappedRes = {};
+	HR(context->Map(buffer, subresourceIndex, mode, mapFlag, &mappedRes));
+	if (mappedRes.pData == nullptr)
+		return false;
+
+	//Return data
+	mappedResourceOut->MappedData = mappedRes.pData;
+	mappedResourceOut->RowPitch = mappedRes.RowPitch;
+	mappedResourceOut->DepthPitch = mappedRes.DepthPitch;
+
+	//Buffer is mapped
+	isResourceCurrentlyMapped = true;
+
+	//Done
+	return true;
 }
 
-void D3D11BufferResource::UnmapResource()
+void D3D11BufferResource::UnmapResource(EngineAPI::Graphics::GraphicsDevice* device, 
+	UINT subresourceIndex)
 {
+	//Verify if we can unmap
+	if (isResourceCurrentlyMapped)
+	{
+		//Unmap resource
+		device->GetD3D11ImmediateContext()->Unmap(buffer, subresourceIndex);
 
+		//Update internal flag. 
+		isResourceCurrentlyMapped = false;
+	}
 }

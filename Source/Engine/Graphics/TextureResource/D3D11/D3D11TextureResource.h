@@ -27,9 +27,11 @@ namespace EngineAPI
 				//Textures should override shutdown
 				virtual void Shutdown() override = 0;
 
-				//Texture mapping
-				virtual void MapResource() override;
-				virtual void UnmapResource() override;
+				//Map the textures for read/write operations - Should be 
+				//implemented by subclasses -> Eg: Texture2D, Texture3D etc
+				virtual bool MapResource(EngineAPI::Graphics::GraphicsDevice* device,
+					UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut) override = 0;
+				virtual void UnmapResource(EngineAPI::Graphics::GraphicsDevice* device, UINT subresourceIndex) override = 0;
 			};
 		};
 	};

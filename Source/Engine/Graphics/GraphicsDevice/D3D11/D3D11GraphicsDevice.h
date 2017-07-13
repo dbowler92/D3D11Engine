@@ -89,10 +89,10 @@ namespace EngineAPI
 				//Mapping
 				bool MapBufferResource(EngineAPI::Graphics::BufferResource* resource, 
 					UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut);
-				//MappedResourceData MapTextureResource(EngineAPI::Graphics::TextureResource* resource);
-
+				MappedResourceData MapTextureResource(EngineAPI::Graphics::TextureResource* resource);
+				
 				void UnmapBufferResource(EngineAPI::Graphics::BufferResource* resource);
-				//void UnmapTextureResource(EngineAPI::Graphics::TextureResource* resource);
+				void UnmapTextureResource(EngineAPI::Graphics::TextureResource* resource);
 
 			protected:
 				//D3D11 resources

@@ -83,7 +83,7 @@ bool D3D11DepthTexture2D::InitDepthTexture2D(EngineAPI::Graphics::GraphicsDevice
 	ResourceBindFlag resourceBindingFlag = (ResourceBindFlag)textureDesc.BindFlags;
 
 	//Init the underlying texture - no initial data
-	if (!InitTexture2D(device, false, resourceUsage, cpuAccess, resourceBindingFlag, debugName))
+	if (!InitTexture2D(device, false, RESOURCE_TYPE_DEPTH_STENCIL_TEXTURE2D, resourceUsage, cpuAccess, resourceBindingFlag, debugName))
 		return false;
 
 	//Done

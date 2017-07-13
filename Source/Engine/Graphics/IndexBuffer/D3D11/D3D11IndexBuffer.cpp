@@ -71,7 +71,7 @@ bool D3D11IndexBuffer::InitIndexBuffer(EngineAPI::Graphics::GraphicsDevice* devi
 	bool doesInitWithInitialData = (indexData != nullptr) ? true : false;
 
 	//Init the buffer
-	if (!InitBuffer(device, doesInitWithInitialData, usage, cpuAccess, resourceBinding, debugName))
+	if (!InitBuffer(device, doesInitWithInitialData, RESOURCE_TYPE_INDEX_BUFFER, usage, cpuAccess, resourceBinding, debugName))
 		return false;
 
 	//Done

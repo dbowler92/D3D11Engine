@@ -30,6 +30,13 @@ namespace EngineAPI
 				//Override the SetDebugName function() -> Set the debug name
 				//of the D3D11 resource
 				void SetDebugName(std::string s) override;
+
+				//Mapping resource
+				virtual bool MapResource(EngineAPI::Graphics::GraphicsDevice* device,
+					UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut) override;
+				virtual void UnmapResource(EngineAPI::Graphics::GraphicsDevice* device, 
+					UINT subresourceIndex) override;
+			
 			public:
 				//Getters 
 				ID3D11Texture2D* GetD3D11Texture2DHandle() { return texture2DHandle ;};
@@ -50,7 +57,7 @@ namespace EngineAPI
 			protected:
 				//Inits the underlying texture object
 				bool InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
-					bool doInitWitInitialData,
+					bool doInitWitInitialData, ResourceType resourceType,
 					ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
 					std::string debugName = "");
 			};

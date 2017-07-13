@@ -8,6 +8,7 @@
 #pragma once
 
 //Parent class
+#include "../../Graphics/BaseResource/BaseResource.h"
 #include "../../Core/CoreObject/CoreObject.h"
 
 //Graphics includes - inc D3D11
@@ -25,7 +26,7 @@ namespace EngineAPI
 	{
 		namespace Platform
 		{
-			class D3D11CommonResource : public EngineAPI::Core::CoreObject
+			class D3D11CommonResource : public EngineAPI::Graphics::BaseResource
 			{
 			public:
 				D3D11CommonResource() {};

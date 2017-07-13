@@ -30,6 +30,7 @@
     <ClCompile Include="..\Gameplay\GameObject\GameObject.cpp" />
     <ClCompile Include="..\Gameplay\SceneManager\SceneManager.cpp" />
     <ClCompile Include="..\Gameplay\Scene\Scene.cpp" />
+    <ClCompile Include="..\Graphics\BaseResource\BaseResource.cpp" />
     <ClCompile Include="..\Graphics\BlendState\D3D11\D3D11BlendState.cpp" />
     <ClCompile Include="..\Graphics\BufferResource\D3D11\D3D11BufferResource.cpp" />
     <ClCompile Include="..\Graphics\CommonResource\CommonResource.cpp" />
@@ -77,6 +78,7 @@
     <ClInclude Include="..\Gameplay\SceneManager\SceneManager.h" />
     <ClInclude Include="..\Gameplay\Scene\Scene.h" />
     <ClInclude Include="..\Globals\GraphicsGlobals.h" />
+    <ClInclude Include="..\Graphics\BaseResource\BaseResource.h" />
     <ClInclude Include="..\Graphics\BlendState\BlendState.h" />
     <ClInclude Include="..\Graphics\BlendState\D3D11\D3D11BlendState.h" />
     <ClInclude Include="..\Graphics\BufferResource\BufferResource.h" />

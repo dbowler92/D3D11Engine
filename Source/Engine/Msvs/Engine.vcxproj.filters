@@ -241,6 +241,9 @@
     <Filter Include="Src\Core\CoreSubystem">
       <UniqueIdentifier>{9c086f43-f908-486e-b16c-d4af6a2a83ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\BaseResource">
+      <UniqueIdentifier>{fbede370-14b7-435d-b1ff-e11ef9e91c31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -362,6 +365,9 @@
     </ClCompile>
     <ClCompile Include="..\Core\CoreSubsystem\CoreSubsystem.cpp">
       <Filter>Src\Core\CoreSubystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\BaseResource\BaseResource.cpp">
+      <Filter>Src\Graphics\BaseResource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -577,6 +583,9 @@
     </ClInclude>
     <ClInclude Include="..\Core\CoreSubsystem\CoreSubsystem.h">
       <Filter>Src\Core\CoreSubystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\BaseResource\BaseResource.h">
+      <Filter>Src\Graphics\BaseResource</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

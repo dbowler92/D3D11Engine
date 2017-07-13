@@ -28,7 +28,9 @@ namespace EngineAPI
 			virtual void Shutdown() override = 0;
 
 			//Virtual mapping functions - implemented by BufferResource
-			//and TextureResource
+			//and each texture type (Texture2D, Texture3D etc. We could put this
+			//in TextureResource && ask that to cache a pointer to the ID3D11Resource
+			//that represents the texture...)
 			virtual bool MapResource(EngineAPI::Graphics::GraphicsDevice* device,
 				UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut) = 0;
 			virtual void UnmapResource(EngineAPI::Graphics::GraphicsDevice* device, 

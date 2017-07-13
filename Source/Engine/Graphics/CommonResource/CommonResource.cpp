@@ -59,7 +59,7 @@ bool CommonResource::CanPerformMapOperation(ResourceMappingMode mapMode)
 			ret = false;
 
 		//Must have read and write flags
-		if ( (resourceCPUAccessFlag & (RESOURCE_CPU_ACCESS_READ_BIT | RESOURCE_CPU_ACCESS_WRITE_BIT) == false) )
+		if ( (resourceCPUAccessFlag & (RESOURCE_CPU_ACCESS_READ_BIT | RESOURCE_CPU_ACCESS_WRITE_BIT)) == false )
 			ret = false;
 	}
 
@@ -107,36 +107,3 @@ bool CommonResource::CanPerformMapOperation(ResourceMappingMode mapMode)
 	//Done
 	return ret;
 }
-
-
-/*
-
-//If default || immutable, we can't map
-if (resourceUsage == RESOURCE_USAGE_DEFAULT || resourceUsage == RESOURCE_USAGE_IMMUTABLE)
-ret = false;
-
-//Dynamic resources can be mapped for write only
-else if (resourceUsage == RESOURCE_USAGE_DYNAMIC)
-{
-//No reading!
-if (mapMode == RESOURCE_MAP_READ || mapMode == RESOURCE_MAP_READ_WRITE)
-{
-ret = false;
-}
-else if (mapMode == RESOURCE_MAP_WRITE_NO_OVERWRITE)
-{
-//Only for vertex and index buffers with CPU write access.
-if (resourceType != RESOURCE_TYPE_VERTEX_BUFFER && resourceType != RESOURCE_TYPE_INDEX_BUFFER)
-ret = false;
-if ((resourceCPUAccessFlag & RESOURCE_CPU_ACCESS_WRITE_BIT) == false)
-ret = false;
-}
-//Resource created without CPU write bit set -> Likely a semantic error
-//of some form.
-else if ((resourceCPUAccessFlag & RESOURCE_CPU_ACCESS_WRITE_BIT) == false)
-{
-ret = false;
-}
-}
-
-*/

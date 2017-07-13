@@ -26,16 +26,13 @@ bool D3D11PixelShader::InitCompiledPixelShaderFromFile(EngineAPI::Graphics::Grap
 		ReleaseCOM(pixelShader);
 	}
 
-	//Store debug name
-	SetDebugName(debugName);
-
 	//Load shader byte code from file
 	if (!ReadCompiledShaderFile(compiledShaderFile))
 	{
 		//File read failed - cleanup and print error to console
 		CleanupBytecodeBuffer();
 
-		std::string o = std::string(__FUNCTION__) + " Error: Could not read file: " + compiledShaderFile + ". Shader Debug Name: " + GetDebugName();
+		std::string o = std::string(__FUNCTION__) + " Error: Could not read file: " + compiledShaderFile + ". Shader Debug Name: " + debugName;
 		EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
 		return false;
 	}
@@ -47,7 +44,7 @@ bool D3D11PixelShader::InitCompiledPixelShaderFromFile(EngineAPI::Graphics::Grap
 	ID3D11ClassLinkage* linkage = nullptr;
 
 	//Print message saying we are creating a pixel shader
-	std::string o = std::string(__FUNCTION__) + ": " + "Creating Pixel Shader: " + GetDebugName();
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating Pixel Shader: " + debugName;
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create shader
@@ -55,8 +52,12 @@ bool D3D11PixelShader::InitCompiledPixelShaderFromFile(EngineAPI::Graphics::Grap
 	if (pixelShader == nullptr)
 		return false;
 
+	//Cache a reference to the ID3D11DeviceChild pointer - BEFORE setting the D3D11
+	//resource debug name
+	CacheD3D11DeviceChildInterface(pixelShader);
+
 	//Debug name
-	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(pixelShader, debugName);
+	SetDebugName(debugName);
 
 	//
 	//Done with the PS bytecode (We could extract some info such as inputs here???)

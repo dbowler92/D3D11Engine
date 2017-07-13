@@ -11,7 +11,9 @@ void D3D11BufferResource::Shutdown()
 }
 
 bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device, 
-	bool doInitWitInitialData, std::string debugName)
+	bool doInitWitInitialData, 
+	ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
+	std::string debugName)
 {
 	//If old buffer, destroy it before recreating
 	if (buffer)
@@ -21,11 +23,8 @@ bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device
 		ReleaseCOM(buffer);
 	}
 
-	//Store debug name
-	SetDebugName(debugName);
-
 	//Print message saying we are creating a buffer
-	std::string o = std::string(__FUNCTION__) + ": " + "Creating Buffer: " + GetDebugName();
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating Buffer: " + debugName;
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Initial data?
@@ -39,10 +38,23 @@ bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device
 		return false;
 
 	//Debug name
-	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(buffer, debugName);
+	SetDebugName(debugName);
+
+	//Init the common resource - stores api agnostic data on the buffer usage
+	CommonResource::InitCommonResourceUsageData(resourceUsage, cpuAccess, resourceBindingFlag);
 
 	//Done
 	return true;
+}
+
+void D3D11BufferResource::SetDebugName(std::string s)
+{
+	//Set engine debug name
+	__super::SetDebugName(s);
+
+	//Set resource debug name
+	if (buffer)
+		buffer->SetPrivateData(WKPDID_D3DDebugObjectName, s.size(), s.c_str());
 }
 
 void D3D11BufferResource::MapResource()

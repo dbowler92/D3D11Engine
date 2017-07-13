@@ -34,6 +34,10 @@ namespace EngineAPI
 				//Shutsdown the base shader resource. 
 				virtual void Shutdown() override = 0;
 
+				//Override the SetDebugName() -> We will also set the
+				//debug name of the underlying ID3D11DeviceChild*
+				virtual void SetDebugName(std::string s) override;
+
 			protected:
 				//Parses a shader file in to a buffer
 				bool ReadCompiledShaderFile(const char* shaderFile);
@@ -45,6 +49,15 @@ namespace EngineAPI
 				//it doesnt exist
 				char* GetShaderBytecodeBuffer() { return shaderBytecodeBuffer; };
 				SIZE_T GetShaderBytecodeBufferSize() { return shaderBytecodeSize; };
+
+			protected:
+				//D3D11 Interface for each shader view - make sure to set this
+				//in the subclasses by calling D3D11ViewResource::CacheD3D11DeviceChildInterface();
+				ID3D11DeviceChild* baseShaderInterface = nullptr;
+
+			protected:
+				//Setsup the internal baseShaderInterface
+				void CacheD3D11DeviceChildInterface(ID3D11DeviceChild* shader) { baseShaderInterface = shader; };
 
 			private:
 				//Parsed shader. 

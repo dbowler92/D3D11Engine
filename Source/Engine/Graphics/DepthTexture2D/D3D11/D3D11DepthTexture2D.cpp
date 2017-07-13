@@ -77,8 +77,13 @@ bool D3D11DepthTexture2D::InitDepthTexture2D(EngineAPI::Graphics::GraphicsDevice
 	textureDesc.CPUAccessFlags = NULL; //No CPU access for depth textures
 	textureDesc.MiscFlags = NULL;   
 
+	//API agnostic usage flags
+	ResourceUsage resourceUsage = (ResourceUsage)textureDesc.Usage;
+	ResourceCPUAccessFlag cpuAccess = (ResourceCPUAccessFlag)textureDesc.CPUAccessFlags;
+	ResourceBindFlag resourceBindingFlag = (ResourceBindFlag)textureDesc.BindFlags;
+
 	//Init the underlying texture - no initial data
-	if (!InitTexture2D(device, false, debugName))
+	if (!InitTexture2D(device, false, resourceUsage, cpuAccess, resourceBindingFlag, debugName))
 		return false;
 
 	//Done

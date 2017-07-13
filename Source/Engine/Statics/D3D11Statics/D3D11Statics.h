@@ -25,8 +25,14 @@ namespace EngineAPI
 			static bool CalculateD3D11UsageFlags(ResourceUsage usage, ResourceCPUAccessFlag cpuAccess, 
 				D3D11_USAGE& d3d11UsageOut, UINT& d3d11CPUAccessFlagOut);
 
-			//Sets the debug name of an ID3D11Resource
+			//Sets the internal/private D3D11 debug name for a given resource - this can be inspected
+			//in NSight for example
+			//
+			//NOTE: This is somewhat depreciated => Naming some things like the ID3D11InputLayout isn't
+			//of use - its just useful for shaders, buffers, textures, views. However, I'll leave this in here
+			//just in case I'm missing something in NSight!
 			static void SetD3D11ResourceDebugName(ID3D11DeviceChild* child, std::string name);
+			static void SetIDXGIResourceDebugName(IDXGIDeviceSubObject* subobject, std::string name);
 		};
 	};
 };

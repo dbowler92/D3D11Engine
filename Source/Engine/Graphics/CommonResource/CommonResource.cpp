@@ -8,13 +8,10 @@ void CommonResource::Shutdown()
 	__super::Shutdown();
 }
 
-void CommonResource::InitCommonResource(ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag, std::string debugName)
+void CommonResource::InitCommonResourceUsageData(ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag)
 {
 	//Cache data
 	this->resourceUsage = resourceUsage;
 	this->resourceCPUAccessFlag = resourceCPUAccessFlag;
 	this->resourceBindingFlag = resourceBindingFlag;
-	
-	//TODO: Do something with name
-	SetDebugName(debugName);
 }

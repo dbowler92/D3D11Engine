@@ -55,8 +55,7 @@ bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDe
 		dsvDesc.Flags = D3D11_DSV_READ_ONLY_DEPTH;
 
 	//Create
-	SetDebugName(debugName);
-	std::string o = std::string(__FUNCTION__) + ": " + "Creating DepthStencilView: " + GetDebugName();
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating DepthStencilView: " + debugName;
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create DSV
@@ -64,8 +63,12 @@ bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDe
 	if (dsv == nullptr)
 		return false;
 
+	//Cache a reference to the ID3D11View pointer - BEFORE setting the D3D11
+	//resource debug name
+	CacheD3D11ViewInterface(dsv);
+
 	//Debug name
-	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(dsv, debugName);
+	SetDebugName(debugName);
 
 	//Done
 	return true;

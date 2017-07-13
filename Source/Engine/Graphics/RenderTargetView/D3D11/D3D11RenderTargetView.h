@@ -49,7 +49,7 @@ namespace EngineAPI
 							
 				//Inits the D3D11 RTV
 				bool InitRenderTargetView(EngineAPI::Graphics::GraphicsDevice* device,
-					std::string debugName = std::string(""));
+					std::string debugName = std::string("")); //TODO
 
 				//Shutdown the RTV
 				virtual void Shutdown() override;

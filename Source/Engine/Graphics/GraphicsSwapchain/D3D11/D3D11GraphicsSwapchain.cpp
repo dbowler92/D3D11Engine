@@ -149,6 +149,10 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainHandle(EngineAPI::Graphics::Graph
 	//Create swapchain
 	HR(dxgiFactory->CreateSwapChain(device->GetD3D11Device(), &sc, &swapchain));
 
+	//Debug name
+	if (swapchain)
+		EngineAPI::Statics::D3D11ResourceStatics::SetIDXGIResourceDebugName(swapchain, std::string("SwapchainObject"));
+
 	//Clean up afterourselves - ReleaseCOM is a macro found in D3dUtil.
 	ReleaseCOM(dxgiDevice);
 	ReleaseCOM(dgxiAdapter);
@@ -179,6 +183,10 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainBuffers(EngineAPI::Graphics::Grap
 	ID3D11Texture2D* backBuffer;
 	HR(swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer)));
 	
+	//Debug name of the backbuffer texture2D object
+	if (backBuffer)
+		EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(backBuffer, std::string("SwapchainBackbufferTexture2D"));
+
 	//Create the RTV via protected method in D3D11RenderTargetView class
 	assert(swapchainBackbufferRenderTargetView.InitRenderTargetViewDirectFromD3D11Texture2D(device, backBuffer, std::string("SwapchainBackbufferRenderTargetView")));
 	
@@ -205,7 +213,7 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainDepthBuffer(EngineAPI::Graphics::
 		if (!swpachainDepthTexture.InitDepthTexture2D(device, 
 			swapchainBuffersWidth, swapchainBuffersHeight, 
 			DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, msaaCount, true,
-			std::string("SwapchainDepthStencil")))
+			std::string("SwapchainDepthStencilTexture2D")))
 		{
 			EngineAPI::Debug::DebugLog::PrintErrorMessage("D3D11GraphicsSwapchain::InitD3D11SwapchainDepthBuffer() Error - Could not create depth texture");
 			return false;

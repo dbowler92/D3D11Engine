@@ -70,7 +70,7 @@ bool D3D11ConstantBuffer::InitConstantBuffer(EngineAPI::Graphics::GraphicsDevice
 	bool doesInitWithInitialData = (initialData != nullptr) ? true : false;
 
 	//Init the buffer
-	if (!InitBuffer(device, doesInitWithInitialData, debugName))
+	if (!InitBuffer(device, doesInitWithInitialData, usage, cpuAccess, resourceBinding, debugName))
 		return false;
 
 	//Done

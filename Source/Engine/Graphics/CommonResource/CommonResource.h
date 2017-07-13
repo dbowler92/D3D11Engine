@@ -39,8 +39,9 @@ namespace EngineAPI
 			ResourceBindFlag GetResourceBindingFlag() { return resourceBindingFlag; };
 
 		protected:
-			//Inits the common resource data
-			void InitCommonResource(ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag, std::string debugName);
+			//Inits the common resource data - Should be called by texture resource
+			//and buffer resource
+			void InitCommonResourceUsageData(ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag);
 		
 		private:
 			ResourceUsage resourceUsage;

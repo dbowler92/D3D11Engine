@@ -23,10 +23,13 @@ namespace EngineAPI
 			public:
 				D3D11Texture2D() {};
 				virtual ~D3D11Texture2D() = 0 {};
-
+				
 				//Shutsdown the underlying Texture2D object
 				virtual void Shutdown() override = 0;
 				 
+				//Override the SetDebugName function() -> Set the debug name
+				//of the D3D11 resource
+				void SetDebugName(std::string s) override;
 			public:
 				//Getters 
 				ID3D11Texture2D* GetD3D11Texture2DHandle() { return texture2DHandle ;};
@@ -46,7 +49,9 @@ namespace EngineAPI
 
 			protected:
 				//Inits the underlying texture object
-				bool InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, bool doInitWitInitialData,
+				bool InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
+					bool doInitWitInitialData,
+					ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
 					std::string debugName = "");
 			};
 		};

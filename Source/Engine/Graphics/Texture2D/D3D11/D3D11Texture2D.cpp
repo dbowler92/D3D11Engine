@@ -13,7 +13,9 @@ void D3D11Texture2D::Shutdown()
 }
 
 bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
-	bool doInitWitInitialData, std::string debugName)
+	bool doInitWitInitialData,
+	ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
+	std::string debugName)
 {
 	//Destroy old texture
 	if (texture2DHandle)
@@ -23,11 +25,8 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 		ReleaseCOM(texture2DHandle);
 	}
 
-	//Store debug name
-	SetDebugName(debugName);
-
 	//Print message saying we are creating a texture
-	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture: " + GetDebugName();
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture: " + debugName;
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Init texture with initial data?
@@ -40,8 +39,21 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 		return false;
 
 	//Debug name
-	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(texture2DHandle, debugName);
+	SetDebugName(debugName);
+
+	//Init common resource with API agnostic usage data
+	CommonResource::InitCommonResourceUsageData(resourceUsage, cpuAccess, resourceBindingFlag);
 
 	//Done
 	return true;
+}
+
+void D3D11Texture2D::SetDebugName(std::string s)
+{
+	//Set engine debug name
+	__super::SetDebugName(s);
+
+	//Set resource debug name
+	if (texture2DHandle)
+		texture2DHandle->SetPrivateData(WKPDID_D3DDebugObjectName, s.size(), s.c_str());
 }

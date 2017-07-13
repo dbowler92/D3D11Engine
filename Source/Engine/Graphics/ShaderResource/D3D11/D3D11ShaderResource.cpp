@@ -10,8 +10,22 @@ void D3D11ShaderResource::Shutdown()
 	//If we still have shader byte code buffer, delete it now
 	CleanupBytecodeBuffer();
 
+	//No longer need the reference to the baseShaderInterface
+	//ReleaseCOM(baseShaderInterface);
+	baseShaderInterface = nullptr;
+
 	//Shutdown core object
 	__super::Shutdown();
+}
+
+void D3D11ShaderResource::SetDebugName(std::string s)
+{
+	//CoreObject debug name
+	__super::SetDebugName(s);
+
+	//D3D11 Resource
+	if (baseShaderInterface)
+		baseShaderInterface->SetPrivateData(WKPDID_D3DDebugObjectName, s.size(), s.c_str());
 }
 
 bool D3D11ShaderResource::ReadCompiledShaderFile(const char* shaderFile)

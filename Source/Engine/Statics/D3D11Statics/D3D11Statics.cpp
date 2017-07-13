@@ -31,3 +31,9 @@ void D3D11ResourceStatics::SetD3D11ResourceDebugName(ID3D11DeviceChild* child, s
 	if (child)
 		child->SetPrivateData(WKPDID_D3DDebugObjectName, name.size(), name.c_str());
 }
+
+void D3D11ResourceStatics::SetIDXGIResourceDebugName(IDXGIDeviceSubObject* subobject, std::string name)
+{
+	if (subobject)
+		subobject->SetPrivateData(WKPDID_D3DDebugObjectName, name.size(), name.c_str());
+}

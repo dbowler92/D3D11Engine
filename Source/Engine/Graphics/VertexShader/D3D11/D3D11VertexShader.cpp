@@ -27,16 +27,13 @@ bool D3D11VertexShader::InitCompiledVertexShaderFromFile(EngineAPI::Graphics::Gr
 		ReleaseCOM(vertexShader);
 	}
 
-	//Store debug name
-	SetDebugName(debugName);
-
 	//Load shader byte code from file
 	if (!ReadCompiledShaderFile(compiledShaderFile))
 	{
 		//File read failed - cleanup and print error to console
 		CleanupBytecodeBuffer();
 
-		std::string o = std::string(__FUNCTION__) + " Error: Could not read file: " + compiledShaderFile + ". Shader Debug Name: " + GetDebugName();
+		std::string o = std::string(__FUNCTION__) + " Error: Could not read file: " + compiledShaderFile + ". Shader Debug Name: " + debugName;
 		EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
 		return false;
 	}
@@ -48,7 +45,7 @@ bool D3D11VertexShader::InitCompiledVertexShaderFromFile(EngineAPI::Graphics::Gr
 	ID3D11ClassLinkage* linkage = nullptr;
 
 	//Print message saying we are creating a vertex shader
-	std::string o = std::string(__FUNCTION__) + ": " + "Creating Vertex Shader: " + GetDebugName();
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating Vertex Shader: " + debugName;
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create shader
@@ -56,13 +53,17 @@ bool D3D11VertexShader::InitCompiledVertexShaderFromFile(EngineAPI::Graphics::Gr
 	if (vertexShader == nullptr)
 		return false;
 
+	//Cache a reference to the ID3D11DeviceChild pointer - BEFORE setting the D3D11
+	//resource debug name
+	CacheD3D11DeviceChildInterface(vertexShader);
+
 	//Debug name
-	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(vertexShader, debugName);
+	SetDebugName(debugName);
 
 	//Generate the input signature.
-	if (!inputLayout.InitVertexInputSignature(device, inputSignature, inputsCount, shaderByteCode, byteCodeLength, GetDebugName()))
+	if (!inputLayout.InitVertexInputSignature(device, inputSignature, inputsCount, shaderByteCode, byteCodeLength, debugName))
 	{
-		std::string o = std::string(__FUNCTION__) + ": " + "Failed to init the input layout/signature: " + GetDebugName();
+		std::string o = std::string(__FUNCTION__) + ": " + "Failed to init the input layout/signature for Vertex Shader: " + debugName;
 		EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
 		return false;
 	}

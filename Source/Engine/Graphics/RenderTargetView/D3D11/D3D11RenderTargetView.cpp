@@ -40,8 +40,7 @@ bool D3D11RenderTargetView::InitRenderTargetViewDirectFromD3D11Texture2D(EngineA
 	rtvDesc = {};
 
 	//Create
-	SetDebugName(debugName);
-	std::string o = std::string(__FUNCTION__) + ": " + "Creating RenderTargetView: " + GetDebugName();
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating RenderTargetView: " + debugName;
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create RTV
@@ -49,8 +48,12 @@ bool D3D11RenderTargetView::InitRenderTargetViewDirectFromD3D11Texture2D(EngineA
 	if (rtv == nullptr)
 		return false;
 
+	//Cache a reference to the ID3D11View pointer - BEFORE setting the D3D11
+	//resource debug name
+	CacheD3D11ViewInterface(rtv);
+
 	//Debug name
-	EngineAPI::Statics::D3D11ResourceStatics::SetD3D11ResourceDebugName(rtv, debugName);
+	SetDebugName(debugName);
 
 	//Done
 	return true;

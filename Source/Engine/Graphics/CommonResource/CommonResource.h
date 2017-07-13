@@ -24,6 +24,9 @@ namespace EngineAPI
 			CommonResource() {};
 			virtual ~CommonResource() = 0 {};
 
+			//Shutdown the common resource data
+			virtual void Shutdown() override = 0;
+
 			//Virtual mapping functions - implemented by BufferResource
 			//and TextureResource
 			virtual void MapResource() = 0;

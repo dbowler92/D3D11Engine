@@ -9,6 +9,9 @@ void D3D11ShaderResource::Shutdown()
 {
 	//If we still have shader byte code buffer, delete it now
 	CleanupBytecodeBuffer();
+
+	//Shutdown core object
+	__super::Shutdown();
 }
 
 bool D3D11ShaderResource::ReadCompiledShaderFile(const char* shaderFile)

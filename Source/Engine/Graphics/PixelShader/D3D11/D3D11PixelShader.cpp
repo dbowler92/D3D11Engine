@@ -4,6 +4,9 @@ using namespace EngineAPI::Graphics::Platform;
 
 void D3D11PixelShader::Shutdown()
 {
+	//If still around...
+	CleanupBytecodeBuffer();
+
 	//Delete PS
 	ReleaseCOM(pixelShader);
 

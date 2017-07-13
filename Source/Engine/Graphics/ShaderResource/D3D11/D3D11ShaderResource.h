@@ -32,7 +32,7 @@ namespace EngineAPI
 				virtual ~D3D11ShaderResource() = 0 {};
 
 				//Shutsdown the base shader resource. 
-				virtual void Shutdown() = 0;
+				virtual void Shutdown() override = 0;
 
 			protected:
 				//Parses a shader file in to a buffer

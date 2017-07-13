@@ -29,6 +29,10 @@ namespace EngineAPI
 			public:
 				D3D11ViewResource() {};
 				virtual ~D3D11ViewResource() = 0 {};
+
+				//Views should implement their own shutdown function - ensuring that
+				//they call __super::Shutdown() to shutdown the core object
+				virtual void Shutdown() override = 0;
 			};
 		};
 	};

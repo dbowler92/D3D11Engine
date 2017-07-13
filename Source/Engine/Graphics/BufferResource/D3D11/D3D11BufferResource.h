@@ -22,7 +22,7 @@ namespace EngineAPI
 				virtual ~D3D11BufferResource() = 0 {};
 
 				//Cleansup the buffer resource
-				virtual void Shutdown() = 0;
+				virtual void Shutdown() override = 0;
 
 				//Override the map and unmap resource functions
 				virtual void MapResource() override;
@@ -36,14 +36,14 @@ namespace EngineAPI
 			protected:
 				//Buffer description
 				D3D11_BUFFER_DESC bufferDesc = {};
+				D3D11_SUBRESOURCE_DATA bufferInitialData = {};
 
 				//Each buffer resource creates an ID3D11Buffer*
 				ID3D11Buffer* buffer = nullptr;
 
 			protected:
 				//Inits the ID3D11Buffer
-				bool InitBuffer(EngineAPI::Graphics::GraphicsDevice* device,
-					const D3D11_SUBRESOURCE_DATA* initialData,
+				bool InitBuffer(EngineAPI::Graphics::GraphicsDevice* device, bool doInitWitInitialData,
 					std::string debugName);
 			};
 		};

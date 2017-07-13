@@ -45,7 +45,7 @@ namespace EngineAPI
 					std::string debugName = std::string(""));
 
 				//Shutdown the DSV
-				void Shutdown();
+				virtual void Shutdown() override;
 
 			public:
 				//Clears the depth/stencil view/buffer

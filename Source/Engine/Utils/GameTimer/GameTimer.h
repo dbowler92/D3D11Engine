@@ -7,13 +7,13 @@
 #pragma once
 
 //Parent
-#include "../../Core/CoreObject/CoreObject.h"
+//#include "../../Core/CoreObject/CoreObject.h"
 
 namespace EngineAPI
 {
 	namespace Utils
 	{
-		class GameTimer : public EngineAPI::Core::CoreObject
+		class GameTimer /*: public EngineAPI::Core::CoreObject*/
 		{
 		public:
 			GameTimer();

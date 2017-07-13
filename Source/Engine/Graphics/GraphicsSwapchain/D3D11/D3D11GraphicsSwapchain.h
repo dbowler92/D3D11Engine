@@ -57,7 +57,7 @@ namespace EngineAPI
 
 				//Shutsdown the swapchain and resources we create inc the depth
 				//buffer if we created one.
-				void ShutdownD3D11Swapchain();
+				virtual void Shutdown() override;
 
 				//Called by graphics manager during resize event
 				bool OnResize(EngineAPI::Graphics::GraphicsDevice* device,

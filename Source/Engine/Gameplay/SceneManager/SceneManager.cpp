@@ -46,6 +46,9 @@ void SceneManager::ShutdownSubsystem()
 		it++;
 	}
 	scenes.clear();
+
+	//Super
+	__super::ShutdownSubsystem();
 }
 
 bool SceneManager::InitSubsystem()

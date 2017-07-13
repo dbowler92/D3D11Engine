@@ -2,8 +2,18 @@
 
 using namespace EngineAPI::Graphics::Platform;
 
+
+void D3D11Texture2D::Shutdown()
+{
+	//Release texture
+	ReleaseCOM(texture2DHandle);
+
+	//Shutdown up the chain
+	__super::Shutdown();
+}
+
 bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
-	D3D11_SUBRESOURCE_DATA* textureInitData, std::string debugName)
+	bool doInitWitInitialData, std::string debugName)
 {
 	//Destroy old texture
 	if (texture2DHandle)
@@ -20,8 +30,12 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture: " + GetDebugName();
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
-	//Create the texture object
-	HR(device->GetD3D11Device()->CreateTexture2D(&textureDesc, textureInitData, &texture2DHandle));
+	//Init texture with initial data?
+	D3D11_SUBRESOURCE_DATA* initialData = nullptr;
+	if (doInitWitInitialData)
+		initialData = &textureInitialData;
+
+	HR(device->GetD3D11Device()->CreateTexture2D(&textureDesc, initialData, &texture2DHandle));
 	if (texture2DHandle == nullptr)
 		return false;
 
@@ -30,10 +44,4 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 
 	//Done
 	return true;
-}
-
-void D3D11Texture2D::Shutdown()
-{
-	//Release texture
-	ReleaseCOM(texture2DHandle);
 }

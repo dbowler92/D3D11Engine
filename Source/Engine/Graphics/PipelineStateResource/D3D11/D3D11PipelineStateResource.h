@@ -31,7 +31,7 @@ namespace EngineAPI
 				virtual ~D3D11PipelineStateResource() = 0 {};
 
 				//Shutsdown the pipeline state
-				virtual void Shutdown() = 0;
+				virtual void Shutdown() override = 0;
 			};
 		};
 	};

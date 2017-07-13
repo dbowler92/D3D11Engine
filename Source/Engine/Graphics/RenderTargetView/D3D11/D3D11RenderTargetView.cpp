@@ -5,6 +5,14 @@
 
 using namespace EngineAPI::Graphics::Platform;
 
+void D3D11RenderTargetView::Shutdown()
+{
+	ReleaseCOM(rtv);
+
+	//Shutdown core object
+	__super::Shutdown();
+}
+
 bool D3D11RenderTargetView::InitRenderTargetView(EngineAPI::Graphics::GraphicsDevice* device,
 	std::string debugName)
 {
@@ -46,11 +54,6 @@ bool D3D11RenderTargetView::InitRenderTargetViewDirectFromD3D11Texture2D(EngineA
 
 	//Done
 	return true;
-}
-
-void D3D11RenderTargetView::Shutdown()
-{
-	ReleaseCOM(rtv);
 }
 
 void D3D11RenderTargetView::ClearRenderTargetView(EngineAPI::Graphics::GraphicsDevice* device, const float* col)

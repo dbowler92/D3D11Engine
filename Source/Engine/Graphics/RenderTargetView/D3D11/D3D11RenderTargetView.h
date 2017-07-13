@@ -52,7 +52,7 @@ namespace EngineAPI
 					std::string debugName = std::string(""));
 
 				//Shutdown the RTV
-				void Shutdown();
+				virtual void Shutdown() override;
 
 			public:
 				//Clears this RTV

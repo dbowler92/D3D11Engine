@@ -24,6 +24,7 @@
     <ClCompile Include="..\3rdParty\LodePNG\lodepng.cpp" />
     <ClCompile Include="..\Components\BaseComponent\BaseComponent.cpp" />
     <ClCompile Include="..\Core\CoreObject\CoreObject.cpp" />
+    <ClCompile Include="..\Core\CoreSubsystem\CoreSubsystem.cpp" />
     <ClCompile Include="..\Debug\Log\DebugLog.cpp" />
     <ClCompile Include="..\Debug\Rendering\DebugRendering.cpp" />
     <ClCompile Include="..\Gameplay\GameObject\GameObject.cpp" />
@@ -69,6 +70,7 @@
     <ClInclude Include="..\Config\GraphicsConfig.h" />
     <ClInclude Include="..\Config\Win32Config.h" />
     <ClInclude Include="..\Core\CoreObject\CoreObject.h" />
+    <ClInclude Include="..\Core\CoreSubsystem\CoreSubsystem.h" />
     <ClInclude Include="..\Debug\Log\DebugLog.h" />
     <ClInclude Include="..\Debug\Rendering\DebugRendering.h" />
     <ClInclude Include="..\Gameplay\GameObject\GameObject.h" />

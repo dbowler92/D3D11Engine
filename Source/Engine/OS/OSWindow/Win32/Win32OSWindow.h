@@ -25,11 +25,14 @@ namespace EngineAPI
 			{
 			public:
 				Win32OSWindow() {};
-				virtual ~Win32OSWindow() = 0 {};
+				virtual ~Win32OSWindow() = 0;
 
 				//Init functions
 				void SetWin32AppInstance(HINSTANCE handle) { appInstanceHandle = handle; };
 				void SetWin32AppMainWindowHandle(HWND handle) { appMainWindowHandle = handle; };
+
+				//Shutdown
+				void Shutdown() override;
 
 				//Setters & getters
 				void UpdateWindowWidth(unsigned w) { windowWidth = w; };

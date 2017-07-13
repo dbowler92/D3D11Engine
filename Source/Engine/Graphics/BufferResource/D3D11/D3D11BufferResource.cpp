@@ -5,11 +5,13 @@ using namespace EngineAPI::Graphics::Platform;
 void D3D11BufferResource::Shutdown()
 {
 	ReleaseCOM(buffer);
+
+	//Shutdown core object
+	__super::Shutdown();
 }
 
-bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device,
-	const D3D11_SUBRESOURCE_DATA* initialData,
-	std::string debugName)
+bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device, 
+	bool doInitWitInitialData, std::string debugName)
 {
 	//If old buffer, destroy it before recreating
 	if (buffer)
@@ -25,6 +27,11 @@ bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device
 	//Print message saying we are creating a buffer
 	std::string o = std::string(__FUNCTION__) + ": " + "Creating Buffer: " + GetDebugName();
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
+
+	//Initial data?
+	D3D11_SUBRESOURCE_DATA* initialData = nullptr;
+	if (doInitWitInitialData)
+		initialData = &bufferInitialData;
 
 	//Create the buffer
 	HR(device->GetD3D11Device()->CreateBuffer(&bufferDesc, initialData, &buffer));

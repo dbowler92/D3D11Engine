@@ -30,6 +30,9 @@ namespace EngineAPI
 			public:
 				D3D11CommonResource() {};
 				virtual ~D3D11CommonResource() = 0 {};
+
+				//Shutdown any common resource data
+				virtual void Shutdown() override = 0;
 			};
 		};
 	};

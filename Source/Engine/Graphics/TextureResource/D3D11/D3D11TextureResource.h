@@ -24,6 +24,9 @@ namespace EngineAPI
 				D3D11TextureResource() {};
 				virtual ~D3D11TextureResource() = 0 {};
 
+				//Textures should override shutdown
+				virtual void Shutdown() override = 0;
+
 				//Texture mapping
 				virtual void MapResource() override;
 				virtual void UnmapResource() override;

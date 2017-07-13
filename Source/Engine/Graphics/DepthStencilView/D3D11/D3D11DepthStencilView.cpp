@@ -4,6 +4,14 @@
 
 using namespace EngineAPI::Graphics::Platform;
 
+void D3D11DepthStencilView::Shutdown()
+{
+	ReleaseCOM(dsv);
+
+	//Shutdown core object
+	__super::Shutdown();
+}
+
 bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDevice* device,
 	EngineAPI::Graphics::DepthTexture2D* depthTextureResource,
 	bool isReadOnlyDSV,
@@ -61,11 +69,6 @@ bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDe
 
 	//Done
 	return true;
-}
-
-void D3D11DepthStencilView::Shutdown()
-{
-	ReleaseCOM(dsv);
 }
 
 bool D3D11DepthStencilView::ClearDepthStencil(EngineAPI::Graphics::GraphicsDevice* device,

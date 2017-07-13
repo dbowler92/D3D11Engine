@@ -238,6 +238,9 @@
     <Filter Include="Src\Graphics\ConstandBuffer\D3D11">
       <UniqueIdentifier>{becb89d8-12cc-4bd5-986c-18d8091d1b8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Core\CoreSubystem">
+      <UniqueIdentifier>{9c086f43-f908-486e-b16c-d4af6a2a83ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -356,6 +359,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\CommonResource\CommonResource.cpp">
       <Filter>Src\Graphics\CommonResource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Core\CoreSubsystem\CoreSubsystem.cpp">
+      <Filter>Src\Core\CoreSubystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -568,6 +574,9 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\ConstantBuffer\ConstantBuffer.h">
       <Filter>Src\Graphics\ConstandBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Core\CoreSubsystem\CoreSubsystem.h">
+      <Filter>Src\Core\CoreSubystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

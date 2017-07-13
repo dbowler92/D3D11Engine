@@ -2,6 +2,12 @@
 
 using namespace EngineAPI::Graphics::Platform;
 
+void D3D11DepthTexture2D::Shutdown()
+{
+	//Shutdown the texture
+	__super::Shutdown();
+}
+
 bool D3D11DepthTexture2D::InitDepthTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	uint32_t textureWidth, uint32_t textureHeight, 
 	DepthStencilTextureFormat textureFormat, uint32_t msaaSampleCount,
@@ -71,16 +77,10 @@ bool D3D11DepthTexture2D::InitDepthTexture2D(EngineAPI::Graphics::GraphicsDevice
 	textureDesc.CPUAccessFlags = NULL; //No CPU access for depth textures
 	textureDesc.MiscFlags = NULL;   
 
-	//Init the underlying texture -> No initial data
-	if (!InitTexture2D(device, nullptr, debugName))
+	//Init the underlying texture - no initial data
+	if (!InitTexture2D(device, false, debugName))
 		return false;
 
 	//Done
 	return true;
-}
-
-void D3D11DepthTexture2D::Shutdown()
-{
-	//Shutdown the texture
-	__super::Shutdown();
 }

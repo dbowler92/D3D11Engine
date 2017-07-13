@@ -7,7 +7,7 @@ using namespace EngineAPI::Graphics::Platform;
 
 void D3D11IndexBuffer::Shutdown()
 {
-	//Cleanup buffer
+	//Cleanup buffer && everything in the inheritance chain
 	__super::Shutdown();
 }
 
@@ -62,11 +62,16 @@ bool D3D11IndexBuffer::InitIndexBuffer(EngineAPI::Graphics::GraphicsDevice* devi
 	bufferDesc.BindFlags = resourceBinding; //Cast
 
 	//Initial data structure
-	D3D11_SUBRESOURCE_DATA initialDataDesc = {};
-	initialDataDesc.pSysMem = indexData;
+	bufferInitialData = {};
+	bufferInitialData.pSysMem = indexData;
+	bufferInitialData.SysMemPitch = 0;
+	bufferInitialData.SysMemSlicePitch = 0;
+
+	//Should use initial data?
+	bool doesInitWithInitialData = (indexData != nullptr) ? true : false;
 
 	//Init the buffer
-	if (!InitBuffer(device, &initialDataDesc, debugName))
+	if (!InitBuffer(device, doesInitWithInitialData, debugName))
 		return false;
 
 	//Done

@@ -7,7 +7,7 @@
 #pragma once
 
 //Parent
-#include "../../Core/CoreObject/CoreObject.h"
+#include "../../Core/CoreSubsystem/CoreSubsystem.h"
 
 //Container
 #include <list>
@@ -34,7 +34,7 @@ namespace EngineAPI
 {
 	namespace Gameplay
 	{
-		class SceneManager : public EngineAPI::Core::CoreObject
+		class SceneManager : public EngineAPI::Core::CoreSubsystem
 		{
 			//Application should be the only one able to 
 			//create and destroy the scene manager
@@ -67,13 +67,10 @@ namespace EngineAPI
 			//scene is null
 			std::string GetCurrentSceneTitle();
 
-		protected:
-			//Called after ShutdownSubsystem -> Cleans up memory
-			static void DestroyInstance();
-		
+		protected:		
 			//Init and shutdown
 			bool InitSubsystem();
-			void ShutdownSubsystem();
+			void ShutdownSubsystem() override;
 
 			//Events
 			bool OnResize(uint32_t newWidth, uint32_t newHeight);
@@ -89,6 +86,8 @@ namespace EngineAPI
 			SceneManager(SceneManager& other);
 			SceneManager& operator= (SceneManager& other);
 
+			//Called after ShutdownSubsystem -> Cleans up memory
+			static void DestroyInstance();
 		private:
 			static SceneManager* instance;
 

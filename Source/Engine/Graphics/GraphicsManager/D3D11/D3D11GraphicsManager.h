@@ -7,7 +7,7 @@
 #pragma once
 
 //Parent
-#include "../../Core/CoreObject/CoreObject.h"
+#include "../../Core/CoreSubsystem/CoreSubsystem.h"
 
 //Graphics includes - inc D3D11
 #include "../../Includes/GraphicsIncludes.h"
@@ -40,7 +40,7 @@ namespace EngineAPI
 	{
 		namespace Platform
 		{
-			class D3D11GraphicsManager : EngineAPI::Core::CoreObject
+			class D3D11GraphicsManager : EngineAPI::Core::CoreSubsystem
 			{
 				//Only application should be able to create/destroy this
 				//subsystem + pass events. 
@@ -58,7 +58,7 @@ namespace EngineAPI
 
 				//Inits && shutdown the subsystem
 				bool InitSubsystem(EngineAPI::OS::OSWindow* osWindow); //Contains the initial window size
-				void ShutdownSubsystem();
+				void ShutdownSubsystem() override;
 
 				//Called when the window is resized - Will
 				//need to resize render targets. 

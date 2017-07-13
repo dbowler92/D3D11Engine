@@ -7,7 +7,7 @@ using namespace EngineAPI::Graphics::Platform;
 
 void D3D11VertexBuffer::Shutdown()
 {
-	//Cleanup buffer
+	//Cleanup buffer && everything in the inheritance chain
 	__super::Shutdown();
 }
 
@@ -64,11 +64,16 @@ bool D3D11VertexBuffer::InitVertexBuffer(EngineAPI::Graphics::GraphicsDevice* de
 	bufferDesc.BindFlags = resourceBinding; //Cast
 
 	//Initial data structure
-	D3D11_SUBRESOURCE_DATA initialDataDesc = {};
-	initialDataDesc.pSysMem = initialData;
-	
+	bufferInitialData = {};
+	bufferInitialData.pSysMem = initialData;
+	bufferInitialData.SysMemPitch = 0;
+	bufferInitialData.SysMemSlicePitch = 0;
+
+	//Should use initial data?
+	bool doesInitWithInitialData = (initialData != nullptr) ? true : false;
+
 	//Init the buffer
-	if (!InitBuffer(device, &initialDataDesc, debugName))
+	if (!InitBuffer(device, doesInitWithInitialData, debugName))
 		return false;
 
 	//Done

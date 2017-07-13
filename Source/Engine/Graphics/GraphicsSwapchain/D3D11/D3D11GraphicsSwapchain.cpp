@@ -49,7 +49,7 @@ bool D3D11GraphicsSwapchain::InitD3D11Swapchain(EngineAPI::Graphics::GraphicsDev
 	return true;
 }
 
-void D3D11GraphicsSwapchain::ShutdownD3D11Swapchain()
+void D3D11GraphicsSwapchain::Shutdown()
 {
 	if (doesManageADepthBuffer)
 	{
@@ -60,6 +60,9 @@ void D3D11GraphicsSwapchain::ShutdownD3D11Swapchain()
 
 	swapchainBackbufferRenderTargetView.Shutdown();
 	ReleaseCOM(swapchain);
+
+	//Super
+	__super::Shutdown();
 }
 
 bool D3D11GraphicsSwapchain::OnResize(EngineAPI::Graphics::GraphicsDevice* device,

@@ -24,10 +24,13 @@ void D3D11GraphicsManager::ShutdownSubsystem()
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(__FUNCTION__);
 
 	//Destroy system swapchain
-	swapchain.ShutdownD3D11Swapchain();
+	swapchain.Shutdown();
 
 	//Lastly, shutdown device and context
-	device.ShutdownD3D11DeviceAndContext();
+	device.Shutdown();
+
+	//Super
+	__super::ShutdownSubsystem();
 }
 
 bool D3D11GraphicsManager::OnResize(EngineAPI::OS::OSWindow* osWindow)

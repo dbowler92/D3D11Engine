@@ -53,7 +53,7 @@ namespace EngineAPI
 
 				//Inits && shutdown the D3D11 device
 				bool InitD3D11DeviceAndImmediateContext(EngineAPI::OS::OSWindow* osWindow); //TODO: Allow user to create deferred context + separate device and context creation + classes
-				void ShutdownD3D11DeviceAndContext();
+				virtual void Shutdown() override;
 
 				//Returns the device and context
 				ID3D11Device* GetD3D11Device() { return d3dDevice; };

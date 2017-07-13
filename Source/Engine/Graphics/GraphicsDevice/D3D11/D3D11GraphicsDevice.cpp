@@ -66,10 +66,13 @@ bool D3D11GraphicsDevice::InitD3D11DeviceAndImmediateContext(EngineAPI::OS::OSWi
 	return true;
 }
 
-void D3D11GraphicsDevice::ShutdownD3D11DeviceAndContext()
+void D3D11GraphicsDevice::Shutdown()
 {
 	ReleaseCOM(d3dImmediateContext);
 	ReleaseCOM(d3dDevice);
+
+	//Shutdown core object
+	__super::Shutdown();
 }
 
 //

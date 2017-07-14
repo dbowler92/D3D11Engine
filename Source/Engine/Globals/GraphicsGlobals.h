@@ -113,6 +113,7 @@ enum ResourceBindBit
 //hacked in some clever way)
 enum ResourceFormat
 {
+	//D3D11 resource formats
 	RESOURCE_FORMAT_UNKNOWN = 0,
 	RESOURCE_FORMAT_R32G32B32A32_TYPELESS = 1,
 	RESOURCE_FORMAT_R32G32B32A32_FLOAT = 2,

@@ -276,7 +276,10 @@ void TestScene::TestRenderTarget()
 		std::string("TestRenderTexture2D")));
 
 	//View
-	assert(renderTgtView.InitRenderTargetView(device, &renderTgt, std::string("TestRenderTexture2D_RTV")));
+	assert(renderTgtView.InitRenderTargetView(device, &renderTgt, 
+		//true, RESOURCE_FORMAT_UNKNOWN,
+		false, RESOURCE_FORMAT_R8G8B8A8_UNORM,
+		std::string("TestRenderTexture2D_RTV")));
 }
 
 bool TestScene::OnSceneBecomeDeactive()

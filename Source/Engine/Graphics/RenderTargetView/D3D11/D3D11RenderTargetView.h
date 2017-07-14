@@ -50,6 +50,8 @@ namespace EngineAPI
 				//Inits the D3D11 RTV
 				bool InitRenderTargetView(EngineAPI::Graphics::GraphicsDevice* device,
 					EngineAPI::Graphics::RenderTexture2D* renderTexture,
+					bool doUseUnderlyingResourceFormatForView = true,
+					ResourceFormat renderTargetTextureViewFormat = RESOURCE_FORMAT_UNKNOWN,
 					std::string debugName = std::string("")); //TODO
 
 				//Shutdown the RTV

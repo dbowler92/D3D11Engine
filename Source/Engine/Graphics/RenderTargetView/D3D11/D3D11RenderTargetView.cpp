@@ -18,11 +18,56 @@ void D3D11RenderTargetView::Shutdown()
 
 bool D3D11RenderTargetView::InitRenderTargetView(EngineAPI::Graphics::GraphicsDevice* device,
 	EngineAPI::Graphics::RenderTexture2D* renderTexture,
+	bool doUseUnderlyingResourceFormatForView,
+	ResourceFormat renderTargetTextureViewFormat,
 	std::string debugName)
 {
 	assert(renderTexture != nullptr);
+	
+	//Release old data
+	if (rtv)
+	{
+		std::string o = std::string(__FUNCTION__) + ": " + "Releasing old RenderTargetView: " + GetDebugName();
+		EngineAPI::Debug::DebugLog::PrintWarningMessage(o.c_str());
+		ReleaseCOM(rtv);
+	}
 
+	//Fill RTV description
+	rtvDesc = {};
 
+	//Format - important if the resource was created typeless
+	if (doUseUnderlyingResourceFormatForView)
+		rtvDesc.Format = renderTexture->GetD3D11Texture2DResourceFormat();
+	else
+		rtvDesc.Format = (DXGI_FORMAT)renderTargetTextureViewFormat;
+
+	//Fillout rest of the description structure. 
+	if (renderTexture->IsMSAATexture())
+	{
+		rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DMS;
+		rtvDesc.Texture2DMS = {};
+	}
+	else
+	{
+		rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+		rtvDesc.Texture2D.MipSlice = 0;
+	}
+
+	//Print creation message
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating RenderTargetView: " + debugName;
+	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
+
+	//Create RTV
+	HR_CHECK_ERROR(device->GetD3D11Device()->CreateRenderTargetView(renderTexture->GetD3D11Texture2DHandle(), &rtvDesc, &rtv));
+	if (rtv == nullptr)
+		return false;
+
+	//Cache a reference to the ID3D11View pointer - BEFORE setting the D3D11
+	//resource debug name
+	CacheD3D11ViewInterface(rtv);
+
+	//Debug name inc D3D11 resource debug name
+	SetDebugName(debugName);
 
 	//Done
 	return true;
@@ -58,7 +103,7 @@ bool D3D11RenderTargetView::InitRenderTargetViewDirectFromD3D11Texture2D(EngineA
 	//resource debug name
 	CacheD3D11ViewInterface(rtv);
 
-	//Debug name
+	//Debug name inc D3D11 resource debug name
 	SetDebugName(debugName);
 
 	//Done

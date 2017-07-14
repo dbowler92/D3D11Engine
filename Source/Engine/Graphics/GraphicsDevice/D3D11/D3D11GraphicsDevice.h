@@ -40,6 +40,9 @@ namespace EngineAPI
 		class RasterizerState;
 		class BlendState;
 		class DepthStencilState;
+
+		class RenderTargetView;
+		class DepthStencilView;
 	}
 }
 
@@ -69,8 +72,7 @@ namespace EngineAPI
 				//
 				//Input Assembly (IA)
 				void IASetTopology(PrimitiveTopology topology);
-				void IABindVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset);
-				//void IASetVertexBuffers(EngineAPI::Graphics::VertexBuffer* vbs, uint32_t buffCount); //TOOD
+				void IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset);
 				void IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib, UINT offset);
 
 				//Rasterizer (RS)
@@ -80,9 +82,13 @@ namespace EngineAPI
 				void OMSetBlendState(EngineAPI::Graphics::BlendState* bs, const float blendFactor[4] = DEFAULT_BLEND_FACTOR, UINT sampleMask = 0xFFFFFFFF);
 				void OMSetDepthStencilState(EngineAPI::Graphics::DepthStencilState* dss, UINT stencilRef);
 
+				//OM - Setting render target(s)
+				void OMSetRenderTarget(EngineAPI::Graphics::RenderTargetView* renderTargetView,
+					EngineAPI::Graphics::DepthStencilView* optionalDepthStencilView);
+
 				//VS
 				void VSSetShader(EngineAPI::Graphics::VertexShader* vs);
-				void VSBindConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot);
+				void VSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot);
 
 				//PS
 				void PSSetShader(EngineAPI::Graphics::PixelShader* ps);
@@ -92,9 +98,14 @@ namespace EngineAPI
 				void DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation);
 
 				//Mapping
-				bool MapBufferResource(EngineAPI::Graphics::BufferResource* resource, 
-					UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut);				
-				void UnmapBufferResource(EngineAPI::Graphics::BufferResource* resource);
+				//bool MapResource();
+				//void UnmapResource();
+
+				//Clearing render targets & depth/stencil buffers
+				void ClearRenderTarget(EngineAPI::Graphics::RenderTargetView* rtv, Float32Colour clearColour);
+				void ClearDepthStencilBuffer(EngineAPI::Graphics::DepthStencilView* dsv,
+					DepthStencilClearFlag depthStencilBufferClearFlag = DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT,
+					float depthClear = 1.0f, uint8_t stencilClear = 0);
 
 			protected:
 				//D3D11 resources

@@ -83,9 +83,9 @@ namespace EngineAPI
 				bool DoesSwapchainManageDepthStencilBuffer() { return doesManageADepthBuffer; };
 
 				//Get the depth texture && views
-				EngineAPI::Graphics::DepthTexture2D* GetSwapchainDepthTexture2D() { (doesManageADepthBuffer == true) ? &swpachainDepthTexture : nullptr; };
-				EngineAPI::Graphics::DepthStencilView* GetSwapchainDepthTexture2DReadWriteView() { (doesManageADepthBuffer == true) ? &swapchainDepthStencilViewReadWrite : nullptr; };
-				EngineAPI::Graphics::DepthStencilView* GetSwapchainDepthTexture2DReadOnlyView() { (doesManageADepthBuffer == true) ? &swapchainDepthStencilViewReadOnly : nullptr; };
+				EngineAPI::Graphics::DepthTexture2D* GetSwapchainDepthTexture2D() { return ((doesManageADepthBuffer == true) ? &swpachainDepthTexture : nullptr); };
+				EngineAPI::Graphics::DepthStencilView* GetSwapchainDepthTexture2DReadWriteView() { return ((doesManageADepthBuffer == true) ? &swapchainDepthStencilViewReadWrite : nullptr); };
+				EngineAPI::Graphics::DepthStencilView* GetSwapchainDepthTexture2DReadOnlyView() { return ((doesManageADepthBuffer == true) ? &swapchainDepthStencilViewReadOnly : nullptr); };
 
 			public:
 				//Clears the backbuffer RTV

@@ -24,6 +24,8 @@
 
 #include <Engine/Graphics/RenderTexture2D/RenderTexture2D.h>
 #include <Engine/Graphics/RenderTargetView/RenderTargetView.h>
+#include <Engine/Graphics/DepthTexture2D/DepthTexture2D.h>
+#include <Engine/Graphics/DepthStencilView/DepthStencilView.h>
 
 class TestScene : public EngineAPI::Gameplay::Scene
 {
@@ -73,6 +75,8 @@ private:
 
 	EngineAPI::Graphics::RenderTexture2D renderTgt;
 	EngineAPI::Graphics::RenderTargetView renderTgtView;
+	EngineAPI::Graphics::DepthTexture2D depthTexture;
+	EngineAPI::Graphics::DepthStencilView depthTextureView;
 
 private:
 	void TestVB();

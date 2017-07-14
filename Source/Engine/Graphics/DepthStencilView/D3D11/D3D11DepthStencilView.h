@@ -49,9 +49,12 @@ namespace EngineAPI
 
 			public:
 				//Clears the depth/stencil view/buffer
-				bool ClearDepthStencil(EngineAPI::Graphics::GraphicsDevice* device, 
+				void ClearDepthStencilView(EngineAPI::Graphics::GraphicsDevice* device,
 					DepthStencilClearFlag depthStencilBufferClearFlag,
 					float depthClear = 1.0f, uint8_t stencilClear = 0);
+
+				//Bind the depth stencil view -> Without any render targets.
+				void BindDepthStencilView(EngineAPI::Graphics::GraphicsDevice* device);
 
 			public:
 				//Getters

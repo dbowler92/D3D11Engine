@@ -15,6 +15,9 @@
 #include <Graphics/BlendState/BlendState.h>
 #include <Graphics/DepthStencilState/DepthStencilState.h>
 
+#include <Graphics/RenderTargetView/RenderTargetView.h>
+#include <Graphics/DepthStencilView/DepthStencilView.h>
+
 using namespace EngineAPI::Graphics::Platform;
 
 bool D3D11GraphicsDevice::InitD3D11DeviceAndImmediateContext(EngineAPI::OS::OSWindow* osWindow)
@@ -88,7 +91,7 @@ void D3D11GraphicsDevice::IASetTopology(PrimitiveTopology topology)
 	GetD3D11ImmediateContext()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)topology);
 }
 
-void D3D11GraphicsDevice::IABindVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset)
+void D3D11GraphicsDevice::IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset)
 {
 	if (vb)
 		vb->BindVertexBufferToPipeline((EngineAPI::Graphics::GraphicsDevice*)this, offset);
@@ -137,6 +140,13 @@ void D3D11GraphicsDevice::OMSetDepthStencilState(EngineAPI::Graphics::DepthStenc
 		GetD3D11ImmediateContext()->OMSetDepthStencilState(nullptr, 0);
 }
 
+void D3D11GraphicsDevice::OMSetRenderTarget(EngineAPI::Graphics::RenderTargetView* renderTargetView,
+	EngineAPI::Graphics::DepthStencilView* optionalDepthStencilView)
+{
+	if (renderTargetView)
+		renderTargetView->BindAsRenderTarget((EngineAPI::Graphics::GraphicsDevice*)this, optionalDepthStencilView);
+}
+
 //
 //VS
 //
@@ -149,7 +159,7 @@ void D3D11GraphicsDevice::VSSetShader(EngineAPI::Graphics::VertexShader* vs)
 		GetD3D11ImmediateContext()->VSSetShader(nullptr, nullptr, 0);
 }
 
-void D3D11GraphicsDevice::VSBindConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot)
+void D3D11GraphicsDevice::VSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot)
 {
 	if (cBuffer)
 		cBuffer->BindConstantBufferToVertexShaderStage((EngineAPI::Graphics::GraphicsDevice*)this, bufferSlot);
@@ -185,39 +195,17 @@ void D3D11GraphicsDevice::DrawIndexed(UINT indexCount, UINT startIndexLocation, 
 //Mapping
 //
 
-bool D3D11GraphicsDevice::MapBufferResource(EngineAPI::Graphics::BufferResource* resource,
-	UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut)
+
+//Clearning buffers
+void D3D11GraphicsDevice::ClearRenderTarget(EngineAPI::Graphics::RenderTargetView* rtv, Float32Colour clearColour)
 {
-	assert(resource);
-
-	//From api agnostic to D3D11:;
-	D3D11_MAP mode = (D3D11_MAP)mapMode;
-
-	//TODO:
-	D3D11_MAP_FLAG mapFlag = (D3D11_MAP_FLAG)0;
-
-	//
-	//Check if possible
-	//
-
-	//Map
-	D3D11_MAPPED_SUBRESOURCE mappedRes = {};
-	HR_CHECK_WARNING(GetD3D11ImmediateContext()->Map(resource->GetD3D11BufferAsResource(), subresourceIndex, mode, mapFlag, &mappedRes));
-	if (mappedRes.pData == nullptr)
-		return false;
-
-	//Return 
-	*mappedResourceOut = {};
-	mappedResourceOut->MappedData = mappedRes.pData;
-	mappedResourceOut->RowPitch = mappedRes.RowPitch;
-	mappedResourceOut->DepthPitch = mappedRes.DepthPitch;
-	
-	return true;
+	if (rtv)
+		rtv->ClearRenderTargetView((EngineAPI::Graphics::GraphicsDevice*)this, (const float*)&clearColour);
 }
 
-void D3D11GraphicsDevice::UnmapBufferResource(EngineAPI::Graphics::BufferResource* resource)
+void D3D11GraphicsDevice::ClearDepthStencilBuffer(EngineAPI::Graphics::DepthStencilView* dsv,
+	DepthStencilClearFlag depthStencilBufferClearFlag, float depthClear, uint8_t stencilClear)
 {
-	assert(resource);
-
-	GetD3D11ImmediateContext()->Unmap(resource->GetD3D11BufferAsResource(), 0);
+	if (dsv)
+		dsv->ClearDepthStencilView((EngineAPI::Graphics::GraphicsDevice*)this, depthStencilBufferClearFlag, depthClear, stencilClear);
 }

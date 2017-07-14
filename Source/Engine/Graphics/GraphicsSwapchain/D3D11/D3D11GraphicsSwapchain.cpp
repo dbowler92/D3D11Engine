@@ -251,7 +251,7 @@ void D3D11GraphicsSwapchain::ClearDepthStencilBuffer(EngineAPI::Graphics::Graphi
 {
 	//Only clear if we manage the depth stencil buffer. 
 	if (doesManageADepthBuffer)
-		assert(swapchainDepthStencilViewReadWrite.ClearDepthStencil(device, depthStencilBufferClearFlag, 1.0f, 0));
+		swapchainDepthStencilViewReadWrite.ClearDepthStencilView(device, depthStencilBufferClearFlag, 1.0f, 0);
 }
 
 void D3D11GraphicsSwapchain::BindSwapchainBackbufferAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,

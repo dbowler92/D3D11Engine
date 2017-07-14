@@ -2,6 +2,7 @@
 
 //Subsystems
 #include <Engine/Graphics/GraphicsManager/GraphicsManager.h>
+#include <Engine/Graphics/GraphicsSwapchain/GraphicsSwapchain.h>
 
 struct Vertex
 {
@@ -267,8 +268,11 @@ void TestScene::TestRenderTarget()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
+	uint32_t w = 512;
+	uint32_t h = 512;
+
 	//RenderTexture2D
-	assert(renderTgt.InitRenderTexture2D(device, 512, 512, 1, nullptr,
+	assert(renderTgt.InitRenderTexture2D(device, w, h, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT, nullptr,
 		RESOURCE_FORMAT_R8G8B8A8_UNORM,
 		RESOURCE_USAGE_DEFAULT,
 		(ResourceCPUAccessFlag)0,
@@ -280,6 +284,13 @@ void TestScene::TestRenderTarget()
 		//true, RESOURCE_FORMAT_UNKNOWN,
 		false, RESOURCE_FORMAT_R8G8B8A8_UNORM,
 		std::string("TestRenderTexture2D_RTV")));
+
+	//Depth
+	assert(depthTexture.InitDepthTexture2D(device, w, h, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT,
+		DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, false, std::string("RenderTarget_DepthTexture")));
+
+	//View
+	assert(depthTextureView.InitDepthStencilView(device, &depthTexture, false, std::string("RenderTarget_DepthTextureView")));
 }
 
 bool TestScene::OnSceneBecomeDeactive()
@@ -308,6 +319,8 @@ bool TestScene::OnSceneBecomeDeactive()
 
 	renderTgt.Shutdown();
 	renderTgtView.Shutdown();
+	depthTexture.Shutdown();
+	depthTextureView.Shutdown();
 
 	//Done
 	return true;
@@ -380,12 +393,14 @@ bool TestScene::OnSceneRender()
 {
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
+	
+	//Clear render target & depth
+	device->ClearRenderTarget(&renderTgtView, Float32Colour(0.0f, 0.0f, 1.0f, 1.0f));
+	device->ClearDepthStencilBuffer(&depthTextureView,
+		DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
 
-	//Bind render target with default depth buffer for now && clear (The render target - depth
-	//buffer should have been cleared by the engine at frame start!)
-	assert(gm->GetSwapchain()->DoesSwapchainManageDepthStencilBuffer());
-	//device->OMBindRenderTarget( /* Get default depth buffer */ );
-	//device->ClearRenderTarget();
+	//Bind render target + depth.
+	device->OMSetRenderTarget(&renderTgtView, &depthTextureView);
 
 	//Topology
 	device->IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -395,11 +410,11 @@ bool TestScene::OnSceneRender()
 	device->PSSetShader(&cbPS);
 
 	//Vertex and index buffer
-	device->IABindVertexBuffer(&cbVB, 0);
+	device->IASetVertexBuffer(&cbVB, 0);
 	device->IASetIndexBuffer(&cbIB, 0);
 
 	//Shader resource / cbuffers
-	device->VSBindConstantBuffer(&constantBuffer, 0);
+	device->VSSetConstantBuffer(&constantBuffer, 0);
 
 	//Rendering state
 	device->RSSetState(&rss);

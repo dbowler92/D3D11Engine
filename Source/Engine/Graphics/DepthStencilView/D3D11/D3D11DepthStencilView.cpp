@@ -74,17 +74,10 @@ bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDe
 	return true;
 }
 
-bool D3D11DepthStencilView::ClearDepthStencil(EngineAPI::Graphics::GraphicsDevice* device,
+void D3D11DepthStencilView::ClearDepthStencilView(EngineAPI::Graphics::GraphicsDevice* device,
 	DepthStencilClearFlag depthStencilBufferClearFlag, 
 	float depthClear, uint8_t stencilClear)
 {
 	if (dsv)
-	{
-		ID3D11DeviceContext* immediateContext = device->GetD3D11ImmediateContext();
-		immediateContext->ClearDepthStencilView(dsv, depthStencilBufferClearFlag, depthClear, stencilClear);
-	
-		return true;
-	}
-	else
-		return false; 	//Error - DSV has been released.
+		device->GetD3D11ImmediateContext()->ClearDepthStencilView(dsv, depthStencilBufferClearFlag, depthClear, stencilClear);
 }

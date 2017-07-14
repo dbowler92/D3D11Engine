@@ -112,7 +112,8 @@ bool D3D11RenderTargetView::InitRenderTargetViewDirectFromD3D11Texture2D(EngineA
 
 void D3D11RenderTargetView::ClearRenderTargetView(EngineAPI::Graphics::GraphicsDevice* device, const float* col)
 {
-	device->GetD3D11ImmediateContext()->ClearRenderTargetView(rtv, col);
+	if (rtv)
+		device->GetD3D11ImmediateContext()->ClearRenderTargetView(rtv, col);
 }
 
 void D3D11RenderTargetView::BindAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,

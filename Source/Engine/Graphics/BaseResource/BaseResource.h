@@ -10,13 +10,13 @@
 #pragma once
 
 //Parent class
-#include "../../Core/CoreObject/CoreObject.h"
+#include <Core/CoreObject/CoreObject.h>
 
 //Graphics includes - inc D3D11 / GL etc
-#include "../../Includes/GraphicsIncludes.h"
+#include <Includes/GraphicsIncludes.h>
 
 //Device used to create texture, buffers && views
-#include "../../Graphics/GraphicsDevice/GraphicsDevice.h"
+#include <Graphics/GraphicsDevice/GraphicsDevice.h>
 
 namespace EngineAPI
 {

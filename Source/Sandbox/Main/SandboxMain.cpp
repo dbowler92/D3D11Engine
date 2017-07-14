@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include "../App Config/AppConfig.h"
-#include "../../Engine/Config/EngineConfig.h" //Build settings etc
-#include "../../Engine/Main/EngineStd.h" //Allows us to easily call entey function for Engine lib
-#include "../../Sandbox/Application/SandboxApplication.h" //Our application
+#include <Sandbox/AppConfig/AppConfig.h>
+#include <Engine/Config/EngineConfig.h> //Build settings etc
+#include <Engine/Main/EngineStd.h> //Allows us to easily call entey function for Engine lib
+#include <Sandbox/Application/SandboxApplication.h> //Our application
 #include <iostream>
 
 //Declare application specific instances of engine classes (such as the base Application class) 

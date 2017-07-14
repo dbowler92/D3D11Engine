@@ -1,7 +1,7 @@
 #include "D3D11VertexInputSignature.h"
 
 //Statics (D3D11)
-#include "../../../Statics/D3D11Statics/D3D11Statics.h"
+#include <Statics/D3D11Statics/D3D11Statics.h>
 
 using namespace EngineAPI::Graphics::Platform;
 

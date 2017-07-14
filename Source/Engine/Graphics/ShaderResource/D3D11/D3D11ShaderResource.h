@@ -8,10 +8,10 @@
 #pragma once
 
 //Parent class
-#include "../../../Graphics/BaseShaderResource/BaseShaderResource.h"
+#include <Graphics/BaseShaderResource/BaseShaderResource.h>
 
 //Statics (D3D11)
-#include "../../../Statics/D3D11Statics/D3D11Statics.h"
+#include <Statics/D3D11Statics/D3D11Statics.h>
 
 namespace EngineAPI 
 {

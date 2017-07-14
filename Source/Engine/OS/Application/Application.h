@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include "../../Config/EngineConfig.h" //Engine settings
+#include <Config/EngineConfig.h> //Engine settings
 //#include "../Main/EngineStd.h"
 
 #ifdef ENGINE_CONFIG_PLATFORM_WIN32
-#include "Win32\Win32Application.h"
+#include "Win32/Win32Application.h"
 #endif 
 
 namespace EngineAPI 

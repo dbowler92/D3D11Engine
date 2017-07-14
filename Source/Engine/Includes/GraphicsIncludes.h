@@ -7,13 +7,13 @@
 #pragma once
 
 //Engine Globals
-#include "../../Main/EngineStd.h"
+#include <Main/EngineStd.h>
 
 //Graphics globals
-#include "../Globals/GraphicsGlobals.h"
+#include <Globals/GraphicsGlobals.h>
 
 #ifdef ENGINE_CONFIG_GRAPHICS_API_D3D11
 #include <dxgi.h>
 #include <d3d11.h>
-#include "../3rdParty/dxerr/dxerr.h"
+#include <3rdParty/dxerr/dxerr.h>
 #endif

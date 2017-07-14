@@ -8,7 +8,7 @@
 #pragma once
 
 //Parent
-#include "../../Core/CoreObject/CoreObject.h"
+#include <Core/CoreObject/CoreObject.h>
 
 namespace EngineAPI
 {

@@ -1,7 +1,7 @@
 #include "D3D11ConstantBuffer.h"
 
 //Statics 
-#include "../../Statics/D3D11Statics/D3D11Statics.h"
+#include <Statics/D3D11Statics/D3D11Statics.h>
 
 using namespace EngineAPI::Graphics::Platform;
 

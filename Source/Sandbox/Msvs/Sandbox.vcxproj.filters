@@ -10,9 +10,6 @@
     <Filter Include="Src\SandboxApplication">
       <UniqueIdentifier>{25f087a4-24d2-4901-a8c3-82d7f07edb76}</UniqueIdentifier>
     </Filter>
-    <Filter Include="App Config">
-      <UniqueIdentifier>{713c60f4-8c88-4d28-8933-7ad4507836e0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\TestScene">
       <UniqueIdentifier>{b618c303-741a-4035-b03c-1515cbeac507}</UniqueIdentifier>
     </Filter>
@@ -27,6 +24,9 @@
     </Filter>
     <Filter Include="Resources\HLSLShaders\TestCBufferShader">
       <UniqueIdentifier>{b2e9b2ba-2c78-411e-bf55-12dbcb023494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppConfig">
+      <UniqueIdentifier>{713c60f4-8c88-4d28-8933-7ad4507836e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,11 +44,11 @@
     <ClInclude Include="..\Application\SandboxApplication.h">
       <Filter>Src\SandboxApplication</Filter>
     </ClInclude>
-    <ClInclude Include="..\App Config\AppConfig.h">
-      <Filter>App Config</Filter>
-    </ClInclude>
     <ClInclude Include="..\TestScene\TestScene.h">
       <Filter>Src\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AppConfig\AppConfig.h">
+      <Filter>AppConfig</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@
 #pragma once
 
 //Is a Texture2D object at heart!
-#include "../../Texture2D/Texture2D.h"
+#include <Graphics/Texture2D/Texture2D.h>
 
 enum DepthStencilTextureFormat
 {

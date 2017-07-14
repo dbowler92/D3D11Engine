@@ -7,11 +7,11 @@
 #pragma once
 
 //Platform
-#include "../../Config/EngineConfig.h"
+#include <Config/EngineConfig.h>
 
 //Which os to inherit from
 #ifdef ENGINE_CONFIG_PLATFORM_WIN32
-#include "Win32\Win32OSWindow.h"
+#include "Win32/Win32OSWindow.h"
 #endif
 
 namespace EngineAPI

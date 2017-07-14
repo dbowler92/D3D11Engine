@@ -1,19 +1,19 @@
 #include "D3D11GraphicsDevice.h"
 
 //Forward declarations
-#include "../../OS/OSWindow/OSWindow.h"
+#include <OS/OSWindow/OSWindow.h>
 
-#include "../../VertexBuffer/VertexBuffer.h"
-#include "../../IndexBuffer/IndexBuffer.h"
+#include <Graphics/VertexBuffer/VertexBuffer.h>
+#include <Graphics/IndexBuffer/IndexBuffer.h>
 
-#include "../../ConstantBuffer/ConstantBuffer.h"
+#include <Graphics/ConstantBuffer/ConstantBuffer.h>
 
-#include "../../VertexShader/VertexShader.h"
-#include "../../PixelShader/PixelShader.h"
+#include <Graphics/VertexShader/VertexShader.h>
+#include <Graphics/PixelShader/PixelShader.h>
 
-#include "../../RasterizerState/RasterizerState.h"
-#include "../../BlendState/BlendState.h"
-#include "../../DepthStencilState/DepthStencilState.h"
+#include <Graphics/RasterizerState/RasterizerState.h>
+#include <Graphics/BlendState/BlendState.h>
+#include <Graphics/DepthStencilState/DepthStencilState.h>
 
 using namespace EngineAPI::Graphics::Platform;
 

@@ -8,11 +8,11 @@
 #pragma once
 
 //Parent class
-#include "../../Graphics/BaseResource/BaseResource.h"
-//#include "../../Core/CoreObject/CoreObject.h"
+#include <Graphics/BaseResource/BaseResource.h>
+//#include <Core/CoreObject/CoreObject.h>
 
 //Statics
-#include "../../Statics/D3D11Statics/D3D11Statics.h"
+#include <Statics/D3D11Statics/D3D11Statics.h>
 
 namespace EngineAPI
 {

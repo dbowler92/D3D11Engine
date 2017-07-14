@@ -1,7 +1,7 @@
 #include "D3D11RenderTargetView.h"
 
 //Needs to get D3D11 DSV from depth stencil view when binding
-#include "../../DepthStencilView/DepthStencilView.h"
+#include <Graphics/DepthStencilView/DepthStencilView.h>
 
 using namespace EngineAPI::Graphics::Platform;
 

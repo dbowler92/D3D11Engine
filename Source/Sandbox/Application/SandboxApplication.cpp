@@ -1,10 +1,10 @@
 #include "SandboxApplication.h"
 
 //App config
-#include "../App Config/AppConfig.h"
+#include <Sandbox/AppConfig/AppConfig.h>
 
 //Scenes
-#include "../TestScene/TestScene.h"
+#include <Sandbox/TestScene/TestScene.h>
 
 SandboxApplication::SandboxApplication()
 {}

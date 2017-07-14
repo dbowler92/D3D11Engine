@@ -1,7 +1,7 @@
 #include "TestScene.h"
 
 //Subsystems
-#include "../../../Engine/Graphics/GraphicsManager/GraphicsManager.h"
+#include <Engine/Graphics/GraphicsManager/GraphicsManager.h>
 
 struct Vertex
 {

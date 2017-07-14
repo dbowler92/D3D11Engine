@@ -7,10 +7,10 @@
 
 #pragma once
 
-#include "../../Config/EngineConfig.h" //Build settings
+#include <Config/EngineConfig.h> //Build settings
 
 #ifdef ENGINE_CONFIG_GRAPHICS_API_D3D11
-#include "D3D11\D3D11ShaderResource.h"
+#include "D3D11/D3D11ShaderResource.h"
 #endif
 
 namespace EngineAPI

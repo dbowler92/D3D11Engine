@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "../Config/GraphicsConfig.h"
+#include <Config/GraphicsConfig.h>
 
 //Global defines / consts 
 //

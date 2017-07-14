@@ -7,20 +7,20 @@
 #pragma once
 
 //Parent
-#include "../../Core/CoreSubsystem/CoreSubsystem.h"
+#include <Core/CoreSubsystem/CoreSubsystem.h>
 
 //Graphics includes - inc D3D11
-#include "../../Includes/GraphicsIncludes.h"
+#include <Includes/GraphicsIncludes.h>
 
 //Debug
-#include "../../../Debug/Log/DebugLog.h"
+#include <Debug/Log/DebugLog.h>
 
 //OS window info - so the graphics API can talk to the OS windowing system.
-#include "../../../OS/OSWindow/OSWindow.h"
+#include <OS/OSWindow/OSWindow.h>
 
 //classes that this manager manages
-#include "../../GraphicsDevice/GraphicsDevice.h"
-#include "../../GraphicsSwapchain/GraphicsSwapchain.h"
+#include <Graphics/GraphicsDevice/GraphicsDevice.h>
+#include <Graphics/GraphicsSwapchain/GraphicsSwapchain.h>
 
 //Forward declarations
 namespace EngineAPI

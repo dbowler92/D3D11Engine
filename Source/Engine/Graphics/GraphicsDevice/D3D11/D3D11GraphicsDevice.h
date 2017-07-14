@@ -7,13 +7,13 @@
 #pragma once
 
 //Parent
-#include "../../Core/CoreObject/CoreObject.h"
+#include <Core/CoreObject/CoreObject.h>
 
 //Graphics includes - inc D3D11
-#include "../../Includes/GraphicsIncludes.h"
+#include <Includes/GraphicsIncludes.h>
 
 //Debug
-#include "../../Debug/Log/DebugLog.h"
+#include <Debug/Log/DebugLog.h>
 
 //Globals
 const float DEFAULT_BLEND_FACTOR[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
@@ -93,11 +93,8 @@ namespace EngineAPI
 
 				//Mapping
 				bool MapBufferResource(EngineAPI::Graphics::BufferResource* resource, 
-					UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut);
-				MappedResourceData MapTextureResource(EngineAPI::Graphics::TextureResource* resource);
-				
+					UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut);				
 				void UnmapBufferResource(EngineAPI::Graphics::BufferResource* resource);
-				void UnmapTextureResource(EngineAPI::Graphics::TextureResource* resource);
 
 			protected:
 				//D3D11 resources

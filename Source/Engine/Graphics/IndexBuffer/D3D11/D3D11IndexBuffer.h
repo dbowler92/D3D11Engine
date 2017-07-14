@@ -7,7 +7,7 @@
 #pragma once
 
 //Parent class
-#include "../../Graphics/BufferResource/BufferResource.h"
+#include <Graphics/BufferResource/BufferResource.h>
 
 namespace EngineAPI
 {

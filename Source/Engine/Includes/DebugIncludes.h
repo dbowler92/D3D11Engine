@@ -6,5 +6,5 @@
 
 #pragma once
 
-#include "../Debug/Log/DebugLog.h"
-#include "../Debug/Rendering/DebugRendering.h"
+#include <Debug/Log/DebugLog.h>
+#include <Debug/Rendering/DebugRendering.h>

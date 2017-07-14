@@ -7,10 +7,10 @@
 #pragma once
 
 //Parent class
-#include "../../Graphics/TextureResource/TextureResource.h"
+#include <Graphics/TextureResource/TextureResource.h>
 
 //Debug
-#include "../../Debug/Log/DebugLog.h"
+#include <Debug/Log/DebugLog.h>
 
 namespace EngineAPI
 {

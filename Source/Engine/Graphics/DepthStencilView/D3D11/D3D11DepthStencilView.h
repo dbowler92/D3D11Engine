@@ -7,16 +7,16 @@
 #pragma once
 
 //Parent class
-#include "../../Graphics/ViewResource/ViewResource.h"
+#include <Graphics/ViewResource/ViewResource.h>
 
 //Graphics includes - inc D3D11
-#include "../../Includes/GraphicsIncludes.h"
+#include <Includes/GraphicsIncludes.h>
 
 //Debug
-#include "../../Debug/Log/DebugLog.h"
+#include <Debug/Log/DebugLog.h>
 
 //Device used to create views
-#include "../../Graphics/GraphicsDevice/GraphicsDevice.h"
+#include <Graphics/GraphicsDevice/GraphicsDevice.h>
 
 namespace EngineAPI
 {

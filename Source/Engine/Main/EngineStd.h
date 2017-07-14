@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../Config/EngineConfig.h" //Build settings
+#include <Config/EngineConfig.h> //Build settings
 
 //Windows
 #ifdef ENGINE_CONFIG_PLATFORM_WIN32

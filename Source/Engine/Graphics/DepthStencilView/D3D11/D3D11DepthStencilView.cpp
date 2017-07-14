@@ -1,6 +1,6 @@
 #include "D3D11DepthStencilView.h"
 
-#include "../../DepthTexture2D/DepthTexture2D.h"
+#include <Graphics/DepthTexture2D/DepthTexture2D.h>
 
 using namespace EngineAPI::Graphics::Platform;
 

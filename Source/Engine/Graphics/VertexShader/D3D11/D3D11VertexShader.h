@@ -7,10 +7,10 @@
 #pragma once
 
 //Parent class
-#include "../../Graphics/ShaderResource/ShaderResource.h"
+#include <Graphics/ShaderResource/ShaderResource.h>
 
 //Input layout/signature
-#include "../../Graphics/VertexInputSignature/VertexInputSignature.h"
+#include <Graphics/VertexInputSignature/VertexInputSignature.h>
 
 namespace EngineAPI
 {

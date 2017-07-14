@@ -1,8 +1,8 @@
 #include "D3D11GraphicsSwapchain.h"
 
 //Complete forward declarations 
-#include "../../GraphicsDevice/GraphicsDevice.h"
-#include "../../OS/OSWindow/OSWindow.h"
+#include <Graphics/GraphicsDevice/GraphicsDevice.h>
+#include <OS/OSWindow/OSWindow.h>
 
 using namespace EngineAPI::Graphics::Platform;
 

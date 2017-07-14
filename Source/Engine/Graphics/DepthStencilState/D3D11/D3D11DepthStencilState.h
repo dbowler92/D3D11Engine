@@ -8,7 +8,7 @@
 
 
 //Parent class
-#include "../../Graphics/PipelineStateResource/PipelineStateResource.h"
+#include <Graphics/PipelineStateResource/PipelineStateResource.h>
 
 namespace EngineAPI
 {

@@ -7,7 +7,7 @@
 #pragma once
 
 //Parent class
-#include "../../Graphics/CommonResource/CommonResource.h"
+#include <Graphics/CommonResource/CommonResource.h>
 
 namespace EngineAPI
 {

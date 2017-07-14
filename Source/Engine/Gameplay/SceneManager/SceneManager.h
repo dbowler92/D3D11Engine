@@ -7,16 +7,16 @@
 #pragma once
 
 //Parent
-#include "../../Core/CoreSubsystem/CoreSubsystem.h"
+#include <Core/CoreSubsystem/CoreSubsystem.h>
 
 //Container
 #include <list>
 
 //Scene
-#include "../Scene/Scene.h"
+#include <Gameplay/Scene/Scene.h>
 
 //Debug
-#include "../../Debug/Log/DebugLog.h"
+#include <Debug/Log/DebugLog.h>
 
 //Forward declarations
 namespace EngineAPI

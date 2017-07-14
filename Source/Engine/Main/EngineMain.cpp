@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include "../Config/EngineConfig.h" //Build settings
+#include <Config/EngineConfig.h> //Build settings
 #include "EngineStd.h"
-#include "../OS/Application/Application.h"
-#include "../Debug/Log/DebugLog.h"
+#include <OS/Application/Application.h>
+#include <Debug/Log/DebugLog.h>
 #include <iostream>
 
 //

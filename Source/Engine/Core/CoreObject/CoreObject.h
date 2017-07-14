@@ -10,7 +10,7 @@
 #include <string>
 
 //Common engine includes
-#include "../../Debug/Log/DebugLog.h"
+#include <Debug/Log/DebugLog.h>
 
 namespace EngineAPI
 {

@@ -10,7 +10,7 @@
 #pragma once
 
 //Parent
-#include "../../Core/CoreObject/CoreObject.h"
+#include <Core/CoreObject/CoreObject.h>
 
 //Windows
 #include <Windows.h>

@@ -77,7 +77,7 @@
     <IntDir>$(SolutionDir)..\..\Temp\$(ProjectName)$(PlatformName)$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)$(PlatformName)$(Configuration)</TargetName>
     <LibraryPath>$(SolutionDir)..\..\Lib\$(PlatformName)$(Configuration);C:\VulkanSDK\1.0.46.0\Lib32;$(SolutionDir)..\..\Lib;C:\Program Files %28x86%29\Windows Kits\8.0\Lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\VulkanSDK\1.0.46.0\Include;..\..\Engine\3rdParty\glm\;..\..\Engine\3rdParty\gli;..\..\Engine\3rdParty\lodePNG\;C:\Program Files %28x86%29\Windows Kits\8.0\Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\VulkanSDK\1.0.46.0\Include;C:\Program Files %28x86%29\Windows Kits\8.0\Include;$(SolutionDir)../../;$(SolutionDir)../;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)$(PlatformName)$(Configuration)</TargetName>
@@ -184,7 +184,7 @@
     <ClCompile Include="..\TestScene\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\App Config\AppConfig.h" />
+    <ClInclude Include="..\AppConfig\AppConfig.h" />
     <ClInclude Include="..\Application\SandboxApplication.h" />
     <ClInclude Include="..\TestScene\TestScene.h" />
   </ItemGroup>

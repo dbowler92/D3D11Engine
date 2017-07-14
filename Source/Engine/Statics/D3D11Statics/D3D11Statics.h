@@ -7,7 +7,7 @@
 #pragma once
 
 //Graphics
-#include "../../Includes/GraphicsIncludes.h"
+#include <Includes/GraphicsIncludes.h>
 
 namespace EngineAPI
 {

@@ -8,20 +8,20 @@
 #pragma once
 
 //Parent
-#include "../../Core/CoreObject/CoreObject.h"
+#include <Core/CoreObject/CoreObject.h>
 
 //Graphics includes - inc D3D11
-#include "../../Includes/GraphicsIncludes.h"
+#include <Includes/GraphicsIncludes.h>
 
 //Debug
-#include "../../Debug/Log/DebugLog.h"
+#include <Debug/Log/DebugLog.h>
 
 //Creates an RTV to the backbuffer / texture
-#include "../../RenderTargetView/RenderTargetView.h"
+#include <Graphics/RenderTargetView/RenderTargetView.h>
 
 //Manages a depth texture
-#include "../../DepthTexture2D/DepthTexture2D.h"
-#include "../../DepthStencilView/DepthStencilView.h"
+#include <Graphics/DepthTexture2D/DepthTexture2D.h>
+#include <Graphics/DepthStencilView/DepthStencilView.h>
 
 namespace EngineAPI
 {

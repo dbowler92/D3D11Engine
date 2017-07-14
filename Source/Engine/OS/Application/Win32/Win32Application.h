@@ -7,21 +7,21 @@
 #pragma once
 
 //Parent
-#include "../../Core/CoreObject/CoreObject.h"
-#include "../../Core/CoreSubsystem/CoreSubsystem.h"
+#include <Core/CoreObject/CoreObject.h>
+#include <Core/CoreSubsystem/CoreSubsystem.h>
 
 #include <Windows.h>
 
-#include "../../Config/EngineConfig.h" //Engine settings
-#include "../../Main/EngineStd.h"
-#include "../../Debug/Log/DebugLog.h" //Debug logging
+#include <Config/EngineConfig.h> //Engine settings
+#include <Main/EngineStd.h>
+#include <Debug/Log/DebugLog.h> //Debug logging
 
-#include "../../Utils/GameTimer/GameTimer.h"
-#include "../../OSWindow/OSWindow.h"
+#include <Utils/GameTimer/GameTimer.h>
+#include <OS/OSWindow/OSWindow.h>
 
 //Subsystems
-#include "../../Graphics/GraphicsManager/GraphicsManager.h"
-#include "../../Gameplay/SceneManager/SceneManager.h"
+#include <Graphics/GraphicsManager/GraphicsManager.h>
+#include <Gameplay/SceneManager/SceneManager.h>
 
 namespace EngineAPI
 {

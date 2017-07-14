@@ -7,10 +7,10 @@
 #pragma once
 
 //Parent class
-#include "../../Graphics/CommonResource/CommonResource.h"
+#include <Graphics/CommonResource/CommonResource.h>
 
 //DDS Texture loading in to an ID3D11* resource
-#include "../../3rdParty/DDSTextureLoader/DDSTextureLoader.h"
+#include <3rdParty/DDSTextureLoader/DDSTextureLoader.h>
 
 namespace EngineAPI
 {

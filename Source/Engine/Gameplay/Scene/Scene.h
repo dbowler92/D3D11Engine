@@ -7,15 +7,15 @@
 #pragma once
 
 //Parent
-#include "../../Core/CoreObject/CoreObject.h"
+#include <Core/CoreObject/CoreObject.h>
 
 //Shared includes
 //
 //Debugging
-#include "../../Includes/DebugIncludes.h"
+#include <Includes/DebugIncludes.h>
 
 //Math
-#include "../../Includes/MathIncludes.h"
+#include <Includes/MathIncludes.h>
 
 namespace EngineAPI
 {

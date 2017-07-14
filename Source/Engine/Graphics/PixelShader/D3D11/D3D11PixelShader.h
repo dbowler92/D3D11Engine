@@ -7,7 +7,7 @@
 #pragma once
 
 //Parent class
-#include "../../Graphics/ShaderResource/ShaderResource.h"
+#include <Graphics/ShaderResource/ShaderResource.h>
 
 namespace EngineAPI
 {

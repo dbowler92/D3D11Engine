@@ -26,10 +26,14 @@ namespace EngineAPI
 			BasePipelineStateResource() {};
 			virtual ~BasePipelineStateResource() = 0 {};
 
+			//
 			//Virtual functions that will be inherited by all pipeline states
 			//
 			//Shutdown function - we will ensure to call up the inheritance chain
 			virtual void Shutdown() override = 0;
+
+			//Binds the subclass pipeline state to the actual pipeline
+			//virtual void BindPipelineState(EngineAPI::Graphics::GraphicsDevice* device) = 0;
 		};
 	};
 };

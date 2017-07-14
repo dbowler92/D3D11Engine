@@ -40,7 +40,7 @@ bool D3D11VertexInputSignature::InitVertexInputSignature(EngineAPI::Graphics::Gr
 	}
 
 	//Create the input layout (D3D11)
-	HR(device->GetD3D11Device()->CreateInputLayout(inputElementsArray.data(), inputsCount, 
+	HR_CHECK_ERROR(device->GetD3D11Device()->CreateInputLayout(inputElementsArray.data(), inputsCount,
 		vertexShaderBytecodeWithSignature, shaderByteCodeSize, &inputLayout));
 	if (inputLayout == nullptr)
 		return false;

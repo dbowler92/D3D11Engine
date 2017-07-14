@@ -27,13 +27,13 @@
 //Helper macros
 //
 #if defined(DEBUG) | defined(_DEBUG)
-#ifndef HR
-#define HR(x)                                              \
+#ifndef HR_CHECK_ERROR
+#define HR_CHECK_ERROR(x)                                              \
 	{                                                          \
 		HRESULT hr = (x);                                      \
 		if(FAILED(hr))                                         \
 		{													   \
-			std::string str = "D3D11 HR() Macro Failed. Object Debug Name: " + GetDebugName(); \
+			std::string str = "D3D11 HR_ERROR() Macro Failed with hr: " + std::to_string(hr) + " Object Debug Name: " + GetDebugName(); \
 			EngineAPI::Debug::DebugLog::PrintInfoMessage(str.c_str()); \
 			DXTrace(__FILEW__, (DWORD)__LINE__, hr, L#x, true); \
 		}                                                      \
@@ -41,8 +41,27 @@
 #endif
 
 #else
-#ifndef HR
-#define HR(x) (x)
+#ifndef HR_CHECK_ERROR
+#define HR_CHECK_ERROR(x) (x)
+#endif
+#endif 
+
+#if defined(DEBUG) | defined(_DEBUG)
+#ifndef HR_CHECK_WARNING
+#define HR_CHECK_WARNING(x)                                              \
+	{                                                          \
+		HRESULT hr = (x);                                      \
+		if(FAILED(hr))                                         \
+		{													   \
+			std::string str = "D3D11 HR_WARNING() Macro Failed with hr: " + std::to_string(hr) + " Object Debug Name: " + GetDebugName(); \
+			EngineAPI::Debug::DebugLog::PrintWarningMessage(str.c_str()); \
+		}                                                      \
+	}
+#endif
+
+#else
+#ifndef HR_CHECK_WARNING
+#define HR_CHECK_WARNING(x) (x)
 #endif
 #endif 
 

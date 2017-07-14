@@ -189,6 +189,9 @@ void TestScene::TestStates()
 	RasterizerPipelineStateDescription rssState = {};
 	//rssState.FillMode = POLYGON_FILL_WIREFRAME;
 	assert(rss.InitRasterizerState(device, &rssState, std::string("TestRSS")));
+
+	BlendPipelineStateDescription bsDesc = {};
+	assert(bs.InitBlendState(device, &bsDesc, std::string("TestBS")));
 }
 
 void TestScene::TestConstantBuffers()
@@ -272,6 +275,7 @@ bool TestScene::OnSceneBecomeDeactive()
 
 	stateVB.Shutdown();
 	stateIB.Shutdown();
+	bs.Shutdown();
 	dss.Shutdown();
 	rss.Shutdown();
 
@@ -362,6 +366,10 @@ bool TestScene::OnSceneRender()
 	device->IASetIndexBuffer(&cbIB, 0);
 
 	device->RSSetState(&rss);
+	//float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	//device->OMSetBlendState(&bs, blendFactor, 0xffffffff);
+	device->OMSetBlendState(&bs);
+	//device->OMSetBlendState(nullptr);
 	device->OMSetDepthStencilState(&dss, 0);
 
 	device->VSBindConstantBuffer(&constantBuffer, 0);

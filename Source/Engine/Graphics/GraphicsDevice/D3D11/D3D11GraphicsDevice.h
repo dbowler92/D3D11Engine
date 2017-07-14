@@ -15,6 +15,9 @@
 //Debug
 #include "../../Debug/Log/DebugLog.h"
 
+//Globals
+const float DEFAULT_BLEND_FACTOR[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
 namespace EngineAPI
 {
 	namespace OS
@@ -35,6 +38,7 @@ namespace EngineAPI
 		class PixelShader;
 
 		class RasterizerState;
+		class BlendState;
 		class DepthStencilState;
 	}
 }
@@ -73,6 +77,7 @@ namespace EngineAPI
 				void RSSetState(EngineAPI::Graphics::RasterizerState* rss);
 
 				//Ouput Merger (OM)
+				void OMSetBlendState(EngineAPI::Graphics::BlendState* bs, const float blendFactor[4] = DEFAULT_BLEND_FACTOR, UINT sampleMask = 0xFFFFFFFF);
 				void OMSetDepthStencilState(EngineAPI::Graphics::DepthStencilState* dss, UINT stencilRef);
 
 				//VS

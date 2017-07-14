@@ -44,7 +44,7 @@ bool D3D11RenderTargetView::InitRenderTargetViewDirectFromD3D11Texture2D(EngineA
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create RTV
-	HR(device->GetD3D11Device()->CreateRenderTargetView(d3d11TextureResource, nullptr, &rtv));
+	HR_CHECK_ERROR(device->GetD3D11Device()->CreateRenderTargetView(d3d11TextureResource, nullptr, &rtv));
 	if (rtv == nullptr)
 		return false;
 

@@ -12,6 +12,7 @@
 #include "../../PixelShader/PixelShader.h"
 
 #include "../../RasterizerState/RasterizerState.h"
+#include "../../BlendState/BlendState.h"
 #include "../../DepthStencilState/DepthStencilState.h"
 
 using namespace EngineAPI::Graphics::Platform;
@@ -106,6 +107,7 @@ void D3D11GraphicsDevice::IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib,
 //
 //RS
 //
+
 void D3D11GraphicsDevice::RSSetState(EngineAPI::Graphics::RasterizerState* rss)
 {
 	if (rss)
@@ -118,6 +120,14 @@ void D3D11GraphicsDevice::RSSetState(EngineAPI::Graphics::RasterizerState* rss)
 //
 //OM
 //
+
+void D3D11GraphicsDevice::OMSetBlendState(EngineAPI::Graphics::BlendState* bs, const float blendFactor[4], UINT sampleMask)
+{
+	if (bs)
+		bs->BindBlendStateToPipeline((EngineAPI::Graphics::GraphicsDevice*)this, blendFactor, sampleMask);
+	else
+		GetD3D11ImmediateContext()->OMSetBlendState(nullptr, DEFAULT_BLEND_FACTOR, 0xFFFFFFFF);
+}
 
 void D3D11GraphicsDevice::OMSetDepthStencilState(EngineAPI::Graphics::DepthStencilState* dss, UINT stencilRef)
 {
@@ -192,7 +202,7 @@ bool D3D11GraphicsDevice::MapBufferResource(EngineAPI::Graphics::BufferResource*
 
 	//Map
 	D3D11_MAPPED_SUBRESOURCE mappedRes = {};
-	HR(GetD3D11ImmediateContext()->Map(resource->GetD3D11BufferAsResource(), subresourceIndex, mode, mapFlag, &mappedRes));
+	HR_CHECK_WARNING(GetD3D11ImmediateContext()->Map(resource->GetD3D11BufferAsResource(), subresourceIndex, mode, mapFlag, &mappedRes));
 	if (mappedRes.pData == nullptr)
 		return false;
 

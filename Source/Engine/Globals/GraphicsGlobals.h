@@ -12,6 +12,11 @@
 
 #include "../Config/GraphicsConfig.h"
 
+//Global defines / consts 
+//
+//Maximum render targets that can be bound at once
+const UINT8 MAX_RENDER_TARGETS_THAT_CAN_BE_BOUND = 8;
+
 enum DepthStencilClearBit
 {
 	DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT = 0x1L,
@@ -380,6 +385,102 @@ struct DepthStencilPipelineStateDescription
 	//Op based on result of depth and/or stencil testing
 	DepthStencilResultOp FrontFaceOp;
 	DepthStencilResultOp BackFaceOp;
+};
+
+
+//Blend mode and operation
+enum BlendMode 
+{
+	BLEND_MODE_ZERO = 1,
+	BLEND_MODE_ONE = 2,
+	BLEND_MODE_SRC_COLOR = 3,
+	BLEND_MODE_INV_SRC_COLOR = 4,
+	BLEND_MODE_SRC_ALPHA = 5,
+	BLEND_MODE_INV_SRC_ALPHA = 6,
+	BLEND_MODE_DEST_ALPHA = 7,
+	BLEND_MODE_INV_DEST_ALPHA = 8,
+	BLEND_MODE_DEST_COLOR = 9,
+	BLEND_MODE_INV_DEST_COLOR = 10,
+	BLEND_MODE_SRC_ALPHA_SAT = 11,
+	BLEND_MODE_BLEND_FACTOR = 14,
+	BLEND_MODE_INV_BLEND_FACTOR = 15,
+	BLEND_MODE_SRC1_COLOR = 16,
+	BLEND_MODE_INV_SRC1_COLOR = 17,
+	BLEND_MODE_SRC1_ALPHA = 18,
+	BLEND_MODE_INV_SRC1_ALPHA = 19
+};
+
+enum BlendOperation 
+{
+	BLEND_OP_ADD = 1,
+	BLEND_OP_SUBTRACT = 2,
+	BLEND_OP_REV_SUBTRACT = 3,
+	BLEND_OP_MIN = 4,
+	BLEND_OP_MAX = 5
+};
+
+enum RenderTargetWriteBits
+{
+	RENDER_TARGET_WRITE_ENABLE_RED_BIT = 1,
+	RENDER_TARGET_WRITE_ENABLE_GREEN_BIT = 2,
+	RENDER_TARGET_WRITE_ENABLE_BLUE_BIT = 4,
+	RENDER_TARGET_WRITE_ENABLE_ALPHA_BIT = 8,
+	RENDER_TARGET_WRITE_ENABLE_ALL = (((RENDER_TARGET_WRITE_ENABLE_RED_BIT | RENDER_TARGET_WRITE_ENABLE_GREEN_BIT) | RENDER_TARGET_WRITE_ENABLE_BLUE_BIT) | RENDER_TARGET_WRITE_ENABLE_ALPHA_BIT)
+};
+
+typedef UINT RenderTargetWriteFlag;
+
+//Per render target blend state
+struct RenderTargetBlendStateDescription
+{
+	RenderTargetBlendStateDescription()
+	{
+		//Default state - off
+		BlendEnabled = false;
+
+		SourceBlend = BLEND_MODE_ONE;
+		DestinationBlend = BLEND_MODE_ZERO;
+		BlendOp = BLEND_OP_ADD;
+
+		SourceAlphaBlend = BLEND_MODE_ONE;
+		DestinationAlphaBlend = BLEND_MODE_ZERO;
+		BlendAlphaOp = BLEND_OP_ADD;
+
+		RenderTargetWriteMask = RENDER_TARGET_WRITE_ENABLE_ALL;
+	}
+
+	bool BlendEnabled;
+
+	BlendMode SourceBlend;
+	BlendMode DestinationBlend;
+	BlendOperation BlendOp;
+
+	BlendMode SourceAlphaBlend;
+	BlendMode DestinationAlphaBlend;
+	BlendOperation BlendAlphaOp;
+
+	RenderTargetWriteFlag RenderTargetWriteMask;
+};
+
+//Blend state description (OM)
+struct BlendPipelineStateDescription
+{
+	BlendPipelineStateDescription()
+	{
+		//Default state - off
+		AlphaToCoverageEnable = false;
+		IndependentBlendEnable = false;
+		
+		for (int i = 0; i < MAX_RENDER_TARGETS_THAT_CAN_BE_BOUND; i++)
+			RenderTargetsBlendState[i] = RenderTargetBlendStateDescription();
+	}
+
+	//OM settings relating to blend state
+	bool AlphaToCoverageEnable;
+	bool IndependentBlendEnable;  //If true, we use a separate blend state per render target. If false, use RenderTargetBlendState[0]
+
+	//Per render target blend state
+	RenderTargetBlendStateDescription RenderTargetsBlendState[MAX_RENDER_TARGETS_THAT_CAN_BE_BOUND];
 };
 
 //polygone fill mode

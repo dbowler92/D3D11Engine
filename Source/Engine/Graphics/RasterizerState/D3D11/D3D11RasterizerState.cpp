@@ -35,7 +35,7 @@ bool D3D11RasterizerState::InitRasterizerState(EngineAPI::Graphics::GraphicsDevi
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create the RSS object
-	HR(device->GetD3D11Device()->CreateRasterizerState(&rssDesc, &rss));
+	HR_CHECK_ERROR(device->GetD3D11Device()->CreateRasterizerState(&rssDesc, &rss));
 	if (rss == nullptr)
 		return false;
 

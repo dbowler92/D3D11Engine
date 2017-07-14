@@ -16,6 +16,7 @@
 #include "../../../Engine/Graphics/VertexShader/VertexShader.h"
 #include "../../../Engine/Graphics/PixelShader/PixelShader.h"
 
+#include "../../../Engine/Graphics/BlendState/BlendState.h"
 #include "../../../Engine/Graphics/DepthStencilState/DepthStencilState.h"
 #include "../../../Engine/Graphics/RasterizerState/RasterizerState.h"
 
@@ -54,6 +55,7 @@ private:
 
 	EngineAPI::Graphics::VertexBuffer stateVB;
 	EngineAPI::Graphics::IndexBuffer stateIB;
+	EngineAPI::Graphics::BlendState bs;
 	EngineAPI::Graphics::DepthStencilState dss;
 	EngineAPI::Graphics::RasterizerState rss;
 

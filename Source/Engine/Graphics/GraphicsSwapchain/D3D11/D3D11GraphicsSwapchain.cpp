@@ -145,12 +145,12 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainHandle(EngineAPI::Graphics::Graph
 	IDXGIAdapter* dgxiAdapter = NULL;
 	IDXGIFactory* dxgiFactory = NULL;
 
-	HR(device->GetD3D11Device()->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice));
-	HR(dxgiDevice->GetParent(__uuidof(IDXGIAdapter), (void**)&dgxiAdapter));
-	HR(dgxiAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&dxgiFactory));
+	HR_CHECK_ERROR(device->GetD3D11Device()->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice));
+	HR_CHECK_ERROR(dxgiDevice->GetParent(__uuidof(IDXGIAdapter), (void**)&dgxiAdapter));
+	HR_CHECK_ERROR(dgxiAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&dxgiFactory));
 
 	//Create swapchain
-	HR(dxgiFactory->CreateSwapChain(device->GetD3D11Device(), &sc, &swapchain));
+	HR_CHECK_ERROR(dxgiFactory->CreateSwapChain(device->GetD3D11Device(), &sc, &swapchain));
 
 	//Debug name
 	if (swapchain)
@@ -179,12 +179,12 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainBuffers(EngineAPI::Graphics::Grap
 	swapchainBuffersAspect = (float)swapchainBuffersWidth / (float)swapchainBuffersHeight;
 
 	//Resize buffers
-	HR(swapchain->ResizeBuffers(1, swapchainBuffersWidth, swapchainBuffersHeight, swapchainBuffersFormat, 0)); //Also resizes the swapchain width/height
+	HR_CHECK_ERROR(swapchain->ResizeBuffers(1, swapchainBuffersWidth, swapchainBuffersHeight, swapchainBuffersFormat, 0)); //Also resizes the swapchain width/height
 	
 	//Render target view (RTV) to the back buffer - we will be drawing directly in to the 
 	//back buffer. 
 	ID3D11Texture2D* backBuffer;
-	HR(swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer)));
+	HR_CHECK_ERROR(swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer)));
 	
 	//Debug name of the backbuffer texture2D object
 	if (backBuffer)

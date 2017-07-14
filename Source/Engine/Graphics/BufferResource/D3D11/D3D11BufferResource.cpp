@@ -33,7 +33,7 @@ bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device
 		initialData = &bufferInitialData;
 
 	//Create the buffer
-	HR(device->GetD3D11Device()->CreateBuffer(&bufferDesc, initialData, &buffer));
+	HR_CHECK_ERROR(device->GetD3D11Device()->CreateBuffer(&bufferDesc, initialData, &buffer));
 	if (buffer == nullptr)
 		return false;
 
@@ -61,8 +61,8 @@ bool D3D11BufferResource::MapResource(EngineAPI::Graphics::GraphicsDevice* devic
 	UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut)
 {
 	//Verify if we can map this resource?
-	if (!CanPerformMapOperation(mapMode))
-		return false;
+	//if (!CanPerformMapOperation(mapMode))
+	//	return false;
 
 	ID3D11DeviceContext* context = device->GetD3D11ImmediateContext();
 
@@ -75,7 +75,7 @@ bool D3D11BufferResource::MapResource(EngineAPI::Graphics::GraphicsDevice* devic
 
 	//Map the buffer
 	D3D11_MAPPED_SUBRESOURCE mappedRes = {};
-	HR(context->Map(buffer, subresourceIndex, mode, mapFlag, &mappedRes));
+	HR_CHECK_WARNING(context->Map(buffer, subresourceIndex, mode, mapFlag, &mappedRes));
 	if (mappedRes.pData == nullptr)
 		return false;
 

@@ -36,7 +36,7 @@ bool D3D11DepthStencilState::InitDepthStencilState(EngineAPI::Graphics::Graphics
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create the DSS object
-	HR(device->GetD3D11Device()->CreateDepthStencilState(&dssDesc, &dss));
+	HR_CHECK_ERROR(device->GetD3D11Device()->CreateDepthStencilState(&dssDesc, &dss));
 	if (dss == nullptr)
 		return false;
 

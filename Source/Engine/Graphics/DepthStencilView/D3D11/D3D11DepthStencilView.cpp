@@ -59,7 +59,7 @@ bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDe
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create DSV
-	HR(device->GetD3D11Device()->CreateDepthStencilView(depthTextureResource->GetD3D11Texture2DHandle(), &dsvDesc, &dsv));
+	HR_CHECK_ERROR(device->GetD3D11Device()->CreateDepthStencilView(depthTextureResource->GetD3D11Texture2DHandle(), &dsvDesc, &dsv));
 	if (dsv == nullptr)
 		return false;
 

@@ -34,7 +34,7 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	if (doInitWitInitialData)
 		initialData = &textureInitialData;
 
-	HR(device->GetD3D11Device()->CreateTexture2D(&textureDesc, initialData, &texture2DHandle));
+	HR_CHECK_ERROR(device->GetD3D11Device()->CreateTexture2D(&textureDesc, initialData, &texture2DHandle));
 	if (texture2DHandle == nullptr)
 		return false;
 
@@ -62,8 +62,8 @@ bool D3D11Texture2D::MapResource(EngineAPI::Graphics::GraphicsDevice* device,
 	UINT subresourceIndex, ResourceMappingMode mapMode, MappedResourceData* mappedResourceOut)
 {
 	//Verify if we can map this resource?
-	if (!CanPerformMapOperation(mapMode))
-		return false;
+	//if (!CanPerformMapOperation(mapMode))
+	//	return false;
 
 	ID3D11DeviceContext* context = device->GetD3D11ImmediateContext();
 
@@ -75,8 +75,9 @@ bool D3D11Texture2D::MapResource(EngineAPI::Graphics::GraphicsDevice* device,
 	D3D11_MAP_FLAG mapFlag = (D3D11_MAP_FLAG)0; //TODO
 
 	//Map the buffer
+	HRESULT hResult;
 	D3D11_MAPPED_SUBRESOURCE mappedRes = {};
-	HR(context->Map(texture2DHandle, subresourceIndex, mode, mapFlag, &mappedRes));
+	HR_CHECK_WARNING(context->Map(texture2DHandle, subresourceIndex, mode, mapFlag, &mappedRes));
 	if (mappedRes.pData == nullptr)
 		return false;
 

@@ -9,8 +9,8 @@ void D3D11DepthTexture2D::Shutdown()
 }
 
 bool D3D11DepthTexture2D::InitDepthTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
-	uint32_t textureWidth, uint32_t textureHeight, 
-	DepthStencilTextureFormat textureFormat, uint32_t msaaSampleCount,
+	uint32_t textureWidth, uint32_t textureHeight, uint32_t msaaSampleCount,
+	DepthStencilTextureFormat textureFormat,
 	bool willBeUsedAsShaderSamplerInput,
 	std::string debugName)
 {

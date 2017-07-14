@@ -75,6 +75,18 @@ namespace EngineAPI
 				//MSAA count
 				uint32_t GetSwapchainBuffersMSAASamplesCount() { return msaaSampleCount; };
 
+				//Does the swapchain manage a depth/stencil buffer - this will have been created
+				//when the swapchain was inited/reinited. 
+				//
+				//This depth/stencil buffer can be manually used (Eg: the depth texture for deferred
+				//rendering)
+				bool DoesSwapchainManageDepthStencilBuffer() { return doesManageADepthBuffer; };
+
+				//Get the depth texture && views
+				EngineAPI::Graphics::DepthTexture2D* GetSwapchainDepthTexture2D() { (doesManageADepthBuffer == true) ? &swpachainDepthTexture : nullptr; };
+				EngineAPI::Graphics::DepthStencilView* GetSwapchainDepthTexture2DReadWriteView() { (doesManageADepthBuffer == true) ? &swapchainDepthStencilViewReadWrite : nullptr; };
+				EngineAPI::Graphics::DepthStencilView* GetSwapchainDepthTexture2DReadOnlyView() { (doesManageADepthBuffer == true) ? &swapchainDepthStencilViewReadOnly : nullptr; };
+
 			public:
 				//Clears the backbuffer RTV
 				void ClearSwapchainBackbufferRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,

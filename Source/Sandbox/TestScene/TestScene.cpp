@@ -72,6 +72,7 @@ bool TestScene::OnSceneBecomeActive()
 	TestIB();
 	TestStates();
 	TestConstantBuffers();
+	TestRenderTarget();
 
 	//Done
 	return true;
@@ -261,6 +262,23 @@ void TestScene::TestConstantBuffers()
 		std::string("TestConstantBuffer_WVP")));
 }
 
+void TestScene::TestRenderTarget()
+{
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
+
+	//RenderTexture2D
+	assert(renderTgt.InitRenderTexture2D(device, 512, 512, 1, nullptr,
+		RESOURCE_FORMAT_R8G8B8A8_UNORM,
+		RESOURCE_USAGE_DEFAULT,
+		(ResourceCPUAccessFlag)0,
+		RESOURCE_BIND_RENDER_TARGET_BIT | RESOURCE_BIND_SHADER_RESOURCE_BIT,
+		std::string("TestRenderTexture2D")));
+
+	//View
+	assert(renderTgtView.InitRenderTargetView(device, &renderTgt, std::string("TestRenderTexture2D_RTV")));
+}
+
 bool TestScene::OnSceneBecomeDeactive()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("TestScene::OnSceneBecomeDeactive()\n");
@@ -284,6 +302,9 @@ bool TestScene::OnSceneBecomeDeactive()
 	cbVB.Shutdown();
 	cbIB.Shutdown();
 	constantBuffer.Shutdown();
+
+	renderTgt.Shutdown();
+	renderTgtView.Shutdown();
 
 	//Done
 	return true;
@@ -357,40 +378,34 @@ bool TestScene::OnSceneRender()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
+	//Bind render target with default depth buffer for now && clear (The render target - depth
+	//buffer should have been cleared by the engine at frame start!)
+	assert(gm->GetSwapchain()->DoesSwapchainManageDepthStencilBuffer());
+	//device->OMBindRenderTarget( /* Get default depth buffer */ );
+	//device->ClearRenderTarget();
+
+	//Topology
 	device->IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	device->VSBindShader(&cbVS);
-	device->PSBindShader(&cbPS);
+	//Shaders
+	device->VSSetShader(&cbVS);
+	device->PSSetShader(&cbPS);
 
-	device->IASetVertexBuffer(&cbVB, 0);
+	//Vertex and index buffer
+	device->IABindVertexBuffer(&cbVB, 0);
 	device->IASetIndexBuffer(&cbIB, 0);
 
+	//Shader resource / cbuffers
+	device->VSBindConstantBuffer(&constantBuffer, 0);
+
+	//Rendering state
 	device->RSSetState(&rss);
-	//float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-	//device->OMSetBlendState(&bs, blendFactor, 0xffffffff);
 	device->OMSetBlendState(&bs);
-	//device->OMSetBlendState(nullptr);
 	device->OMSetDepthStencilState(&dss, 0);
 
-	device->VSBindConstantBuffer(&constantBuffer, 0);
+	//Draw command
 	device->DrawIndexed(cbIB.GetIndexCount(), 0, 0);
 
-	//device->VSBindShader(&vs);
-	//device->PSBindShader(&ps);
-		
-	//device->IASetVertexBuffer(&stateVB, 0);
-	//device->IASetIndexBuffer(&stateIB, 0);
-	//device->RSSetState(&rss);
-	//device->OMSetDepthStencilState(&dss, 0);
-	//device->DrawIndexed(stateIB.GetIndexCount(), 0, 0);
-	
-	//device->IASetVertexBuffer(&indexedVB, 0);
-	//device->IASetIndexBuffer(&ib, 0);
-	//device->DrawIndexed(ib.GetIndexCount(), 0, 0);
-
-	//device->IASetVertexBuffer(&vb, 0);
-	//device->Draw(3, 0);
-	
 	//Done
 	return true;
 }

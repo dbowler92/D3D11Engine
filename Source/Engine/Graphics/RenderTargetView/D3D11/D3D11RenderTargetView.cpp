@@ -1,5 +1,8 @@
 #include "D3D11RenderTargetView.h"
 
+//RenderTexture2D
+#include <Graphics/RenderTexture2D/RenderTexture2D.h>
+
 //Needs to get D3D11 DSV from depth stencil view when binding
 #include <Graphics/DepthStencilView/DepthStencilView.h>
 
@@ -14,9 +17,12 @@ void D3D11RenderTargetView::Shutdown()
 }
 
 bool D3D11RenderTargetView::InitRenderTargetView(EngineAPI::Graphics::GraphicsDevice* device,
+	EngineAPI::Graphics::RenderTexture2D* renderTexture,
 	std::string debugName)
 {
-	//TODO
+	assert(renderTexture != nullptr);
+
+
 
 	//Done
 	return true;

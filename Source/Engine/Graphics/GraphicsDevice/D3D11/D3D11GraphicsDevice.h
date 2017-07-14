@@ -69,7 +69,7 @@ namespace EngineAPI
 				//
 				//Input Assembly (IA)
 				void IASetTopology(PrimitiveTopology topology);
-				void IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset);
+				void IABindVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset);
 				//void IASetVertexBuffers(EngineAPI::Graphics::VertexBuffer* vbs, uint32_t buffCount); //TOOD
 				void IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib, UINT offset);
 
@@ -81,11 +81,11 @@ namespace EngineAPI
 				void OMSetDepthStencilState(EngineAPI::Graphics::DepthStencilState* dss, UINT stencilRef);
 
 				//VS
-				void VSBindShader(EngineAPI::Graphics::VertexShader* vs);
+				void VSSetShader(EngineAPI::Graphics::VertexShader* vs);
 				void VSBindConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot);
 
 				//PS
-				void PSBindShader(EngineAPI::Graphics::PixelShader* ps);
+				void PSSetShader(EngineAPI::Graphics::PixelShader* ps);
 				
 				//Drawing
 				void Draw(UINT count, UINT startIndex);

@@ -22,11 +22,11 @@ namespace EngineAPI
 {
 	namespace Graphics
 	{
+		class RenderTexture2D;
 		class DepthStencilView;
 		namespace Platform
 		{
 			class D3D11GraphicsSwapchain;
-
 		};
 	};
 };
@@ -49,6 +49,7 @@ namespace EngineAPI
 							
 				//Inits the D3D11 RTV
 				bool InitRenderTargetView(EngineAPI::Graphics::GraphicsDevice* device,
+					EngineAPI::Graphics::RenderTexture2D* renderTexture,
 					std::string debugName = std::string("")); //TODO
 
 				//Shutdown the RTV

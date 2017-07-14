@@ -214,8 +214,8 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainDepthBuffer(EngineAPI::Graphics::
 	if (doesManageADepthBuffer)
 	{
 		if (!swpachainDepthTexture.InitDepthTexture2D(device, 
-			swapchainBuffersWidth, swapchainBuffersHeight, 
-			DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, msaaCount, true,
+			swapchainBuffersWidth, swapchainBuffersHeight, msaaCount,
+			DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, true,
 			std::string("SwapchainDepthStencilTexture2D")))
 		{
 			EngineAPI::Debug::DebugLog::PrintErrorMessage("D3D11GraphicsSwapchain::InitD3D11SwapchainDepthBuffer() Error - Could not create depth texture");

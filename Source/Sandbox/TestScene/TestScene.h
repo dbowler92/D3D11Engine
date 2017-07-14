@@ -22,6 +22,9 @@
 
 #include <Engine/Graphics/ConstantBuffer/ConstantBuffer.h>
 
+#include <Engine/Graphics/RenderTexture2D/RenderTexture2D.h>
+#include <Engine/Graphics/RenderTargetView/RenderTargetView.h>
+
 class TestScene : public EngineAPI::Gameplay::Scene
 {
 public:
@@ -59,7 +62,6 @@ private:
 	EngineAPI::Graphics::DepthStencilState dss;
 	EngineAPI::Graphics::RasterizerState rss;
 
-
 	EngineAPI::Graphics::VertexShader cbVS;
 	EngineAPI::Graphics::PixelShader cbPS;
 	EngineAPI::Graphics::VertexBuffer cbVB;
@@ -69,10 +71,14 @@ private:
 	XMMATRIX cbView;
 	XMMATRIX cbProj;
 
+	EngineAPI::Graphics::RenderTexture2D renderTgt;
+	EngineAPI::Graphics::RenderTargetView renderTgtView;
+
 private:
 	void TestVB();
 	void TestShaders();
 	void TestIB();
 	void TestStates();
 	void TestConstantBuffers();
+	void TestRenderTarget();
 };

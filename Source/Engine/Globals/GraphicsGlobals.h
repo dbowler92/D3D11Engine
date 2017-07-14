@@ -17,14 +17,6 @@
 //Maximum render targets that can be bound at once
 const UINT8 MAX_RENDER_TARGETS_THAT_CAN_BE_BOUND = 8;
 
-enum DepthStencilClearBit
-{
-	DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT = 0x1L,
-	DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT = 0x2L
-};
-
-typedef UINT DepthStencilClearFlag;
-
 enum ResourceType
 {
 	RESOURCE_TYPE_UNDEFINED = 0,
@@ -34,6 +26,7 @@ enum ResourceType
 	RESOURCE_TYPE_CONSTANT_BUFFER,
 	
 	RESOURCE_TYPE_DEPTH_STENCIL_TEXTURE2D,
+	RESOURCE_TYPE_RENDER_TARGET_2D,
 	RESOURCE_TYPE_SAMPLER_2D,
 };
 
@@ -575,3 +568,12 @@ struct MappedResourceData
 	UINT RowPitch;
 	UINT DepthPitch;
 };
+
+//Depth/stencil buffer clear flag
+enum DepthStencilClearBit
+{
+	DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT = 0x1L,
+	DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT = 0x2L
+};
+
+typedef UINT DepthStencilClearFlag;

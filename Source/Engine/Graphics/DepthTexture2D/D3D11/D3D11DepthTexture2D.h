@@ -30,9 +30,8 @@ namespace EngineAPI
 
 				//Inits the depth texture
 				bool InitDepthTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
-					uint32_t textureWidth, uint32_t textureHeight, 
+					uint32_t textureWidth, uint32_t textureHeight, uint32_t msaaSampleCount = 1,
 					DepthStencilTextureFormat textureFormat  = DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, 
-					uint32_t msaaSampleCount = 1,
 					bool willBeUsedAsShaderSamplerInput = false,    
 					std::string debugName = std::string(""));
 

@@ -88,7 +88,7 @@ void D3D11GraphicsDevice::IASetTopology(PrimitiveTopology topology)
 	GetD3D11ImmediateContext()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)topology);
 }
 
-void D3D11GraphicsDevice::IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset)
+void D3D11GraphicsDevice::IABindVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset)
 {
 	if (vb)
 		vb->BindVertexBufferToPipeline((EngineAPI::Graphics::GraphicsDevice*)this, offset);
@@ -141,7 +141,7 @@ void D3D11GraphicsDevice::OMSetDepthStencilState(EngineAPI::Graphics::DepthStenc
 //VS
 //
 
-void D3D11GraphicsDevice::VSBindShader(EngineAPI::Graphics::VertexShader* vs)
+void D3D11GraphicsDevice::VSSetShader(EngineAPI::Graphics::VertexShader* vs)
 {
 	if (vs)
 		vs->BindVertexShaderToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);
@@ -159,7 +159,7 @@ void D3D11GraphicsDevice::VSBindConstantBuffer(EngineAPI::Graphics::ConstantBuff
 //PS
 //
 
-void D3D11GraphicsDevice::PSBindShader(EngineAPI::Graphics::PixelShader* ps)
+void D3D11GraphicsDevice::PSSetShader(EngineAPI::Graphics::PixelShader* ps)
 {
 	if (ps)
 		ps->BindPixelShaderToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);

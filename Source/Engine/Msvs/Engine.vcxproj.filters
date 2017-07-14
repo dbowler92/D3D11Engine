@@ -253,6 +253,12 @@
     <Filter Include="Src\Graphics\BaseShaderResource">
       <UniqueIdentifier>{5703f101-17b6-48da-8405-bdbf15363096}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\RenderTexture2D">
+      <UniqueIdentifier>{1fef4540-4aef-4981-8a8b-231691906dea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\RenderTexture2D\D3D11">
+      <UniqueIdentifier>{f4b9464c-4a22-4120-bf85-93dd862784c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -386,6 +392,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\BaseShaderResource\BaseShaderResource.cpp">
       <Filter>Src\Graphics\BaseShaderResource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\RenderTexture2D\D3D11\D3D11RenderTexture2D.cpp">
+      <Filter>Src\Graphics\RenderTexture2D\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -613,6 +622,12 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\BaseShaderResource\BaseShaderResource.h">
       <Filter>Src\Graphics\BaseShaderResource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\RenderTexture2D\D3D11\D3D11RenderTexture2D.h">
+      <Filter>Src\Graphics\RenderTexture2D\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\RenderTexture2D\RenderTexture2D.h">
+      <Filter>Src\Graphics\RenderTexture2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

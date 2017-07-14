@@ -23,7 +23,6 @@ namespace EngineAPI
 		public:
 			OSWindow() {};
 			~OSWindow() {};
-			
 		};
 	};
 };

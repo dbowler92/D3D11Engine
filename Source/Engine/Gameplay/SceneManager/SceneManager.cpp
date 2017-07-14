@@ -31,6 +31,8 @@ void SceneManager::DestroyInstance()
 
 void SceneManager::ShutdownSubsystem()
 {
+	SetDebugName("SceneManager");
+
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(__FUNCTION__);
 
 	//Deactivate current scene

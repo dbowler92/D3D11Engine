@@ -4,6 +4,6 @@ using namespace EngineAPI::Graphics::Platform;
 
 void D3D11CommonResource::Shutdown()
 {
-	//Shutdown core object
+	//Shutdown base resource
 	__super::Shutdown();
 }

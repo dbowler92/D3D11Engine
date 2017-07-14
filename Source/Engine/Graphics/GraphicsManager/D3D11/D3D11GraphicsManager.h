@@ -51,6 +51,17 @@ namespace EngineAPI
 				//Public interface
 				//
 				EngineAPI::Graphics::GraphicsDevice* GetDevice() { return &device; };
+				EngineAPI::Graphics::GraphicsSwapchain* GetSwapchain() { return &swapchain; };
+
+				//Get the size of the swapchain buffers
+				uint32_t GetSwapchainBuffersWidth() { return swapchain.GetSwapchainBuffersWidth(); };
+				uint32_t GetSwapchainBuffersHeight() { return swapchain.GetSwapchainBuffersHeight(); };
+
+				//Get the size of the window - this may not be the same size as the swapchain buffers
+				//if we are using some form of resolution scale (IE: Render to the backbuffer that is smaller
+				//than the OSWindow or if the backbuffer is larger than the window (Super Sampling))
+				uint32_t GetWindowWidth() { return windowWidth; };
+				uint32_t GetWindowHeight() { return windowHeight; };
 
 			protected:
 				D3D11GraphicsManager() {};
@@ -74,6 +85,10 @@ namespace EngineAPI
 				EngineAPI::Graphics::GraphicsDevice device;
 				EngineAPI::Graphics::GraphicsSwapchain swapchain;
 
+			protected:
+				//Cache the OS window width
+				uint32_t windowWidth = 0;
+				uint32_t windowHeight = 0;
 			};
 		};
 	};

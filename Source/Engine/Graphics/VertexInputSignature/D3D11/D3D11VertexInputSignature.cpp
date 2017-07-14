@@ -24,7 +24,7 @@ bool D3D11VertexInputSignature::InitVertexInputSignature(EngineAPI::Graphics::Gr
 	}
 
 	//Set debug name
-	SetDebugName(ownerDebugName + "VertexInputSignature");
+	SetDebugName(ownerDebugName + "_VertexInputSignature");
 
 	//For each input, generate a D3D11_INPUT_LAYOUT_DESC
 	inputElementsArray.resize(inputsCount);
@@ -56,4 +56,7 @@ void D3D11VertexInputSignature::Shutdown()
 {
 	inputElementsArray.clear();
 	ReleaseCOM(inputLayout);
+
+	//Super
+	__super::Shutdown();
 }

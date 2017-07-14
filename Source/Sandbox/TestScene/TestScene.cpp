@@ -239,8 +239,8 @@ void TestScene::TestConstantBuffers()
 	XMVECTOR upV = XMLoadFloat3(&up);
 	cbView = XMMatrixLookAtLH(eyeV, lookV, upV);
 
-	float screenW = 960.0f; //TODO: Get actual window dimensions
-	float screenH = 540.0f; //TODO: Get actual window dimensions
+	float screenW = (float)gm->GetWindowWidth(); 
+	float screenH = (float)gm->GetWindowHeight(); 
 	cbProj = XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45.0f), (screenW / screenH), 0.1f, 100.0f);
 	
 	cbWorld = XMMatrixIdentity();
@@ -303,8 +303,12 @@ bool TestScene::OnEngineShutdown()
 
 bool TestScene::OnResize(uint32_t newWidth, uint32_t newHeight)
 {
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	float screenW = (float)gm->GetWindowWidth();
+	float screenH = (float)gm->GetWindowHeight();
+
 	//Recreate proj matrix
-	cbProj = XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45.0f), ((float)newWidth / (float)newHeight), 0.1f, 100.0f);
+	cbProj = XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45.0f), (screenW / screenH), 0.1f, 100.0f);
 
 	//Done
 	return true;

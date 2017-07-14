@@ -18,6 +18,9 @@ using namespace EngineAPI::Graphics::Platform;
 
 bool D3D11GraphicsDevice::InitD3D11DeviceAndImmediateContext(EngineAPI::OS::OSWindow* osWindow)
 {
+	//Set debug name
+	SetDebugName("D3D11DeviceAndContext");
+
 	//If debug mode, set the D3D11_CREATE_DEVICE_DEBUG flag
 	UINT createDeviceFlags = 0;
 #if defined (DEBUG) || defined (_DEBUG)

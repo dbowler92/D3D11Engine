@@ -24,8 +24,8 @@ namespace EngineAPI
 			class Win32OSWindow : public EngineAPI::Core::CoreObject
 			{
 			public:
-				Win32OSWindow() {};
-				virtual ~Win32OSWindow() = 0;
+				Win32OSWindow() { SetDebugName("Win32OSWindow"); };
+				virtual ~Win32OSWindow() = 0 {};
 
 				//Init functions
 				void SetWin32AppInstance(HINSTANCE handle) { appInstanceHandle = handle; };

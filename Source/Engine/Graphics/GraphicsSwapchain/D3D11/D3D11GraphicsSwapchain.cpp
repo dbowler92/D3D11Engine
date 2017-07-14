@@ -13,6 +13,9 @@ bool D3D11GraphicsSwapchain::InitD3D11Swapchain(EngineAPI::Graphics::GraphicsDev
 {
 	assert(device != nullptr);
 
+	//Set debug name
+	SetDebugName("Swapchain");
+
 	//Cahce init info
 	this->backBufferCount = backBufferCount;
 	this->msaaSampleCount = msaaSampleCount;
@@ -243,21 +246,12 @@ void D3D11GraphicsSwapchain::ClearSwapchainBackbufferRenderTarget(EngineAPI::Gra
 }
 
 void D3D11GraphicsSwapchain::ClearDepthStencilBuffer(EngineAPI::Graphics::GraphicsDevice* device,
-	bool doClearDepth, bool doClearStencil,
+	DepthStencilClearFlag depthStencilBufferClearFlag,
 	float depthClearValue, uint8_t stencilClearValue)
 {
 	//Only clear if we manage the depth stencil buffer. 
 	if (doesManageADepthBuffer)
-	{
-		//What to clear?
-		UINT clearFlag = 0;
-		if (doClearDepth)
-			clearFlag |= D3D11_CLEAR_DEPTH;
-		if (doClearStencil)
-			clearFlag |= D3D11_CLEAR_STENCIL;
-
-		assert(swapchainDepthStencilViewReadWrite.ClearDepthStencil(device, clearFlag, 1.0f, 0));
-	}
+		assert(swapchainDepthStencilViewReadWrite.ClearDepthStencil(device, depthStencilBufferClearFlag, 1.0f, 0));
 }
 
 void D3D11GraphicsSwapchain::BindSwapchainBackbufferAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,

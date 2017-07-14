@@ -41,7 +41,7 @@ bool D3D11BufferResource::InitBuffer(EngineAPI::Graphics::GraphicsDevice* device
 	SetDebugName(debugName);
 
 	//Init the common resource - stores api agnostic data on the buffer usage
-	CommonResource::InitCommonResourceUsageData(resourceType, resourceUsage, cpuAccess, resourceBindingFlag);
+	BaseResource::InitBaseResourceUsageData(resourceType, resourceUsage, cpuAccess, resourceBindingFlag);
 
 	//Done
 	return true;

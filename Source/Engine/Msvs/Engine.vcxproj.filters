@@ -241,8 +241,17 @@
     <Filter Include="Src\Core\CoreSubystem">
       <UniqueIdentifier>{9c086f43-f908-486e-b16c-d4af6a2a83ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\BasePipelineStateResource">
+      <UniqueIdentifier>{f609ecd6-298a-4fc0-8c29-702e4c3528ec}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Src\Graphics\BaseResource">
       <UniqueIdentifier>{fbede370-14b7-435d-b1ff-e11ef9e91c31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\BaseViewResource">
+      <UniqueIdentifier>{21d43e47-5811-41b9-a2ab-96eda08beff2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\BaseShaderResource">
+      <UniqueIdentifier>{5703f101-17b6-48da-8405-bdbf15363096}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -368,6 +377,15 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\BaseResource\BaseResource.cpp">
       <Filter>Src\Graphics\BaseResource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\BasePipelineStateResource\BasePipelineStateResource.cpp">
+      <Filter>Src\Graphics\BasePipelineStateResource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\BaseViewResource\BaseViewResource.cpp">
+      <Filter>Src\Graphics\BaseViewResource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\BaseShaderResource\BaseShaderResource.cpp">
+      <Filter>Src\Graphics\BaseShaderResource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -586,6 +604,15 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\BaseResource\BaseResource.h">
       <Filter>Src\Graphics\BaseResource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\BasePipelineStateResource\BasePipelineStateResource.h">
+      <Filter>Src\Graphics\BasePipelineStateResource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\BaseViewResource\BaseViewResource.h">
+      <Filter>Src\Graphics\BaseViewResource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\BaseShaderResource\BaseShaderResource.h">
+      <Filter>Src\Graphics\BaseShaderResource</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

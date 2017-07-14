@@ -152,6 +152,9 @@ bool Win32Application::InitEngine(HINSTANCE hInstance, LPWSTR lpCmdLine, HWND hW
 	int appVersionMajor, int appVersionMinor, int appVersionPatch,
 	int screenWidth, int screenHeight)
 {
+	//Set debug name
+	SetDebugName("Win32Application");
+
 	//   
 	//TODO: Plenty more init work that needs to be completed once I get to the relivent
 	//chapters in the book. Eg: Registering all engine events
@@ -206,6 +209,13 @@ bool Win32Application::ShutdownEngine()
 		EngineAPI::Graphics::GraphicsManager::DestroyInstance();
 	}
 
+	//Shutdown osWindow
+	osWindow.Shutdown();
+
+	//Shutdown super
+	__super::Shutdown();
+
+	//Engine shutdown
 	return true;
 }
 
@@ -299,7 +309,7 @@ bool Win32Application::OnResize()
 	osWindow.UpdateWindowWidth((unsigned)windowWidth);
 	osWindow.UpdateWindowHeight((unsigned)windowHeight);
 
-	//Resize render targets, etc
+	//Resize render targets, etc (FIRST - other systems maybe dependent on the updated info)
 	if (graphicsSubsystem)
 	{
 		if (!graphicsSubsystem->OnResize(&osWindow))
@@ -308,7 +318,10 @@ bool Win32Application::OnResize()
 
 	//Tell other subsystems of the resize event
 	if (sceneManagerSubsystem)
-		sceneManagerSubsystem->OnResize(osWindow.GetWindowWidth(), osWindow.GetWindowHeight());
+	{
+		if (!sceneManagerSubsystem->OnResize(osWindow.GetWindowWidth(), osWindow.GetWindowHeight()))
+			return false;
+	}
 
 	//Done
 	return true;
@@ -383,20 +396,28 @@ void Win32Application::CalculateFrameRateStats()
 		std::string currentSceneTitle = sceneManagerSubsystem->GetCurrentSceneTitle();
 
 		//Window size?
-		std::string windowSizeStr = "<";
+		std::string windowSizeStr = "Window Size: <";
 		windowSizeStr += std::to_string(osWindow.GetWindowWidth());
 		windowSizeStr += ", ";
 		windowSizeStr += std::to_string(osWindow.GetWindowHeight());
 		windowSizeStr += ">";
 
+		//Backbuffer size?
+		std::string backbufferSizeStr = "Swapchain Size: <";
+		backbufferSizeStr += std::to_string(graphicsSubsystem->GetSwapchainBuffersWidth());
+		backbufferSizeStr += ", ";
+		backbufferSizeStr += std::to_string(graphicsSubsystem->GetSwapchainBuffersHeight());
+		backbufferSizeStr += ">";
+
 		std::wostringstream outs;
 		outs.precision(8);
-		outs << L"<" << platformString.c_str() << L", " << graphicsAPIString.c_str() << L">    "
-			<< windowSizeStr.c_str() << L"    "
+		outs << L"<" << platformString.c_str() << L", " << graphicsAPIString.c_str() << L"> "
+			<< windowSizeStr.c_str() << L" "
+			<< backbufferSizeStr.c_str() << L"    "
 			<< (GetGameTitle()) << L"    "
 			<< (currentSceneTitle.c_str()) << L"    "
-			<< L"FPS: " << fps << L"    "
-			<< L"Frame Time: " << mspf << L" (ms)";
+			<< L"Frame Time (ms): " << mspf << L" "
+			<< L"(FPS: " << fps << L")";
 		SetWindowText(osWindow.GetAppMainWindowHandle(), outs.str().c_str());
 
 		// Reset for next average.

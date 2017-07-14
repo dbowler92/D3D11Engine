@@ -8,6 +8,7 @@
 
 //Parent
 #include "../../Core/CoreObject/CoreObject.h"
+#include "../../Core/CoreSubsystem/CoreSubsystem.h"
 
 #include <Windows.h>
 
@@ -104,6 +105,7 @@ namespace EngineAPI
 				EngineAPI::OS::OSWindow osWindow;
 				int appVersionMajor, appVersionMinor, appVersionPatch; //Application version
 
+			private:
 				uint32_t windowWidth;  //Window width && height -> Updated during WM_SIZE event
 				uint32_t windowHeight; //When user stops dragging, we can then resize the render targets
 			};

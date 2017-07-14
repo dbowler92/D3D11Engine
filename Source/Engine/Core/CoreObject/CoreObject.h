@@ -28,7 +28,7 @@ namespace EngineAPI
 			//Virtual functions that subclasses must implement
 		
 			//Virtual functions that subclasses can implement
-			virtual void Shutdown() {};
+			virtual void Shutdown();
 
 		protected:
 			//Internally sets the debug name - can be override by, say, D3D11

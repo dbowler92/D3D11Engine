@@ -64,13 +64,25 @@ namespace EngineAPI
 					EngineAPI::OS::OSWindow* osWindow);
 
 			public:
+				//Getters:
+				//
+				//Size of the swapchain buffers - This is not the size of the OSWindow which
+				//could be different (Eg: Say we have a system where the user can render at 200%
+				//scale)
+				uint32_t GetSwapchainBuffersWidth() { return swapchainBuffersWidth; };
+				uint32_t GetSwapchainBuffersHeight() { return swapchainBuffersHeight; };
+
+				//MSAA count
+				uint32_t GetSwapchainBuffersMSAASamplesCount() { return msaaSampleCount; };
+
+			public:
 				//Clears the backbuffer RTV
 				void ClearSwapchainBackbufferRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,
 					const float* col);
 
 				//Clears the depth stencil buffer
 				void ClearDepthStencilBuffer(EngineAPI::Graphics::GraphicsDevice* device,
-					bool doClearDepth = true, bool doClearStencil = true,
+					DepthStencilClearFlag depthStencilBufferClearFlag,
 					float depthClearValue = 1.0f, uint8_t stencilClearValue = 0);
 
 				//Binds the swapchain back buffer (and depth buffer if we manage it - pass false for shouldBindReadWriteDSV to

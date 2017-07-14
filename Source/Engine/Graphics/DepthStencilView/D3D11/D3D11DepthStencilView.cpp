@@ -75,12 +75,13 @@ bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDe
 }
 
 bool D3D11DepthStencilView::ClearDepthStencil(EngineAPI::Graphics::GraphicsDevice* device,
-	UINT clearFlag, float depthClear, uint8_t stencilClear)
+	DepthStencilClearFlag depthStencilBufferClearFlag, 
+	float depthClear, uint8_t stencilClear)
 {
 	if (dsv)
 	{
 		ID3D11DeviceContext* immediateContext = device->GetD3D11ImmediateContext();
-		immediateContext->ClearDepthStencilView(dsv, clearFlag, depthClear, stencilClear);
+		immediateContext->ClearDepthStencilView(dsv, depthStencilBufferClearFlag, depthClear, stencilClear);
 	
 		return true;
 	}

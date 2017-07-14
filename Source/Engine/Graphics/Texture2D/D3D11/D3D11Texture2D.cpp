@@ -41,8 +41,8 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	//Debug name
 	SetDebugName(debugName);
 
-	//Init common resource with API agnostic usage data
-	CommonResource::InitCommonResourceUsageData(resourceType, resourceUsage, cpuAccess, resourceBindingFlag);
+	//Init base resource with API agnostic usage data
+	BaseResource::InitBaseResourceUsageData(resourceType, resourceUsage, cpuAccess, resourceBindingFlag);
 
 	//Done
 	return true;

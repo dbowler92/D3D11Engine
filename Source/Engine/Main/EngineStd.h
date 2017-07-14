@@ -71,10 +71,10 @@ struct Uint8Colour
 	uint8_t A;
 };
 
-struct UNorm32Colour
+struct Float32Colour
 {
-	UNorm32Colour() {};
-	UNorm32Colour(float r, float g, float b, float a)
+	Float32Colour() {};
+	Float32Colour(float r, float g, float b, float a)
 	{
 		R = r;
 		G = g;

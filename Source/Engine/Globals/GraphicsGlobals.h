@@ -12,6 +12,14 @@
 
 #include "../Config/GraphicsConfig.h"
 
+enum DepthStencilClearBit
+{
+	DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT = 0x1L,
+	DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT = 0x2L
+};
+
+typedef UINT DepthStencilClearFlag;
+
 enum ResourceType
 {
 	RESOURCE_TYPE_UNDEFINED = 0,

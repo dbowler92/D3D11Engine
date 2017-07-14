@@ -22,11 +22,22 @@ namespace EngineAPI
 			CoreSubsystem() {};
 			virtual ~CoreSubsystem() = 0 {};
 
+			//Get the debug name of the subsystem
+			std::string GetDebugName() { return _subsystemDebugNameString; };
+
 			//Virtual functions that subclasses must implement
 			//virtual void InitSubsystem() = 0 {}; //TODO
-			virtual void ShutdownSubsystem() = 0 {};
+			virtual void ShutdownSubsystem() = 0 ;
 
 			//Virtual functions that subclasses can implement
+
+		protected:
+			//Internally sets the debug name
+			void SetDebugName(std::string s) { _subsystemDebugNameString = s; };
+
+		private:
+			//Debug string. 
+			std::string _subsystemDebugNameString = "";
 		};
 	};
 };

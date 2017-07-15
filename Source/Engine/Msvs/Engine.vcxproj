@@ -54,7 +54,6 @@
     <ClCompile Include="..\Graphics\RenderTexture2D\D3D11\D3D11RenderTexture2D.cpp" />
     <ClCompile Include="..\Graphics\ShaderResource\D3D11\D3D11ShaderResource.cpp" />
     <ClCompile Include="..\Graphics\Texture2D\D3D11\D3D11Texture2D.cpp" />
-    <ClCompile Include="..\Graphics\TextureFile2D\D3D11\D3D11TextureFile2D.cpp" />
     <ClCompile Include="..\Graphics\TextureResource\D3D11\D3D11TextureResource.cpp" />
     <ClCompile Include="..\Graphics\VertexBuffer\D3D11\D3D11VertexBuffer.cpp" />
     <ClCompile Include="..\Graphics\VertexInputSignature\D3D11\D3D11VertexInputSignature.cpp" />
@@ -124,8 +123,6 @@
     <ClInclude Include="..\Graphics\ShaderResource\ShaderResource.h" />
     <ClInclude Include="..\Graphics\Texture2D\D3D11\D3D11Texture2D.h" />
     <ClInclude Include="..\Graphics\Texture2D\Texture2D.h" />
-    <ClInclude Include="..\Graphics\TextureFile2D\D3D11\D3D11TextureFile2D.h" />
-    <ClInclude Include="..\Graphics\TextureFile2D\TextureFile2D.h" />
     <ClInclude Include="..\Graphics\TextureResource\D3D11\D3D11TextureResource.h" />
     <ClInclude Include="..\Graphics\TextureResource\TextureResource.h" />
     <ClInclude Include="..\Graphics\VertexBuffer\D3D11\D3D11VertexBuffer.h" />

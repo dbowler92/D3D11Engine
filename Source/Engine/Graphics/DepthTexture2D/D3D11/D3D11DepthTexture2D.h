@@ -6,7 +6,10 @@
 
 #pragma once
 
-//Is a Texture2D object at heart!
+//Parent
+#include <Core/CoreObject/CoreObject.h>
+
+//Manages a Texture2D
 #include <Graphics/Texture2D/Texture2D.h>
 
 enum DepthStencilTextureFormat
@@ -22,7 +25,7 @@ namespace EngineAPI
 	{
 		namespace Platform
 		{
-			class D3D11DepthTexture2D : public EngineAPI::Graphics::Texture2D
+			class D3D11DepthTexture2D : public EngineAPI::Core::CoreObject
 			{
 			public:
 				D3D11DepthTexture2D() {};
@@ -39,11 +42,17 @@ namespace EngineAPI
 				virtual void Shutdown() override;
 
 			public:
-				//Getters
+				//Gets the underlying Texture2D object we are managing
+				EngineAPI::Graphics::Texture2D* GetTexture2D() { return &depthStencilTexture2D; };
+
+				//API Agnostic info
 				DepthStencilTextureFormat GetDepthTextureFormat() { return depthTextureFormat; };
 				bool CanCreateShaderResourceViewForDepthTexture() { return willBeUsedAsShaderSamplerInput; };
 
 			protected:
+				//The Texture2D we manage
+				EngineAPI::Graphics::Texture2D depthStencilTexture2D;
+
 				//My engine depth/stencil texture format.
 				DepthStencilTextureFormat depthTextureFormat;
 

@@ -269,8 +269,8 @@ void TestScene::TestRenderTarget()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
-	uint32_t w = 512;
-	uint32_t h = 512;
+	uint32_t w = (float)gm->GetWindowWidth();
+	uint32_t h = (float)gm->GetWindowHeight();
 
 	//RenderTexture2D
 	assert(renderTgt.InitRenderTexture2D(device, w, h, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT, nullptr,
@@ -328,8 +328,6 @@ bool TestScene::OnSceneBecomeDeactive()
 	depthTexture.Shutdown();
 	depthTextureView.Shutdown();
 
-	texFromFile.Shutdown();
-
 	//Done
 	return true;
 }
@@ -358,6 +356,9 @@ bool TestScene::OnResize(uint32_t newWidth, uint32_t newHeight)
 
 	//Recreate proj matrix
 	cbProj = XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45.0f), (screenW / screenH), 0.1f, 100.0f);
+
+	//Resize render to texture
+	TestRenderTarget();
 
 	//Done
 	return true;
@@ -430,10 +431,10 @@ bool TestScene::OnSceneRender()
 		DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
 
 	//Error check
-	assert(renderTgt.GetTexture2D()->GetTextureWidth() == depthTexture.GetTextureWidth());
-	assert(renderTgt.GetTexture2D()->GetTextureHeight() == depthTexture.GetTextureHeight());
-	assert(renderTgt.GetTexture2D()->GetTextureMSAASampleCount() == depthTexture.GetTextureMSAASampleCount());
-	assert(renderTgt.GetTexture2D()->GetTextureMSAAQuality() == depthTexture.GetTextureMSAAQuality());
+	assert(renderTgt.GetTexture2D()->GetTextureWidth() == depthTexture.GetTexture2D()->GetTextureWidth());
+	assert(renderTgt.GetTexture2D()->GetTextureHeight() == depthTexture.GetTexture2D()->GetTextureHeight());
+	assert(renderTgt.GetTexture2D()->GetTextureMSAASampleCount() == depthTexture.GetTexture2D()->GetTextureMSAASampleCount());
+	assert(renderTgt.GetTexture2D()->GetTextureMSAAQuality() == depthTexture.GetTexture2D()->GetTextureMSAAQuality());
 
 	//Bind render target + depth.
 	device->OMSetRenderTarget(&renderTgtView, &depthTextureView);

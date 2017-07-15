@@ -100,12 +100,6 @@
     <Filter Include="Src\Graphics\Texture2D\D3D11">
       <UniqueIdentifier>{8eae44f4-56f0-4ffd-8de5-91fab5dc76bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Graphics\DepthTexture2D">
-      <UniqueIdentifier>{181c82cb-55e7-4993-89d0-f29e055accc0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Graphics\DepthTexture2D\D3D11">
-      <UniqueIdentifier>{56ef115c-5cc9-4d34-944c-02b288564e02}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Graphics\BufferResource">
       <UniqueIdentifier>{2c3aad5c-f551-46d3-a6b6-4b50161db490}</UniqueIdentifier>
     </Filter>
@@ -268,6 +262,12 @@
     <Filter Include="Src\Math\Matrix">
       <UniqueIdentifier>{849ddbbf-1960-4f9e-8cf3-74fe28943cce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\DepthStencilTexture2D">
+      <UniqueIdentifier>{181c82cb-55e7-4993-89d0-f29e055accc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\DepthStencilTexture2D\D3D11">
+      <UniqueIdentifier>{56ef115c-5cc9-4d34-944c-02b288564e02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -314,9 +314,6 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\DepthStencilView\D3D11\D3D11DepthStencilView.cpp">
       <Filter>Src\Graphics\DepthStencilView\D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Graphics\DepthTexture2D\D3D11\D3D11DepthTexture2D.cpp">
-      <Filter>Src\Graphics\DepthTexture2D\D3D11</Filter>
     </ClCompile>
     <ClCompile Include="..\Graphics\CommonResource\D3D11\D3D11CommonResource.cpp">
       <Filter>Src\Graphics\CommonResource\D3D11</Filter>
@@ -408,6 +405,9 @@
     <ClCompile Include="..\Math\Vector\Vector.cpp">
       <Filter>Src\Math\Vector</Filter>
     </ClCompile>
+    <ClCompile Include="..\Graphics\DepthStencilTexture2D\D3D11\D3D11DepthStencilTexture2D.cpp">
+      <Filter>Src\Graphics\DepthStencilTexture2D\D3D11</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Main\EngineStd.h">
@@ -487,12 +487,6 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\DepthStencilView\D3D11\D3D11DepthStencilView.h">
       <Filter>Src\Graphics\DepthStencilView\D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Graphics\DepthTexture2D\D3D11\D3D11DepthTexture2D.h">
-      <Filter>Src\Graphics\DepthTexture2D\D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Graphics\DepthTexture2D\DepthTexture2D.h">
-      <Filter>Src\Graphics\DepthTexture2D</Filter>
     </ClInclude>
     <ClInclude Include="..\Graphics\CommonResource\D3D11\D3D11CommonResource.h">
       <Filter>Src\Graphics\CommonResource\D3D11</Filter>
@@ -643,6 +637,12 @@
     </ClInclude>
     <ClInclude Include="..\Math\Vector\Vector.h">
       <Filter>Src\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\DepthStencilTexture2D\D3D11\D3D11DepthStencilTexture2D.h">
+      <Filter>Src\Graphics\DepthStencilTexture2D\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\DepthStencilTexture2D\DepthStencilTexture2D.h">
+      <Filter>Src\Graphics\DepthStencilTexture2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

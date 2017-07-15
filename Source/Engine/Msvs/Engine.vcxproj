@@ -40,8 +40,8 @@
     <ClCompile Include="..\Graphics\CommonResource\D3D11\D3D11CommonResource.cpp" />
     <ClCompile Include="..\Graphics\ConstantBuffer\D3D11\D3D11ConstantBuffer.cpp" />
     <ClCompile Include="..\Graphics\DepthStencilState\D3D11\D3D11DepthStencilState.cpp" />
+    <ClCompile Include="..\Graphics\DepthStencilTexture2D\D3D11\D3D11DepthStencilTexture2D.cpp" />
     <ClCompile Include="..\Graphics\DepthStencilView\D3D11\D3D11DepthStencilView.cpp" />
-    <ClCompile Include="..\Graphics\DepthTexture2D\D3D11\D3D11DepthTexture2D.cpp" />
     <ClCompile Include="..\Graphics\GraphicsDevice\D3D11\D3D11GraphicsDevice.cpp" />
     <ClCompile Include="..\Graphics\GraphicsManager\D3D11\D3D11GraphicsManager.cpp" />
     <ClCompile Include="..\Graphics\GraphicsManager\GraphicsManager.cpp" />
@@ -97,10 +97,10 @@
     <ClInclude Include="..\Graphics\ConstantBuffer\D3D11\D3D11ConstantBuffer.h" />
     <ClInclude Include="..\Graphics\DepthStencilState\D3D11\D3D11DepthStencilState.h" />
     <ClInclude Include="..\Graphics\DepthStencilState\DepthStencilState.h" />
+    <ClInclude Include="..\Graphics\DepthStencilTexture2D\D3D11\D3D11DepthStencilTexture2D.h" />
+    <ClInclude Include="..\Graphics\DepthStencilTexture2D\DepthStencilTexture2D.h" />
     <ClInclude Include="..\Graphics\DepthStencilView\D3D11\D3D11DepthStencilView.h" />
     <ClInclude Include="..\Graphics\DepthStencilView\DepthStencilView.h" />
-    <ClInclude Include="..\Graphics\DepthTexture2D\D3D11\D3D11DepthTexture2D.h" />
-    <ClInclude Include="..\Graphics\DepthTexture2D\DepthTexture2D.h" />
     <ClInclude Include="..\Graphics\GraphicsDevice\D3D11\D3D11GraphicsDevice.h" />
     <ClInclude Include="..\Graphics\GraphicsDevice\GraphicsDevice.h" />
     <ClInclude Include="..\Graphics\GraphicsManager\D3D11\D3D11GraphicsManager.h" />

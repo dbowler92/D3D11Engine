@@ -287,7 +287,7 @@ void TestScene::TestRenderTarget()
 		std::string("TestRenderTexture2D_RTV")));
 
 	//Depth
-	assert(depthTexture.InitDepthTexture2D(device, w, h, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT,
+	assert(depthTexture.InitDepthStencilTexture2D(device, w, h, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT,
 		DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, false, std::string("RenderTarget_DepthTexture")));
 
 	//View

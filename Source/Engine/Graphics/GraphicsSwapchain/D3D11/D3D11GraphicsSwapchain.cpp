@@ -58,7 +58,7 @@ void D3D11GraphicsSwapchain::Shutdown()
 	{
 		swapchainDepthStencilViewReadWrite.Shutdown();
 		swapchainDepthStencilViewReadOnly.Shutdown();
-		swpachainDepthTexture.Shutdown();
+		swpachainDepthStencilTexture.Shutdown();
 	}
 
 	swapchainBackbufferRenderTargetView.Shutdown();
@@ -213,7 +213,7 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainDepthBuffer(EngineAPI::Graphics::
 {
 	if (doesManageADepthBuffer)
 	{
-		if (!swpachainDepthTexture.InitDepthTexture2D(device, 
+		if (!swpachainDepthStencilTexture.InitDepthStencilTexture2D(device, 
 			swapchainBuffersWidth, swapchainBuffersHeight, msaaCount,
 			DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, true,
 			std::string("SwapchainDepthStencilTexture2D")))
@@ -223,8 +223,8 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainDepthBuffer(EngineAPI::Graphics::
 		}
 
 		//DSVs
-		assert(swapchainDepthStencilViewReadWrite.InitDepthStencilView(device,&swpachainDepthTexture, false, std::string("SwapchainDepthStencilViewReadWrite")));
-		assert(swapchainDepthStencilViewReadOnly.InitDepthStencilView(device, &swpachainDepthTexture, true, std::string("SwapchainDepthStencilViewReadOnly")));
+		assert(swapchainDepthStencilViewReadWrite.InitDepthStencilView(device,&swpachainDepthStencilTexture, false, std::string("SwapchainDepthStencilViewReadWrite")));
+		assert(swapchainDepthStencilViewReadOnly.InitDepthStencilView(device, &swpachainDepthStencilTexture, true, std::string("SwapchainDepthStencilViewReadOnly")));
 
 		//TODO: SRV to the depth buffer
 	}

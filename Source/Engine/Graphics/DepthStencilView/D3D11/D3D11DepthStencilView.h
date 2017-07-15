@@ -22,7 +22,7 @@ namespace EngineAPI
 {
 	namespace Graphics
 	{
-		class DepthTexture2D;
+		class DepthStencilTexture2D;
 	};
 };
 
@@ -40,7 +40,7 @@ namespace EngineAPI
 
 				//Inits the D3D11 DSV
 				bool InitDepthStencilView(EngineAPI::Graphics::GraphicsDevice* device,
-					class EngineAPI::Graphics::DepthTexture2D* depthTextureResource,
+					EngineAPI::Graphics::DepthStencilTexture2D* depthTextureResource,
 					bool isReadOnlyDSV = false,
 					std::string debugName = std::string(""));
 

@@ -1,6 +1,6 @@
 #include "D3D11DepthStencilView.h"
 
-#include <Graphics/DepthTexture2D/DepthTexture2D.h>
+#include <Graphics/DepthStencilTexture2D/DepthStencilTexture2D.h>
 
 using namespace EngineAPI::Graphics::Platform;
 
@@ -13,7 +13,7 @@ void D3D11DepthStencilView::Shutdown()
 }
 
 bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDevice* device,
-	EngineAPI::Graphics::DepthTexture2D* depthTextureResource,
+	EngineAPI::Graphics::DepthStencilTexture2D* depthTextureResource,
 	bool isReadOnlyDSV,
 	std::string debugName)
 {
@@ -31,7 +31,7 @@ bool D3D11DepthStencilView::InitDepthStencilView(EngineAPI::Graphics::GraphicsDe
 	dsvDesc = {};
 
 	//Calculate the format for the DSV based on depth buffer format. 
-	DepthStencilTextureFormat texFormat = depthTextureResource->GetDepthTextureFormat();
+	DepthStencilTextureFormat texFormat = depthTextureResource->GetDepthStencilTextureFormat();
 	if (texFormat == DEPTH_STENCIL_FORMAT_D16_UNORM)
 		dsvDesc.Format = DXGI_FORMAT_D16_UNORM;
 	else if (texFormat == DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT)

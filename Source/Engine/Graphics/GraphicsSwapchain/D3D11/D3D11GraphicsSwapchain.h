@@ -19,8 +19,8 @@
 //Creates an RTV to the backbuffer / texture
 #include <Graphics/RenderTargetView/RenderTargetView.h>
 
-//Manages a depth texture
-#include <Graphics/DepthTexture2D/DepthTexture2D.h>
+//Manages a depth/stencil texture
+#include <Graphics/DepthStencilTexture2D/DepthStencilTexture2D.h>
 #include <Graphics/DepthStencilView/DepthStencilView.h>
 
 namespace EngineAPI
@@ -83,7 +83,7 @@ namespace EngineAPI
 				bool DoesSwapchainManageDepthStencilBuffer() { return doesManageADepthBuffer; };
 
 				//Get the depth texture && views
-				EngineAPI::Graphics::DepthTexture2D* GetSwapchainDepthTexture2D() { return ((doesManageADepthBuffer == true) ? &swpachainDepthTexture : nullptr); };
+				EngineAPI::Graphics::DepthStencilTexture2D* GetSwapchainDepthTexture2D() { return ((doesManageADepthBuffer == true) ? &swpachainDepthStencilTexture : nullptr); };
 				EngineAPI::Graphics::DepthStencilView* GetSwapchainDepthTexture2DReadWriteView() { return ((doesManageADepthBuffer == true) ? &swapchainDepthStencilViewReadWrite : nullptr); };
 				EngineAPI::Graphics::DepthStencilView* GetSwapchainDepthTexture2DReadOnlyView() { return ((doesManageADepthBuffer == true) ? &swapchainDepthStencilViewReadOnly : nullptr); };
 
@@ -141,7 +141,7 @@ namespace EngineAPI
 				//Depth texture created alongside the swapchain. TODO: Add way of not creating one
 				//of these automatically (not 100% necessary in deferred rendering - you can create one and manage
 				//it yourself when initing a GBuffer)
-				EngineAPI::Graphics::DepthTexture2D swpachainDepthTexture;
+				EngineAPI::Graphics::DepthStencilTexture2D swpachainDepthStencilTexture;
 				EngineAPI::Graphics::DepthStencilView swapchainDepthStencilViewReadWrite; //Normal use
 				EngineAPI::Graphics::DepthStencilView swapchainDepthStencilViewReadOnly;  //Want to sample from depth buffer but use depth test. 
 

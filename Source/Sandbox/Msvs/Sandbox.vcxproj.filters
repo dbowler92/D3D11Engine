@@ -28,6 +28,9 @@
     <Filter Include="AppConfig">
       <UniqueIdentifier>{713c60f4-8c88-4d28-8933-7ad4507836e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\HLSLShaders\TestTexturedShader">
+      <UniqueIdentifier>{f31611ca-92e7-4832-b95c-26aec34c5c4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\SandboxMain.cpp">
@@ -63,6 +66,12 @@
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestCBufferVS.hlsl">
       <Filter>Resources\HLSLShaders\TestCBufferShader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestTexturedPS.hlsl">
+      <Filter>Resources\HLSLShaders\TestTexturedShader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestTexturedVS.hlsl">
+      <Filter>Resources\HLSLShaders\TestTexturedShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

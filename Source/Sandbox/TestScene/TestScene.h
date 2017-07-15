@@ -28,6 +28,7 @@
 #include <Engine/Graphics/DepthStencilView/DepthStencilView.h>
 
 #include <Engine/Graphics/Texture2D/Texture2D.h>
+#include <Engine/Graphics/ShaderResourceView/ShaderResourceView.h>
 
 class TestScene : public EngineAPI::Gameplay::Scene
 {
@@ -80,7 +81,12 @@ private:
 	EngineAPI::Graphics::DepthStencilTexture2D depthTexture;
 	EngineAPI::Graphics::DepthStencilView depthTextureView;
 
+	EngineAPI::Graphics::VertexBuffer texCubeVB;
+	EngineAPI::Graphics::IndexBuffer texCubeIB;
+	EngineAPI::Graphics::VertexShader texVS;
+	EngineAPI::Graphics::PixelShader texPS;
 	EngineAPI::Graphics::Texture2D textureFromFile;
+	EngineAPI::Graphics::ShaderResourceView texSRV;
 
 private:
 	void TestVB();

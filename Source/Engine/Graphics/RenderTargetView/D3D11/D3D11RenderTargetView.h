@@ -52,7 +52,7 @@ namespace EngineAPI
 					EngineAPI::Graphics::RenderTexture2D* renderTexture,
 					bool doUseUnderlyingResourceFormatForView = true,
 					ResourceFormat renderTargetTextureViewFormat = RESOURCE_FORMAT_UNKNOWN,
-					std::string debugName = std::string("")); //TODO
+					std::string debugName = std::string(""));
 
 				//Shutdown the RTV
 				virtual void Shutdown() override;

@@ -43,9 +43,11 @@ namespace EngineAPI
 
 				//Loads a texture with data from file - Note: This is limited to .DDS files for
 				//now -> Uses the DDSTextureLoader 3rdParty library
+				//
+				//Resource will use default usage settings - IE, its an default shader resource with no CPU access. TODO:
+				//Add support for the extra functions of the DDS loader (eg: auto mips generation)
 				bool InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevice* device, 
-					std::string ddsFilePath, bool doAutoGenerateMips = false, 
-					std::string debugName = std::string(""));
+					std::string ddsFilePath, std::string debugName = std::string(""));
 
 			public:
 				//OVerride base class(es) functions:

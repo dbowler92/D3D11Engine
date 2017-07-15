@@ -93,8 +93,7 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 }
 
 bool D3D11Texture2D::InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevice* device,
-	std::string ddsFilePath, bool doAutoGenerateMips,
-	std::string debugName)
+	std::string ddsFilePath, std::string debugName)
 {
 	assert(!ddsFilePath.empty());
 
@@ -135,14 +134,16 @@ bool D3D11Texture2D::InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevic
 	textureInitialData = {};
 	texture2DHandle->GetDesc(&textureDesc);
 
-	//Set debug name - this gives a warning that we are overriding the resource
-	//name set by the DDS loader library -> Just ignore it!
-	SetDebugName(debugName);
+	//Set debug name - Just the CoreObject name mind - the DDSLoader 
+	//sets the debug name of the resource to its asset path which is
+	//rather handy!
+	//SetDebugName(debugName);
+	__super::SetDebugName(debugName);
 
 	//Init the BaseResource data
-	ResourceUsage textureUsage = RESOURCE_USAGE_IMMUTABLE;
-	ResourceCPUAccessFlag textureCPUAccess = (ResourceCPUAccessFlag)0;
-	ResourceBindFlag textureBinding = RESOURCE_BIND_SHADER_RESOURCE_BIT;
+	ResourceUsage textureUsage = (ResourceUsage)textureDesc.Usage;
+	ResourceCPUAccessFlag textureCPUAccess = (ResourceCPUAccessFlag)textureDesc.CPUAccessFlags;
+	ResourceBindFlag textureBinding = (ResourceBindFlag)textureDesc.BindFlags;
 	BaseResource::InitBaseResourceUsageData(RESOURCE_TYPE_TEXTURE_2D, 
 		textureUsage, textureCPUAccess, textureBinding);
 	

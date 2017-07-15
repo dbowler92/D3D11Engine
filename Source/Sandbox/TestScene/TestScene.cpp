@@ -22,6 +22,23 @@ struct Vertex
 	float c[3];
 };
 
+struct TexVertex
+{
+	TexVertex() {};
+	TexVertex(float px, float py, float pz, float tx, float ty)
+	{
+		p[0] = px;
+		p[1] = py;
+		p[2] = pz;
+
+		t[0] = tx;
+		t[1] = ty;
+	}
+
+	float p[3];
+	float t[2];
+};
+
 const UINT CUBE_VERT_COUNT = 8;
 const UINT CUBE_INDS_COUNT = 36;
 
@@ -35,6 +52,18 @@ const Vertex CUBE_VERTS[CUBE_VERT_COUNT]
 	{ 1.0f, 1.0f, 1.0f, 1, 0, 0, },
 	{ -1.0f, -1.0f, 1.0f, 0, 1, 0, },
 	{ 1.0f, -1.0f, 1.0f, 0, 1, 1 },
+};
+
+const TexVertex CUBE_TEX_VERTS[CUBE_VERT_COUNT]
+{
+	{ -1.0f, 1.0f, -1.0f, 1, 0, },    // vertex 0
+	{ 1.0f, 1.0f, -1.0f, 0, 1, },     // vertex ...
+	{ -1.0f, -1.0f, -1.0f, 1, 0, },
+	{ 1.0f, -1.0f, -1.0f, 0, 1, },
+	{ -1.0f, 1.0f, 1.0f, 1, 1, },
+	{ 1.0f, 1.0f, 1.0f, 1, 0, },
+	{ -1.0f, -1.0f, 1.0f, 0, 1, },
+	{ 1.0f, -1.0f, 1.0f, 0, 1,},
 };
 
 const UINT16 CUBE_INDICES[CUBE_INDS_COUNT]
@@ -299,9 +328,41 @@ void TestScene::TestTexturesFromFile()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
+	//Shaders
+	//Vertex input layout 
+	VertexInputSignatureElementDescription vbDesc[2];
+	vbDesc[0] = VertexInputSignatureElementDescription::PerVertex("POSITION", 0, RESOURCE_FORMAT_R32G32B32_FLOAT, 0, 0);
+	vbDesc[1] = VertexInputSignatureElementDescription::PerVertex("TEXCOORD", 0, RESOURCE_FORMAT_R32G32_FLOAT, 0, 12);
+
+	assert(texVS.InitCompiledVertexShaderFromFile(device,
+		SHADER_COMPILED_ASSETS_FOLDER"TestTexturedVS.cso",
+		&vbDesc[0], 2,
+		std::string("TexturedCubeVS")));
+
+	assert(texPS.InitCompiledPixelShaderFromFile(device,
+		SHADER_COMPILED_ASSETS_FOLDER"TestTexturedPS.cso",
+		std::string("TexturedCubePS")));
+
+	//Cube
+	assert(texCubeVB.InitVertexBuffer(device,
+		sizeof(TexVertex), CUBE_VERT_COUNT, (void*)CUBE_TEX_VERTS,
+		RESOURCE_USAGE_IMMUTABLE, NULL, RESOURCE_BIND_VERTEX_BUFFER_BIT,
+		std::string("Cube_Textured_VB")));
+
+	assert(texCubeIB.InitIndexBuffer(device,
+		INDEX_BUFFER_FORMAT_UINT16, CUBE_INDS_COUNT, (void*)CUBE_INDICES,
+		RESOURCE_USAGE_IMMUTABLE, NULL, RESOURCE_BIND_INDEX_BUFFER_BIT,
+		std::string("Cube_Textured_IB")));
+
+	//TEX
 	assert(textureFromFile.InitTexture2DFromDDSFile(device,
 		std::string(TEXTURE_ASSETS_FOLDER"/TestTextures/floor.dds"),
-		false, std::string("TestTexture2DLoadedFromFile")));
+		std::string("TestTexture2DLoadedFromFile")));
+
+	//SRV
+	assert(texSRV.InitShaderResourceViewToTexture2D(device,
+		&textureFromFile, true, RESOURCE_FORMAT_R8G8B8A8_UNORM,
+		std::string("DDSTextureFromFile_SRV")));
 }
 
 bool TestScene::OnSceneBecomeDeactive()
@@ -333,7 +394,12 @@ bool TestScene::OnSceneBecomeDeactive()
 	depthTexture.Shutdown();
 	depthTextureView.Shutdown();
 
+	texCubeVB.Shutdown();
+	texCubeIB.Shutdown();
+	texVS.Shutdown();
+	texPS.Shutdown();
 	textureFromFile.Shutdown();
+	texSRV.Shutdown();
 
 	//Done
 	return true;
@@ -433,29 +499,29 @@ bool TestScene::OnSceneRender()
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 	
 	//Clear render target & depth
-	device->ClearRenderTarget(&renderTgtView, Float32Colour(0.0f, 0.0f, 1.0f, 1.0f));
-	device->ClearDepthStencilBuffer(&depthTextureView,
-		DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
+	//device->ClearRenderTarget(&renderTgtView, Float32Colour(0.0f, 0.0f, 1.0f, 1.0f));
+	//device->ClearDepthStencilBuffer(&depthTextureView,
+	//	DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
 
 	//Error check
-	assert(renderTgt.GetTexture2D()->GetTextureWidth() == depthTexture.GetTexture2D()->GetTextureWidth());
-	assert(renderTgt.GetTexture2D()->GetTextureHeight() == depthTexture.GetTexture2D()->GetTextureHeight());
-	assert(renderTgt.GetTexture2D()->GetTextureMSAASampleCount() == depthTexture.GetTexture2D()->GetTextureMSAASampleCount());
-	assert(renderTgt.GetTexture2D()->GetTextureMSAAQuality() == depthTexture.GetTexture2D()->GetTextureMSAAQuality());
+	//assert(renderTgt.GetTexture2D()->GetTextureWidth() == depthTexture.GetTexture2D()->GetTextureWidth());
+	//assert(renderTgt.GetTexture2D()->GetTextureHeight() == depthTexture.GetTexture2D()->GetTextureHeight());
+	//assert(renderTgt.GetTexture2D()->GetTextureMSAASampleCount() == depthTexture.GetTexture2D()->GetTextureMSAASampleCount());
+	//assert(renderTgt.GetTexture2D()->GetTextureMSAAQuality() == depthTexture.GetTexture2D()->GetTextureMSAAQuality());
 
 	//Bind render target + depth.
-	device->OMSetRenderTarget(&renderTgtView, &depthTextureView);
+	//device->OMSetRenderTarget(&renderTgtView, &depthTextureView);
 
 	//Topology
 	device->IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//Shaders
-	device->VSSetShader(&cbVS);
-	device->PSSetShader(&cbPS);
+	device->VSSetShader(&texVS);
+	device->PSSetShader(&texPS);
 
 	//Vertex and index buffer
-	device->IASetVertexBuffer(&cbVB, 0);
-	device->IASetIndexBuffer(&cbIB, 0);
+	device->IASetVertexBuffer(&texCubeVB, 0);
+	device->IASetIndexBuffer(&texCubeIB, 0);
 
 	//Shader resource / cbuffers
 	device->VSSetConstantBuffer(&constantBuffer, 0);
@@ -466,7 +532,7 @@ bool TestScene::OnSceneRender()
 	device->OMSetDepthStencilState(&dss, 0);
 
 	//Draw command
-	device->DrawIndexed(cbIB.GetIndexCount(), 0, 0);
+	device->DrawIndexed(texCubeIB.GetIndexCount(), 0, 0);
 
 	//Done
 	return true;

@@ -265,6 +265,12 @@
     <Filter Include="Src\Graphics\DepthStencilTexture2D\D3D11">
       <UniqueIdentifier>{56ef115c-5cc9-4d34-944c-02b288564e02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\ShaderResourceView">
+      <UniqueIdentifier>{6e6d6bea-465a-42ac-9454-11712420d7e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\ShaderResourceView\D3D11">
+      <UniqueIdentifier>{12201897-219e-4576-9498-1f98ec434342}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -401,6 +407,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\DepthStencilTexture2D\D3D11\D3D11DepthStencilTexture2D.cpp">
       <Filter>Src\Graphics\DepthStencilTexture2D\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\ShaderResourceView\D3D11\D3D11ShaderResourceView.cpp">
+      <Filter>Src\Graphics\ShaderResourceView\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -634,6 +643,12 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\DepthStencilTexture2D\DepthStencilTexture2D.h">
       <Filter>Src\Graphics\DepthStencilTexture2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\ShaderResourceView\D3D11\D3D11ShaderResourceView.h">
+      <Filter>Src\Graphics\ShaderResourceView\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\ShaderResourceView\ShaderResourceView.h">
+      <Filter>Src\Graphics\ShaderResourceView</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

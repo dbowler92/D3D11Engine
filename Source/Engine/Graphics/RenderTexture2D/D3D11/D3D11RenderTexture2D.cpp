@@ -66,7 +66,7 @@ bool D3D11RenderTexture2D::InitRenderTexture2D(EngineAPI::Graphics::GraphicsDevi
 	//Initial data
 	bool doInitWithInitialData = (initialData != nullptr) ? true : false;
 	textureInitialData.pSysMem = initialData;
-	textureInitialData.SysMemPitch - 0;
+	textureInitialData.SysMemPitch = 0;
 	textureInitialData.SysMemSlicePitch = 0;
 
 	//API agnostic usage info -> This data may have changed from what

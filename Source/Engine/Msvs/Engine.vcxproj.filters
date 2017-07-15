@@ -259,6 +259,15 @@
     <Filter Include="Src\Graphics\RenderTexture2D\D3D11">
       <UniqueIdentifier>{f4b9464c-4a22-4120-bf85-93dd862784c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Math">
+      <UniqueIdentifier>{f4e5b7d1-d413-4281-9417-49c69f9fc567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Math\Vector">
+      <UniqueIdentifier>{1c1e8bef-e454-442a-9256-2a218e4272a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Math\Matrix">
+      <UniqueIdentifier>{849ddbbf-1960-4f9e-8cf3-74fe28943cce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -395,6 +404,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\RenderTexture2D\D3D11\D3D11RenderTexture2D.cpp">
       <Filter>Src\Graphics\RenderTexture2D\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Math\Vector\Vector.cpp">
+      <Filter>Src\Math\Vector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -628,6 +640,9 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\RenderTexture2D\RenderTexture2D.h">
       <Filter>Src\Graphics\RenderTexture2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\Vector\Vector.h">
+      <Filter>Src\Math\Vector</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

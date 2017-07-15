@@ -46,6 +46,14 @@ namespace EngineAPI
 				DXGI_FORMAT GetD3D11Texture2DResourceFormat() { return textureDesc.Format; };
 				bool IsMSAATexture() { return textureDesc.SampleDesc.Count > 1; };
 
+				//Width and height of the texture
+				uint32_t GetTextureWidth() { return textureDesc.Width; };
+				uint32_t GetTextureHeight() { return textureDesc.Height; }; 
+				
+				//MSAA count and quality 
+				uint32_t GetTextureMSAASampleCount()  { return textureDesc.SampleDesc.Count; };
+				uint32_t GetTextureMSAAQuality() { return textureDesc.SampleDesc.Quality; };
+				
 			protected:
 				//Texture description
 				D3D11_TEXTURE2D_DESC textureDesc = {};

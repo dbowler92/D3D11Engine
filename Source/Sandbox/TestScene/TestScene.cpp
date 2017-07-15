@@ -385,6 +385,26 @@ bool TestScene::OnSceneUpdate(float dt)
 		memcpy(mrd.MappedData, (void*)&wvp4x4, constantBuffer.GetConstantBufferSizeBytes());
 	constantBuffer.UnmapResource(device, 0);
 	
+	//
+	//My Math library
+	//
+	Vector3D v(2.0f, 2.0f, 2.0f);
+	Vector3D v2(8.0f, 8.0f, 8.0f);
+
+	Vector3D v3 = v2 * 2;
+	Vector3D v4 = -v3;
+
+	Vector3D v5(2.0f, 3.0f, 5.0f);
+	Vector3D v6 = Normalize(v5);
+	float v5Len = Length(v5);
+	float v5Mag = Magnitude(v5);
+	float v6Len = Length(v6);
+	Vector3D v7 = -v5;
+
+	Vector3D v8 = v5 * 2;
+	
+	int x = 100;   
+
 	//Done
 	return true;
 }
@@ -398,6 +418,12 @@ bool TestScene::OnSceneRender()
 	device->ClearRenderTarget(&renderTgtView, Float32Colour(0.0f, 0.0f, 1.0f, 1.0f));
 	device->ClearDepthStencilBuffer(&depthTextureView,
 		DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
+
+	//Error check
+	assert(renderTgt.GetTextureWidth() == depthTexture.GetTextureWidth());
+	assert(renderTgt.GetTextureHeight() == depthTexture.GetTextureHeight());
+	assert(renderTgt.GetTextureMSAASampleCount() == depthTexture.GetTextureMSAASampleCount());
+	assert(renderTgt.GetTextureMSAAQuality() == depthTexture.GetTextureMSAAQuality());
 
 	//Bind render target + depth.
 	device->OMSetRenderTarget(&renderTgtView, &depthTextureView);

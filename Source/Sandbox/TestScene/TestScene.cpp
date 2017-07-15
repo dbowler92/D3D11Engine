@@ -299,6 +299,9 @@ void TestScene::TestTexturesFromFile()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
+	assert(textureFromFile.InitTexture2DFromDDSFile(device,
+		std::string(TEXTURE_ASSETS_FOLDER"/TestTextures/floor.dds"),
+		false, std::string("TestTexture2DLoadedFromFile")));
 }
 
 bool TestScene::OnSceneBecomeDeactive()

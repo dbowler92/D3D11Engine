@@ -1,5 +1,10 @@
 #include "D3D11Texture2D.h"
 
+//#include <string>
+
+//File loader (DDS)
+#include <3rdParty/DDSTextureLoader/DDSTextureLoader.h>
+
 using namespace EngineAPI::Graphics::Platform;
 
 void D3D11Texture2D::Shutdown()
@@ -25,7 +30,7 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	//Destroy old texture
 	if (texture2DHandle)
 	{
-		std::string o = std::string(__FUNCTION__) + ": " + "Releasing old texture: " + GetDebugName();
+		std::string o = std::string(__FUNCTION__) + ": " + "Releasing old Texture2D: " + GetDebugName();
 		EngineAPI::Debug::DebugLog::PrintWarningMessage(o.c_str());
 		ReleaseCOM(texture2DHandle);
 	}
@@ -65,7 +70,7 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	textureInitialData.SysMemSlicePitch = 0;
 
 	//Print message saying we are creating a texture
-	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture: " + debugName;
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture2D: " + debugName;
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Init texture with initial data?
@@ -87,6 +92,64 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	return true;
 }
 
+bool D3D11Texture2D::InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevice* device,
+	std::string ddsFilePath, bool doAutoGenerateMips,
+	std::string debugName)
+{
+	assert(!ddsFilePath.empty());
+
+	//Release old texture + warning message
+	if (texture2DHandle)
+	{
+		std::string o = std::string(__FUNCTION__) + ": " + "Releasing old Texture2D: " + GetDebugName();
+		EngineAPI::Debug::DebugLog::PrintWarningMessage(o.c_str());
+		ReleaseCOM(texture2DHandle);
+	}
+
+	//Message telling us we are loading a Texture2D from file
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture2D: " + debugName + ". Loaded from file: " + ddsFilePath;
+	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
+	 
+	//Load the texture
+	std::wstring ddsFileWS(ddsFilePath.begin(), ddsFilePath.end());
+	ID3D11Resource* resource = nullptr;
+	DirectX::DDS_ALPHA_MODE alphaMode;
+	HR_CHECK_ERROR(DirectX::CreateDDSTextureFromFile(device->GetD3D11Device(),
+		ddsFileWS.c_str(), &resource, nullptr, 0, &alphaMode));
+	
+	//Check 
+	if (resource == nullptr)
+		return false;
+
+	//Ensure we actually loaded a Texture2D object
+	D3D11_RESOURCE_DIMENSION d3dResourceDimention = {};
+	resource->GetType(&d3dResourceDimention);
+	if (d3dResourceDimention != D3D11_RESOURCE_DIMENSION_TEXTURE2D)
+		return false;
+
+	//Cache texture pointer
+	texture2DHandle = (ID3D11Texture2D*)resource;
+
+	//Cache the D3D11_TEXTURE2D_DESC struct
+	textureDesc = {};
+	textureInitialData = {};
+	texture2DHandle->GetDesc(&textureDesc);
+
+	//Set debug name - this gives a warning that we are overriding the resource
+	//name set by the DDS loader library -> Just ignore it!
+	SetDebugName(debugName);
+
+	//Init the BaseResource data
+	ResourceUsage textureUsage = RESOURCE_USAGE_IMMUTABLE;
+	ResourceCPUAccessFlag textureCPUAccess = (ResourceCPUAccessFlag)0;
+	ResourceBindFlag textureBinding = RESOURCE_BIND_SHADER_RESOURCE_BIT;
+	BaseResource::InitBaseResourceUsageData(RESOURCE_TYPE_TEXTURE_2D, 
+		textureUsage, textureCPUAccess, textureBinding);
+	
+	//Done
+	return true;
+}
+
 bool D3D11Texture2D::Internal_InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	bool doInitWitInitialData, ResourceType resourceType,
 	ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
@@ -95,13 +158,13 @@ bool D3D11Texture2D::Internal_InitTexture2D(EngineAPI::Graphics::GraphicsDevice*
 	//Destroy old texture
 	if (texture2DHandle)
 	{
-		std::string o = std::string(__FUNCTION__) + ": " + "Releasing old texture: " + GetDebugName();
+		std::string o = std::string(__FUNCTION__) + ": " + "Releasing old Texture2D: " + GetDebugName();
 		EngineAPI::Debug::DebugLog::PrintWarningMessage(o.c_str());
 		ReleaseCOM(texture2DHandle);
 	}
 
 	//Print message saying we are creating a texture
-	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture: " + debugName;
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture2D: " + debugName;
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Init texture with initial data?

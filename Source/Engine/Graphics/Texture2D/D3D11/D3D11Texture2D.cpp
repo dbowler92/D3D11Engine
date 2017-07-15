@@ -11,7 +11,83 @@ void D3D11Texture2D::Shutdown()
 	__super::Shutdown();
 }
 
-bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
+bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
+	uint32_t textureWidth, uint32_t textureHeight, uint32_t msaaSampleCount,
+	uint32_t mipLevels, uint32_t arraySize,
+	ResourceMiscFlag miscFlags,
+	void* initialData,
+	ResourceFormat textureFormat,
+	ResourceUsage textureUsage,
+	ResourceCPUAccessFlag textureCpuAccess,
+	ResourceBindFlag textureBindFlag,
+	std::string debugName)
+{
+	//Destroy old texture
+	if (texture2DHandle)
+	{
+		std::string o = std::string(__FUNCTION__) + ": " + "Releasing old texture: " + GetDebugName();
+		EngineAPI::Debug::DebugLog::PrintWarningMessage(o.c_str());
+		ReleaseCOM(texture2DHandle);
+	}
+
+	//Fill D3D11 Tex desc struct
+	textureDesc.Width = textureWidth;
+	textureDesc.Height = textureHeight;
+	textureDesc.MipLevels = mipLevels;
+	textureDesc.ArraySize = arraySize;
+	textureDesc.Format = (DXGI_FORMAT)textureFormat;
+	textureDesc.Usage = (D3D11_USAGE)textureUsage;
+	textureDesc.CPUAccessFlags = (UINT)textureCpuAccess;
+	textureDesc.BindFlags = (UINT)textureBindFlag;
+	textureDesc.MiscFlags = (UINT)miscFlags;
+
+	//MSAA
+	if (msaaSampleCount == 1)
+	{
+		textureDesc.SampleDesc.Count = 1;
+		textureDesc.SampleDesc.Quality = 0;
+	}
+	else
+	{
+		uint32_t maxMSAAQuality = 0;
+		device->GetD3D11Device()->CheckMultisampleQualityLevels((DXGI_FORMAT)textureFormat, msaaSampleCount, &maxMSAAQuality);
+		assert(maxMSAAQuality > 0);
+
+		//Do enable msaa (for render targets...)
+		uint32_t msaaQualityLevel = maxMSAAQuality - 1;
+		textureDesc.SampleDesc.Count = msaaSampleCount;
+		textureDesc.SampleDesc.Quality = msaaQualityLevel;
+	}
+
+	//Fill D3D11 init data struct
+	textureInitialData.pSysMem = initialData;
+	textureInitialData.SysMemPitch = 0;
+	textureInitialData.SysMemSlicePitch = 0;
+
+	//Print message saying we are creating a texture
+	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture: " + debugName;
+	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
+
+	//Init texture with initial data?
+	D3D11_SUBRESOURCE_DATA* initialDataDesc = nullptr;
+	if (initialData)
+		initialDataDesc = &textureInitialData;
+
+	HR_CHECK_ERROR(device->GetD3D11Device()->CreateTexture2D(&textureDesc, initialDataDesc, &texture2DHandle));
+	if (texture2DHandle == nullptr)
+		return false;
+
+	//Debug name
+	SetDebugName(debugName);
+
+	//Init base resource with API agnostic usage data
+	BaseResource::InitBaseResourceUsageData(RESOURCE_TYPE_TEXTURE_2D, textureUsage, textureCpuAccess, textureBindFlag);
+	
+	//Done
+	return true;
+}
+
+bool D3D11Texture2D::Internal_InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	bool doInitWitInitialData, ResourceType resourceType,
 	ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
 	std::string debugName)

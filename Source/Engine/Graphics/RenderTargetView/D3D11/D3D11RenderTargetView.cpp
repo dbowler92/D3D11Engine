@@ -37,12 +37,12 @@ bool D3D11RenderTargetView::InitRenderTargetView(EngineAPI::Graphics::GraphicsDe
 
 	//Format - important if the resource was created typeless
 	if (doUseUnderlyingResourceFormatForView)
-		rtvDesc.Format = renderTexture->GetD3D11Texture2DResourceFormat();
+		rtvDesc.Format = renderTexture->GetTexture2D()->GetD3D11Texture2DResourceFormat();
 	else
 		rtvDesc.Format = (DXGI_FORMAT)renderTargetTextureViewFormat;
 
 	//Fillout rest of the description structure. 
-	if (renderTexture->IsMSAATexture())
+	if (renderTexture->GetTexture2D()->IsMSAATexture())
 	{
 		rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DMS;
 		rtvDesc.Texture2DMS = {};
@@ -58,7 +58,7 @@ bool D3D11RenderTargetView::InitRenderTargetView(EngineAPI::Graphics::GraphicsDe
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
 	//Create RTV
-	HR_CHECK_ERROR(device->GetD3D11Device()->CreateRenderTargetView(renderTexture->GetD3D11Texture2DHandle(), &rtvDesc, &rtv));
+	HR_CHECK_ERROR(device->GetD3D11Device()->CreateRenderTargetView(renderTexture->GetTexture2D()->GetD3D11Texture2DHandle(), &rtvDesc, &rtv));
 	if (rtv == nullptr)
 		return false;
 

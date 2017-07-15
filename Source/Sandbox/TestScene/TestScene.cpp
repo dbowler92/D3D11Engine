@@ -74,6 +74,7 @@ bool TestScene::OnSceneBecomeActive()
 	TestStates();
 	TestConstantBuffers();
 	TestRenderTarget();
+	TestTexturesFromFile();
 
 	//Done
 	return true;
@@ -293,6 +294,11 @@ void TestScene::TestRenderTarget()
 	assert(depthTextureView.InitDepthStencilView(device, &depthTexture, false, std::string("RenderTarget_DepthTextureView")));
 }
 
+void TestScene::TestTexturesFromFile()
+{
+
+}
+
 bool TestScene::OnSceneBecomeDeactive()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("TestScene::OnSceneBecomeDeactive()\n");
@@ -321,6 +327,8 @@ bool TestScene::OnSceneBecomeDeactive()
 	renderTgtView.Shutdown();
 	depthTexture.Shutdown();
 	depthTextureView.Shutdown();
+
+	texFromFile.Shutdown();
 
 	//Done
 	return true;
@@ -388,6 +396,7 @@ bool TestScene::OnSceneUpdate(float dt)
 	//
 	//My Math library
 	//
+	/*
 	Vector3D v(2.0f, 2.0f, 2.0f);
 	Vector3D v2(8.0f, 8.0f, 8.0f);
 
@@ -404,6 +413,7 @@ bool TestScene::OnSceneUpdate(float dt)
 	Vector3D v8 = v5 * 2;
 	
 	int x = 100;   
+	*/
 
 	//Done
 	return true;
@@ -420,10 +430,10 @@ bool TestScene::OnSceneRender()
 		DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
 
 	//Error check
-	assert(renderTgt.GetTextureWidth() == depthTexture.GetTextureWidth());
-	assert(renderTgt.GetTextureHeight() == depthTexture.GetTextureHeight());
-	assert(renderTgt.GetTextureMSAASampleCount() == depthTexture.GetTextureMSAASampleCount());
-	assert(renderTgt.GetTextureMSAAQuality() == depthTexture.GetTextureMSAAQuality());
+	assert(renderTgt.GetTexture2D()->GetTextureWidth() == depthTexture.GetTextureWidth());
+	assert(renderTgt.GetTexture2D()->GetTextureHeight() == depthTexture.GetTextureHeight());
+	assert(renderTgt.GetTexture2D()->GetTextureMSAASampleCount() == depthTexture.GetTextureMSAASampleCount());
+	assert(renderTgt.GetTexture2D()->GetTextureMSAAQuality() == depthTexture.GetTextureMSAAQuality());
 
 	//Bind render target + depth.
 	device->OMSetRenderTarget(&renderTgtView, &depthTextureView);

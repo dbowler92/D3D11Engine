@@ -6,7 +6,10 @@
 
 #pragma once
 
-//Is a Texture2D object at heart!
+//Parent
+#include <Core/CoreObject/CoreObject.h>
+
+//Manages a Texture2D object
 #include <Graphics/Texture2D/Texture2D.h>
 
 namespace EngineAPI
@@ -15,7 +18,7 @@ namespace EngineAPI
 	{
 		namespace Platform
 		{
-			class D3D11RenderTexture2D : public EngineAPI::Graphics::Texture2D
+			class D3D11RenderTexture2D : public EngineAPI::Core::CoreObject
 			{
 			public:
 				D3D11RenderTexture2D() {};
@@ -33,6 +36,14 @@ namespace EngineAPI
 
 				//Shutsdown the render texture
 				virtual void Shutdown() override;
+
+			public:
+				//Gets the actual texture object
+				EngineAPI::Graphics::Texture2D* GetTexture2D() { return &renderTexture2D; };
+
+			protected:
+				//The actual GPU Texture object
+				EngineAPI::Graphics::Texture2D renderTexture2D;
 			};
 		}
 	};

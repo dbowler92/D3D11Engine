@@ -22,11 +22,29 @@ namespace EngineAPI
 			{
 			public:
 				D3D11Texture2D() {};
-				virtual ~D3D11Texture2D() = 0 {};
+				virtual ~D3D11Texture2D(){};
 				
 				//Shutsdown the underlying Texture2D object
-				virtual void Shutdown() override = 0;
+				virtual void Shutdown() override;
 				 
+				//Public init function for Texture objects - this will be used
+				//if no other class/system exists for what you want to do. For example, 
+				//dynamic textures
+				//
+				bool InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
+					uint32_t textureWidth, uint32_t textureHeight, uint32_t msaaSampleCount = 1,
+					uint32_t mipLevels = 1, uint32_t arraySize = 1,
+					ResourceMiscFlag miscFlags = 0,
+					void* initialData = nullptr, 
+					ResourceFormat textureFormat = RESOURCE_FORMAT_R8G8B8A8_UNORM,
+					ResourceUsage textureUsage = RESOURCE_USAGE_DYNAMIC,
+					ResourceCPUAccessFlag textureCpuAccess = RESOURCE_CPU_ACCESS_WRITE_BIT,
+					ResourceBindFlag textureBindFlag = RESOURCE_BIND_SHADER_RESOURCE_BIT,
+					std::string debugName = std::string(""));
+
+			public:
+				//OVerride base class(es) functions:
+				//
 				//Override the SetDebugName function() -> Set the debug name
 				//of the D3D11 resource
 				void SetDebugName(std::string s) override;
@@ -63,8 +81,8 @@ namespace EngineAPI
 				ID3D11Texture2D* texture2DHandle = nullptr;
 
 			protected:
-				//Inits the underlying texture object
-				bool InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
+				//Inits the underlying texture object - this can be called by subclasses
+				bool Internal_InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
 					bool doInitWitInitialData, ResourceType resourceType,
 					ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
 					std::string debugName = "");

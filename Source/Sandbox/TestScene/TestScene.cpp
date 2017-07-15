@@ -269,8 +269,8 @@ void TestScene::TestRenderTarget()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
-	uint32_t w = (float)gm->GetWindowWidth();
-	uint32_t h = (float)gm->GetWindowHeight();
+	uint32_t w = (uint32_t)gm->GetWindowWidth();
+	uint32_t h = (uint32_t)gm->GetWindowHeight();
 
 	//RenderTexture2D
 	assert(renderTgt.InitRenderTexture2D(device, w, h, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT, nullptr,
@@ -296,6 +296,8 @@ void TestScene::TestRenderTarget()
 
 void TestScene::TestTexturesFromFile()
 {
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
 }
 
@@ -327,6 +329,8 @@ bool TestScene::OnSceneBecomeDeactive()
 	renderTgtView.Shutdown();
 	depthTexture.Shutdown();
 	depthTextureView.Shutdown();
+
+	textureFromFile.Shutdown();
 
 	//Done
 	return true;

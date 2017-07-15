@@ -110,6 +110,11 @@ bool D3D11RenderTargetView::InitRenderTargetViewDirectFromD3D11Texture2D(EngineA
 	return true;
 }
 
+void D3D11RenderTargetView::ReleaseD3D11RenderTargetView()
+{
+	ReleaseCOM(rtv);
+}
+
 void D3D11RenderTargetView::ClearRenderTargetView(EngineAPI::Graphics::GraphicsDevice* device, const float* col)
 {
 	if (rtv)

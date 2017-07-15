@@ -20,7 +20,12 @@
 
 #pragma once
 
+#if defined(_XBOX_ONE) && defined(_TITLE)
+#include <d3d11_x.h>
+#else
 #include <d3d11_1.h>
+#endif
+
 #include <stdint.h>
 
 
@@ -36,7 +41,7 @@ namespace DirectX
     };
 
     // Standard version
-    HRESULT CreateDDSTextureFromMemory(
+    HRESULT __cdecl CreateDDSTextureFromMemory(
         _In_ ID3D11Device* d3dDevice,
         _In_reads_bytes_(ddsDataSize) const uint8_t* ddsData,
         _In_ size_t ddsDataSize,
@@ -45,7 +50,7 @@ namespace DirectX
         _In_ size_t maxsize = 0,
         _Out_opt_ DDS_ALPHA_MODE* alphaMode = nullptr);
 
-    HRESULT CreateDDSTextureFromFile(
+    HRESULT __cdecl CreateDDSTextureFromFile(
         _In_ ID3D11Device* d3dDevice,
         _In_z_ const wchar_t* szFileName,
         _Outptr_opt_ ID3D11Resource** texture,
@@ -54,9 +59,14 @@ namespace DirectX
         _Out_opt_ DDS_ALPHA_MODE* alphaMode = nullptr);
 
     // Standard version with optional auto-gen mipmap support
-    HRESULT CreateDDSTextureFromMemory(
+    HRESULT __cdecl CreateDDSTextureFromMemory(
+    #if defined(_XBOX_ONE) && defined(_TITLE)
+        _In_ ID3D11DeviceX* d3dDevice,
+        _In_opt_ ID3D11DeviceContextX* d3dContext,
+    #else
         _In_ ID3D11Device* d3dDevice,
         _In_opt_ ID3D11DeviceContext* d3dContext,
+    #endif
         _In_reads_bytes_(ddsDataSize) const uint8_t* ddsData,
         _In_ size_t ddsDataSize,
         _Outptr_opt_ ID3D11Resource** texture,
@@ -64,9 +74,14 @@ namespace DirectX
         _In_ size_t maxsize = 0,
         _Out_opt_ DDS_ALPHA_MODE* alphaMode = nullptr);
 
-    HRESULT CreateDDSTextureFromFile(
+    HRESULT __cdecl CreateDDSTextureFromFile(
+    #if defined(_XBOX_ONE) && defined(_TITLE)
+        _In_ ID3D11DeviceX* d3dDevice,
+        _In_opt_ ID3D11DeviceContextX* d3dContext,
+    #else
         _In_ ID3D11Device* d3dDevice,
         _In_opt_ ID3D11DeviceContext* d3dContext,
+    #endif
         _In_z_ const wchar_t* szFileName,
         _Outptr_opt_ ID3D11Resource** texture,
         _Outptr_opt_ ID3D11ShaderResourceView** textureView,
@@ -74,7 +89,7 @@ namespace DirectX
         _Out_opt_ DDS_ALPHA_MODE* alphaMode = nullptr);
 
     // Extended version
-    HRESULT CreateDDSTextureFromMemoryEx(
+    HRESULT __cdecl CreateDDSTextureFromMemoryEx(
         _In_ ID3D11Device* d3dDevice,
         _In_reads_bytes_(ddsDataSize) const uint8_t* ddsData,
         _In_ size_t ddsDataSize,
@@ -88,7 +103,7 @@ namespace DirectX
         _Outptr_opt_ ID3D11ShaderResourceView** textureView,
         _Out_opt_ DDS_ALPHA_MODE* alphaMode = nullptr);
 
-    HRESULT CreateDDSTextureFromFileEx(
+    HRESULT __cdecl CreateDDSTextureFromFileEx(
         _In_ ID3D11Device* d3dDevice,
         _In_z_ const wchar_t* szFileName,
         _In_ size_t maxsize,
@@ -102,9 +117,14 @@ namespace DirectX
         _Out_opt_ DDS_ALPHA_MODE* alphaMode = nullptr);
 
     // Extended version with optional auto-gen mipmap support
-    HRESULT CreateDDSTextureFromMemoryEx(
+    HRESULT __cdecl CreateDDSTextureFromMemoryEx(
+    #if defined(_XBOX_ONE) && defined(_TITLE)
+        _In_ ID3D11DeviceX* d3dDevice,
+        _In_opt_ ID3D11DeviceContextX* d3dContext,
+    #else
         _In_ ID3D11Device* d3dDevice,
         _In_opt_ ID3D11DeviceContext* d3dContext,
+    #endif
         _In_reads_bytes_(ddsDataSize) const uint8_t* ddsData,
         _In_ size_t ddsDataSize,
         _In_ size_t maxsize,
@@ -117,9 +137,14 @@ namespace DirectX
         _Outptr_opt_ ID3D11ShaderResourceView** textureView,
         _Out_opt_ DDS_ALPHA_MODE* alphaMode = nullptr);
 
-    HRESULT CreateDDSTextureFromFileEx(
+    HRESULT __cdecl CreateDDSTextureFromFileEx(
+    #if defined(_XBOX_ONE) && defined(_TITLE)
+        _In_ ID3D11DeviceX* d3dDevice,
+        _In_opt_ ID3D11DeviceContextX* d3dContext,
+    #else
         _In_ ID3D11Device* d3dDevice,
         _In_opt_ ID3D11DeviceContext* d3dContext,
+    #endif
         _In_z_ const wchar_t* szFileName,
         _In_ size_t maxsize,
         _In_ D3D11_USAGE usage,

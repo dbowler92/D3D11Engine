@@ -88,6 +88,10 @@ namespace EngineAPI
 				bool InitRenderTargetViewDirectFromD3D11Texture2D(EngineAPI::Graphics::GraphicsDevice* device,
 					ID3D11Texture2D* d3d11TextureResource,
 					std::string debugName = std::string(""));
+
+				//Special release function called before resizing the swapchain buffers by the swapchain
+				//class itself
+				void ReleaseD3D11RenderTargetView();
 			};
 		};
 	};

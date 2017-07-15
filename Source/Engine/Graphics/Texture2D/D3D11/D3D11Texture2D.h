@@ -27,10 +27,9 @@ namespace EngineAPI
 				//Shutsdown the underlying Texture2D object
 				virtual void Shutdown() override;
 				 
-				//Public init function for Texture objects - this will be used
-				//if no other class/system exists for what you want to do. For example, 
-				//dynamic textures
+				//Public init function for Texture objects
 				//
+				//General all-purpose Texture2D init function
 				bool InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
 					uint32_t textureWidth, uint32_t textureHeight, uint32_t msaaSampleCount = 1,
 					uint32_t mipLevels = 1, uint32_t arraySize = 1,
@@ -40,6 +39,12 @@ namespace EngineAPI
 					ResourceUsage textureUsage = RESOURCE_USAGE_DYNAMIC,
 					ResourceCPUAccessFlag textureCpuAccess = RESOURCE_CPU_ACCESS_WRITE_BIT,
 					ResourceBindFlag textureBindFlag = RESOURCE_BIND_SHADER_RESOURCE_BIT,
+					std::string debugName = std::string(""));
+
+				//Loads a texture with data from file - Note: This is limited to .DDS files for
+				//now -> Uses the DDSTextureLoader 3rdParty library
+				bool InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevice* device, 
+					std::string ddsFilePath, bool doAutoGenerateMips = false, 
 					std::string debugName = std::string(""));
 
 			public:

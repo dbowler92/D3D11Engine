@@ -168,9 +168,11 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainHandle(EngineAPI::Graphics::Graph
 bool D3D11GraphicsSwapchain::InitD3D11SwapchainBuffers(EngineAPI::Graphics::GraphicsDevice* device,
 	EngineAPI::OS::OSWindow* osWindow)
 {
-	//Destroy old RTV to backbuffer
-	swapchainBackbufferRenderTargetView.Shutdown();
-
+	//Destroy old RTV to backbuffer - don't call Shutdown() as that calls
+	//the parent shutdown which eventually shutsdown the core object - not an issue
+	//now, but maybe later!
+	swapchainBackbufferRenderTargetView.ReleaseD3D11RenderTargetView();
+	
 	//New client size?
 	swapchainBuffersWidth = osWindow->GetWindowWidth();
 	swapchainBuffersHeight = osWindow->GetWindowHeight();

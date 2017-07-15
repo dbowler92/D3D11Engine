@@ -190,9 +190,6 @@
     <Filter Include="Src\3rdParty\dxerr">
       <UniqueIdentifier>{e27bf84d-d3b8-49fa-b858-3848b1605f82}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\3rdParty\DDSTextureLoader">
-      <UniqueIdentifier>{2da0c1eb-8803-46b5-a2ce-bdb044df1c1e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Debug\Rendering">
       <UniqueIdentifier>{4e65a6f7-bbc6-45df-acc3-85c4628486ec}</UniqueIdentifier>
     </Filter>
@@ -356,9 +353,6 @@
     </ClCompile>
     <ClCompile Include="..\3rdParty\dxerr\dxerr.cpp">
       <Filter>Src\3rdParty\dxerr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\DDSTextureLoader\DDSTextureLoader.cpp">
-      <Filter>Src\3rdParty\DDSTextureLoader</Filter>
     </ClCompile>
     <ClCompile Include="..\Debug\Rendering\DebugRendering.cpp">
       <Filter>Src\Debug\Rendering</Filter>
@@ -568,9 +562,6 @@
     </ClInclude>
     <ClInclude Include="..\3rdParty\dxerr\dxerr.h">
       <Filter>Src\3rdParty\dxerr</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\DDSTextureLoader\DDSTextureLoader.h">
-      <Filter>Src\3rdParty\DDSTextureLoader</Filter>
     </ClInclude>
     <ClInclude Include="..\Debug\Rendering\DebugRendering.h">
       <Filter>Src\Debug\Rendering</Filter>

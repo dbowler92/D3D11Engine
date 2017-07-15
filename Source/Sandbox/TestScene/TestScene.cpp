@@ -41,6 +41,7 @@ struct TexVertex
 
 const UINT CUBE_VERT_COUNT = 8;
 const UINT CUBE_INDS_COUNT = 36;
+const UINT CUBE_NON_INDEXED_VERTS_COUNT = 36;
 
 const Vertex CUBE_VERTS[CUBE_VERT_COUNT]
 {
@@ -54,16 +55,49 @@ const Vertex CUBE_VERTS[CUBE_VERT_COUNT]
 	{ 1.0f, -1.0f, 1.0f, 0, 1, 1 },
 };
 
-const TexVertex CUBE_TEX_VERTS[CUBE_VERT_COUNT]
+const TexVertex CUBE_TEX_VERTS[36] =
 {
-	{ -1.0f, 1.0f, -1.0f, 1, 0, },    // vertex 0
-	{ 1.0f, 1.0f, -1.0f, 0, 1, },     // vertex ...
-	{ -1.0f, -1.0f, -1.0f, 1, 0, },
-	{ 1.0f, -1.0f, -1.0f, 0, 1, },
-	{ -1.0f, 1.0f, 1.0f, 1, 1, },
-	{ 1.0f, 1.0f, 1.0f, 1, 0, },
-	{ -1.0f, -1.0f, 1.0f, 0, 1, },
-	{ 1.0f, -1.0f, 1.0f, 0, 1,},
+	{ -1.0f,-1.0f,-1.0f, 1.0f, 1.0f },  // -X side
+	{ -1.0f,-1.0f, 1.0f, 0.0f, 1.0f },
+	{ -1.0f, 1.0f, 1.0f, 0.0f, 0.0f },
+	{ -1.0f, 1.0f, 1.0f, 0.0f, 0.0f },
+	{ -1.0f, 1.0f,-1.0f, 1.0f, 0.0f },
+	{ -1.0f,-1.0f,-1.0f, 1.0f, 1.0f },
+
+	{ -1.0f,-1.0f,-1.0f, 0.0f, 1.0f },  // -Z side
+	{ 1.0f, 1.0f,-1.0f,  1.0f, 0.0f },
+	{ 1.0f,-1.0f,-1.0f,  1.0f, 1.0f },
+	{ -1.0f,-1.0f,-1.0f, 0.0f, 1.0f },
+	{ -1.0f, 1.0f,-1.0f, 0.0f, 0.0f },
+	{ 1.0f, 1.0f,-1.0f,  1.0f, 0.0f },
+
+	{ -1.0f,-1.0f,-1.0f, 0.0f, 1.0f }, // -Y
+	{ 1.0f,-1.0f,-1.0f,  0.0f, 0.0f },
+	{ 1.0f,-1.0f, 1.0f,  1.0f, 0.0f },
+	{ -1.0f,-1.0f,-1.0f, 0.0f, 1.0f },
+	{ 1.0f,-1.0f, 1.0f,  1.0f, 0.0f },
+	{ -1.0f,-1.0f, 1.0f, 1.0f, 1.0f },
+
+	{ -1.0f, 1.0f,-1.0f, 0.0f, 1.0f },  // +Y side
+	{ -1.0f, 1.0f, 1.0f, 0.0f, 0.0f },
+	{ 1.0f, 1.0f, 1.0f,  1.0f, 0.0f },
+	{ -1.0f, 1.0f,-1.0f, 0.0f, 1.0f },
+	{ 1.0f, 1.0f, 1.0f,  1.0f, 0.0f },
+	{ 1.0f, 1.0f,-1.0f,  1.0f, 1.0f },
+
+	{ 1.0f, 1.0f,-1.0f, 0.0f, 1.0f },  // +X side
+	{ 1.0f, 1.0f, 1.0f, 0.0f, 0.0f },
+	{ 1.0f,-1.0f, 1.0f, 1.0f, 0.0f },
+	{ 1.0f,-1.0f, 1.0f, 1.0f, 0.0f },
+	{ 1.0f,-1.0f,-1.0f, 1.0f, 1.0f },
+	{ 1.0f, 1.0f,-1.0f, 0.0f, 1.0f },
+
+	{ -1.0f, 1.0f, 1.0f, 0.0f, 1.0f },  // +Z side
+	{ -1.0f,-1.0f, 1.0f, 0.0f, 0.0f },
+	{ 1.0f, 1.0f, 1.0f,  1.0f, 1.0f },
+	{ -1.0f,-1.0f, 1.0f, 0.0f, 0.0f },
+	{ 1.0f,-1.0f, 1.0f,  1.0f, 0.0f },
+	{ 1.0f, 1.0f, 1.0f,  1.0f, 1.0f },
 };
 
 const UINT16 CUBE_INDICES[CUBE_INDS_COUNT]
@@ -345,14 +379,9 @@ void TestScene::TestTexturesFromFile()
 
 	//Cube
 	assert(texCubeVB.InitVertexBuffer(device,
-		sizeof(TexVertex), CUBE_VERT_COUNT, (void*)CUBE_TEX_VERTS,
+		sizeof(TexVertex), CUBE_NON_INDEXED_VERTS_COUNT, (void*)CUBE_TEX_VERTS,
 		RESOURCE_USAGE_IMMUTABLE, NULL, RESOURCE_BIND_VERTEX_BUFFER_BIT,
 		std::string("Cube_Textured_VB")));
-
-	assert(texCubeIB.InitIndexBuffer(device,
-		INDEX_BUFFER_FORMAT_UINT16, CUBE_INDS_COUNT, (void*)CUBE_INDICES,
-		RESOURCE_USAGE_IMMUTABLE, NULL, RESOURCE_BIND_INDEX_BUFFER_BIT,
-		std::string("Cube_Textured_IB")));
 
 	//TEX
 	assert(textureFromFile.InitTexture2DFromDDSFile(device,
@@ -395,7 +424,6 @@ bool TestScene::OnSceneBecomeDeactive()
 	depthTextureView.Shutdown();
 
 	texCubeVB.Shutdown();
-	texCubeIB.Shutdown();
 	texVS.Shutdown();
 	texPS.Shutdown();
 	textureFromFile.Shutdown();
@@ -521,18 +549,19 @@ bool TestScene::OnSceneRender()
 
 	//Vertex and index buffer
 	device->IASetVertexBuffer(&texCubeVB, 0);
-	device->IASetIndexBuffer(&texCubeIB, 0);
+	//device->IASetIndexBuffer(&texCubeIB, 0);
 
 	//Shader resource / cbuffers
 	device->VSSetConstantBuffer(&constantBuffer, 0);
-
+	device->PSSetShaderResource(&texSRV, 0);
+	
 	//Rendering state
 	device->RSSetState(&rss);
 	device->OMSetBlendState(&bs);
 	device->OMSetDepthStencilState(&dss, 0);
 
 	//Draw command
-	device->DrawIndexed(texCubeIB.GetIndexCount(), 0, 0);
+	device->Draw(texCubeVB.GetElementsCount(), 0);
 
 	//Done
 	return true;

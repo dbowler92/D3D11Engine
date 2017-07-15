@@ -44,11 +44,16 @@ namespace EngineAPI
 				bool InitShaderResourceViewToTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 					EngineAPI::Graphics::Texture2D* texture,
 					bool doUseUnderlyingResourceFormatForView = true,
-					ResourceFormat renderTargetTextureViewFormat = RESOURCE_FORMAT_UNKNOWN,
+					ResourceFormat shaderResourceViewTextureFormat = RESOURCE_FORMAT_UNKNOWN,
 					std::string debugName = std::string(""));
 
 				//Shutdown the SRV
 				virtual void Shutdown() override;
+
+			public:
+				//Binds the SRV to the pipeline - just this SRV
+				void BindShaderResourceViewToPixelShader(EngineAPI::Graphics::GraphicsDevice* device, UINT bindingSlotIndex);
+				void BindShaderResourceViewToVertexShader(EngineAPI::Graphics::GraphicsDevice* device, UINT bindingSlotIndex);
 
 			public:
 				//Getters

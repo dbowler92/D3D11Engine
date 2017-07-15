@@ -79,6 +79,10 @@ namespace EngineAPI
 				uint32_t GetTextureMSAASampleCount()  { return textureDesc.SampleDesc.Count; };
 				uint32_t GetTextureMSAAQuality() { return textureDesc.SampleDesc.Quality; };
 				
+				//Mips
+				uint32_t GetMipLevels() { return textureDesc.MipLevels; };
+				uint32_t GetMostDetailedMipLevel() { return 0; }
+
 			protected:
 				//Texture description
 				D3D11_TEXTURE2D_DESC textureDesc = {};

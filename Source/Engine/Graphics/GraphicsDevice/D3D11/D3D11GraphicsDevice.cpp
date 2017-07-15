@@ -17,6 +17,7 @@
 
 #include <Graphics/RenderTargetView/RenderTargetView.h>
 #include <Graphics/DepthStencilView/DepthStencilView.h>
+#include <Graphics/ShaderResourceView/ShaderResourceView.h>
 
 using namespace EngineAPI::Graphics::Platform;
 
@@ -165,6 +166,12 @@ void D3D11GraphicsDevice::VSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffe
 		cBuffer->BindConstantBufferToVertexShaderStage((EngineAPI::Graphics::GraphicsDevice*)this, bufferSlot);
 }
 
+void D3D11GraphicsDevice::VSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot)
+{
+	if (shaderResource)
+		shaderResource->BindShaderResourceViewToVertexShader((EngineAPI::Graphics::GraphicsDevice*)this, bindingSlot);
+}
+
 //
 //PS
 //
@@ -176,6 +183,13 @@ void D3D11GraphicsDevice::PSSetShader(EngineAPI::Graphics::PixelShader* ps)
 	else
 		GetD3D11ImmediateContext()->PSSetShader(nullptr, nullptr, 0);
 }
+
+void D3D11GraphicsDevice::PSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot)
+{
+	if (shaderResource)
+		shaderResource->BindShaderResourceViewToPixelShader((EngineAPI::Graphics::GraphicsDevice*)this, bindingSlot);
+}
+
 
 //
 //Draw commands

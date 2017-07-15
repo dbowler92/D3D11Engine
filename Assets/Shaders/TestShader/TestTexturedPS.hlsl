@@ -5,7 +5,19 @@ struct VS_OUTPUT
     float2 Texcoord : TEXCOORD0;
 };
 
+SamplerState DefaultSamplerState
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = clamp;
+    AddressV = clamp;
+};
+
+//Smapler
+Texture2D Tex : register(t0);
+
 float4 main(VS_OUTPUT input) : SV_Target
 {
-    return float4(input.Texcoord.rg, 0.0f, 1.0f);
+    //Sample
+    float4 texSample = Tex.Sample(DefaultSamplerState, input.Texcoord);
+    return float4(texSample.rgb, 1.0f);
 }

@@ -43,6 +43,7 @@ namespace EngineAPI
 
 		class RenderTargetView;
 		class DepthStencilView;
+		class ShaderResourceView;
 	}
 }
 
@@ -89,10 +90,12 @@ namespace EngineAPI
 				//VS
 				void VSSetShader(EngineAPI::Graphics::VertexShader* vs);
 				void VSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot);
+				void VSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot);
 
 				//PS
 				void PSSetShader(EngineAPI::Graphics::PixelShader* ps);
-				
+				void PSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot);
+
 				//Drawing
 				void Draw(UINT count, UINT startIndex);
 				void DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation);

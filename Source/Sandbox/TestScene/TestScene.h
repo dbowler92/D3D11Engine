@@ -82,7 +82,6 @@ private:
 	EngineAPI::Graphics::DepthStencilView depthTextureView;
 
 	EngineAPI::Graphics::VertexBuffer texCubeVB;
-	EngineAPI::Graphics::IndexBuffer texCubeIB;
 	EngineAPI::Graphics::VertexShader texVS;
 	EngineAPI::Graphics::PixelShader texPS;
 	EngineAPI::Graphics::Texture2D textureFromFile;

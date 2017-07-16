@@ -327,6 +327,10 @@ void D3D11Texture2D::UpdateSubresourceFull(EngineAPI::Graphics::GraphicsDevice* 
 {
 	assert(subresourceData);
 
+	//Must not be immutable or dynamic resource
+	assert(GetResourceUsage() != RESOURCE_USAGE_IMMUTABLE);
+	assert(GetResourceUsage() != RESOURCE_USAGE_DYNAMIC);
+
 	device->GetD3D11ImmediateContext()->UpdateSubresource(texture2DHandle, subresourceIndex, nullptr,
 		subresourceData->pData, subresourceData->MemoryRowPitch, subresourceData->MemorySlicePitch);
 }

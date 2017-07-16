@@ -45,6 +45,7 @@ namespace EngineAPI
 
 			//UpdateSubresource and UpdateSubresourceRegion functionality for default 
 			//resources - this can be used to update default buffers with new data.
+			
 
 		public:
 			//Getters:

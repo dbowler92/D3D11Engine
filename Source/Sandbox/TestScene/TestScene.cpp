@@ -405,7 +405,7 @@ void TestScene::TestTexturesFromFile()
 		std::string("DDSTextureFromFile_SRV")));
 
 	//Mip generation
-	device->GetD3D11ImmediateContext()->GenerateMips(texSRV.GetD3D11ShaderResourceView());
+	assert(textureFromFile.AutoGenerateMipmaps(device, &texSRV));
 
 	//Linear sampler
 	SamplerStateDescription linearSamplerDesc = {};

@@ -57,6 +57,7 @@ namespace EngineAPI
 				void BindShaderResourceViewToPixelShader(EngineAPI::Graphics::GraphicsDevice* device, UINT bindingSlotIndex);
 
 				//Use this SRV to auto generate mips
+				bool AutoGenerateMipmaps(EngineAPI::Graphics::GraphicsDevice* device);
 
 			public:
 				//Getters

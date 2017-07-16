@@ -72,6 +72,11 @@ namespace EngineAPI
 					UINT subresourceIndex, SubResourceData* subresourceData);
 
 			public:
+				//Asks this texture to automatically generate mipmaps via D3D11
+				bool AutoGenerateMipmaps(EngineAPI::Graphics::GraphicsDevice* device,
+					EngineAPI::Graphics::ShaderResourceView* srv);
+
+			public:
 				//Getters 
 				ID3D11Texture2D* GetD3D11Texture2DHandle() { return texture2DHandle ;};
 				const D3D11_TEXTURE2D_DESC& GetD3D11Texture2DDescData() { return textureDesc; };

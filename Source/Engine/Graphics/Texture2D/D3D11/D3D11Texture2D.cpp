@@ -7,6 +7,9 @@
 #include <3rdParty/DDSTextureLoader/DDSTextureLoader.h>
 #include <3rdParty/LodePNG/lodepng.h>
 
+//SRV for auto mip map generation
+#include <Graphics/ShaderResourceView/ShaderResourceView.h>
+
 using namespace EngineAPI::Graphics::Platform;
 
 void D3D11Texture2D::Shutdown()
@@ -321,6 +324,22 @@ void D3D11Texture2D::UpdateSubresourceFull(EngineAPI::Graphics::GraphicsDevice* 
 
 	device->GetD3D11ImmediateContext()->UpdateSubresource(texture2DHandle, subresourceIndex, nullptr,
 		subresourceData->pData, subresourceData->MemoryRowPitch, subresourceData->MemorySlicePitch);
+}
+
+bool D3D11Texture2D::AutoGenerateMipmaps(EngineAPI::Graphics::GraphicsDevice* device,
+	EngineAPI::Graphics::ShaderResourceView* srv)
+{
+	if (srv)
+	{
+		//TODO: Verify that the SRV references us
+
+		if (textureDesc.MiscFlags & D3D11_RESOURCE_MISC_GENERATE_MIPS)
+			return (srv->AutoGenerateMipmaps(device));
+		else
+			return false;
+	}
+
+	return false;
 }
 
 //

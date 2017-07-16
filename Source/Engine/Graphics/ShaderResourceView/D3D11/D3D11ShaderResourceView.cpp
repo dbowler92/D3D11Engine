@@ -85,3 +85,14 @@ void D3D11ShaderResourceView::BindShaderResourceViewToPixelShader(EngineAPI::Gra
 {
 	device->GetD3D11ImmediateContext()->PSSetShaderResources(bindingSlotIndex, 1, &srv);
 }
+
+bool D3D11ShaderResourceView::AutoGenerateMipmaps(EngineAPI::Graphics::GraphicsDevice* device)
+{
+	if (srv)
+	{
+		device->GetD3D11ImmediateContext()->GenerateMips(srv);
+		return true;
+	}
+	
+	return false;
+}

@@ -45,7 +45,7 @@ namespace EngineAPI
 					EngineAPI::Graphics::Texture2D* texture,
 					bool doUseUnderlyingResourceFormatForView = true,
 					ResourceFormat shaderResourceViewTextureFormat = RESOURCE_FORMAT_UNKNOWN,
-					bool doUseFirstMipOnly = false,
+					bool doUseFirstMipOnly = false,				//Else, will use all mip levels. TODO: System to specify a subset of mips to use. 
 					std::string debugName = std::string(""));
 
 				//Shutdown the SRV

@@ -34,7 +34,7 @@ namespace EngineAPI
 					uint32_t textureWidth, uint32_t textureHeight, uint32_t msaaSampleCount = 1,
 					uint32_t mipLevels = 1, uint32_t arraySize = 1,
 					ResourceMiscFlag miscFlags = 0,
-					void* initialData = nullptr, uint32_t initialDataMemoryPitch = NULL,
+					SubResourceData* resourceInitDataPerSubresource = nullptr,
 					ResourceFormat textureFormat = RESOURCE_FORMAT_R8G8B8A8_UNORM,
 					ResourceUsage textureUsage = RESOURCE_USAGE_DYNAMIC,
 					ResourceCPUAccessFlag textureCpuAccess = RESOURCE_CPU_ACCESS_WRITE_BIT,
@@ -67,6 +67,10 @@ namespace EngineAPI
 				virtual void UnmapResource(EngineAPI::Graphics::GraphicsDevice* device, 
 					UINT subresourceIndex) override;
 			
+				//Update the (sub)resource
+				virtual void UpdateSubresourceFull(EngineAPI::Graphics::GraphicsDevice* device, 
+					UINT subresourceIndex, SubResourceData* subresourceData);
+
 			public:
 				//Getters 
 				ID3D11Texture2D* GetD3D11Texture2DHandle() { return texture2DHandle ;};
@@ -91,17 +95,9 @@ namespace EngineAPI
 			protected:
 				//Texture description
 				D3D11_TEXTURE2D_DESC textureDesc = {};
-				D3D11_SUBRESOURCE_DATA textureInitialData = {};
 
 				//Texture handle
 				ID3D11Texture2D* texture2DHandle = nullptr;
-
-			protected:
-				//Inits the underlying texture object - this can be called by subclasses
-				bool Internal_InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
-					bool doInitWitInitialData, ResourceType resourceType,
-					ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
-					std::string debugName = "");
 
 			private:
 				//Given a resource size, calculates the number of mip levels

@@ -651,6 +651,22 @@ struct SamplerStateDescription
 	FLOAT MaxLOD;
 };
 
+//Initial data when creating a resource - one struct per
+//subresource it seems -> Eg: Per mip level
+struct SubResourceData
+{
+	SubResourceData()
+	{
+		pData = nullptr;
+		MemoryRowPitch = 0;
+		MemorySlicePitch = 0;
+	}
+
+	void* pData;
+	uint32_t MemoryRowPitch;
+	uint32_t MemorySlicePitch;
+};
+
 //Mapping
 //
 enum ResourceMappingMode

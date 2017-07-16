@@ -1,5 +1,6 @@
 #include "D3D11Texture2D.h"
 
+#include <math.h>
 //#include <string>
 
 //File loaders
@@ -21,7 +22,7 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	uint32_t textureWidth, uint32_t textureHeight, uint32_t msaaSampleCount,
 	uint32_t mipLevels, uint32_t arraySize,
 	ResourceMiscFlag miscFlags,
-	void* initialData, uint32_t initialDataMemoryPitch,
+	SubResourceData* resourceInitDataPerSubresource,
 	ResourceFormat textureFormat,
 	ResourceUsage textureUsage,
 	ResourceCPUAccessFlag textureCpuAccess,
@@ -44,9 +45,8 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 		textureBindFlag |= RESOURCE_BIND_RENDER_TARGET_BIT;
 	}
 
-	//Reset D3D11 structs
+	//Reset D3D11 desc struct
 	textureDesc = {};
-	textureInitialData = {};
 
 	//Fill D3D11 Tex desc struct
 	textureDesc.Width = textureWidth;
@@ -77,27 +77,27 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 		textureDesc.SampleDesc.Quality = msaaQualityLevel;
 	}
 
-	//Fill D3D11 init data struct
-	textureInitialData.pSysMem = initialData;
-	textureInitialData.SysMemPitch = initialDataMemoryPitch;
-	textureInitialData.SysMemSlicePitch = 0;
-
 	//Print message saying we are creating a texture
 	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture2D: " + debugName;
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
-
-	//
-	//TODO:
-	//	If immutable resource, pass initial data now. If not, use UpdateSubresource() instead. 
-	//
-
 	//Init texture with initial data?
-	D3D11_SUBRESOURCE_DATA* initialDataDesc = nullptr;
-	if (initialData)
-		initialDataDesc = &textureInitialData;
+	uint32_t subresourceStructsCount = mipLevels; //TODO
+	std::vector<D3D11_SUBRESOURCE_DATA>textureInitialData(subresourceStructsCount);
+	D3D11_SUBRESOURCE_DATA* initialDataDescPtr = nullptr;
+	if (resourceInitDataPerSubresource)
+	{
+		//Fill D3D11 init data struct
+		for (int i = 0; i < (int)subresourceStructsCount; i++)
+		{
+			textureInitialData[i].pSysMem = resourceInitDataPerSubresource[i].pData;
+			textureInitialData[i].SysMemPitch = resourceInitDataPerSubresource[i].MemoryRowPitch;
+			textureInitialData[i].SysMemSlicePitch = resourceInitDataPerSubresource[i].MemorySlicePitch;
+		}
+		initialDataDescPtr = textureInitialData.data();
+	}
 
-	HR_CHECK_ERROR(device->GetD3D11Device()->CreateTexture2D(&textureDesc, initialDataDesc, &texture2DHandle));
+	HR_CHECK_ERROR(device->GetD3D11Device()->CreateTexture2D(&textureDesc, initialDataDescPtr, &texture2DHandle));
 	if (texture2DHandle == nullptr)
 		return false;
 
@@ -156,7 +156,6 @@ bool D3D11Texture2D::InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevic
 
 	//Cache the D3D11_TEXTURE2D_DESC struct
 	textureDesc = {};
-	textureInitialData = {};
 	texture2DHandle->GetDesc(&textureDesc);
 
 	//Set debug name
@@ -213,59 +212,48 @@ bool D3D11Texture2D::InitTexture2DFromPNGFile(EngineAPI::Graphics::GraphicsDevic
 	//If we want to enable auto mips generation...
 	if (doEnableAutoMipGeneration)
 	{
-		mipLevels = 1; // CalculateFullMipmapChainCount(pngFileWidth, pngFileHeight);
+		mipLevels = CalculateFullMipmapChainCount(pngFileWidth, pngFileHeight);
 		miscFlag |= RESOURCE_MISC_GENERATE_MIPS;
 		binding |= RESOURCE_BIND_RENDER_TARGET_BIT;
 		usg = RESOURCE_USAGE_DEFAULT;
 	}
+
+	//Initial data - The main texture. NOTE: If the mip levels of the texture
+	//we are creating is 1 (Ie: We don't want to support auto mip generation), 
+	//then we can pass the parsed texture as the initial data to load in to 
+	//GPU memory. If we do support auto generation of mips (ie: mipLevels > 1)
+	//then we will pass null here and call UpdateSubresource() after the texture
+	//has been inited to load the most detailed mip level with some data - we can
+	//then call D3D11ImediateContext->GenerateMips() later.
+	SubResourceData texInitData = {};
+	texInitData.pData = (void*)pngData.data();
+	texInitData.MemoryRowPitch = memoryPitch;
+	texInitData.MemorySlicePitch = 0;
+
+	SubResourceData* initialDataDescPtr = nullptr;
+	if (mipLevels == 1)
+		initialDataDescPtr = &texInitData;
 
 	//Init the texture
 	bool ret = InitTexture2D(device,
 		pngFileWidth, pngFileHeight, 1,
 		mipLevels, 1,
 		miscFlag,
-		(void*)pngData.data(), memoryPitch,
+		initialDataDescPtr,
 		RESOURCE_FORMAT_R8G8B8A8_UNORM, usg, NULL,
 		binding,
 		debugName);
 
-	return ret;
-}
+	assert(ret == true);
 
-bool D3D11Texture2D::Internal_InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
-	bool doInitWitInitialData, ResourceType resourceType,
-	ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
-	std::string debugName)
-{
-	//Destroy old texture
-	if (texture2DHandle)
-	{
-		std::string o = std::string(__FUNCTION__) + ": " + "Releasing old Texture2D: " + GetDebugName();
-		EngineAPI::Debug::DebugLog::PrintWarningMessage(o.c_str());
-		ReleaseCOM(texture2DHandle);
-	}
-
-	//Print message saying we are creating a texture
-	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture2D: " + debugName;
-	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
-
-	//Init texture with initial data?
-	D3D11_SUBRESOURCE_DATA* initialData = nullptr;
-	if (doInitWitInitialData)
-		initialData = &textureInitialData;
-
-	HR_CHECK_ERROR(device->GetD3D11Device()->CreateTexture2D(&textureDesc, initialData, &texture2DHandle));
-	if (texture2DHandle == nullptr)
-		return false;
-
-	//Debug name
-	SetDebugName(debugName);
-
-	//Init base resource with API agnostic usage data
-	BaseResource::InitBaseResourceUsageData(resourceType, resourceUsage, cpuAccess, resourceBindingFlag);
+	//If we want auto mips generation, the texture data has not been 
+	//loaded as of now - go ahead and copy the texture data loaded from the
+	//PNG in to the most detailed mip now
+	if (mipLevels > 1)
+		UpdateSubresourceFull(device, 0, &texInitData);
 
 	//Done
-	return true;
+	return ret;
 }
 
 void D3D11Texture2D::SetDebugName(std::string s)
@@ -326,18 +314,24 @@ void D3D11Texture2D::UnmapResource(EngineAPI::Graphics::GraphicsDevice* device,
 	}
 }
 
+void D3D11Texture2D::UpdateSubresourceFull(EngineAPI::Graphics::GraphicsDevice* device,
+	UINT subresourceIndex, SubResourceData* subresourceData)
+{
+	assert(subresourceData);
+
+	device->GetD3D11ImmediateContext()->UpdateSubresource(texture2DHandle, subresourceIndex, nullptr,
+		subresourceData->pData, subresourceData->MemoryRowPitch, subresourceData->MemorySlicePitch);
+}
+
 //
 //Private
 //
 
 uint32_t D3D11Texture2D::CalculateFullMipmapChainCount(uint32_t w, uint32_t h)
 {
-	uint32_t count = 1;
-	while (w != 1)
-	{
-		count++;
-		w /= 2;
-	}
+	assert(w >= 1);
+	assert(h >= 1);
 
-	return count;
+	uint32_t numLevels = (1 + floor(log2(max(w, h))));
+	return numLevels;
 }

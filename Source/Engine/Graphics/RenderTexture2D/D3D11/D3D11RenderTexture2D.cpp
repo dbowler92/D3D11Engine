@@ -35,7 +35,7 @@ bool D3D11RenderTexture2D::InitRenderTexture2D(EngineAPI::Graphics::GraphicsDevi
 	if (!renderTexture2D.InitTexture2D(device,
 		textureWidth, textureHeight, msaaSampleCount,
 		1, 1, NULL,
-		nullptr, 0, 
+		nullptr, 
 		textureFormat, textureUsage, textureCpuAccess, textureBindingFlag,
 		debugName))
 	{

@@ -31,6 +31,8 @@
 #include <Engine/Graphics/ShaderResourceView/ShaderResourceView.h>
 #include <Engine/Graphics/SamplerState/SamplerState.h>
 
+#include <Engine/Rendering/VirtualCamera/VirtualCamera.h>
+
 class TestScene : public EngineAPI::Gameplay::Scene
 {
 public:

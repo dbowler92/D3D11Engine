@@ -277,6 +277,9 @@
     <Filter Include="Src\Graphics\SamplerState\D3D11">
       <UniqueIdentifier>{036697df-bc81-481b-aef5-51a10d270393}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Rendering\VirtualCamera">
+      <UniqueIdentifier>{836de219-a4b5-4172-8c4c-673fc96dd2ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -419,6 +422,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\SamplerState\D3D11\D3D11SamplerState.cpp">
       <Filter>Src\Graphics\SamplerState\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Rendering\VirtualCamera\VirtualCamera.cpp">
+      <Filter>Src\Rendering\VirtualCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -664,6 +670,9 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\SamplerState\SamplerState.h">
       <Filter>Src\Graphics\SamplerState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Rendering\VirtualCamera\VirtualCamera.h">
+      <Filter>Src\Rendering\VirtualCamera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

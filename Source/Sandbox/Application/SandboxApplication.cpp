@@ -33,8 +33,8 @@ bool SandboxApplication::InitApplicationPostEngineInit()
 	EngineAPI::Gameplay::SceneManager::GetInstance()->AddNewSceneToManager<SponzaScene>("Sponza Scene");
 
 	//Set the first active scene
-	//assert(EngineAPI::Gameplay::SceneManager::GetInstance()->SetCurrentActiveSceneByTitle("Sponza Scene"));
-	assert(EngineAPI::Gameplay::SceneManager::GetInstance()->SetCurrentActiveSceneByTitle("Test Scene"));
+	assert(EngineAPI::Gameplay::SceneManager::GetInstance()->SetCurrentActiveSceneByTitle("Sponza Scene"));
+	//assert(EngineAPI::Gameplay::SceneManager::GetInstance()->SetCurrentActiveSceneByTitle("Test Scene"));
 
 	return true;
 }

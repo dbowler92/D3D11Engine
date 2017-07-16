@@ -386,14 +386,14 @@ void TestScene::TestTexturesFromFile()
 	//TEX
 	//
 	//DDS:
-	//assert(textureFromFile.InitTexture2DFromDDSFile(device,
-	//	std::string(TEXTURE_ASSETS_FOLDER"/TestTextures/floor.dds"), false,
-	//	std::string("TestTexture2DLoadedFromFile")));
+	assert(textureFromFile.InitTexture2DFromDDSFile(device,
+		std::string(TEXTURE_ASSETS_FOLDER"/TestTextures/floor.dds"),
+		std::string("TestTexture2DLoadedFromFile")));
 
 	//PNG:
-	assert(textureFromFile.InitTexture2DFromPNGFile(device,
-		std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"), true,
-		std::string("TestTexture2DLoadedFromFile_PNG")));
+	//assert(textureFromFile.InitTexture2DFromPNGFile(device,
+	//	std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"), true,
+	//	std::string("TestTexture2DLoadedFromFile_PNG")));
 
 	//assert(textureFromFile.InitTexture2DFromPNGFile(device,
 	//	std::string(ASSETS_FOLDER"Sponza/textures/spnza_bricks_a_diff.png"), true,
@@ -404,8 +404,9 @@ void TestScene::TestTexturesFromFile()
 		&textureFromFile, true, RESOURCE_FORMAT_R8G8B8A8_UNORM, false,
 		std::string("DDSTextureFromFile_SRV")));
 
-	//Mip generation
-	assert(textureFromFile.AutoGenerateMipmaps(device, &texSRV));
+	//Mip generation?
+	if (textureFromFile.DoesSupportAutoMipmapsGeneration())
+		assert(textureFromFile.AutoGenerateMipmaps(device, &texSRV));
 
 	//Linear sampler
 	SamplerStateDescription linearSamplerDesc = {};
@@ -577,7 +578,7 @@ bool TestScene::OnSceneRender()
 	//Shader resource / cbuffers
 	device->VSSetConstantBuffer(&constantBuffer, 0);
 	device->PSSetShaderResource(&texSRV, 0);
-	
+
 	//Rendering state
 	device->RSSetState(&rss);
 	device->OMSetBlendState(&bs);

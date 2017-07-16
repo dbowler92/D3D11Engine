@@ -48,11 +48,11 @@ bool D3D11ShaderResourceView::InitShaderResourceViewToTexture2D(EngineAPI::Graph
 	{
 		srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 		if (doUseFirstMipOnly)
-			srvDesc.Texture2D.MipLevels = 1; //texture->GetMipLevels(); //TODO
+			srvDesc.Texture2D.MipLevels = 1;
 		else
-			srvDesc.Texture2D.MipLevels = -1; //texture->GetMipLevels(); //TODO
+			srvDesc.Texture2D.MipLevels = -1; // -1 == texture->GetMipLevels() == ALL mips;
 
-		srvDesc.Texture2D.MostDetailedMip = texture->GetMostDetailedMipLevel(); //TOOD
+		srvDesc.Texture2D.MostDetailedMip = texture->GetMostDetailedMipLevel();
 	}
 
 	//Print creation message

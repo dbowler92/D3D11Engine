@@ -46,12 +46,11 @@ namespace EngineAPI
 				//DDSTextureLoader: Resource will use default usage settings - IE, its an default shader resource with no CPU access. TODO:
 				//Add support for the extra functions of the DDS loader (eg: auto mips generation)
 				bool InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevice* device, 
-					std::string ddsFilePath, bool doEnableAutoMipGeneration,
-					std::string debugName = std::string(""));
+					std::string ddsFilePath, std::string debugName = std::string(""));
 
 				//LodePNG: 
 				bool InitTexture2DFromPNGFile(EngineAPI::Graphics::GraphicsDevice* device, 
-					std::string pngFilePath, bool doEnableAutoMipGeneration,
+					std::string pngFilePath, bool doEnableAutoMipGeneration,				//TODO: Ablility to set maximum number of mipmaps
 					std::string debugName = std::string(""));
 
 			public:
@@ -72,6 +71,9 @@ namespace EngineAPI
 					UINT subresourceIndex, SubResourceData* subresourceData);
 
 			public:
+				//Can this texture support auto mipmap generation
+				bool DoesSupportAutoMipmapsGeneration() { return (bool)(textureDesc.MiscFlags & D3D11_RESOURCE_MISC_GENERATE_MIPS); };
+
 				//Asks this texture to automatically generate mipmaps via D3D11
 				bool AutoGenerateMipmaps(EngineAPI::Graphics::GraphicsDevice* device,
 					EngineAPI::Graphics::ShaderResourceView* srv);

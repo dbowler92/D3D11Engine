@@ -64,6 +64,7 @@
     <ClCompile Include="..\Math\Vector\Vector.cpp" />
     <ClCompile Include="..\OS\Application\Win32\Win32Application.cpp" />
     <ClCompile Include="..\OS\OSWindow\Win32\Win32OSWindow.cpp" />
+    <ClCompile Include="..\Rendering\VirtualCamera\VirtualCamera.cpp" />
     <ClCompile Include="..\Statics\D3D11Statics\D3D11Statics.cpp" />
     <ClCompile Include="..\Utils\GameTimer\GameTimer.cpp" />
   </ItemGroup>
@@ -147,6 +148,7 @@
     <ClInclude Include="..\OS\Application\Win32\Win32Application.h" />
     <ClInclude Include="..\OS\OSWindow\OSWindow.h" />
     <ClInclude Include="..\OS\OSWindow\Win32\Win32OSWindow.h" />
+    <ClInclude Include="..\Rendering\VirtualCamera\VirtualCamera.h" />
     <ClInclude Include="..\Statics\D3D11Statics\D3D11Statics.h" />
     <ClInclude Include="..\Utils\GameTimer\GameTimer.h" />
   </ItemGroup>

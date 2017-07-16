@@ -115,15 +115,9 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 }
 
 bool D3D11Texture2D::InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevice* device,
-	std::string ddsFilePath, bool doEnableAutoMipGeneration,
-	std::string debugName)
+	std::string ddsFilePath, std::string debugName)
 {
 	assert(!ddsFilePath.empty());
-
-	//
-	//TEMP: TODO: DDSTextureLoader with customization - eg: To enable auto mip generation
-	//
-	assert(doEnableAutoMipGeneration == false);
 
 	//Release old texture + warning message
 	if (texture2DHandle)
@@ -133,6 +127,12 @@ bool D3D11Texture2D::InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevic
 		ReleaseCOM(texture2DHandle);
 	}
 
+	//Usage
+	ResourceUsage usg = RESOURCE_USAGE_DEFAULT;
+	ResourceCPUAccessFlag cpuAccess = 0;
+	ResourceBindFlag bindFlag = RESOURCE_BIND_SHADER_RESOURCE_BIT;
+	ResourceMiscFlag misc = 0;
+
 	//Message telling us we are loading a Texture2D from file
 	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture2D: " + debugName + ". Loaded from file: " + ddsFilePath;
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
@@ -141,9 +141,14 @@ bool D3D11Texture2D::InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevic
 	std::wstring ddsFileWS(ddsFilePath.begin(), ddsFilePath.end());
 	ID3D11Resource* resource = nullptr;
 	DirectX::DDS_ALPHA_MODE alphaMode;
-	HR_CHECK_ERROR(DirectX::CreateDDSTextureFromFile(device->GetD3D11Device(),
-		ddsFileWS.c_str(), &resource, nullptr, 0, &alphaMode));
-	
+
+	//HR_CHECK_ERROR(DirectX::CreateDDSTextureFromFile(device->GetD3D11Device(),
+	//	ddsFileWS.c_str(), &resource, nullptr, 0, &alphaMode));
+
+	HR_CHECK_ERROR(DirectX::CreateDDSTextureFromFileEx(device->GetD3D11Device(), 
+		ddsFileWS.c_str(), 0, (D3D11_USAGE)usg, (UINT)bindFlag, cpuAccess, misc, 
+		false, &resource, nullptr, &alphaMode));
+
 	//Check 
 	if (resource == nullptr)
 		return false;
@@ -333,7 +338,7 @@ bool D3D11Texture2D::AutoGenerateMipmaps(EngineAPI::Graphics::GraphicsDevice* de
 	{
 		//TODO: Verify that the SRV references us
 
-		if (textureDesc.MiscFlags & D3D11_RESOURCE_MISC_GENERATE_MIPS)
+		if (DoesSupportAutoMipmapsGeneration())
 			return (srv->AutoGenerateMipmaps(device));
 		else
 			return false;
@@ -351,6 +356,5 @@ uint32_t D3D11Texture2D::CalculateFullMipmapChainCount(uint32_t w, uint32_t h)
 	assert(w >= 1);
 	assert(h >= 1);
 
-	uint32_t numLevels = (1 + floor(log2(max(w, h))));
-	return numLevels;
+	return (uint32_t)(1 + floor(log2(max(w, h))));
 }

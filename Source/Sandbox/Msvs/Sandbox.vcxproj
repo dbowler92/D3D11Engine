@@ -181,11 +181,13 @@
   <ItemGroup>
     <ClCompile Include="..\Application\SandboxApplication.cpp" />
     <ClCompile Include="..\Main\SandboxMain.cpp" />
+    <ClCompile Include="..\SponzaScene\SponzaScene.cpp" />
     <ClCompile Include="..\TestScene\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AppConfig\AppConfig.h" />
     <ClInclude Include="..\Application\SandboxApplication.h" />
+    <ClInclude Include="..\SponzaScene\SponzaScene.h" />
     <ClInclude Include="..\TestScene\TestScene.h" />
   </ItemGroup>
   <ItemGroup>

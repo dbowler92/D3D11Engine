@@ -5,6 +5,7 @@
 
 //Scenes
 #include <Sandbox/TestScene/TestScene.h>
+#include <Sandbox/SponzaScene/SponzaScene.h>
 
 SandboxApplication::SandboxApplication()
 {}
@@ -27,8 +28,12 @@ bool SandboxApplication::InitApplicationPostEngineInit()
 	//Debug
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("SandboxApplication::InitApplicationPostEngineInit()\n");
 
-	//Inform scene manager of scenes && set first scene
+	//Inform scene manager of scenes
 	EngineAPI::Gameplay::SceneManager::GetInstance()->AddNewSceneToManager<TestScene>("Test Scene");
+	EngineAPI::Gameplay::SceneManager::GetInstance()->AddNewSceneToManager<SponzaScene>("Sponza Scene");
+
+	//Set the first active scene
+	//assert(EngineAPI::Gameplay::SceneManager::GetInstance()->SetCurrentActiveSceneByTitle("Sponza Scene"));
 	assert(EngineAPI::Gameplay::SceneManager::GetInstance()->SetCurrentActiveSceneByTitle("Test Scene"));
 
 	return true;

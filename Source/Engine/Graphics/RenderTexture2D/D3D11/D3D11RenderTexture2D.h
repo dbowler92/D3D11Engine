@@ -27,7 +27,6 @@ namespace EngineAPI
 				//Inits the render texture
 				bool InitRenderTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 					uint32_t textureWidth, uint32_t textureHeight, uint32_t msaaSampleCount = 1,
-					void* initialData = nullptr,
 					ResourceFormat textureFormat = RESOURCE_FORMAT_R8G8B8A8_UNORM,  
 					ResourceUsage textureUsage = RESOURCE_USAGE_DEFAULT, 
 					ResourceCPUAccessFlag textureCpuAccess = (ResourceCPUAccessFlag)0,

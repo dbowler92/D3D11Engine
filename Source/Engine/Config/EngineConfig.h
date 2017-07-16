@@ -17,13 +17,17 @@
 //Folder for debug dumps
 #define DEBUG_DUMPS_FOLDER "Dumps/"
 
-//Assets folders 
+//Application assets folders 
 #define ASSETS_FOLDER "../Assets/"
-
 #define SHADER_ASSETS_FOLDER ASSETS_FOLDER"Shaders/"
 #define SHADER_COMPILED_ASSETS_FOLDER SHADER_ASSETS_FOLDER"Compiled/"
-
 #define TEXTURE_ASSETS_FOLDER ASSETS_FOLDER"Textures/"
+
+//Engine assets folder
+#define ENGINE_ASSETS_FILDER ASSETS_FOLDER"/EngineAssets/"
+#define ENGINE_SHADER_ASSETS_FOLDER ENGINE_ASSETS_FILDER"Shaders/"
+#define ENGINE_SHADER_COMPILED_ASSETS_FOLDER ENGINE_SHADER_ASSETS_FOLDER"/Compiled/"
+#define ENGINE_TEXTURE_ASSETS_FOLDER ENGINE_ASSETS_FILDER"/Textures/"
 
 //Platform - not really used for now?
 #define PLATFORM_IDX_WIN32 0

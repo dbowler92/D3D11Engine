@@ -47,7 +47,7 @@ bool D3D11DepthStencilTexture2D::InitDepthStencilTexture2D(EngineAPI::Graphics::
 	if (!depthStencilTexture2D.InitTexture2D(device, 
 		textureWidth, textureHeight, msaaSampleCount, 
 		1, 1, NULL, 
-		nullptr, 
+		nullptr, 0,
 		resourceFormat, resourceUsage, resourceCPUAccess, resourceBinding, 
 		debugName))
 	{

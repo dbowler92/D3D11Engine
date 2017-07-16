@@ -2,8 +2,9 @@
 
 //#include <string>
 
-//File loader (DDS)
+//File loaders
 #include <3rdParty/DDSTextureLoader/DDSTextureLoader.h>
+#include <3rdParty/LodePNG/lodepng.h>
 
 using namespace EngineAPI::Graphics::Platform;
 
@@ -20,7 +21,7 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	uint32_t textureWidth, uint32_t textureHeight, uint32_t msaaSampleCount,
 	uint32_t mipLevels, uint32_t arraySize,
 	ResourceMiscFlag miscFlags,
-	void* initialData,
+	void* initialData, uint32_t initialDataMemoryPitch,
 	ResourceFormat textureFormat,
 	ResourceUsage textureUsage,
 	ResourceCPUAccessFlag textureCpuAccess,
@@ -34,6 +35,10 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 		EngineAPI::Debug::DebugLog::PrintWarningMessage(o.c_str());
 		ReleaseCOM(texture2DHandle);
 	}
+
+	//Reset D3D11 structs
+	textureDesc = {};
+	textureInitialData = {};
 
 	//Fill D3D11 Tex desc struct
 	textureDesc.Width = textureWidth;
@@ -66,7 +71,7 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 
 	//Fill D3D11 init data struct
 	textureInitialData.pSysMem = initialData;
-	textureInitialData.SysMemPitch = 0;
+	textureInitialData.SysMemPitch = initialDataMemoryPitch;
 	textureInitialData.SysMemSlicePitch = 0;
 
 	//Print message saying we are creating a texture
@@ -149,6 +154,46 @@ bool D3D11Texture2D::InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevic
 	
 	//Done
 	return true;
+}
+
+bool D3D11Texture2D::InitTexture2DFromPNGFile(EngineAPI::Graphics::GraphicsDevice* device,
+	std::string pngFilePath, std::string debugName)
+{
+	assert(!pngFilePath.empty());
+
+	//Print file path
+	std::string o = std::string(__FUNCTION__) + ": " + "LodePNG parsing file: " + pngFilePath + " For Object: " + debugName;
+	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
+
+	//Use LodePNG to load the file
+	std::vector<unsigned char>pngData;
+	unsigned int pngFileWidth;
+	unsigned int pngFileHeight;
+	unsigned error = lodepng::decode(pngData, pngFileWidth, pngFileHeight, pngFilePath, LCT_RGBA, 8); //RGBA8
+	if (error != 0)
+	{
+		std::string o = std::string(__FUNCTION__) + ": " + "Failed to load PNG: " + pngFilePath + " For Object: " + debugName;
+		EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
+		pngData.clear();
+		return false;
+	}
+
+	assert(pngFileWidth > 0);
+	assert(pngFileHeight > 0);
+	
+	//Calculate size in bytes from the beginning of one line of the texture
+	//to to the next line
+	uint32_t memoryPitch = (pngFileWidth) * 4; //PNG is converted to RGBA8 within pngData
+
+	//Init the texture
+	return InitTexture2D(device,
+		pngFileWidth, pngFileHeight, 1,
+		1, 1,
+		NULL,
+		(void*)pngData.data(), memoryPitch,
+		RESOURCE_FORMAT_R8G8B8A8_UNORM, RESOURCE_USAGE_DEFAULT, NULL,
+		RESOURCE_BIND_SHADER_RESOURCE_BIT, 
+		debugName);
 }
 
 bool D3D11Texture2D::Internal_InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,

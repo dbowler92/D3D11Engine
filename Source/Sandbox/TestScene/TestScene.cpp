@@ -336,7 +336,7 @@ void TestScene::TestRenderTarget()
 	uint32_t h = (uint32_t)gm->GetWindowHeight();
 
 	//RenderTexture2D
-	assert(renderTgt.InitRenderTexture2D(device, w, h, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT, nullptr,
+	assert(renderTgt.InitRenderTexture2D(device, w, h, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT,
 		RESOURCE_FORMAT_R8G8B8A8_UNORM,
 		RESOURCE_USAGE_DEFAULT,
 		(ResourceCPUAccessFlag)0,
@@ -384,9 +384,16 @@ void TestScene::TestTexturesFromFile()
 		std::string("Cube_Textured_VB")));
 
 	//TEX
-	assert(textureFromFile.InitTexture2DFromDDSFile(device,
-		std::string(TEXTURE_ASSETS_FOLDER"/TestTextures/floor.dds"),
-		std::string("TestTexture2DLoadedFromFile")));
+	//
+	//DDS:
+	//assert(textureFromFile.InitTexture2DFromDDSFile(device,
+	//	std::string(TEXTURE_ASSETS_FOLDER"/TestTextures/floor.dds"),
+	//	std::string("TestTexture2DLoadedFromFile")));
+
+	//PNG:
+	assert(textureFromFile.InitTexture2DFromPNGFile(device,
+		std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"),
+		std::string("TestTexture2DLoadedFromFile_PNG")));
 
 	//SRV
 	assert(texSRV.InitShaderResourceViewToTexture2D(device,

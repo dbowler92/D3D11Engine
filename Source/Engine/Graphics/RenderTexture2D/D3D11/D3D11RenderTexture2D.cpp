@@ -13,7 +13,6 @@ void D3D11RenderTexture2D::Shutdown()
 
 bool D3D11RenderTexture2D::InitRenderTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	uint32_t textureWidth, uint32_t textureHeight, uint32_t msaaSampleCount,
-	void* initialData,
 	ResourceFormat textureFormat,
 	ResourceUsage textureUsage,
 	ResourceCPUAccessFlag textureCpuAccess,
@@ -36,7 +35,7 @@ bool D3D11RenderTexture2D::InitRenderTexture2D(EngineAPI::Graphics::GraphicsDevi
 	if (!renderTexture2D.InitTexture2D(device,
 		textureWidth, textureHeight, msaaSampleCount,
 		1, 1, NULL,
-		initialData, 
+		nullptr, 0, 
 		textureFormat, textureUsage, textureCpuAccess, textureBindingFlag,
 		debugName))
 	{

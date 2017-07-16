@@ -34,20 +34,23 @@ namespace EngineAPI
 					uint32_t textureWidth, uint32_t textureHeight, uint32_t msaaSampleCount = 1,
 					uint32_t mipLevels = 1, uint32_t arraySize = 1,
 					ResourceMiscFlag miscFlags = 0,
-					void* initialData = nullptr, 
+					void* initialData = nullptr, uint32_t initialDataMemoryPitch = NULL,
 					ResourceFormat textureFormat = RESOURCE_FORMAT_R8G8B8A8_UNORM,
 					ResourceUsage textureUsage = RESOURCE_USAGE_DYNAMIC,
 					ResourceCPUAccessFlag textureCpuAccess = RESOURCE_CPU_ACCESS_WRITE_BIT,
 					ResourceBindFlag textureBindFlag = RESOURCE_BIND_SHADER_RESOURCE_BIT,
 					std::string debugName = std::string(""));
 
-				//Loads a texture with data from file - Note: This is limited to .DDS files for
-				//now -> Uses the DDSTextureLoader 3rdParty library
+				//Loads a texture with data from file
 				//
-				//Resource will use default usage settings - IE, its an default shader resource with no CPU access. TODO:
+				//DDSTextureLoader: Resource will use default usage settings - IE, its an default shader resource with no CPU access. TODO:
 				//Add support for the extra functions of the DDS loader (eg: auto mips generation)
 				bool InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevice* device, 
 					std::string ddsFilePath, std::string debugName = std::string(""));
+
+				//LodePNG: 
+				bool InitTexture2DFromPNGFile(EngineAPI::Graphics::GraphicsDevice* device, 
+					std::string pngFilePath, std::string debugName = std::string(""));
 
 			public:
 				//OVerride base class(es) functions:

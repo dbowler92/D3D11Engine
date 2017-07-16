@@ -36,6 +36,14 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 		ReleaseCOM(texture2DHandle);
 	}
 
+	//If we want to auto generate mips, we must set the bind flag to include
+	//render target + shader resource
+	if (miscFlags & RESOURCE_MISC_GENERATE_MIPS)
+	{
+		textureBindFlag |= RESOURCE_BIND_SHADER_RESOURCE_BIT;
+		textureBindFlag |= RESOURCE_BIND_RENDER_TARGET_BIT;
+	}
+
 	//Reset D3D11 structs
 	textureDesc = {};
 	textureInitialData = {};
@@ -78,6 +86,12 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 	std::string o = std::string(__FUNCTION__) + ": " + "Creating Texture2D: " + debugName;
 	EngineAPI::Debug::DebugLog::PrintInfoMessage(o.c_str());
 
+
+	//
+	//TODO:
+	//	If immutable resource, pass initial data now. If not, use UpdateSubresource() instead. 
+	//
+
 	//Init texture with initial data?
 	D3D11_SUBRESOURCE_DATA* initialDataDesc = nullptr;
 	if (initialData)
@@ -98,9 +112,15 @@ bool D3D11Texture2D::InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 }
 
 bool D3D11Texture2D::InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevice* device,
-	std::string ddsFilePath, std::string debugName)
+	std::string ddsFilePath, bool doEnableAutoMipGeneration,
+	std::string debugName)
 {
 	assert(!ddsFilePath.empty());
+
+	//
+	//TEMP: TODO: DDSTextureLoader with customization - eg: To enable auto mip generation
+	//
+	assert(doEnableAutoMipGeneration == false);
 
 	//Release old texture + warning message
 	if (texture2DHandle)
@@ -139,11 +159,9 @@ bool D3D11Texture2D::InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevic
 	textureInitialData = {};
 	texture2DHandle->GetDesc(&textureDesc);
 
-	//Set debug name - Just the CoreObject name mind - the DDSLoader 
-	//sets the debug name of the resource to its asset path which is
-	//rather handy!
-	//SetDebugName(debugName);
-	__super::SetDebugName(debugName);
+	//Set debug name
+	SetDebugName(debugName);
+	//__super::SetDebugName(debugName);
 
 	//Init the BaseResource data
 	ResourceUsage textureUsage = (ResourceUsage)textureDesc.Usage;
@@ -157,7 +175,8 @@ bool D3D11Texture2D::InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevic
 }
 
 bool D3D11Texture2D::InitTexture2DFromPNGFile(EngineAPI::Graphics::GraphicsDevice* device,
-	std::string pngFilePath, std::string debugName)
+	std::string pngFilePath, bool doEnableAutoMipGeneration,
+	std::string debugName)
 {
 	assert(!pngFilePath.empty());
 
@@ -185,15 +204,32 @@ bool D3D11Texture2D::InitTexture2DFromPNGFile(EngineAPI::Graphics::GraphicsDevic
 	//to to the next line
 	uint32_t memoryPitch = (pngFileWidth) * 4; //PNG is converted to RGBA8 within pngData
 
+	//Flags && init data:
+	uint32_t mipLevels = 1;
+	ResourceUsage usg = RESOURCE_USAGE_IMMUTABLE;
+	ResourceBindFlag binding = RESOURCE_BIND_SHADER_RESOURCE_BIT;
+	ResourceMiscFlag miscFlag = NULL;
+
+	//If we want to enable auto mips generation...
+	if (doEnableAutoMipGeneration)
+	{
+		mipLevels = 1; // CalculateFullMipmapChainCount(pngFileWidth, pngFileHeight);
+		miscFlag |= RESOURCE_MISC_GENERATE_MIPS;
+		binding |= RESOURCE_BIND_RENDER_TARGET_BIT;
+		usg = RESOURCE_USAGE_DEFAULT;
+	}
+
 	//Init the texture
-	return InitTexture2D(device,
+	bool ret = InitTexture2D(device,
 		pngFileWidth, pngFileHeight, 1,
-		1, 1,
-		NULL,
+		mipLevels, 1,
+		miscFlag,
 		(void*)pngData.data(), memoryPitch,
-		RESOURCE_FORMAT_R8G8B8A8_UNORM, RESOURCE_USAGE_DEFAULT, NULL,
-		RESOURCE_BIND_SHADER_RESOURCE_BIT, 
+		RESOURCE_FORMAT_R8G8B8A8_UNORM, usg, NULL,
+		binding,
 		debugName);
+
+	return ret;
 }
 
 bool D3D11Texture2D::Internal_InitTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
@@ -288,4 +324,20 @@ void D3D11Texture2D::UnmapResource(EngineAPI::Graphics::GraphicsDevice* device,
 		//Update internal is mapped flag 
 		isResourceCurrentlyMapped = false;
 	}
+}
+
+//
+//Private
+//
+
+uint32_t D3D11Texture2D::CalculateFullMipmapChainCount(uint32_t w, uint32_t h)
+{
+	uint32_t count = 1;
+	while (w != 1)
+	{
+		count++;
+		w /= 2;
+	}
+
+	return count;
 }

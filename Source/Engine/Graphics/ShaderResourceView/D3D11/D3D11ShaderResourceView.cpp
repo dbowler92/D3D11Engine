@@ -18,6 +18,7 @@ bool D3D11ShaderResourceView::InitShaderResourceViewToTexture2D(EngineAPI::Graph
 	EngineAPI::Graphics::Texture2D* texture,
 	bool doUseUnderlyingResourceFormatForView,
 	ResourceFormat shaderResourceViewTextureFormat,
+	bool doUseFirstMipOnly,
 	std::string debugName)
 {
 	//Clear old srv
@@ -46,7 +47,11 @@ bool D3D11ShaderResourceView::InitShaderResourceViewToTexture2D(EngineAPI::Graph
 	else
 	{
 		srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-		srvDesc.Texture2D.MipLevels = texture->GetMipLevels(); //TODO
+		if (doUseFirstMipOnly)
+			srvDesc.Texture2D.MipLevels = 1; //texture->GetMipLevels(); //TODO
+		else
+			srvDesc.Texture2D.MipLevels = -1; //texture->GetMipLevels(); //TODO
+
 		srvDesc.Texture2D.MostDetailedMip = texture->GetMostDetailedMipLevel(); //TOOD
 	}
 

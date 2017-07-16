@@ -387,24 +387,31 @@ void TestScene::TestTexturesFromFile()
 	//
 	//DDS:
 	//assert(textureFromFile.InitTexture2DFromDDSFile(device,
-	//	std::string(TEXTURE_ASSETS_FOLDER"/TestTextures/floor.dds"),
+	//	std::string(TEXTURE_ASSETS_FOLDER"/TestTextures/floor.dds"), false,
 	//	std::string("TestTexture2DLoadedFromFile")));
 
 	//PNG:
 	assert(textureFromFile.InitTexture2DFromPNGFile(device,
-		std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"),
+		std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"), true,
 		std::string("TestTexture2DLoadedFromFile_PNG")));
 
+	//assert(textureFromFile.InitTexture2DFromPNGFile(device,
+	//	std::string(ASSETS_FOLDER"Sponza/textures/spnza_bricks_a_diff.png"), true,
+	//	std::string("TestTexture2DLoadedFromFile_PNG")));
+	
 	//SRV
 	assert(texSRV.InitShaderResourceViewToTexture2D(device,
-		&textureFromFile, true, RESOURCE_FORMAT_R8G8B8A8_UNORM,
+		&textureFromFile, true, RESOURCE_FORMAT_R8G8B8A8_UNORM, false,
 		std::string("DDSTextureFromFile_SRV")));
+
+	//Mip generation
+	device->GetD3D11ImmediateContext()->GenerateMips(texSRV.GetD3D11ShaderResourceView());
 
 	//Linear sampler
 	SamplerStateDescription linearSamplerDesc = {};
-	linearSamplerDesc.AddressModeU = TEXTURE_ADDRESS_WRAP;
-	linearSamplerDesc.AddressModeV = TEXTURE_ADDRESS_WRAP;
-	linearSamplerDesc.AddressModeW = TEXTURE_ADDRESS_WRAP;
+	//linearSamplerDesc.AddressModeU = TEXTURE_ADDRESS_WRAP;
+	//linearSamplerDesc.AddressModeV = TEXTURE_ADDRESS_WRAP;
+	//linearSamplerDesc.AddressModeW = TEXTURE_ADDRESS_WRAP;
 	assert(defaultLinearSampler.InitSamplerState(device, &linearSamplerDesc, 
 		std::string("DefaultLinearSamplerState")));
 }

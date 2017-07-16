@@ -45,6 +45,7 @@ namespace EngineAPI
 					EngineAPI::Graphics::Texture2D* texture,
 					bool doUseUnderlyingResourceFormatForView = true,
 					ResourceFormat shaderResourceViewTextureFormat = RESOURCE_FORMAT_UNKNOWN,
+					bool doUseFirstMipOnly = false,
 					std::string debugName = std::string(""));
 
 				//Shutdown the SRV
@@ -55,9 +56,11 @@ namespace EngineAPI
 				void BindShaderResourceViewToVertexShader(EngineAPI::Graphics::GraphicsDevice* device, UINT bindingSlotIndex);
 				void BindShaderResourceViewToPixelShader(EngineAPI::Graphics::GraphicsDevice* device, UINT bindingSlotIndex);
 
+				//Use this SRV to auto generate mips
+
 			public:
 				//Getters
-				ID3D11ShaderResourceView* GetD3D11RenderTargetView() { return srv; };
+				ID3D11ShaderResourceView* GetD3D11ShaderResourceView() { return srv; };
 
 			protected:
 				//Description.

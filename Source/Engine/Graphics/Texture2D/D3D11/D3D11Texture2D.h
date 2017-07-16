@@ -46,11 +46,13 @@ namespace EngineAPI
 				//DDSTextureLoader: Resource will use default usage settings - IE, its an default shader resource with no CPU access. TODO:
 				//Add support for the extra functions of the DDS loader (eg: auto mips generation)
 				bool InitTexture2DFromDDSFile(EngineAPI::Graphics::GraphicsDevice* device, 
-					std::string ddsFilePath, std::string debugName = std::string(""));
+					std::string ddsFilePath, bool doEnableAutoMipGeneration,
+					std::string debugName = std::string(""));
 
 				//LodePNG: 
 				bool InitTexture2DFromPNGFile(EngineAPI::Graphics::GraphicsDevice* device, 
-					std::string pngFilePath, std::string debugName = std::string(""));
+					std::string pngFilePath, bool doEnableAutoMipGeneration,
+					std::string debugName = std::string(""));
 
 			public:
 				//OVerride base class(es) functions:
@@ -100,6 +102,11 @@ namespace EngineAPI
 					bool doInitWitInitialData, ResourceType resourceType,
 					ResourceUsage resourceUsage, ResourceCPUAccessFlag cpuAccess, ResourceBindFlag resourceBindingFlag,
 					std::string debugName = "");
+
+			private:
+				//Given a resource size, calculates the number of mip levels
+				//that will be generated for a full mip-map chain
+				uint32_t CalculateFullMipmapChainCount(uint32_t w, uint32_t h);
 			};
 		};
 	};

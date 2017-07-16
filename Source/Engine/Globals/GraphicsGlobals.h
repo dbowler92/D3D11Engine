@@ -568,6 +568,15 @@ struct RasterizerPipelineStateDescription
 	BOOL  AntialiasedLineEnabled;
 };
 
+//Texture sampling state
+struct SamplerStateDescription
+{
+	SamplerStateDescription()
+	{
+		//Default settings
+	}
+};
+
 //Mapping
 //
 enum ResourceMappingMode

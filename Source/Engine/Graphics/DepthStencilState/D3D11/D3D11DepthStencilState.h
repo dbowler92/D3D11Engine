@@ -6,7 +6,6 @@
 
 #pragma once
 
-
 //Parent class
 #include <Graphics/PipelineStateResource/PipelineStateResource.h>
 

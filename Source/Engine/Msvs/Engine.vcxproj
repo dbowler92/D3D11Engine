@@ -51,6 +51,7 @@
     <ClCompile Include="..\Graphics\RasterizerState\D3D11\D3D11RasterizerState.cpp" />
     <ClCompile Include="..\Graphics\RenderTargetView\D3D11\D3D11RenderTargetView.cpp" />
     <ClCompile Include="..\Graphics\RenderTexture2D\D3D11\D3D11RenderTexture2D.cpp" />
+    <ClCompile Include="..\Graphics\SamplerState\D3D11\D3D11SamplerState.cpp" />
     <ClCompile Include="..\Graphics\ShaderResourceView\D3D11\D3D11ShaderResourceView.cpp" />
     <ClCompile Include="..\Graphics\ShaderResource\D3D11\D3D11ShaderResource.cpp" />
     <ClCompile Include="..\Graphics\Texture2D\D3D11\D3D11Texture2D.cpp" />
@@ -118,6 +119,8 @@
     <ClInclude Include="..\Graphics\RenderTargetView\RenderTargetView.h" />
     <ClInclude Include="..\Graphics\RenderTexture2D\D3D11\D3D11RenderTexture2D.h" />
     <ClInclude Include="..\Graphics\RenderTexture2D\RenderTexture2D.h" />
+    <ClInclude Include="..\Graphics\SamplerState\D3D11\D3D11SamplerState.h" />
+    <ClInclude Include="..\Graphics\SamplerState\SamplerState.h" />
     <ClInclude Include="..\Graphics\ShaderResourceView\D3D11\D3D11ShaderResourceView.h" />
     <ClInclude Include="..\Graphics\ShaderResourceView\ShaderResourceView.h" />
     <ClInclude Include="..\Graphics\ShaderResource\D3D11\D3D11ShaderResource.h" />

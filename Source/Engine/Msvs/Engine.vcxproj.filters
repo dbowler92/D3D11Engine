@@ -271,6 +271,12 @@
     <Filter Include="Src\Graphics\ShaderResourceView\D3D11">
       <UniqueIdentifier>{12201897-219e-4576-9498-1f98ec434342}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\SamplerState">
+      <UniqueIdentifier>{e4aaa1bc-5a44-42d3-af8b-40c4f5dda2ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\SamplerState\D3D11">
+      <UniqueIdentifier>{036697df-bc81-481b-aef5-51a10d270393}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -410,6 +416,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\ShaderResourceView\D3D11\D3D11ShaderResourceView.cpp">
       <Filter>Src\Graphics\ShaderResourceView\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\SamplerState\D3D11\D3D11SamplerState.cpp">
+      <Filter>Src\Graphics\SamplerState\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -649,6 +658,12 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\ShaderResourceView\ShaderResourceView.h">
       <Filter>Src\Graphics\ShaderResourceView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\SamplerState\D3D11\D3D11SamplerState.h">
+      <Filter>Src\Graphics\SamplerState\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\SamplerState\SamplerState.h">
+      <Filter>Src\Graphics\SamplerState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

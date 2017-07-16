@@ -29,6 +29,7 @@
 
 #include <Engine/Graphics/Texture2D/Texture2D.h>
 #include <Engine/Graphics/ShaderResourceView/ShaderResourceView.h>
+#include <Engine/Graphics/SamplerState/SamplerState.h>
 
 class TestScene : public EngineAPI::Gameplay::Scene
 {
@@ -86,6 +87,7 @@ private:
 	EngineAPI::Graphics::PixelShader texPS;
 	EngineAPI::Graphics::Texture2D textureFromFile;
 	EngineAPI::Graphics::ShaderResourceView texSRV;
+	EngineAPI::Graphics::SamplerState defaultLinearSampler;
 
 private:
 	void TestVB();

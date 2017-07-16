@@ -70,12 +70,13 @@ bool D3D11ShaderResourceView::InitShaderResourceViewToTexture2D(EngineAPI::Graph
 	return true;
 }
 
-void D3D11ShaderResourceView::BindShaderResourceViewToPixelShader(EngineAPI::Graphics::GraphicsDevice* device, UINT bindingSlotIndex)
-{
-	device->GetD3D11ImmediateContext()->PSSetShaderResources(bindingSlotIndex, 1, &srv);
-}
 
 void D3D11ShaderResourceView::BindShaderResourceViewToVertexShader(EngineAPI::Graphics::GraphicsDevice* device, UINT bindingSlotIndex)
 {
 	device->GetD3D11ImmediateContext()->VSSetShaderResources(bindingSlotIndex, 1, &srv);
+}
+
+void D3D11ShaderResourceView::BindShaderResourceViewToPixelShader(EngineAPI::Graphics::GraphicsDevice* device, UINT bindingSlotIndex)
+{
+	device->GetD3D11ImmediateContext()->PSSetShaderResources(bindingSlotIndex, 1, &srv);
 }

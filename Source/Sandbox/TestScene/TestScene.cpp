@@ -392,6 +392,14 @@ void TestScene::TestTexturesFromFile()
 	assert(texSRV.InitShaderResourceViewToTexture2D(device,
 		&textureFromFile, true, RESOURCE_FORMAT_R8G8B8A8_UNORM,
 		std::string("DDSTextureFromFile_SRV")));
+
+	//Linear sampler
+	SamplerStateDescription linearSamplerDesc = {};
+	linearSamplerDesc.AddressModeU = TEXTURE_ADDRESS_WRAP;
+	linearSamplerDesc.AddressModeV = TEXTURE_ADDRESS_WRAP;
+	linearSamplerDesc.AddressModeW = TEXTURE_ADDRESS_WRAP;
+	assert(defaultLinearSampler.InitSamplerState(device, &linearSamplerDesc, 
+		std::string("DefaultLinearSamplerState")));
 }
 
 bool TestScene::OnSceneBecomeDeactive()
@@ -428,7 +436,8 @@ bool TestScene::OnSceneBecomeDeactive()
 	texPS.Shutdown();
 	textureFromFile.Shutdown();
 	texSRV.Shutdown();
-
+	defaultLinearSampler.Shutdown();
+	
 	//Done
 	return true;
 }
@@ -559,6 +568,9 @@ bool TestScene::OnSceneRender()
 	device->RSSetState(&rss);
 	device->OMSetBlendState(&bs);
 	device->OMSetDepthStencilState(&dss, 0);
+
+	//Sampler state object
+	device->PSSetSamplerState(&defaultLinearSampler, 0);
 
 	//Draw command
 	device->Draw(texCubeVB.GetElementsCount(), 0);

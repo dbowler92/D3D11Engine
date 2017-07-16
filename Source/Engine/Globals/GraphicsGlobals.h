@@ -313,7 +313,7 @@ struct VertexInputSignatureElementDescription
 };
 
 //General comparison function - fixed function stuff eg: depth test func
-enum PipelineComparisonFunction
+enum ComparisonFunction
 {
 	COMPARISON_FUNCTION_NEVER = 1,
 	COMPARISON_FUNCTION_LESS = 2,
@@ -355,7 +355,7 @@ struct DepthStencilResultOp
 		OnStencilFail = StencilPipelineStateOp::STENCIL_OP_KEEP;
 		OnStencilPassDepthFail = StencilPipelineStateOp::STENCIL_OP_KEEP;
 		OnStencilPassDepthPass = StencilPipelineStateOp::STENCIL_OP_KEEP;
-		StencilComparisonFunction = PipelineComparisonFunction::COMPARISON_FUNCTION_NEVER;
+		StencilComparisonFunction = ComparisonFunction::COMPARISON_FUNCTION_NEVER;
 	}
 
 	//Operation to perform (per face)
@@ -364,7 +364,7 @@ struct DepthStencilResultOp
 	StencilPipelineStateOp OnStencilPassDepthPass;
 
 	//Stencil test comparison function (per face)
-	PipelineComparisonFunction StencilComparisonFunction;
+	ComparisonFunction StencilComparisonFunction;
 };
 
 //Depth && stencil state
@@ -378,7 +378,7 @@ struct DepthStencilPipelineStateDescription
 		//Depth - on
 		DepthTestEnabled = true;
 		DepthWriteMask = DepthTextureWriteMask::DEPTH_TEXTURE_WRITE_MASK_ALL;
-		DepthTestFunction = PipelineComparisonFunction::COMPARISON_FUNCTION_LESS;
+		DepthTestFunction = ComparisonFunction::COMPARISON_FUNCTION_LESS;
 
 		//Stencil - off
 		StencilTestEnabled = false;
@@ -393,7 +393,7 @@ struct DepthStencilPipelineStateDescription
 	//Depth test
 	bool DepthTestEnabled;
 	DepthTextureWriteMask DepthWriteMask;
-	PipelineComparisonFunction DepthTestFunction;
+	ComparisonFunction DepthTestFunction;
 
 	//Stencil test
 	bool StencilTestEnabled;
@@ -568,13 +568,87 @@ struct RasterizerPipelineStateDescription
 	BOOL  AntialiasedLineEnabled;
 };
 
+enum TextureFilterMode
+{
+	TEXTURE_FILTER_MIN_MAG_MIP_POINT = 0,
+	TEXTURE_FILTER_MIN_MAG_POINT_MIP_LINEAR = 0x1,
+	TEXTURE_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT = 0x4,
+	TEXTURE_FILTER_MIN_POINT_MAG_MIP_LINEAR = 0x5,
+	TEXTURE_FILTER_MIN_LINEAR_MAG_MIP_POINT = 0x10,
+	TEXTURE_FILTER_MIN_LINEAR_MAG_POINT_MIP_LINEAR = 0x11,
+	TEXTURE_FILTER_MIN_MAG_LINEAR_MIP_POINT = 0x14,
+	TEXTURE_FILTER_MIN_MAG_MIP_LINEAR = 0x15,
+	TEXTURE_FILTER_ANISOTROPIC = 0x55,
+	TEXTURE_FILTER_COMPARISON_MIN_MAG_MIP_POINT = 0x80,
+	TEXTURE_FILTER_COMPARISON_MIN_MAG_POINT_MIP_LINEAR = 0x81,
+	TEXTURE_FILTER_COMPARISON_MIN_POINT_MAG_LINEAR_MIP_POINT = 0x84,
+	TEXTURE_FILTER_COMPARISON_MIN_POINT_MAG_MIP_LINEAR = 0x85,
+	TEXTURE_FILTER_COMPARISON_MIN_LINEAR_MAG_MIP_POINT = 0x90,
+	TEXTURE_FILTER_COMPARISON_MIN_LINEAR_MAG_POINT_MIP_LINEAR = 0x91,
+	TEXTURE_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT = 0x94,
+	TEXTURE_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR = 0x95,
+	TEXTURE_FILTER_COMPARISON_ANISOTROPIC = 0xd5,
+	TEXTURE_FILTER_MINIMUM_MIN_MAG_MIP_POINT = 0x100,
+	TEXTURE_FILTER_MINIMUM_MIN_MAG_POINT_MIP_LINEAR = 0x101,
+	TEXTURE_FILTER_MINIMUM_MIN_POINT_MAG_LINEAR_MIP_POINT = 0x104,
+	TEXTURE_FILTER_MINIMUM_MIN_POINT_MAG_MIP_LINEAR = 0x105,
+	TEXTURE_FILTER_MINIMUM_MIN_LINEAR_MAG_MIP_POINT = 0x110,
+	TEXTURE_FILTER_MINIMUM_MIN_LINEAR_MAG_POINT_MIP_LINEAR = 0x111,
+	TEXTURE_FILTER_MINIMUM_MIN_MAG_LINEAR_MIP_POINT = 0x114,
+	TEXTURE_FILTER_MINIMUM_MIN_MAG_MIP_LINEAR = 0x115,
+	TEXTURE_FILTER_MINIMUM_ANISOTROPIC = 0x155,
+	TEXTURE_FILTER_MAXIMUM_MIN_MAG_MIP_POINT = 0x180,
+	TEXTURE_FILTER_MAXIMUM_MIN_MAG_POINT_MIP_LINEAR = 0x181,
+	TEXTURE_FILTER_MAXIMUM_MIN_POINT_MAG_LINEAR_MIP_POINT = 0x184,
+	TEXTURE_FILTER_MAXIMUM_MIN_POINT_MAG_MIP_LINEAR = 0x185,
+	TEXTURE_FILTER_MAXIMUM_MIN_LINEAR_MAG_MIP_POINT = 0x190,
+	TEXTURE_FILTER_MAXIMUM_MIN_LINEAR_MAG_POINT_MIP_LINEAR = 0x191,
+	TEXTURE_FILTER_MAXIMUM_MIN_MAG_LINEAR_MIP_POINT = 0x194,
+	TEXTURE_FILTER_MAXIMUM_MIN_MAG_MIP_LINEAR = 0x195,
+	TEXTURE_FILTER_MAXIMUM_ANISOTROPIC = 0x1d5
+};
+
+enum TextureAddressMode
+{
+	TEXTURE_ADDRESS_WRAP = 1,
+	TEXTURE_ADDRESS_MIRROR = 2,
+	TEXTURE_ADDRESS_CLAMP = 3,
+	TEXTURE_ADDRESS_BORDER = 4,
+	TEXTURE_ADDRESS_MIRROR_ONCE = 5
+};
+
 //Texture sampling state
 struct SamplerStateDescription
 {
 	SamplerStateDescription()
 	{
 		//Default settings
+		FilterMode = TEXTURE_FILTER_MIN_MAG_MIP_LINEAR;
+		AddressModeU = TEXTURE_ADDRESS_CLAMP; //TEXTURE_ADDRESS_WRAP;
+		AddressModeV = TEXTURE_ADDRESS_CLAMP; //TEXTURE_ADDRESS_WRAP;
+		AddressModeW = TEXTURE_ADDRESS_CLAMP; //TEXTURE_ADDRESS_WRAP;
+		MipLODBias = 0.0f;
+		MaxAnisotropy = 1;
+		ComparisonFunc = COMPARISON_FUNCTION_NEVER;
+		BorderColour[0] = 1.0f;
+		BorderColour[1] = 1.0f;
+		BorderColour[2] = 1.0f;
+		BorderColour[3] = 1.0f;
+		MinLOD = -FLT_MAX;
+		MaxLOD = FLT_MAX;
+
 	}
+
+	TextureFilterMode FilterMode;
+	TextureAddressMode AddressModeU;
+	TextureAddressMode AddressModeV;
+	TextureAddressMode AddressModeW;
+	FLOAT MipLODBias;
+	UINT MaxAnisotropy;
+	ComparisonFunction ComparisonFunc;
+	FLOAT BorderColour[4];
+	FLOAT MinLOD;
+	FLOAT MaxLOD;
 };
 
 //Mapping

@@ -29,6 +29,11 @@ namespace EngineAPI
 				//Shutsdown the sampler state object
 				virtual void Shutdown() override;
 
+			public:
+				//Binds this sampler state to the pipeline
+				void BindSamplerStateToVertexShader(EngineAPI::Graphics::GraphicsDevice* device, UINT samplerSlot);
+				void BindSamplerStateToPixelShader(EngineAPI::Graphics::GraphicsDevice* device, UINT samplerSlot);
+				
 			protected:
 				//Manages an ID3D11SamplerState object
 				ID3D11SamplerState* samplerState = nullptr;

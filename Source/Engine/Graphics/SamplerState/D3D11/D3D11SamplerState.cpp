@@ -47,7 +47,26 @@ bool D3D11SamplerState::InitSamplerState(EngineAPI::Graphics::GraphicsDevice* de
 	return true;
 }
 
+void D3D11SamplerState::BindSamplerStateToVertexShader(EngineAPI::Graphics::GraphicsDevice* device, UINT samplerSlot)
+{
+	device->GetD3D11ImmediateContext()->VSSetSamplers(samplerSlot, 1, &samplerState);
+}
+
+void D3D11SamplerState::BindSamplerStateToPixelShader(EngineAPI::Graphics::GraphicsDevice* device, UINT samplerSlot)
+{
+	device->GetD3D11ImmediateContext()->PSSetSamplers(samplerSlot, 1, &samplerState);
+}
+
 void D3D11SamplerState::FilloutD3D11SamplerDesc(SamplerStateDescription* state)
 {
-	
+	samplerDesc.Filter = (D3D11_FILTER)state->FilterMode;
+	samplerDesc.AddressU = (D3D11_TEXTURE_ADDRESS_MODE)state->AddressModeU;
+	samplerDesc.AddressV = (D3D11_TEXTURE_ADDRESS_MODE)state->AddressModeV;
+	samplerDesc.AddressW = (D3D11_TEXTURE_ADDRESS_MODE)state->AddressModeW;
+	samplerDesc.MipLODBias = state->MipLODBias;
+	samplerDesc.MaxAnisotropy = state->MaxAnisotropy;
+	samplerDesc.ComparisonFunc = (D3D11_COMPARISON_FUNC)state->ComparisonFunc;
+	memcpy(&samplerDesc.BorderColor, &state->BorderColour, sizeof(FLOAT) * 4);
+	samplerDesc.MinLOD = state->MinLOD;
+	samplerDesc.MaxLOD = state->MaxLOD;
 }

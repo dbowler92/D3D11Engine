@@ -52,8 +52,8 @@ namespace EngineAPI
 
 			public:
 				//Binds the SRV to the pipeline - just this SRV
-				void BindShaderResourceViewToPixelShader(EngineAPI::Graphics::GraphicsDevice* device, UINT bindingSlotIndex);
 				void BindShaderResourceViewToVertexShader(EngineAPI::Graphics::GraphicsDevice* device, UINT bindingSlotIndex);
+				void BindShaderResourceViewToPixelShader(EngineAPI::Graphics::GraphicsDevice* device, UINT bindingSlotIndex);
 
 			public:
 				//Getters

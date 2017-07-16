@@ -40,6 +40,7 @@ namespace EngineAPI
 		class RasterizerState;
 		class BlendState;
 		class DepthStencilState;
+		class SamplerState;
 
 		class RenderTargetView;
 		class DepthStencilView;
@@ -91,10 +92,12 @@ namespace EngineAPI
 				void VSSetShader(EngineAPI::Graphics::VertexShader* vs);
 				void VSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot);
 				void VSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot);
+				void VSSetSamplerState(EngineAPI::Graphics::SamplerState* samplerState, UINT bindingSlot);
 
 				//PS
 				void PSSetShader(EngineAPI::Graphics::PixelShader* ps);
 				void PSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot);
+				void PSSetSamplerState(EngineAPI::Graphics::SamplerState* samplerState, UINT bindingSlot);
 
 				//Drawing
 				void Draw(UINT count, UINT startIndex);

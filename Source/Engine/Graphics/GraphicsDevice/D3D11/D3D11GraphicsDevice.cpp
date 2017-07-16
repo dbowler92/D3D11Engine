@@ -14,6 +14,7 @@
 #include <Graphics/RasterizerState/RasterizerState.h>
 #include <Graphics/BlendState/BlendState.h>
 #include <Graphics/DepthStencilState/DepthStencilState.h>
+#include <Graphics/SamplerState/SamplerState.h>
 
 #include <Graphics/RenderTargetView/RenderTargetView.h>
 #include <Graphics/DepthStencilView/DepthStencilView.h>
@@ -146,6 +147,8 @@ void D3D11GraphicsDevice::OMSetRenderTarget(EngineAPI::Graphics::RenderTargetVie
 {
 	if (renderTargetView)
 		renderTargetView->BindAsRenderTarget((EngineAPI::Graphics::GraphicsDevice*)this, optionalDepthStencilView);
+	else
+		GetD3D11ImmediateContext()->OMSetRenderTargets(1, nullptr, nullptr);
 }
 
 //
@@ -164,12 +167,24 @@ void D3D11GraphicsDevice::VSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffe
 {
 	if (cBuffer)
 		cBuffer->BindConstantBufferToVertexShaderStage((EngineAPI::Graphics::GraphicsDevice*)this, bufferSlot);
+	else
+		GetD3D11ImmediateContext()->VSSetConstantBuffers(bufferSlot, 1, nullptr);
 }
 
 void D3D11GraphicsDevice::VSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot)
 {
 	if (shaderResource)
 		shaderResource->BindShaderResourceViewToVertexShader((EngineAPI::Graphics::GraphicsDevice*)this, bindingSlot);
+	else
+		GetD3D11ImmediateContext()->VSSetShaderResources(bindingSlot, 1, nullptr);
+}
+
+void D3D11GraphicsDevice::VSSetSamplerState(EngineAPI::Graphics::SamplerState* samplerState, UINT bindingSlot)
+{
+	if (samplerState)
+		samplerState->BindSamplerStateToVertexShader((EngineAPI::Graphics::GraphicsDevice*)this, bindingSlot);
+	else
+		GetD3D11ImmediateContext()->VSSetSamplers(bindingSlot, 1, nullptr);
 }
 
 //
@@ -188,8 +203,17 @@ void D3D11GraphicsDevice::PSSetShaderResource(EngineAPI::Graphics::ShaderResourc
 {
 	if (shaderResource)
 		shaderResource->BindShaderResourceViewToPixelShader((EngineAPI::Graphics::GraphicsDevice*)this, bindingSlot);
+	else
+		GetD3D11ImmediateContext()->PSSetShaderResources(bindingSlot, 1, nullptr);
 }
 
+void D3D11GraphicsDevice::PSSetSamplerState(EngineAPI::Graphics::SamplerState* samplerState, UINT bindingSlot)
+{
+	if (samplerState)
+		samplerState->BindSamplerStateToPixelShader((EngineAPI::Graphics::GraphicsDevice*)this, bindingSlot);
+	else
+		GetD3D11ImmediateContext()->PSSetSamplers(bindingSlot, 1, nullptr);
+}
 
 //
 //Draw commands

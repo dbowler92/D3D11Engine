@@ -40,6 +40,9 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	//Init CBuffer
 	InitCBuffer();
 
+	//Init Render Targets
+	InitRenderTargets();
+
 	//Done
 	return true;
 }
@@ -61,6 +64,19 @@ void DeferredTestScene::InitCBuffer()
 		std::string("DeferredTestScene_CB")));
 }
 
+void DeferredTestScene::InitRenderTargets()
+{
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
+	uint32_t screenW = (uint32_t)gm->GetWindowWidth();
+	uint32_t screenH = (uint32_t)gm->GetWindowHeight();
+
+	//assert(renderTarget.InitRenderTarget(screenW, screenH, RESOURCE_FORMAT_R8G8B8A8_UNORM, true, std::string("DeferredScene_TestRenderTarget")));
+	assert(renderTarget.InitRenderTargetWithDepthStencilTexture(screenW, screenH, RESOURCE_FORMAT_R8G8B8A8_UNORM,
+		DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, true, std::string("DeferredScene_TestRenderTarget")));
+
+}
+
 bool DeferredTestScene::OnSceneBecomeDeactive()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("SponzaScene::OnSceneBecomeDeactive()\n");
@@ -69,6 +85,8 @@ bool DeferredTestScene::OnSceneBecomeDeactive()
 	mainCamera.Shutdown();
 	constantBuffer.Shutdown();
 	cube.Shutdown();
+
+	renderTarget.Shutdown();
 
 	//Done
 	return true;

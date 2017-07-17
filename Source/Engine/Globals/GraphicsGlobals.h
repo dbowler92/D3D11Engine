@@ -238,7 +238,12 @@ enum ResourceFormat
 	RESOURCE_FORMAT_BC7_TYPELESS = 97,
 	RESOURCE_FORMAT_BC7_UNORM = 98,
 	RESOURCE_FORMAT_BC7_UNORM_SRGB = 99,
-	RESOURCE_FORMAT_FORCE_UINT = 0xffffffff
+	RESOURCE_FORMAT_FORCE_UINT = 0xffffffff, 
+
+	//Special format / flags to use
+	//
+	//For views: Uses the same format as the underlying resource
+	RESOURCE_FORMAT_USE_UNDERLYING_RESOURCE_FORMAT = 0xFFFFFFFE
 }; 
 
 enum IndexBufferFormat

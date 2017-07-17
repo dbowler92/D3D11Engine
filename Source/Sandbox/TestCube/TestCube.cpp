@@ -83,6 +83,8 @@ void TestCube::InitCube(EngineAPI::Graphics::GraphicsDevice* device,
 	std::string diffuseTex, bool isPNG,
 	std::string debugName)
 {
+	__super::SetDebugName(debugName);
+
 	assert(isPNG == true);
 
 	//World matrix init

@@ -51,7 +51,7 @@ namespace EngineAPI
 				bool InitRenderTargetView(EngineAPI::Graphics::GraphicsDevice* device,
 					EngineAPI::Graphics::RenderTexture2D* renderTexture,
 					bool doUseUnderlyingResourceFormatForView = true,
-					ResourceFormat renderTargetTextureViewFormat = RESOURCE_FORMAT_UNKNOWN,
+					ResourceFormat renderTargetTextureViewFormat = RESOURCE_FORMAT_USE_UNDERLYING_RESOURCE_FORMAT,
 					std::string debugName = std::string(""));
 
 				//Shutdown the RTV

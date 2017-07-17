@@ -432,6 +432,9 @@
     <ClCompile Include="..\Rendering\VirtualCamera\VirtualCamera.cpp">
       <Filter>Src\Rendering\VirtualCamera</Filter>
     </ClCompile>
+    <ClCompile Include="..\Rendering\RenderTarget\RenderTarget.cpp">
+      <Filter>Src\Rendering\RenderTarget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Main\EngineStd.h">
@@ -685,6 +688,9 @@
     </ClInclude>
     <ClInclude Include="..\Math\Matrix\Matrix3x3.h">
       <Filter>Src\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Rendering\RenderTarget\RenderTarget.h">
+      <Filter>Src\Rendering\RenderTarget</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

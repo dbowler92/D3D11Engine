@@ -44,7 +44,7 @@ namespace EngineAPI
 				bool InitShaderResourceViewToTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 					EngineAPI::Graphics::Texture2D* texture,
 					bool doUseUnderlyingResourceFormatForView = true,
-					ResourceFormat shaderResourceViewTextureFormat = RESOURCE_FORMAT_UNKNOWN,
+					ResourceFormat shaderResourceViewTextureFormat = RESOURCE_FORMAT_USE_UNDERLYING_RESOURCE_FORMAT,
 					bool doUseFirstMipOnly = false,				//Else, will use all mip levels. TODO: System to specify a subset of mips to use. 
 					std::string debugName = std::string(""));
 

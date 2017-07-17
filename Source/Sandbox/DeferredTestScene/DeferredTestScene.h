@@ -11,6 +11,7 @@
 
 //Rendering && graphics
 #include <Engine/Rendering/VirtualCamera/VirtualCamera.h>
+#include <Engine/Rendering/RenderTarget/RenderTarget.h>
 
 //Cube we render
 #include <Sandbox/TestCube/TestCube.h>
@@ -47,6 +48,9 @@ private:
 	EngineAPI::Rendering::VirtualCamera mainCamera;
 	POINT lastMPos; //Last mouse position - used when rotating the camera
 
+	//Render target
+	EngineAPI::Rendering::RenderTarget renderTarget;
+
 	//CBuffer (WVP)
 	EngineAPI::Graphics::ConstantBuffer constantBuffer;
 
@@ -55,4 +59,5 @@ private:
 
 private:
 	void InitCBuffer();
+	void InitRenderTargets();
 };

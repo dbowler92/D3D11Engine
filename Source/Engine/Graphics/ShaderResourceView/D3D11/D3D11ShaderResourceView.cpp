@@ -2,6 +2,8 @@
 
 //Include textures
 #include <Graphics/Texture2D/Texture2D.h>
+#include <Graphics/RenderTexture2D/RenderTexture2D.h>
+#include <Graphics/DepthStencilTexture2D/DepthStencilTexture2D.h>
 
 using namespace EngineAPI::Graphics::Platform;
 
@@ -73,6 +75,28 @@ bool D3D11ShaderResourceView::InitShaderResourceViewToTexture2D(EngineAPI::Graph
 
 	//Done
 	return true;
+}
+
+bool D3D11ShaderResourceView::InitShaderResourceViewToDepthStencilTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
+	EngineAPI::Graphics::DepthStencilTexture2D* depthStencilTexture,
+	bool doUseFirstMipOnly,
+	std::string debugName)
+{
+	//Calculate the format for the view
+	ResourceFormat depthStencilTextureSRVFormat;
+	DepthStencilTextureFormat depthStencilTextureFormat = depthStencilTexture->GetDepthStencilTextureFormat();
+	if (depthStencilTextureFormat == DEPTH_STENCIL_FORMAT_D16_UNORM)
+		depthStencilTextureSRVFormat = RESOURCE_FORMAT_R16_UNORM;
+
+	else if (depthStencilTextureFormat == DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT)
+		depthStencilTextureSRVFormat = RESOURCE_FORMAT_R24_UNORM_X8_TYPELESS; 
+
+	else if (depthStencilTextureFormat == DEPTH_STENCIL_FORMAT_D32_FLOAT)
+		depthStencilTextureSRVFormat = RESOURCE_FORMAT_R32_FLOAT;				//TODO: Allow this as R32_UNORM
+
+	//Init SRV
+	return (InitShaderResourceViewToTexture2D(device, depthStencilTexture->GetTexture2D(), 
+		false, depthStencilTextureSRVFormat, doUseFirstMipOnly, debugName));
 }
 
 

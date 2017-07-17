@@ -62,13 +62,20 @@ namespace EngineAPI
 				std::string debugName = std::string(""));
 
 			//
+			//TODO: When creating the RenderTarget with depth/stencil texture, 
+			//allow the user to pass a custom SRV format for the depth texture to
+			//enable DEPTH_STENCIL_FORMAT_R32_FLOAT to be read as RESOURCE_FORMAT_R32_UNORM
+			//by a shader?
+			//
+
+			//
 			//TODO: Support typeless formats by splitting up the texture and view
 			//creation code!
 			//
 
-			//
-			//TODO: Resize the render target (and depth texture) + recreate views
-			//
+			//Destroys and recreates the render target (and depth stencil buffer)
+			//with a new size
+			bool Resize(uint32_t newWidth, uint32_t newHeight);
 
 			//
 			//TODO: Pipeline binding - make sure to enable the option of binding null depth
@@ -89,12 +96,21 @@ namespace EngineAPI
 
 			//Views to the depth stencil buffer
 			EngineAPI::Graphics::DepthStencilView depthStencilDSV;
+			EngineAPI::Graphics::DepthStencilView depthStencilReadOnlyDSV; //Depth test (no writes) + sample depth buffer in shader - Used in lighting pass for deferred rendering
 			EngineAPI::Graphics::ShaderResourceView depthStencilSRV;
 
 		private:
 			//Init state
 			bool isRenderTargetTextureAndViewsInited = false;
 			bool isDepthStencilTextureAndViewsInited = false;
+
+			//Render target data
+			uint32_t renderTargetWidth = 0;
+			uint32_t renderTargetHeight = 0;
+			uint32_t msaaSampleCount = 1;
+			ResourceFormat renderTargetTextureFormat;
+			DepthStencilTextureFormat renderTargetDepthStencilTextureFormat;
+			bool isUsedAsShaderResource = false;
 
 		private:
 			//Internal function which inits the depth stencil texture & views

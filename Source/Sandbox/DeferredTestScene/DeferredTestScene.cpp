@@ -117,6 +117,9 @@ bool DeferredTestScene::OnResize(uint32_t newWidth, uint32_t newHeight)
 	//Resize camera
 	mainCamera.InitCameraPerspectiveProjectionProperties(45.0f, screenW / screenH, 0.1f, 100.0f);
 
+	//Resize render target
+	assert(renderTarget.Resize(newWidth, newHeight));
+
 	//Done
 	return true;
 }

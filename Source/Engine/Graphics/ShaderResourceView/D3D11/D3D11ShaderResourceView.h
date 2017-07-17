@@ -40,12 +40,25 @@ namespace EngineAPI
 				D3D11ShaderResourceView() {};
 				virtual ~D3D11ShaderResourceView() = 0 {};
 
-				//Inits the D3D11 SRV
+				//Inits the D3D11 SRV - takes a Texture2D
 				bool InitShaderResourceViewToTexture2D(EngineAPI::Graphics::GraphicsDevice* device,
 					EngineAPI::Graphics::Texture2D* texture,
 					bool doUseUnderlyingResourceFormatForView = true,
 					ResourceFormat shaderResourceViewTextureFormat = RESOURCE_FORMAT_USE_UNDERLYING_RESOURCE_FORMAT,
 					bool doUseFirstMipOnly = false,				//Else, will use all mip levels. TODO: System to specify a subset of mips to use. 
+					std::string debugName = std::string(""));
+
+				//
+				//TODO: Init the D3D11 SRV - takes a RenderTexture2D
+				//
+
+				//Inits the D3D11 SRV to an DepthStencilTexture2D object -> We calculate
+				//the view format automatically rather than leave it up to the caller - though, they
+				//can override this functionality by using the InitShaderResourceViewToTexture2D()
+				//function instead. 
+				bool InitShaderResourceViewToDepthStencilTexture2D(EngineAPI::Graphics::GraphicsDevice* device, 
+					EngineAPI::Graphics::DepthStencilTexture2D* depthStencilTexture, 
+					bool doUseFirstMipOnly = false, 
 					std::string debugName = std::string(""));
 
 				//Shutdown the SRV

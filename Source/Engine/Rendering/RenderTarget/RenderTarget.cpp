@@ -16,6 +16,7 @@ void RenderTarget::Shutdown()
 	renderTargetSRV.Shutdown();
 
 	depthStencilDSV.Shutdown();
+	depthStencilReadOnlyDSV.Shutdown();
 	depthStencilSRV.Shutdown();
 
 	//Shutdown super
@@ -36,6 +37,7 @@ void RenderTarget::SetDebugName(std::string s)
 	renderTargetSRV.SetDebugName(s + "_RenderTarget_SRV");
 
 	depthStencilDSV.SetDebugName(s + "_DepthStencil_DSV");
+	depthStencilReadOnlyDSV.SetDebugName(s + "_DepthStencil_ReadOnlyDSV");
 	depthStencilSRV.SetDebugName(s + "_DepthStencil_SRV");
 }
 
@@ -51,6 +53,17 @@ bool RenderTarget::InitMSAARenderTarget(uint32_t width, uint32_t height,
 	bool isUsedAsShaderResource,
 	std::string debugName)
 {
+	//Set core object debug name
+	__super::SetDebugName(debugName);
+
+	//Cache info (bar the depth texture format which is cached
+	//later)
+	this->renderTargetWidth = width;
+	this->renderTargetHeight = height;
+	this->msaaSampleCount = msaaSampleCount;
+	this->renderTargetTextureFormat = textureFormat;
+	this->isUsedAsShaderResource = isUsedAsShaderResource;;
+
 	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
 	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
 
@@ -143,6 +156,18 @@ bool RenderTarget::InitMSAARenderTargetWithDepthStencilTexture(uint32_t width, u
 	return true;
 }
 
+bool RenderTarget::Resize(uint32_t newWidth, uint32_t newHeight)
+{
+	//1) Resize the render target
+
+
+
+	//2) Resize the depth stencil buffer
+
+	//Done
+	return true;
+}
+
 //
 //Internal
 //
@@ -153,8 +178,57 @@ bool RenderTarget::InitDepthStencilTextureAndViews(uint32_t width, uint32_t heig
 {
 	assert(isRenderTargetTextureAndViewsInited == true);
 
-	//TODO
+	//Cache the depth/stencil texture format
+	this->renderTargetDepthStencilTextureFormat = depthTexFormat;
 
+	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
+	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
+
+	//Init the depth texture
+	if (!depthStencilTexture2D.InitDepthStencilTexture2D(device,
+		width, height, msaaSampleCount, depthTexFormat, isUsedAsShaderResource,
+		std::string(debugName + "_DepthStencilTexture2D")))
+	{
+		//Error
+		std::string o = "RenderTarget Error: Failed to init the DepthStencilTexture2D. DebugName: " + debugName;
+		EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
+		return false;
+	}
+
+	//Views
+	//
+	//DSV - Read-write
+	if (!depthStencilDSV.InitDepthStencilView(device, &depthStencilTexture2D, false, 
+		std::string(debugName + "_DepthStencil_DSV")))
+	{
+		//Error
+		std::string o = "RenderTarget Error: Failed to init the DepthStencilView (Read-Write) to the DepthStencilTexture2D. DebugName: " + debugName;
+		EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
+		return false;
+	}
+
+	//DSV - ReadOnly
+	if (!depthStencilReadOnlyDSV.InitDepthStencilView(device, &depthStencilTexture2D, true,
+		std::string(debugName + "_DepthStencil_ReadOnlyDSV")))
+	{
+		//Error
+		std::string o = "RenderTarget Error: Failed to init the DepthStencilView (Read Only) to the DepthStencilTexture2D. DebugName: " + debugName;
+		EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
+		return false;
+	}
+
+	//SRV if required
+	if (isUsedAsShaderResource)
+	{
+		if (!depthStencilSRV.InitShaderResourceViewToDepthStencilTexture2D(device, &depthStencilTexture2D,
+			true, std::string(debugName + "_DepthStencil_SRV")))
+		{
+			//Error
+			std::string o = "RenderTarget Error: Failed to init the ShaderResourceView to the DepthStencilTexture2D. DebugName: " + debugName;
+			EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
+			return false;
+		}
+	}
 
 	//Set isInited flag
 	isDepthStencilTextureAndViewsInited = true;

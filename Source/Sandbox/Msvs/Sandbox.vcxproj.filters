@@ -37,6 +37,12 @@
     <Filter Include="Src\Scenes\TestScene">
       <UniqueIdentifier>{b618c303-741a-4035-b03c-1515cbeac507}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Scenes\DeferredTestScene">
+      <UniqueIdentifier>{a020e845-ebb2-43e3-98d8-43f2aa254c51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\TestCube">
+      <UniqueIdentifier>{d115fb92-c2e9-48b2-a7b5-cd5d753f9066}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\SandboxMain.cpp">
@@ -51,6 +57,12 @@
     <ClCompile Include="..\SponzaScene\SponzaScene.cpp">
       <Filter>Src\Scenes\SponzaScene</Filter>
     </ClCompile>
+    <ClCompile Include="..\DeferredTestScene\DeferredTestScene.cpp">
+      <Filter>Src\Scenes\DeferredTestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestCube\TestCube.cpp">
+      <Filter>Src\TestCube</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Application\SandboxApplication.h">
@@ -64,6 +76,12 @@
     </ClInclude>
     <ClInclude Include="..\SponzaScene\SponzaScene.h">
       <Filter>Src\Scenes\SponzaScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DeferredTestScene\DeferredTestScene.h">
+      <Filter>Src\Scenes\DeferredTestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestCube\TestCube.h">
+      <Filter>Src\TestCube</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

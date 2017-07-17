@@ -247,8 +247,6 @@ void SponzaScene::OnMouseDown(WPARAM btnState, int x, int y)
 {
 	lastMPos.x = x;
 	lastMPos.y = y;
-
-	EngineAPI::Debug::DebugLog::PrintInfoMessage(__FUNCTION__);
 }
 
 void SponzaScene::OnMouseUp(WPARAM btnState, int x, int y)

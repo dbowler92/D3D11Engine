@@ -23,47 +23,47 @@ struct TexVertex
 const UINT CUBE_NON_INDEXED_VERTS_COUNT = 36;
 const TexVertex CUBE_TEX_VERTS[36] =
 {
-	{ -1.0f,-1.0f,-1.0f, 1.0f, 1.0f },  // -X side
+	{ -1.0f,-1.0f,-1.0f, 1.0f, 1.0f },  
 	{ -1.0f,-1.0f, 1.0f, 0.0f, 1.0f },
 	{ -1.0f, 1.0f, 1.0f, 0.0f, 0.0f },
 	{ -1.0f, 1.0f, 1.0f, 0.0f, 0.0f },
 	{ -1.0f, 1.0f,-1.0f, 1.0f, 0.0f },
 	{ -1.0f,-1.0f,-1.0f, 1.0f, 1.0f },
 
-	{ -1.0f,-1.0f,-1.0f, 0.0f, 1.0f },  // -Z side
+	{ -1.0f,-1.0f,-1.0f, 0.0f, 1.0f }, 
 	{ 1.0f, 1.0f,-1.0f,  1.0f, 0.0f },
 	{ 1.0f,-1.0f,-1.0f,  1.0f, 1.0f },
 	{ -1.0f,-1.0f,-1.0f, 0.0f, 1.0f },
 	{ -1.0f, 1.0f,-1.0f, 0.0f, 0.0f },
 	{ 1.0f, 1.0f,-1.0f,  1.0f, 0.0f },
 
-	{ -1.0f,-1.0f,-1.0f, 0.0f, 1.0f }, // -Y
-	{ 1.0f,-1.0f,-1.0f,  0.0f, 0.0f },
+	{ -1.0f,-1.0f,-1.0f, 0.0f, 1.0f }, 
+	{ 1.0f,-1.0f,-1.0f,  1.0f, 1.0f },
 	{ 1.0f,-1.0f, 1.0f,  1.0f, 0.0f },
 	{ -1.0f,-1.0f,-1.0f, 0.0f, 1.0f },
 	{ 1.0f,-1.0f, 1.0f,  1.0f, 0.0f },
-	{ -1.0f,-1.0f, 1.0f, 1.0f, 1.0f },
-
-	{ -1.0f, 1.0f,-1.0f, 0.0f, 1.0f },  // +Y side
-	{ -1.0f, 1.0f, 1.0f, 0.0f, 0.0f },
-	{ 1.0f, 1.0f, 1.0f,  1.0f, 0.0f },
-	{ -1.0f, 1.0f,-1.0f, 0.0f, 1.0f },
-	{ 1.0f, 1.0f, 1.0f,  1.0f, 0.0f },
-	{ 1.0f, 1.0f,-1.0f,  1.0f, 1.0f },
-
-	{ 1.0f, 1.0f,-1.0f, 0.0f, 1.0f },  // +X side
-	{ 1.0f, 1.0f, 1.0f, 0.0f, 0.0f },
-	{ 1.0f,-1.0f, 1.0f, 1.0f, 0.0f },
-	{ 1.0f,-1.0f, 1.0f, 1.0f, 0.0f },
-	{ 1.0f,-1.0f,-1.0f, 1.0f, 1.0f },
-	{ 1.0f, 1.0f,-1.0f, 0.0f, 1.0f },
-
-	{ -1.0f, 1.0f, 1.0f, 0.0f, 1.0f },  // +Z side
 	{ -1.0f,-1.0f, 1.0f, 0.0f, 0.0f },
+
+	{ -1.0f, 1.0f,-1.0f, 0.0f, 0.0f },  
+	{ -1.0f, 1.0f, 1.0f, 0.0f, 1.0f },
 	{ 1.0f, 1.0f, 1.0f,  1.0f, 1.0f },
-	{ -1.0f,-1.0f, 1.0f, 0.0f, 0.0f },
-	{ 1.0f,-1.0f, 1.0f,  1.0f, 0.0f },
+	{ -1.0f, 1.0f,-1.0f, 0.0f, 0.0f },
 	{ 1.0f, 1.0f, 1.0f,  1.0f, 1.0f },
+	{ 1.0f, 1.0f,-1.0f,  1.0f, 0.0f },
+
+	{ 1.0f, 1.0f,-1.0f, 0.0f, 0.0f },  
+	{ 1.0f, 1.0f, 1.0f, 1.0f, 0.0f },
+	{ 1.0f,-1.0f, 1.0f, 1.0f, 1.0f },
+	{ 1.0f,-1.0f, 1.0f, 1.0f, 1.0f },
+	{ 1.0f,-1.0f,-1.0f, 0.0f, 1.0f },
+	{ 1.0f, 1.0f,-1.0f, 0.0f, 0.0f },
+
+	{ -1.0f, 1.0f, 1.0f, 0.0f, 0.0f },  
+	{ -1.0f,-1.0f, 1.0f, 0.0f, 1.0f },
+	{ 1.0f, 1.0f, 1.0f,  1.0f, 0.0f },
+	{ -1.0f,-1.0f, 1.0f, 0.0f, 1.0f },
+	{ 1.0f,-1.0f, 1.0f,  1.0f, 1.0f },
+	{ 1.0f, 1.0f, 1.0f,  1.0f, 0.0f },
 };
 
 bool SponzaScene::OnAddToSceneManagerList()
@@ -260,8 +260,8 @@ void SponzaScene::OnMouseMove(WPARAM btnState, int x, int y)
 {
 	if ((btnState & MK_LBUTTON) != 0)
 	{
-		const float CAM_ROT_RATE_DX = 0.10f;
-		const float CAM_ROT_RATE_DY = 0.15f;
+		const float CAM_ROT_RATE_DX = 0.15f;
+		const float CAM_ROT_RATE_DY = 0.20f;
 		
 		// Make each pixel correspond to a quarter of a degree.
 		float dx = CAM_ROT_RATE_DX*static_cast<float>(x - lastMPos.x);
@@ -277,8 +277,8 @@ void SponzaScene::OnMouseMove(WPARAM btnState, int x, int y)
 
 bool SponzaScene::OnSceneUpdate(float dt)
 {
-	const float WALK = 10.0f;
-	const float STRAFE = 10.0f;
+	const float WALK = 7.5f;
+	const float STRAFE = 7.5f;
 
 	//Update camera
 	if (GetAsyncKeyState('W') & 0x8000)

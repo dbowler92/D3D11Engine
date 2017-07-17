@@ -53,6 +53,8 @@ bool RenderTarget::InitMSAARenderTarget(uint32_t width, uint32_t height,
 	bool isUsedAsShaderResource,
 	std::string debugName)
 {
+	assert(isRenderTargetTextureAndViewsInited == false);
+
 	//Set core object debug name
 	__super::SetDebugName(debugName);
 
@@ -158,11 +160,45 @@ bool RenderTarget::InitMSAARenderTargetWithDepthStencilTexture(uint32_t width, u
 
 bool RenderTarget::Resize(uint32_t newWidth, uint32_t newHeight)
 {
-	//1) Resize the render target
+	//Shut everything down
+	renderTargetTexture2D.Shutdown();
+	depthStencilTexture2D.Shutdown();
 
+	renderTargetRTV.Shutdown();
+	renderTargetSRV.Shutdown();
 
+	depthStencilDSV.Shutdown();
+	depthStencilReadOnlyDSV.Shutdown();
+	depthStencilSRV.Shutdown();
 
-	//2) Resize the depth stencil buffer
+	//No longer inited
+	isRenderTargetTextureAndViewsInited = false;
+	isDepthStencilTextureAndViewsInited = false;
+
+	//Recall init() to recreate everything with new size
+	if (doesManageADepthStencilTexture)
+	{
+		if (!InitMSAARenderTargetWithDepthStencilTexture(newWidth, newHeight, msaaSampleCount,
+			renderTargetTextureFormat, renderTargetDepthStencilTextureFormat,
+			isUsedAsShaderResource, GetDebugName()))
+		{
+			//Error
+			std::string o = "RenderTarget Resize() Failed to recreate textures (RenderTexture) + DepthStencilTexture) and views. Debug Name: " + GetDebugName();
+			EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
+			return false;
+		}
+	}
+	else
+	{
+		if (!InitMSAARenderTarget(newWidth, newHeight, msaaSampleCount,
+			renderTargetTextureFormat, isUsedAsShaderResource, GetDebugName()))
+		{
+			//Error
+			std::string o = "RenderTarget Resize() Failed to recreate texture (RenderTexture) and views. Debug Name: " + GetDebugName();
+			EngineAPI::Debug::DebugLog::PrintErrorMessage(o.c_str());
+			return false;
+		}
+	}
 
 	//Done
 	return true;
@@ -177,9 +213,13 @@ bool RenderTarget::InitDepthStencilTextureAndViews(uint32_t width, uint32_t heig
 	std::string debugName)
 {
 	assert(isRenderTargetTextureAndViewsInited == true);
+	assert(isDepthStencilTextureAndViewsInited == false);
 
 	//Cache the depth/stencil texture format
 	this->renderTargetDepthStencilTextureFormat = depthTexFormat;
+
+	//We do manage a depth stencil texture
+	doesManageADepthStencilTexture = true;
 
 	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
 	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();

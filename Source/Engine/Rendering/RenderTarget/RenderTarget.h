@@ -73,14 +73,20 @@ namespace EngineAPI
 			//creation code!
 			//
 
-			//Destroys and recreates the render target (and depth stencil buffer)
+			//
+			//TODO:Destroys and recreates the render target (and depth stencil buffer)
 			//with a new size
+			//
 			bool Resize(uint32_t newWidth, uint32_t newHeight);
 
 			//
-			//TODO: Pipeline binding - make sure to enable the option of binding null depth
-			//stencil texture and the ability to bind an externally manages depth/stencil texture (view - eg:
-			//the one manages by the swapchain)
+			//TODO: Pipeline binding - Add the ability to bind an externally manages depth/stencil texture (view - eg:
+			//the one manages by the swapchain) rather than our own depth buffer
+			//
+
+			//
+			//TODO: Pipeline Binding - Make sure to be able to bind only the colour render
+			//target. Make sure to bind just the depth buffer. etc
 			//
 
 		private:
@@ -103,7 +109,7 @@ namespace EngineAPI
 			//Init state
 			bool isRenderTargetTextureAndViewsInited = false;
 			bool isDepthStencilTextureAndViewsInited = false;
-
+			
 			//Render target data
 			uint32_t renderTargetWidth = 0;
 			uint32_t renderTargetHeight = 0;
@@ -111,6 +117,7 @@ namespace EngineAPI
 			ResourceFormat renderTargetTextureFormat;
 			DepthStencilTextureFormat renderTargetDepthStencilTextureFormat;
 			bool isUsedAsShaderResource = false;
+			bool doesManageADepthStencilTexture = false;
 
 		private:
 			//Internal function which inits the depth stencil texture & views

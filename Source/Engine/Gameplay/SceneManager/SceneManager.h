@@ -75,6 +75,12 @@ namespace EngineAPI
 			//Events
 			bool OnResize(uint32_t newWidth, uint32_t newHeight);
 
+			//TEMP: Mouse input should be forwarded to the current scene - 
+			//this is until I have a proper input subsytem implemented
+			void OnMouseDown(WPARAM btnState, int x, int y);
+			void OnMouseUp(WPARAM btnState, int x, int y);
+			void OnMouseMove(WPARAM btnState, int x, int y);
+
 			//Update and render loops
 			bool OnUpdate(float dt);
 			bool OnRender();

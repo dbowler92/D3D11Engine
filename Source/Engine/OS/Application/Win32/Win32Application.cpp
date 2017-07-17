@@ -134,6 +134,25 @@ LRESULT Win32Application::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 		((MINMAXINFO*)lParam)->ptMinTrackSize.y = 200;
 		return 0;
 
+		//TEMP: Until I have a proper input system implemented, we will
+		//have to catch these messages and pass them on the current scene
+		//in order to rotate the debug / fly camera. 
+	case WM_MOUSEMOVE:
+		OnMouseMove(wParam, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		return 0;
+
+	case WM_LBUTTONDOWN:
+	case WM_MBUTTONDOWN:
+	case WM_RBUTTONDOWN:
+		OnMouseDown(wParam, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		return 0;
+
+	case WM_LBUTTONUP:
+	case WM_MBUTTONUP:
+	case WM_RBUTTONUP:
+		OnMouseUp(wParam, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		return 0;
+
 	case WM_CHAR:
 		//Quit the application using the Escape Key - Will be taken
 		//out in release build. 
@@ -296,6 +315,16 @@ bool Win32Application::InitEngineSubsystems()
 	return true;
 }
 
+
+bool Win32Application::EngineDidFinishInitialisation()
+{
+	//TODO: Load static engine data now. Eg: Fonts, textures for
+	//loading screen. Shaders, etc. 
+
+	//Done
+	return true;
+}
+
 bool Win32Application::OnResize()
 {
 	//Is the current window size the same as the new one? If so, skip resizing 
@@ -327,13 +356,22 @@ bool Win32Application::OnResize()
 	return true;
 }
 
-bool Win32Application::EngineDidFinishInitialisation()
+void Win32Application::OnMouseDown(WPARAM btnState, int x, int y)
 {
-	//TODO: Load static engine data now. Eg: Fonts, textures for
-	//loading screen. Shaders, etc. 
+	if (sceneManagerSubsystem)
+		sceneManagerSubsystem->OnMouseDown(btnState, x, y);
+}
 
-	//Done
-	return true;
+void Win32Application::OnMouseUp(WPARAM btnState, int x, int y)
+{
+	if (sceneManagerSubsystem)
+		sceneManagerSubsystem->OnMouseUp(btnState, x, y);
+}
+
+void Win32Application::OnMouseMove(WPARAM btnState, int x, int y)
+{
+	if (sceneManagerSubsystem)
+		sceneManagerSubsystem->OnMouseMove(btnState, x, y);
 }
 
 void Win32Application::EnterGameLoop()

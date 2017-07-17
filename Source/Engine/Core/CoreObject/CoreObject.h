@@ -30,7 +30,6 @@ namespace EngineAPI
 			//Virtual functions that subclasses can implement
 			virtual void Shutdown();
 
-		protected:
 			//Internally sets the debug name - can be override by, say, D3D11
 			//resources so they can set the debug name of the ID3D11Resource/
 			//ID3D11DeviceChild

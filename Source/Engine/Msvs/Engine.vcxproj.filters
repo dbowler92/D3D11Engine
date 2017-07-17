@@ -280,6 +280,9 @@
     <Filter Include="Src\Rendering\VirtualCamera">
       <UniqueIdentifier>{836de219-a4b5-4172-8c4c-673fc96dd2ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Input">
+      <UniqueIdentifier>{ea97813f-1bbe-48fe-997a-75acbd175370}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -410,9 +413,6 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\RenderTexture2D\D3D11\D3D11RenderTexture2D.cpp">
       <Filter>Src\Graphics\RenderTexture2D\D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Math\Vector\Vector.cpp">
-      <Filter>Src\Math\Vector</Filter>
     </ClCompile>
     <ClCompile Include="..\Graphics\DepthStencilTexture2D\D3D11\D3D11DepthStencilTexture2D.cpp">
       <Filter>Src\Graphics\DepthStencilTexture2D\D3D11</Filter>
@@ -650,9 +650,6 @@
     <ClInclude Include="..\Graphics\RenderTexture2D\RenderTexture2D.h">
       <Filter>Src\Graphics\RenderTexture2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\Math\Vector\Vector.h">
-      <Filter>Src\Math\Vector</Filter>
-    </ClInclude>
     <ClInclude Include="..\Graphics\DepthStencilTexture2D\D3D11\D3D11DepthStencilTexture2D.h">
       <Filter>Src\Graphics\DepthStencilTexture2D\D3D11</Filter>
     </ClInclude>
@@ -673,6 +670,15 @@
     </ClInclude>
     <ClInclude Include="..\Rendering\VirtualCamera\VirtualCamera.h">
       <Filter>Src\Rendering\VirtualCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\Math.h">
+      <Filter>Src\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\Vector\Vector3D.h">
+      <Filter>Src\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Math\Matrix\Matrix3x3.h">
+      <Filter>Src\Math\Matrix</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

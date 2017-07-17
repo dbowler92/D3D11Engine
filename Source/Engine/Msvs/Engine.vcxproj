@@ -61,7 +61,6 @@
     <ClCompile Include="..\Graphics\VertexShader\D3D11\D3D11VertexShader.cpp" />
     <ClCompile Include="..\Graphics\ViewResource\D3D11\D3D11ViewResource.cpp" />
     <ClCompile Include="..\Main\EngineMain.cpp" />
-    <ClCompile Include="..\Math\Vector\Vector.cpp" />
     <ClCompile Include="..\OS\Application\Win32\Win32Application.cpp" />
     <ClCompile Include="..\OS\OSWindow\Win32\Win32OSWindow.cpp" />
     <ClCompile Include="..\Rendering\VirtualCamera\VirtualCamera.cpp" />
@@ -143,7 +142,9 @@
     <ClInclude Include="..\Includes\MathIncludes.h" />
     <ClInclude Include="..\Includes\RenderingIncludes.h" />
     <ClInclude Include="..\Main\EngineStd.h" />
-    <ClInclude Include="..\Math\Vector\Vector.h" />
+    <ClInclude Include="..\Math\Math.h" />
+    <ClInclude Include="..\Math\Matrix\Matrix3x3.h" />
+    <ClInclude Include="..\Math\Vector\Vector3D.h" />
     <ClInclude Include="..\OS\Application\Application.h" />
     <ClInclude Include="..\OS\Application\Win32\Win32Application.h" />
     <ClInclude Include="..\OS\OSWindow\OSWindow.h" />

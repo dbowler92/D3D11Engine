@@ -70,6 +70,10 @@ bool SponzaScene::OnAddToSceneManagerList()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("SponzaScene::OnAddToSceneManagerList()\n");
 
+	//Init last mouse position
+	lastMPos.x = 0;
+	lastMPos.y = 0;
+
 	//Done
 	return true;
 }
@@ -78,10 +82,18 @@ bool SponzaScene::OnSceneBecomeActive()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("SponzaScene::OnSceneBecomeActive()\n");
 	
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
+	float screenW = (float)gm->GetWindowWidth();
+	float screenH = (float)gm->GetWindowHeight();
+
 	//Init camera
-	mainCamera.Init();
+	mainCamera.SetDebugName("SponzaScene_MainCamera");
+	mainCamera.InitCameraViewProperties(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(XMFLOAT3(0.0f, 0.0f, -1.0f)), XMFLOAT3(0.0f, 1.0f, 0.0f));
+	mainCamera.InitCameraPerspectiveProjectionProperties(45.0f, (screenW / screenH), 0.1f, 100.0f);
 
 	//TEMP: Init cube
+	cbWorld = XMMatrixTranslation(0.0f, 0.0f, -5.0f);
 	InitCubeVB();
 	InitShaders();
 	InitTextureAndViewAndSampler();
@@ -164,23 +176,8 @@ void SponzaScene::InitCBuffer()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
-	cbWorld = XMMatrixTranslation(0.0f, 0.0f, -5.0f);
-	
-	XMFLOAT3 eye = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	XMFLOAT3 look = XMFLOAT3(0.0f, 0.0f, -1.0f);
-	XMFLOAT3 up = XMFLOAT3(0.0f, 1.0f, 0.0f);
 
-	XMVECTOR eyeV = XMLoadFloat3(&eye);
-	XMVECTOR lookV = XMLoadFloat3(&look);
-	XMVECTOR upV = XMLoadFloat3(&up);
-
-	cbView = XMMatrixLookAtLH(eyeV, lookV, upV);
-
-	float screenW = (float)gm->GetWindowWidth();
-	float screenH = (float)gm->GetWindowHeight();
-	cbProj = XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45.0f), (screenW / screenH), 0.1f, 100.0f);
-
-	XMMATRIX wvp = (cbWorld * cbView) * cbProj;
+	XMMATRIX wvp = (cbWorld * mainCamera.GetView()) * mainCamera.GetProj();
 	wvp = XMMatrixTranspose(wvp);
 
 	XMFLOAT4X4 wvp4x4;
@@ -238,25 +235,74 @@ bool SponzaScene::OnResize(uint32_t newWidth, uint32_t newHeight)
 	float screenW = (float)gm->GetWindowWidth();
 	float screenH = (float)gm->GetWindowHeight();
 
-	//Recreate proj matrix
-	cbProj = XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(45.0f), (screenW / screenH), 0.1f, 100.0f);
-
 	//Resize camera
+	mainCamera.InitCameraPerspectiveProjectionProperties(45.0f, screenW / screenH, 0.1f, 100.0f);
 
 	//Done
 	return true;
 }
 
+//input subsystem
+void SponzaScene::OnMouseDown(WPARAM btnState, int x, int y)
+{
+	lastMPos.x = x;
+	lastMPos.y = y;
+
+	EngineAPI::Debug::DebugLog::PrintInfoMessage(__FUNCTION__);
+}
+
+void SponzaScene::OnMouseUp(WPARAM btnState, int x, int y)
+{
+
+}
+
+void SponzaScene::OnMouseMove(WPARAM btnState, int x, int y)
+{
+	if ((btnState & MK_LBUTTON) != 0)
+	{
+		const float CAM_ROT_RATE_DX = 0.10f;
+		const float CAM_ROT_RATE_DY = 0.15f;
+		
+		// Make each pixel correspond to a quarter of a degree.
+		float dx = CAM_ROT_RATE_DX*static_cast<float>(x - lastMPos.x);
+		float dy = CAM_ROT_RATE_DY*static_cast<float>(y - lastMPos.y);
+
+		mainCamera.AddPitch(dy);
+		mainCamera.AddYaw(dx);
+	}
+
+	lastMPos.x = x;
+	lastMPos.y = y;
+}
+
 bool SponzaScene::OnSceneUpdate(float dt)
 {
+	const float WALK = 10.0f;
+	const float STRAFE = 10.0f;
+
+	//Update camera
+	if (GetAsyncKeyState('W') & 0x8000)
+		mainCamera.Walk(WALK*dt);
+	else if (GetAsyncKeyState('S') & 0x8000)
+		mainCamera.Walk(-WALK*dt);
+
+	if (GetAsyncKeyState('A') & 0x8000)
+		mainCamera.Strafe(-STRAFE*dt);
+	else if (GetAsyncKeyState('D') & 0x8000)
+		mainCamera.Strafe(STRAFE*dt);
+
+	//Rebuild view matrix
+	mainCamera.RebuildView();
+
+
 	static float rot = 0.0f;
 	static float rotX = 0.0f;
 	rot += 0.25f * dt;
 	rotX += 0.25f * dt;
-	XMMATRIX world = XMMatrixRotationY(rot) * XMMatrixRotationX(rotX);
-	//world = XMMatrixIdentity();
+	//XMMATRIX world = XMMatrixRotationY(rot) * XMMatrixRotationX(rotX);
+	XMMATRIX world = XMMatrixIdentity();
 	world *= XMMatrixTranslation(0.0f, 0.0f, -5.0f);
-	XMMATRIX wvp = (world * cbView) * cbProj;
+	XMMATRIX wvp = (world * mainCamera.GetView()) * mainCamera.GetProj();
 
 	wvp = XMMatrixTranspose(wvp);
 
@@ -276,8 +322,6 @@ bool SponzaScene::OnSceneUpdate(float dt)
 	if (didMap)
 		memcpy(mrd.MappedData, (void*)&wvp4x4, constantBuffer.GetConstantBufferSizeBytes());
 	constantBuffer.UnmapResource(device, 0);
-
-	//Update camera
 
 	//Update CBuffer
 

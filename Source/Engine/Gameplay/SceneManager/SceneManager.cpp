@@ -70,6 +70,24 @@ bool SceneManager::OnResize(uint32_t newWidth, uint32_t newHeight)
 	return true;
 }
 
+void SceneManager::OnMouseDown(WPARAM btnState, int x, int y)
+{
+	if (currentScene)
+		currentScene->OnMouseDown(btnState, x, y);
+}
+
+void SceneManager::OnMouseUp(WPARAM btnState, int x, int y)
+{
+	if (currentScene)
+		currentScene->OnMouseUp(btnState, x, y);
+}
+
+void SceneManager::OnMouseMove(WPARAM btnState, int x, int y)
+{
+	if (currentScene)
+		currentScene->OnMouseMove(btnState, x, y);
+}
+
 bool SceneManager::OnUpdate(float dt)
 {
 	//Update current scene

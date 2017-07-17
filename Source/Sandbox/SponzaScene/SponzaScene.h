@@ -39,6 +39,12 @@ public:
 	//Engine events
 	bool OnResize(uint32_t newWidth, uint32_t newHeight) override;
 
+	//TEMP: Manage the camera rotation this way until I have a proper
+	//input subsystem
+	void OnMouseDown(WPARAM btnState, int x, int y) override;
+	void OnMouseUp(WPARAM btnState, int x, int y) override;
+	void OnMouseMove(WPARAM btnState, int x, int y) override;
+
 	//Rendering and updating the scene - NOTE: I will add
 	//an update/render loop thats used internally. 
 	bool OnSceneUpdate(float dt) override;
@@ -47,11 +53,10 @@ public:
 private:
 	//Fly camera
 	EngineAPI::Rendering::VirtualCamera mainCamera;
-
+	POINT lastMPos; //Last mouse position - used when rotating the camera
+	
 	//TEMP: Textured Cube rendering
 	XMMATRIX cbWorld;
-	XMMATRIX cbView;
-	XMMATRIX cbProj;
 
 	EngineAPI::Graphics::VertexBuffer texCubeVB;
 

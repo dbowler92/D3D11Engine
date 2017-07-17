@@ -43,6 +43,11 @@ namespace EngineAPI
 			//Engine events
 			virtual bool OnResize(uint32_t newWidth, uint32_t newHeight) = 0;
 
+			//TEMP: Until I have a proper input system
+			virtual void OnMouseDown(WPARAM btnState, int x, int y) {};
+			virtual void OnMouseUp(WPARAM btnState, int x, int y) {};
+			virtual void OnMouseMove(WPARAM btnState, int x, int y) {};
+
 			//Update and rendering events that we override
 			virtual bool OnSceneUpdate(float dt) = 0;
 			virtual bool OnSceneRender() = 0;

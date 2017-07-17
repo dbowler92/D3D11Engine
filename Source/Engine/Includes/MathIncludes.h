@@ -32,6 +32,6 @@ using namespace DirectX;
 //
 //My own simple math library - TODO
 //
-#include <Math/Vector/Vector.h>
+#include <Math/Math.h>
 
 using namespace EngineAPI::Math;

@@ -87,6 +87,12 @@ namespace EngineAPI
 				//Called when the window is resized
 				bool OnResize();
 
+				//TEMP: Mouse input (Until I have an input subsystem)
+				//
+				void OnMouseDown(WPARAM btnState, int x, int y);
+				void OnMouseUp(WPARAM btnState, int x, int y);
+				void OnMouseMove(WPARAM btnState, int x, int y);
+
 			private:
 				//Outputs FPS
 				void CalculateFrameRateStats();

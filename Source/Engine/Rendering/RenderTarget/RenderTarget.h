@@ -81,6 +81,13 @@ namespace EngineAPI
 			bool Resize(uint32_t newWidth, uint32_t newHeight);
 
 			//
+			//Clearing
+			//
+			void ClearRenderTarget(Float32Colour clearColour);
+			void ClearDepthStencilTexture(DepthStencilClearFlag clearFlag,
+				float depthClear = 1.0f, uint8_t stencilClear = 0);
+
+			//
 			//Pipeline binding - Ouput
 			//
 			void BindRenderTargetOnlyAsOutput();
@@ -88,13 +95,6 @@ namespace EngineAPI
 			void BindRenderTargetAndDepthStencilTextureAsOutput(bool readWriteDepthTexture = true);
 			void BindRenderTargetWithExternalDepthStencilViewAsOutput(
 				EngineAPI::Graphics::DepthStencilView* externalDSV);
-
-			//
-			//Clearing
-			//
-			void ClearRenderTarget(Float32Colour clearColour);
-			void ClearDepthStencilTexture(DepthStencilClearFlag clearFlag,
-				float depthClear = 1.0f, uint8_t stencilClear = 0);
 
 			//
 			//TODO: Pipeline Binding - Make sure to be able to bind only the colour render

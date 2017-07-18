@@ -239,7 +239,17 @@ bool DeferredTestScene::OnSceneRender()
 		renderTarget.BindRenderTargetWithExternalDepthStencilViewAsOutput(
 			gm->GetSwapchain()->GetSwapchainDepthTexture2DReadWriteView());
 	}
+
+
+	//
+	//Render target set
+	//
+	renderTargetSet.ClearAllRenderTargets(Float32Colour(1.0f, 0.0f, 0.0f, 1.0f));
+	if (renderTargetSet.DoesManageDepthStencilTexture())
+		renderTargetSet.ClearDepthStencilTexture(DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0.0f);
 	
+
+
 	//Set CBUffer
 	device->VSSetConstantBuffer(&constantBuffer, 0);
 

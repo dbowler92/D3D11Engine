@@ -69,9 +69,32 @@ namespace EngineAPI
 				float depthClear = 1.0f, UINT8 stencilClear = 0);
 
 			//
-			//TODO: Pipeline binding
+			//Pipeline binding
 			//
-			
+			//Binds a single render target (targetIndex) - null depth
+			void BindRenderTargetAtIndexAsOutput(uint32_t targetIndex);
+
+			//Binds a single render target (targetIndex) with the managed
+			//depth/stencil texture
+			void BindRenderTargetAtIndexAndDepthStencilTextureAsOutput(uint32_t targetIndex, bool doUseReadWriteDepth = true);
+
+			//Binds a single render target (targetIndex) with an externally
+			//managed depth/stencil texture
+			void BindRenderTargetAtIndexWithExternalDepthStencilViewAsOutput(uint32_t targetIndex,
+				EngineAPI::Graphics::DepthStencilView* externalDSV);
+
+			//Binds all render targets as output - without the depth/stencil
+			//texture - null depth
+			void BindAllRenderTargetsAsOutput();
+
+			//Binds all render textures and the managed depth/stencil texture
+			void BindAllRenderTargetsAndDepthStencilTextureAsOutput(bool doUseReadWriteDepth = true);
+
+			//Binds all render textures and an externally managed depth/stencil
+			//texture
+			void BindAllRenderTargetsAndExternalDepthStencilViewAsOutput(
+				EngineAPI::Graphics::DepthStencilView* externalDSV);
+
 		public:
 			//Getters
 			uint32_t GetRenderTargetsCount() { return renderTargetsCount; };
@@ -84,7 +107,6 @@ namespace EngineAPI
 			//stencil texture. Nullptr if no depth/stencil texture was created
 			EngineAPI::Rendering::RenderTarget* GetRenderTargetThatManagesDepthStencilTexture() { return ((doesManageDepthBuffer) ? &renderTargets[0] : nullptr); };
 	
-
 		private:
 			//Array of render targets 
 			EngineAPI::Rendering::RenderTarget renderTargets[MAX_RENDER_TARGETS_BOUND];

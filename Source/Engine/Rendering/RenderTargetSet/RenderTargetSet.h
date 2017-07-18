@@ -60,13 +60,30 @@ namespace EngineAPI
 			bool Resize(uint32_t newWidth, uint32_t newHeight);
 
 			//
-			//TODO: Clearing
+			//Clearing
 			//
+			void ClearRenderTarget(uint32_t targetIndex, Float32Colour clearColour);
+			void ClearAllRenderTargets(Float32Colour clearColour);
+			void ClearAllRenderTargets(Float32Colour* clearColoursArray);
+			void ClearDepthStencilTexture(DepthStencilClearFlag depthStencilClearFlag,
+				float depthClear = 1.0f, UINT8 stencilClear = 0);
 
 			//
 			//TODO: Pipeline binding
 			//
 			
+		public:
+			//Getters
+			uint32_t GetRenderTargetsCount() { return renderTargetsCount; };
+			bool DoesManageDepthStencilTexture() { return doesManageDepthBuffer ; };
+
+			//Each render target - 0 based index here
+			EngineAPI::Rendering::RenderTarget* GetRenderTargetAtIndex(uint32_t index)  {  return ((index < renderTargetsCount) ? &renderTargets[index] : nullptr); };
+
+			//Gets the render target responsible for managing the depth
+			//stencil texture. Nullptr if no depth/stencil texture was created
+			EngineAPI::Rendering::RenderTarget* GetRenderTargetThatManagesDepthStencilTexture() { return ((doesManageDepthBuffer) ? &renderTargets[0] : nullptr); };
+	
 
 		private:
 			//Array of render targets 

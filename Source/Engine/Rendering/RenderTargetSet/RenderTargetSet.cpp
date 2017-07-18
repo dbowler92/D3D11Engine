@@ -93,6 +93,10 @@ bool RenderTargetSet::InitRenderTargetSetWithADepthStencilTexture(uint32_t width
 	//A depth buffer will be created
 	this->doesManageDepthBuffer = true;
 
+	//
+	//TODO: Make sure formats are compatable with each other
+	//
+
 	//Init first render target with a depth stencil buffer
 	if (!renderTargets[0].InitRenderTargetWithDepthStencilTexture(width, height,
 		renderTextureFormatsArray[0], depthStencilFormat, isUsedAsShaderResource,
@@ -142,4 +146,39 @@ bool RenderTargetSet::Resize(uint32_t newWidth, uint32_t newHeight)
 
 	//Done
 	return true;
+}
+
+void RenderTargetSet::ClearRenderTarget(uint32_t targetIndex, Float32Colour clearColour)
+{
+	assert(targetIndex < renderTargetsCount);
+
+	renderTargets[targetIndex].ClearRenderTarget(clearColour);
+}
+
+void RenderTargetSet::ClearAllRenderTargets(Float32Colour clearColour)
+{
+	assert(renderTargetsCount >= 1);
+
+	for (int i = 0; i < renderTargetsCount; i++)
+		renderTargets[i].ClearRenderTarget(clearColour);
+}
+
+void RenderTargetSet::ClearAllRenderTargets(Float32Colour* clearColoursArray)
+{
+	assert(clearColoursArray != nullptr);
+	assert(renderTargetsCount >= 1);
+
+	for (int i = 0; i < renderTargetsCount; i++)
+		renderTargets[i].ClearRenderTarget((clearColoursArray[i]));
+}
+
+void RenderTargetSet::ClearDepthStencilTexture(DepthStencilClearFlag depthStencilClearFlag,
+	float depthClear, UINT8 stencilClear)
+{
+	assert(doesManageDepthBuffer);
+	assert(renderTargetsCount >= 1);
+	assert(renderTargets[0].DoesManageADepthStencilTexture());
+
+	//renderTargets[0] will be the one managing the depth buffer
+	renderTargets[0].ClearDepthStencilTexture(depthStencilClearFlag, depthClear, stencilClear);
 }

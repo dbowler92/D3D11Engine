@@ -45,8 +45,13 @@ namespace EngineAPI
 		class RenderTargetView;
 		class DepthStencilView;
 		class ShaderResourceView;
-	}
-}
+	};
+	namespace Rendering
+	{
+		class RenderTarget;
+		class RenderTargetSet;
+	};
+};
 
 namespace EngineAPI
 {
@@ -86,6 +91,9 @@ namespace EngineAPI
 
 				//OM - Setting render target(s)
 				void OMSetRenderTarget(EngineAPI::Graphics::RenderTargetView* renderTargetView,
+					EngineAPI::Graphics::DepthStencilView* optionalDepthStencilView);
+				void OMSetRenderTargets(uint32_t renderTargetsCount,
+					EngineAPI::Rendering::RenderTarget* renderTargetsArray, 
 					EngineAPI::Graphics::DepthStencilView* optionalDepthStencilView);
 
 				//VS

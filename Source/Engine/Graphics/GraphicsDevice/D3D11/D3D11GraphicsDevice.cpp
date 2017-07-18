@@ -20,6 +20,9 @@
 #include <Graphics/DepthStencilView/DepthStencilView.h>
 #include <Graphics/ShaderResourceView/ShaderResourceView.h>
 
+#include <Rendering/RenderTarget/RenderTarget.h>
+#include <Rendering/RenderTargetSet/RenderTargetSet.h>
+
 using namespace EngineAPI::Graphics::Platform;
 
 bool D3D11GraphicsDevice::InitD3D11DeviceAndImmediateContext(EngineAPI::OS::OSWindow* osWindow)
@@ -149,6 +152,32 @@ void D3D11GraphicsDevice::OMSetRenderTarget(EngineAPI::Graphics::RenderTargetVie
 		renderTargetView->BindAsRenderTarget((EngineAPI::Graphics::GraphicsDevice*)this, optionalDepthStencilView);
 	else
 		GetD3D11ImmediateContext()->OMSetRenderTargets(1, nullptr, nullptr);
+}
+
+void D3D11GraphicsDevice::OMSetRenderTargets(uint32_t renderTargetsCount,
+	EngineAPI::Rendering::RenderTarget* renderTargetsArray,
+	EngineAPI::Graphics::DepthStencilView* optionalDepthStencilView)
+{
+	assert(renderTargetsCount <= MAX_RENDER_TARGETS_BOUND);
+
+	//Build D3D11 array of render targets
+	ID3D11RenderTargetView* renderTargets[MAX_RENDER_TARGETS_BOUND];
+	ZeroMemory(renderTargets, (sizeof(ID3D11RenderTargetView*) * MAX_RENDER_TARGETS_BOUND));
+	
+	for (uint32_t i = 0; i < renderTargetsCount; i++)
+	{
+		EngineAPI::Graphics::RenderTargetView* rtv = renderTargetsArray[i].GetRenderTargetView();
+		assert(rtv);
+		renderTargets[i] = rtv->GetD3D11RenderTargetView();
+	}
+
+	//D3D11 depth stencil view
+	ID3D11DepthStencilView* dsv = nullptr;
+	if (optionalDepthStencilView)
+		dsv = optionalDepthStencilView->GetD3D11DepthStencilView();
+
+	//Bind to OM
+	GetD3D11ImmediateContext()->OMSetRenderTargets(renderTargetsCount, &renderTargets[0], dsv);
 }
 
 //

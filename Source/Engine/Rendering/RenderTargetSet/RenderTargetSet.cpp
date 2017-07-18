@@ -3,6 +3,10 @@
 //Depth stencil view
 #include <Graphics/DepthStencilView/DepthStencilView.h>
 
+//Graphics manager & the device for binding 
+#include <Graphics/GraphicsManager/GraphicsManager.h>
+#include <Graphics/GraphicsDevice/GraphicsDevice.h>
+
 using namespace EngineAPI::Rendering;
 
 void RenderTargetSet::Shutdown()
@@ -248,6 +252,7 @@ void RenderTargetSet::BindRenderTargetAtIndexWithExternalDepthStencilViewAsOutpu
 	//
 	assert(targetIndex < renderTargetsCount);
 	assert(isInited);
+	assert(externalDSV);
 
 	renderTargets[targetIndex].BindRenderTargetWithExternalDepthStencilViewAsOutput(externalDSV);
 }
@@ -256,12 +261,33 @@ void RenderTargetSet::BindAllRenderTargetsAsOutput()
 {
 	//Binds all render targets as output - without the depth/stencil
 	//texture - null depth
+	//
+	assert(isInited);
 
+	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
+	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
+
+	device->OMSetRenderTargets(renderTargetsCount, &renderTargets[0], nullptr);
 }
 
 void RenderTargetSet::BindAllRenderTargetsAndDepthStencilTextureAsOutput(bool doUseReadWriteDepth)
 {
 	//Binds all render textures and the managed depth/stencil texture
+	//
+	assert(isInited);
+	assert(doesManageDepthBuffer);
+	assert(renderTargets[0].DoesManageADepthStencilTexture());
+
+	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
+	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
+
+	EngineAPI::Graphics::DepthStencilView* dsv = nullptr;
+	if (doUseReadWriteDepth)
+		dsv = renderTargets[0].GetDepthStencilViewReadWrite();
+	else
+		dsv = renderTargets[0].GetDepthStencilViewReadOnly();
+
+	device->OMSetRenderTargets(renderTargetsCount, &renderTargets[0], dsv);
 
 }
 
@@ -270,5 +296,11 @@ void RenderTargetSet::BindAllRenderTargetsAndExternalDepthStencilViewAsOutput(
 {
 	//Binds all render textures and an externally managed depth/stencil
 	//texture
+	assert(isInited);
+	assert(externalDSV);
 
+	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
+	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
+
+	device->OMSetRenderTargets(renderTargetsCount, &renderTargets[0], externalDSV);
 }

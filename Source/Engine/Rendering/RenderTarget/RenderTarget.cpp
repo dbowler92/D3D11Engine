@@ -204,6 +204,96 @@ bool RenderTarget::Resize(uint32_t newWidth, uint32_t newHeight)
 	return true;
 }
 
+void RenderTarget::BindRenderTargetOnlyAsOutput()
+{
+	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
+	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
+
+	assert(isRenderTargetTextureAndViewsInited == true);
+
+	if (isRenderTargetTextureAndViewsInited)
+		renderTargetRTV.BindAsRenderTarget(device, nullptr);
+}
+
+void RenderTarget::BindDepthStencilTextureOnlyAsOutput(bool readWriteDepthTexture)
+{
+	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
+	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
+
+	assert(isDepthStencilTextureAndViewsInited == true);
+	assert(doesManageADepthStencilTexture == true);
+
+	//
+	//VERIFY
+	//
+	if (doesManageADepthStencilTexture && isDepthStencilTextureAndViewsInited)
+	{
+		if (readWriteDepthTexture)
+			depthStencilDSV.BindDepthStencilView(device);
+		else
+			depthStencilReadOnlyDSV.BindDepthStencilView(device);
+	}
+}
+
+void RenderTarget::BindRenderTargetAndDepthStencilTextureAsOutput(bool readWriteDepthTexture)
+{
+	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
+	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
+
+	assert(isRenderTargetTextureAndViewsInited == true);
+	assert(isDepthStencilTextureAndViewsInited == true);
+	assert(doesManageADepthStencilTexture == true);
+
+	EngineAPI::Graphics::DepthStencilView* dsv = nullptr;
+	if (doesManageADepthStencilTexture && isDepthStencilTextureAndViewsInited)
+	{
+		if (readWriteDepthTexture)
+			dsv = &depthStencilDSV;
+		else
+			dsv = &depthStencilReadOnlyDSV;
+	}
+
+	if (isRenderTargetTextureAndViewsInited)
+		renderTargetRTV.BindAsRenderTarget(device, dsv);
+}
+
+void RenderTarget::BindRenderTargetWithExternalDepthStencilViewAsOutput(
+	EngineAPI::Graphics::DepthStencilView* externalDSV)
+{
+	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
+	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
+
+	assert(externalDSV != nullptr);
+	assert(isRenderTargetTextureAndViewsInited == true);
+
+	if (isRenderTargetTextureAndViewsInited)
+		renderTargetRTV.BindAsRenderTarget(device, externalDSV);
+}
+
+void RenderTarget::ClearRenderTarget(Float32Colour clearColour)
+{
+	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
+	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
+
+	assert(isRenderTargetTextureAndViewsInited == true);
+
+	if (isRenderTargetTextureAndViewsInited)
+		renderTargetRTV.ClearRenderTargetView(device, (const float*)&clearColour);
+}
+
+void RenderTarget::ClearDepthStencilTexture(DepthStencilClearFlag clearFlag,
+	float depthClear, uint8_t stencilClear)
+{
+	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
+	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
+
+	assert(isDepthStencilTextureAndViewsInited == true);
+	assert(doesManageADepthStencilTexture == true);
+
+	if (doesManageADepthStencilTexture && isDepthStencilTextureAndViewsInited)
+		depthStencilDSV.ClearDepthStencilView(device, clearFlag, depthClear, stencilClear);
+}
+
 //
 //Internal
 //

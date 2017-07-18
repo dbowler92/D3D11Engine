@@ -81,3 +81,9 @@ void D3D11DepthStencilView::ClearDepthStencilView(EngineAPI::Graphics::GraphicsD
 	if (dsv)
 		device->GetD3D11ImmediateContext()->ClearDepthStencilView(dsv, depthStencilBufferClearFlag, depthClear, stencilClear);
 }
+
+void D3D11DepthStencilView::BindDepthStencilView(EngineAPI::Graphics::GraphicsDevice* device)
+{
+	if (dsv)
+		device->GetD3D11ImmediateContext()->OMSetRenderTargets(0, nullptr, dsv);
+}

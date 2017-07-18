@@ -35,6 +35,7 @@ namespace EngineAPI
 			//set the debug names of our resources
 			void SetDebugName(std::string s) override;
 
+			//
 			//Inits the render target (and optional depth/stencil texture) and views
 			//
 			//Standard render target
@@ -74,20 +75,40 @@ namespace EngineAPI
 			//
 
 			//
-			//TODO:Destroys and recreates the render target (and depth stencil buffer)
+			//Destroys and recreates the render target (and depth stencil buffer)
 			//with a new size
 			//
 			bool Resize(uint32_t newWidth, uint32_t newHeight);
 
 			//
-			//TODO: Pipeline binding - Add the ability to bind an externally manages depth/stencil texture (view - eg:
-			//the one manages by the swapchain) rather than our own depth buffer
+			//Pipeline binding - Ouput
 			//
+			void BindRenderTargetOnlyAsOutput();
+			void BindDepthStencilTextureOnlyAsOutput(bool readWriteDepthTexture = true);
+			void BindRenderTargetAndDepthStencilTextureAsOutput(bool readWriteDepthTexture = true);
+			void BindRenderTargetWithExternalDepthStencilViewAsOutput(
+				EngineAPI::Graphics::DepthStencilView* externalDSV);
+
+			//
+			//Clearing
+			//
+			void ClearRenderTarget(Float32Colour clearColour);
+			void ClearDepthStencilTexture(DepthStencilClearFlag clearFlag,
+				float depthClear = 1.0f, uint8_t stencilClear = 0);
 
 			//
 			//TODO: Pipeline Binding - Make sure to be able to bind only the colour render
 			//target. Make sure to bind just the depth buffer. etc
 			//
+
+			//
+			//TODO: Bind as shader resource
+			//
+
+		public:
+			//Getters:
+			//
+			bool DoesManageADepthStencilTexture() { return doesManageADepthStencilTexture; };
 
 		private:
 			//Render target texture

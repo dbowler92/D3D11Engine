@@ -170,5 +170,32 @@ void TestCube::Render(EngineAPI::Graphics::GraphicsDevice* device)
 
 	//Draw command
 	device->Draw(texCubeVB.GetElementsCount(), 0);
+}
 
+void TestCube::RenderToGBuffer(EngineAPI::Graphics::GraphicsDevice* device)
+{
+	//Topology
+	device->IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	//Shaders
+	device->VSSetShader(&texVS);
+	device->PSSetShader(&texPS);
+
+	//Vertex (and index) buffer
+	device->IASetVertexBuffer(&texCubeVB, 0);
+
+	//Shader resource / cbuffers
+	//device->VSSetConstantBuffer(&constantBuffer, 0);
+	device->PSSetShaderResource(&texSRV, 0);
+
+	//Rendering state
+	device->RSSetState(&rss);
+	device->OMSetBlendState(&bs);
+	device->OMSetDepthStencilState(&dss, 0);
+
+	//Sampler state object
+	device->PSSetSamplerState(&defaultLinearSampler, 0);
+
+	//Draw command
+	device->Draw(texCubeVB.GetElementsCount(), 0);
 }

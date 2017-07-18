@@ -38,6 +38,7 @@ public:
 
 	void Update(float dt);
 	void Render(EngineAPI::Graphics::GraphicsDevice* device);
+	void RenderToGBuffer(EngineAPI::Graphics::GraphicsDevice* device);
 
 public:
 	//Gets world matrix

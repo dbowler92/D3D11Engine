@@ -92,12 +92,12 @@ void DeferredTestScene::InitRenderTargets()
 	fmts[1] = RESOURCE_FORMAT_R11G11B10_FLOAT;
 	fmts[2] = RESOURCE_FORMAT_R8G8B8A8_UNORM;
 
-	//assert(renderTargetSet.InitRenderTargetSet(screenW, screenH, 3,
-	//	&fmts[0], true, std::string("RenderTargetSet")));
+	assert(renderTargetSet.InitRenderTargetSet(screenW, screenH, 3,
+		&fmts[0], true, std::string("RenderTargetSet")));
 
-	assert(renderTargetSet.InitRenderTargetSetWithADepthStencilTexture(screenW, screenH, 3,
-		&fmts[0], DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT,
-		true, std::string("RenderTargetSet")));
+	//assert(renderTargetSet.InitRenderTargetSetWithADepthStencilTexture(screenW, screenH, 3,
+	//	&fmts[0], DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT,
+	//	true, std::string("RenderTargetSet")));
 }
 
 bool DeferredTestScene::OnSceneBecomeDeactive()
@@ -225,6 +225,7 @@ bool DeferredTestScene::OnSceneRender()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
+	/*
 	//Clear render target
 	renderTarget.ClearRenderTarget(Float32Colour(0.f, 0.f, 1.f, 0.f));
 	if (renderTarget.DoesManageADepthStencilTexture())
@@ -239,22 +240,30 @@ bool DeferredTestScene::OnSceneRender()
 		renderTarget.BindRenderTargetWithExternalDepthStencilViewAsOutput(
 			gm->GetSwapchain()->GetSwapchainDepthTexture2DReadWriteView());
 	}
-
-
+	*/
+	
 	//
 	//Render target set
 	//
-	renderTargetSet.ClearAllRenderTargets(Float32Colour(1.0f, 0.0f, 0.0f, 1.0f));
+	renderTargetSet.ClearAllRenderTargets(Float32Colour(0.0f, 0.0f, 1.0f, 1.0f));
 	if (renderTargetSet.DoesManageDepthStencilTexture())
-		renderTargetSet.ClearDepthStencilTexture(DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0.0f);
+		renderTargetSet.ClearDepthStencilTexture(DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
 	
+	if (renderTargetSet.DoesManageDepthStencilTexture())
+		renderTargetSet.BindAllRenderTargetsAndDepthStencilTextureAsOutput(true);
+	else
+	{
+		renderTargetSet.BindAllRenderTargetsAndExternalDepthStencilViewAsOutput(
+			gm->GetSwapchain()->GetSwapchainDepthTexture2DReadWriteView());
+		
+		//renderTargetSet.BindAllRenderTargetsAsOutput();
+	}
 
-
-	//Set CBUffer
+	//Set CBuffer
 	device->VSSetConstantBuffer(&constantBuffer, 0);
 
 	//Draw cube
-	cube.Render(device);
+	cube.RenderToGBuffer(device);
 
 	//Done
 	return true;

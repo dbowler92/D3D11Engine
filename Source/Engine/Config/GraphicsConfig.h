@@ -7,7 +7,7 @@
 #pragma once
 
 //1 == no MSAA, > 1 == MSAA (Max 16)
-#define GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT 4
+#define GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT 1
 //Backbuffer count. Note: 1 == Double buffering && 2 == tripple buffering
 #define GRAPHICS_CONFIG_BACKBUFFER_COUNT 1
 //Should we create a depth stencil buffer alongside the backbuffers? true | false

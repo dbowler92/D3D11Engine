@@ -286,7 +286,7 @@
     <Filter Include="Src\Rendering\RenderTarget">
       <UniqueIdentifier>{d10ebb12-b67e-4cb9-bdb3-3b109beb83f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Rendering\RenderTargetArray">
+    <Filter Include="Src\Rendering\RenderTargetSet">
       <UniqueIdentifier>{82d02ffb-3366-42d9-994e-9c899b770b93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

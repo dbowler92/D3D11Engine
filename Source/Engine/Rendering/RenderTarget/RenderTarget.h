@@ -109,6 +109,24 @@ namespace EngineAPI
 			//Getters:
 			//
 			bool DoesManageADepthStencilTexture() { return doesManageADepthStencilTexture; };
+			
+			uint32_t GetRenderTargetWidth() { return renderTargetWidth; };
+			uint32_t GetRenderTargetHeight() { return renderTargetHeight; };
+			uint32_t GetRenderTargetMSAASampleCount() { return msaaSampleCount; };
+
+			ResourceFormat GetRenderTargetTextureFormat() { return renderTargetTextureFormat; };
+			DepthStencilTextureFormat GetDepthStencilTextureFormat() { return renderTargetDepthStencilTextureFormat; };
+			bool CanBeUsedAsShaderResource() { return isUsedAsShaderResource; };
+
+			EngineAPI::Graphics::RenderTexture2D* GetRenderTargetTexture2D() { return &renderTargetTexture2D; };
+			EngineAPI::Graphics::DepthStencilTexture2D* GetDepthStencilTexture2D() { return ((doesManageADepthStencilTexture == true) ? &depthStencilTexture2D : nullptr); };
+
+			EngineAPI::Graphics::RenderTargetView* GetRenderTargetView() { return &renderTargetRTV; };
+			EngineAPI::Graphics::ShaderResourceView* GetRenderTargetShaderResourceView() { return ((isUsedAsShaderResource == true) ? &renderTargetSRV : nullptr); };
+
+			EngineAPI::Graphics::DepthStencilView* GetDepthStencilViewReadWrite() { return ((doesManageADepthStencilTexture == true) ? &depthStencilDSV : nullptr); };
+			EngineAPI::Graphics::DepthStencilView* GetDepthStencilViewReadOnly() { return ((doesManageADepthStencilTexture == true) ? &depthStencilReadOnlyDSV : nullptr); };
+			EngineAPI::Graphics::ShaderResourceView* GetDepthStencilTextureShaderResourceView() { return ((doesManageADepthStencilTexture == true && isUsedAsShaderResource == true) ? &depthStencilSRV : nullptr); };
 
 		private:
 			//Render target texture
@@ -132,9 +150,9 @@ namespace EngineAPI
 			bool isDepthStencilTextureAndViewsInited = false;
 			
 			//Render target data
-			uint32_t renderTargetWidth = 0;
-			uint32_t renderTargetHeight = 0;
-			uint32_t msaaSampleCount = 1;
+			uint32_t renderTargetWidth = 0;  //Depth tex is the same size
+			uint32_t renderTargetHeight = 0; //Depth tex is the same size
+			uint32_t msaaSampleCount = 1;	 //Depth tex is created with same MSAA sample count
 			ResourceFormat renderTargetTextureFormat;
 			DepthStencilTextureFormat renderTargetDepthStencilTextureFormat;
 			bool isUsedAsShaderResource = false;

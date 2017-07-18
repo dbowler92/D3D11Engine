@@ -73,11 +73,13 @@ void DeferredTestScene::InitRenderTargets()
 
 	//assert(renderTarget.InitRenderTarget(screenW, screenH, RESOURCE_FORMAT_R8G8B8A8_UNORM, true, std::string("DeferredScene_TestRenderTarget")));
 	
+	//assert(renderTarget.InitMSAARenderTarget(screenW, screenH, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT,
+	//	RESOURCE_FORMAT_R8G8B8A8_UNORM, true, std::string("DeferredScene_TestRenderTarget")));
+	
 	assert(renderTarget.InitRenderTargetWithDepthStencilTexture(screenW, screenH, RESOURCE_FORMAT_R8G8B8A8_UNORM,
 		DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, true, std::string("DeferredScene_TestRenderTarget")));
 
-	//const uint32_t msaa = 4;
-	//assert(renderTarget.InitMSAARenderTargetWithDepthStencilTexture(screenW, screenH, msaa,
+	//assert(renderTarget.InitMSAARenderTargetWithDepthStencilTexture(screenW, screenH, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT,
 	//	RESOURCE_FORMAT_R8G8B8A8_UNORM,
 	//	DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, true, std::string("DeferredScene_TestRenderTarget")));
 }
@@ -205,16 +207,21 @@ bool DeferredTestScene::OnSceneRender()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
-	//Render target
+	//Clear render target
 	renderTarget.ClearRenderTarget(Float32Colour(0.f, 0.f, 1.f, 0.f));
 	if (renderTarget.DoesManageADepthStencilTexture())
 		renderTarget.ClearDepthStencilTexture(DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
 
+	//Bind render target
 	if (renderTarget.DoesManageADepthStencilTexture())
 		renderTarget.BindRenderTargetAndDepthStencilTextureAsOutput(true);
 	else
-		renderTarget.BindRenderTargetOnlyAsOutput();
-
+	{
+		//renderTarget.BindRenderTargetOnlyAsOutput();
+		renderTarget.BindRenderTargetWithExternalDepthStencilViewAsOutput(
+			gm->GetSwapchain()->GetSwapchainDepthTexture2DReadWriteView());
+	}
+	
 	//Set CBUffer
 	device->VSSetConstantBuffer(&constantBuffer, 0);
 

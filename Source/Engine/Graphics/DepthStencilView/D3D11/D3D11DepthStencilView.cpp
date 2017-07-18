@@ -85,5 +85,10 @@ void D3D11DepthStencilView::ClearDepthStencilView(EngineAPI::Graphics::GraphicsD
 void D3D11DepthStencilView::BindDepthStencilView(EngineAPI::Graphics::GraphicsDevice* device)
 {
 	if (dsv)
-		device->GetD3D11ImmediateContext()->OMSetRenderTargets(0, nullptr, dsv);
+	{
+		//device->GetD3D11ImmediateContext()->OMSetRenderTargets(0, nullptr, dsv);
+
+		ID3D11RenderTargetView* nullRenderTarget[1] = { NULL };
+		device->GetD3D11ImmediateContext()->OMSetRenderTargets(1, nullRenderTarget, dsv);
+	}
 }

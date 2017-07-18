@@ -56,6 +56,7 @@ void D3D11GraphicsSwapchain::Shutdown()
 {
 	if (doesManageADepthBuffer)
 	{
+		swapchainDepthStencilTextureSRV.Shutdown();
 		swapchainDepthStencilViewReadWrite.Shutdown();
 		swapchainDepthStencilViewReadOnly.Shutdown();
 		swpachainDepthStencilTexture.Shutdown();
@@ -228,7 +229,8 @@ bool D3D11GraphicsSwapchain::InitD3D11SwapchainDepthBuffer(EngineAPI::Graphics::
 		assert(swapchainDepthStencilViewReadWrite.InitDepthStencilView(device,&swpachainDepthStencilTexture, false, std::string("SwapchainDepthStencilViewReadWrite")));
 		assert(swapchainDepthStencilViewReadOnly.InitDepthStencilView(device, &swpachainDepthStencilTexture, true, std::string("SwapchainDepthStencilViewReadOnly")));
 
-		//TODO: SRV to the depth buffer
+		//SRV to the depth buffer
+		assert(swapchainDepthStencilTextureSRV.InitShaderResourceViewToDepthStencilTexture2D(device, &swpachainDepthStencilTexture, false, std::string("SwapchainDepthTextureShaderResourceView")));
 	}
 	else
 	{
@@ -253,10 +255,7 @@ void D3D11GraphicsSwapchain::ClearDepthStencilBuffer(EngineAPI::Graphics::Graphi
 {
 	//Only clear if we manage the depth stencil buffer. 
 	if (doesManageADepthBuffer)
-	{
-		swapchainDepthStencilViewReadWrite.ClearDepthStencilView(device, depthStencilBufferClearFlag, 1.0f, 0);
-		//swapchainDepthStencilViewReadOnly.ClearDepthStencilView(device, DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
-	}
+		swapchainDepthStencilViewReadWrite.ClearDepthStencilView(device, depthStencilBufferClearFlag, depthClearValue, stencilClearValue);
 }
 
 void D3D11GraphicsSwapchain::BindSwapchainBackbufferAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,

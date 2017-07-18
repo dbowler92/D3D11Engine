@@ -22,6 +22,7 @@
 //Manages a depth/stencil texture
 #include <Graphics/DepthStencilTexture2D/DepthStencilTexture2D.h>
 #include <Graphics/DepthStencilView/DepthStencilView.h>
+#include <Graphics/ShaderResourceView/ShaderResourceView.h>
 
 namespace EngineAPI
 {
@@ -86,6 +87,7 @@ namespace EngineAPI
 				EngineAPI::Graphics::DepthStencilTexture2D* GetSwapchainDepthTexture2D() { return ((doesManageADepthBuffer == true) ? &swpachainDepthStencilTexture : nullptr); };
 				EngineAPI::Graphics::DepthStencilView* GetSwapchainDepthTexture2DReadWriteView() { return ((doesManageADepthBuffer == true) ? &swapchainDepthStencilViewReadWrite : nullptr); };
 				EngineAPI::Graphics::DepthStencilView* GetSwapchainDepthTexture2DReadOnlyView() { return ((doesManageADepthBuffer == true) ? &swapchainDepthStencilViewReadOnly : nullptr); };
+				EngineAPI::Graphics::ShaderResourceView* GetSwapchainDepthTexture2DShaderResourceView() { return ((doesManageADepthBuffer == true) ? &swapchainDepthStencilTextureSRV : nullptr); };
 
 			public:
 				//Clears the backbuffer RTV
@@ -144,6 +146,9 @@ namespace EngineAPI
 				EngineAPI::Graphics::DepthStencilTexture2D swpachainDepthStencilTexture;
 				EngineAPI::Graphics::DepthStencilView swapchainDepthStencilViewReadWrite; //Normal use
 				EngineAPI::Graphics::DepthStencilView swapchainDepthStencilViewReadOnly;  //Want to sample from depth buffer but use depth test. 
+
+				//Also generate a SRV to the DepthStencilTexture
+				EngineAPI::Graphics::ShaderResourceView swapchainDepthStencilTextureSRV;
 
 			protected:
 				//Internal init functions

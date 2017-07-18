@@ -19,6 +19,10 @@ void RenderTarget::Shutdown()
 	depthStencilReadOnlyDSV.Shutdown();
 	depthStencilSRV.Shutdown();
 
+	isRenderTargetTextureAndViewsInited = false;
+	isDepthStencilTextureAndViewsInited = false;
+	doesManageADepthStencilTexture = false;
+
 	//Shutdown super
 	__super::Shutdown();
 }
@@ -160,6 +164,8 @@ bool RenderTarget::InitMSAARenderTargetWithDepthStencilTexture(uint32_t width, u
 
 bool RenderTarget::Resize(uint32_t newWidth, uint32_t newHeight)
 {
+	assert(isRenderTargetTextureAndViewsInited == true);
+
 	//Shut everything down
 	renderTargetTexture2D.Shutdown();
 	depthStencilTexture2D.Shutdown();

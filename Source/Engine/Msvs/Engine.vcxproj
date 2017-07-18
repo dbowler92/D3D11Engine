@@ -63,6 +63,7 @@
     <ClCompile Include="..\Main\EngineMain.cpp" />
     <ClCompile Include="..\OS\Application\Win32\Win32Application.cpp" />
     <ClCompile Include="..\OS\OSWindow\Win32\Win32OSWindow.cpp" />
+    <ClCompile Include="..\Rendering\RenderTargetSet\RenderTargetSet.cpp" />
     <ClCompile Include="..\Rendering\RenderTarget\RenderTarget.cpp" />
     <ClCompile Include="..\Rendering\VirtualCamera\VirtualCamera.cpp" />
     <ClCompile Include="..\Statics\D3D11Statics\D3D11Statics.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="..\OS\Application\Win32\Win32Application.h" />
     <ClInclude Include="..\OS\OSWindow\OSWindow.h" />
     <ClInclude Include="..\OS\OSWindow\Win32\Win32OSWindow.h" />
+    <ClInclude Include="..\Rendering\RenderTargetSet\RenderTargetSet.h" />
     <ClInclude Include="..\Rendering\RenderTarget\RenderTarget.h" />
     <ClInclude Include="..\Rendering\VirtualCamera\VirtualCamera.h" />
     <ClInclude Include="..\Statics\D3D11Statics\D3D11Statics.h" />

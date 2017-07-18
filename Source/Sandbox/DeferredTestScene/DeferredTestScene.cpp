@@ -82,6 +82,22 @@ void DeferredTestScene::InitRenderTargets()
 	//assert(renderTarget.InitMSAARenderTargetWithDepthStencilTexture(screenW, screenH, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT,
 	//	RESOURCE_FORMAT_R8G8B8A8_UNORM,
 	//	DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, true, std::string("DeferredScene_TestRenderTarget")));
+
+
+	//
+	//
+	//
+	ResourceFormat fmts[3];
+	fmts[0] = RESOURCE_FORMAT_R8G8B8A8_UNORM;
+	fmts[1] = RESOURCE_FORMAT_R11G11B10_FLOAT;
+	fmts[2] = RESOURCE_FORMAT_R8G8B8A8_UNORM;
+
+	//assert(renderTargetSet.InitRenderTargetSet(screenW, screenH, 3,
+	//	&fmts[0], true, std::string("RenderTargetSet")));
+
+	assert(renderTargetSet.InitRenderTargetSetWithADepthStencilTexture(screenW, screenH, 3,
+		&fmts[0], DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT,
+		true, std::string("RenderTargetSet")));
 }
 
 bool DeferredTestScene::OnSceneBecomeDeactive()
@@ -94,6 +110,7 @@ bool DeferredTestScene::OnSceneBecomeDeactive()
 	cube.Shutdown();
 
 	renderTarget.Shutdown();
+	renderTargetSet.Shutdown();
 
 	//Done
 	return true;
@@ -126,6 +143,7 @@ bool DeferredTestScene::OnResize(uint32_t newWidth, uint32_t newHeight)
 
 	//Resize render target
 	assert(renderTarget.Resize(newWidth, newHeight));
+	assert(renderTargetSet.Resize(newWidth, newHeight));
 
 	//Done
 	return true;

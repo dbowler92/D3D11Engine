@@ -12,6 +12,7 @@
 //Rendering && graphics
 #include <Engine/Rendering/VirtualCamera/VirtualCamera.h>
 #include <Engine/Rendering/RenderTarget/RenderTarget.h>
+#include <Engine/Rendering/RenderTargetSet/RenderTargetSet.h>
 
 //Cube we render
 #include <Sandbox/TestCube/TestCube.h>
@@ -50,6 +51,7 @@ private:
 
 	//Render target
 	EngineAPI::Rendering::RenderTarget renderTarget;
+	EngineAPI::Rendering::RenderTargetSet renderTargetSet;
 
 	//CBuffer (WVP)
 	EngineAPI::Graphics::ConstantBuffer constantBuffer;

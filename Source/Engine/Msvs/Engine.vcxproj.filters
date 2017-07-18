@@ -435,6 +435,9 @@
     <ClCompile Include="..\Rendering\RenderTarget\RenderTarget.cpp">
       <Filter>Src\Rendering\RenderTarget</Filter>
     </ClCompile>
+    <ClCompile Include="..\Rendering\RenderTargetSet\RenderTargetSet.cpp">
+      <Filter>Src\Rendering\RenderTargetSet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Main\EngineStd.h">
@@ -691,6 +694,9 @@
     </ClInclude>
     <ClInclude Include="..\Rendering\RenderTarget\RenderTarget.h">
       <Filter>Src\Rendering\RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Rendering\RenderTargetSet\RenderTargetSet.h">
+      <Filter>Src\Rendering\RenderTargetSet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@
 
 #include <Sandbox/AppConfig/AppConfig.h>
 #include <Engine/Config/EngineConfig.h> //Build settings etc
-#include <Engine/Main/EngineStd.h> //Allows us to easily call entey function for Engine lib
+#include <Engine/Main/EngineStd.h> //Allows us to easily call entry function for Engine lib
 #include <Sandbox/Application/SandboxApplication.h> //Our application
 #include <iostream>
 

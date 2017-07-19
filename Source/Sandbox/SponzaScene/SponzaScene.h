@@ -48,7 +48,14 @@ public:
 	//Rendering and updating the scene - NOTE: I will add
 	//an update/render loop thats used internally. 
 	bool OnSceneUpdate(float dt) override;
-	bool OnSceneRender() override;
+
+	bool OnScenePreRender() override;
+	bool OnSceneRenderGeometryPass() override;
+	bool OnSceneRenderLightPass() override;
+	bool OnSceneRenderPostProcessPass() override;
+	bool OnSceneRenderDebugPass()  override;
+	bool OnSceneRenderUIPass() override;
+	bool OnSceneRenderDebugUIPass() override;
 
 private:
 	//Fly camera

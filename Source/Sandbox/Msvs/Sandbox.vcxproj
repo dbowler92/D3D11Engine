@@ -184,7 +184,6 @@
     <ClCompile Include="..\Main\SandboxMain.cpp" />
     <ClCompile Include="..\SponzaScene\SponzaScene.cpp" />
     <ClCompile Include="..\TestCube\TestCube.cpp" />
-    <ClCompile Include="..\TestScene\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AppConfig\AppConfig.h" />
@@ -192,7 +191,6 @@
     <ClInclude Include="..\DeferredTestScene\DeferredTestScene.h" />
     <ClInclude Include="..\SponzaScene\SponzaScene.h" />
     <ClInclude Include="..\TestCube\TestCube.h" />
-    <ClInclude Include="..\TestScene\TestScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestCBufferPS.hlsl">

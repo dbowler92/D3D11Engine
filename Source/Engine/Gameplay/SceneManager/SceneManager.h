@@ -28,6 +28,14 @@ namespace EngineAPI
 			class OS_PLATFORM_IMPLEMENTATION_CLASS_NAME(Application);
 		};
 	};
+
+	namespace Graphics
+	{
+		namespace Platform
+		{
+			class RENDERING_PLATFORM_IMPLEMENTATION_CLASS_NAME(GraphicsManager);
+		};
+	};
 };
 
 namespace EngineAPI
@@ -39,6 +47,9 @@ namespace EngineAPI
 			//Application should be the only one able to 
 			//create and destroy the scene manager
 			friend EngineAPI::OS::Platform::OS_PLATFORM_IMPLEMENTATION_CLASS_NAME(Application);
+
+			//Graphics manager will call rendering functions at apprpriate times
+			friend EngineAPI::Graphics::Platform::RENDERING_PLATFORM_IMPLEMENTATION_CLASS_NAME(GraphicsManager);
 
 		public:
 			//Singleton class
@@ -83,7 +94,14 @@ namespace EngineAPI
 
 			//Update and render loops
 			bool OnUpdate(float dt);
-			bool OnRender();
+
+			bool OnPreRender();
+			bool OnRenderGeometryPass();
+			bool OnRenderLightPass();
+			bool OnRenderPostProcessPass();
+			bool OnRenderDebugPass();
+			bool OnRenderUIPass();
+			bool OnRenderDebugUIPass();
 
 		private:
 			//Singleton

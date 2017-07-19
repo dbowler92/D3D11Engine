@@ -38,6 +38,8 @@
     <ClCompile Include="..\Graphics\CommonResource\CommonResource.cpp" />
     <ClCompile Include="..\Graphics\CommonResource\D3D11\D3D11CommonResource.cpp" />
     <ClCompile Include="..\Graphics\ConstantBuffer\D3D11\D3D11ConstantBuffer.cpp" />
+    <ClCompile Include="..\Graphics\DeferredRendering\GBuffer\D3D11\D3D11GBuffer.cpp" />
+    <ClCompile Include="..\Graphics\DeferredRendering\LABuffer\D3D11\D3D11LABuffer.cpp" />
     <ClCompile Include="..\Graphics\DepthStencilState\D3D11\D3D11DepthStencilState.cpp" />
     <ClCompile Include="..\Graphics\DepthStencilTexture2D\D3D11\D3D11DepthStencilTexture2D.cpp" />
     <ClCompile Include="..\Graphics\DepthStencilView\D3D11\D3D11DepthStencilView.cpp" />
@@ -97,6 +99,10 @@
     <ClInclude Include="..\Graphics\CommonResource\D3D11\D3D11CommonResource.h" />
     <ClInclude Include="..\Graphics\ConstantBuffer\ConstantBuffer.h" />
     <ClInclude Include="..\Graphics\ConstantBuffer\D3D11\D3D11ConstantBuffer.h" />
+    <ClInclude Include="..\Graphics\DeferredRendering\GBuffer\D3D11\D3D11GBuffer.h" />
+    <ClInclude Include="..\Graphics\DeferredRendering\GBuffer\GBuffer.h" />
+    <ClInclude Include="..\Graphics\DeferredRendering\LABuffer\D3D11\D3D11LABuffer.h" />
+    <ClInclude Include="..\Graphics\DeferredRendering\LABuffer\LABuffer.h" />
     <ClInclude Include="..\Graphics\DepthStencilState\D3D11\D3D11DepthStencilState.h" />
     <ClInclude Include="..\Graphics\DepthStencilState\DepthStencilState.h" />
     <ClInclude Include="..\Graphics\DepthStencilTexture2D\D3D11\D3D11DepthStencilTexture2D.h" />

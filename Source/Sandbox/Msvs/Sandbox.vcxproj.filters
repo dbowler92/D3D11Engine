@@ -34,9 +34,6 @@
     <Filter Include="Src\Scenes\SponzaScene">
       <UniqueIdentifier>{77a2fb9b-2464-4fba-8601-6e1192193d27}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Scenes\TestScene">
-      <UniqueIdentifier>{b618c303-741a-4035-b03c-1515cbeac507}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Scenes\DeferredTestScene">
       <UniqueIdentifier>{a020e845-ebb2-43e3-98d8-43f2aa254c51}</UniqueIdentifier>
     </Filter>
@@ -51,9 +48,6 @@
     <ClCompile Include="..\Application\SandboxApplication.cpp">
       <Filter>Src\SandboxApplication</Filter>
     </ClCompile>
-    <ClCompile Include="..\TestScene\TestScene.cpp">
-      <Filter>Src\Scenes\TestScene</Filter>
-    </ClCompile>
     <ClCompile Include="..\SponzaScene\SponzaScene.cpp">
       <Filter>Src\Scenes\SponzaScene</Filter>
     </ClCompile>
@@ -67,9 +61,6 @@
   <ItemGroup>
     <ClInclude Include="..\Application\SandboxApplication.h">
       <Filter>Src\SandboxApplication</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TestScene\TestScene.h">
-      <Filter>Src\Scenes\TestScene</Filter>
     </ClInclude>
     <ClInclude Include="..\AppConfig\AppConfig.h">
       <Filter>AppConfig</Filter>

@@ -75,6 +75,10 @@ namespace EngineAPI
 				//need to resize render targets. 
 				bool OnResize(EngineAPI::OS::OSWindow* osWindow);
 
+				//Renders the scene. Setsup internally depending on the pass before
+				//getting the scene manager to render. 
+				bool OnRender();
+
 				//Called when we are begining rendering & finishing rendering by the 
 				//main game loop
 				bool OnBeginRender();

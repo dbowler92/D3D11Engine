@@ -327,11 +327,17 @@ bool SponzaScene::OnSceneUpdate(float dt)
 	return true;
 }
 
-bool SponzaScene::OnSceneRender()
+bool SponzaScene::OnScenePreRender()
+{
+	//Done
+	return true;
+}
+
+bool SponzaScene::OnSceneRenderGeometryPass()
 {
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
-	
+
 	//Topology
 	device->IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
@@ -357,6 +363,36 @@ bool SponzaScene::OnSceneRender()
 	//Draw command
 	device->Draw(texCubeVB.GetElementsCount(), 0);
 
+	//Done
+	return true;
+}
+
+bool SponzaScene::OnSceneRenderLightPass()
+{
+	//Done
+	return true;
+}
+
+bool SponzaScene::OnSceneRenderPostProcessPass()
+{
+	//Done
+	return true;
+}
+
+bool SponzaScene::OnSceneRenderDebugPass()
+{
+	//Done
+	return true;
+}
+
+bool SponzaScene::OnSceneRenderUIPass()
+{
+	//Done
+	return true;
+}
+
+bool SponzaScene::OnSceneRenderDebugUIPass()
+{
 	//Done
 	return true;
 }

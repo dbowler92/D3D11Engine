@@ -178,9 +178,6 @@
     <Filter Include="Src\Graphics\PixelShader\D3D11">
       <UniqueIdentifier>{b6e1b969-2708-4134-bdbe-60c8bb217498}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Graphics\Program">
-      <UniqueIdentifier>{8191cdbe-28da-4e9f-9b11-c6e21cfc704c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Graphics\VertexInputSignature">
       <UniqueIdentifier>{00f0d5c5-bef7-4586-adce-bd730e9cdde4}</UniqueIdentifier>
     </Filter>
@@ -288,6 +285,21 @@
     </Filter>
     <Filter Include="Src\Rendering\RenderTargetSet">
       <UniqueIdentifier>{82d02ffb-3366-42d9-994e-9c899b770b93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\DeferredRendering">
+      <UniqueIdentifier>{223342d8-058d-4a61-af90-2717dcec9056}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\DeferredRendering\GBuffer">
+      <UniqueIdentifier>{5c1d1874-64d8-4b63-956d-2af3d43ac5e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\DeferredRendering\LABuffer">
+      <UniqueIdentifier>{6b4bd073-486e-4b6c-a46c-c589b0150e34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\DeferredRendering\GBuffer\D3D11">
+      <UniqueIdentifier>{f4c26539-c7d4-4f96-916b-25dea0130cba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\DeferredRendering\LABuffer\D3D11">
+      <UniqueIdentifier>{855e3c83-5c47-4ec0-b44e-1cbbee626680}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -437,6 +449,12 @@
     </ClCompile>
     <ClCompile Include="..\Rendering\RenderTargetSet\RenderTargetSet.cpp">
       <Filter>Src\Rendering\RenderTargetSet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\DeferredRendering\GBuffer\D3D11\D3D11GBuffer.cpp">
+      <Filter>Src\Graphics\DeferredRendering\GBuffer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\DeferredRendering\LABuffer\D3D11\D3D11LABuffer.cpp">
+      <Filter>Src\Graphics\DeferredRendering\LABuffer\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -697,6 +715,18 @@
     </ClInclude>
     <ClInclude Include="..\Rendering\RenderTargetSet\RenderTargetSet.h">
       <Filter>Src\Rendering\RenderTargetSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\DeferredRendering\GBuffer\D3D11\D3D11GBuffer.h">
+      <Filter>Src\Graphics\DeferredRendering\GBuffer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\DeferredRendering\GBuffer\GBuffer.h">
+      <Filter>Src\Graphics\DeferredRendering\GBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\DeferredRendering\LABuffer\D3D11\D3D11LABuffer.h">
+      <Filter>Src\Graphics\DeferredRendering\LABuffer\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\DeferredRendering\LABuffer\LABuffer.h">
+      <Filter>Src\Graphics\DeferredRendering\LABuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

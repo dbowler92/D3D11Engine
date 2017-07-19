@@ -50,7 +50,14 @@ namespace EngineAPI
 
 			//Update and rendering events that we override
 			virtual bool OnSceneUpdate(float dt) = 0;
-			virtual bool OnSceneRender() = 0;
+
+			virtual bool OnScenePreRender() = 0;
+			virtual bool OnSceneRenderGeometryPass() = 0;
+			virtual bool OnSceneRenderLightPass() = 0;
+			virtual bool OnSceneRenderPostProcessPass() = 0;
+			virtual bool OnSceneRenderDebugPass() = 0;
+			virtual bool OnSceneRenderUIPass() = 0;
+			virtual bool OnSceneRenderDebugUIPass() = 0;
 
 		private:
 			//Scene title - called by scene manager when added to the managers

@@ -98,14 +98,64 @@ bool SceneManager::OnUpdate(float dt)
 	return true;
 }
 
-bool SceneManager::OnRender()
+bool SceneManager::OnPreRender()
 {
-	//Render current scene
 	if (currentScene)
-		return currentScene->OnSceneRender();
+		return currentScene->OnScenePreRender();
 
-	//Done
-	return true;
+	return false;
+
+}
+
+bool SceneManager::OnRenderGeometryPass()
+{
+	if (currentScene)
+		return currentScene->OnSceneRenderGeometryPass();
+
+	return false;
+
+}
+
+bool SceneManager::OnRenderLightPass()
+{
+	if (currentScene)
+		return currentScene->OnSceneRenderLightPass();
+
+	return false;
+
+}
+
+bool SceneManager::OnRenderPostProcessPass()
+{
+	if (currentScene)
+		return currentScene->OnSceneRenderPostProcessPass();
+
+	return false;
+
+}
+
+bool SceneManager::OnRenderDebugPass()
+{
+	if (currentScene)
+		return currentScene->OnSceneRenderDebugPass();
+
+	return false;
+}
+
+bool SceneManager::OnRenderUIPass()
+{
+	if (currentScene)
+		return currentScene->OnSceneRenderUIPass();
+
+	return false;
+}
+
+bool SceneManager::OnRenderDebugUIPass()
+{
+	if (currentScene)
+		return currentScene->OnSceneRenderDebugUIPass();
+
+	return false;
 }
 
 bool SceneManager::SetCurrentActiveScene(EngineAPI::Gameplay::Scene* scene)

@@ -399,9 +399,7 @@ void Win32Application::EnterGameLoop()
 				assert(sceneManagerSubsystem->OnUpdate(mainGameLoopTimer.DeltaTime()));
 
 				//Rendering
-				assert(graphicsSubsystem->OnBeginRender());
-				assert(sceneManagerSubsystem->OnRender());
-				assert(graphicsSubsystem->OnEndRender());
+				assert(graphicsSubsystem->OnRender());
 			}
 			else
 				Sleep(100);

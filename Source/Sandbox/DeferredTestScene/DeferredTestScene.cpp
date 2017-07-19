@@ -220,7 +220,13 @@ bool DeferredTestScene::OnSceneUpdate(float dt)
 	return true;
 }
 
-bool DeferredTestScene::OnSceneRender()
+bool DeferredTestScene::OnScenePreRender()
+{
+	//Done
+	return true;
+}
+
+bool DeferredTestScene::OnSceneRenderGeometryPass()
 {
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
@@ -229,33 +235,33 @@ bool DeferredTestScene::OnSceneRender()
 	//Clear render target
 	renderTarget.ClearRenderTarget(Float32Colour(0.f, 0.f, 1.f, 0.f));
 	if (renderTarget.DoesManageADepthStencilTexture())
-		renderTarget.ClearDepthStencilTexture(DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
+	renderTarget.ClearDepthStencilTexture(DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
 
 	//Bind render target
 	if (renderTarget.DoesManageADepthStencilTexture())
-		renderTarget.BindRenderTargetAndDepthStencilTextureAsOutput(true);
+	renderTarget.BindRenderTargetAndDepthStencilTextureAsOutput(true);
 	else
 	{
-		//renderTarget.BindRenderTargetOnlyAsOutput();
-		renderTarget.BindRenderTargetWithExternalDepthStencilViewAsOutput(
-			gm->GetSwapchain()->GetSwapchainDepthTexture2DReadWriteView());
+	//renderTarget.BindRenderTargetOnlyAsOutput();
+	renderTarget.BindRenderTargetWithExternalDepthStencilViewAsOutput(
+	gm->GetSwapchain()->GetSwapchainDepthTexture2DReadWriteView());
 	}
 	*/
-	
+
 	//
 	//Render target set
 	//
 	renderTargetSet.ClearAllRenderTargets(Float32Colour(0.0f, 0.0f, 1.0f, 1.0f));
 	if (renderTargetSet.DoesManageDepthStencilTexture())
 		renderTargetSet.ClearDepthStencilTexture(DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
-	
+
 	if (renderTargetSet.DoesManageDepthStencilTexture())
 		renderTargetSet.BindAllRenderTargetsAndDepthStencilTextureAsOutput(true);
 	else
 	{
 		renderTargetSet.BindAllRenderTargetsAndExternalDepthStencilViewAsOutput(
 			gm->GetSwapchain()->GetSwapchainDepthTexture2DReadWriteView());
-		
+
 		//renderTargetSet.BindAllRenderTargetsAsOutput();
 	}
 
@@ -265,6 +271,36 @@ bool DeferredTestScene::OnSceneRender()
 	//Draw cube
 	cube.RenderToGBuffer(device);
 
+	//Done
+	return true;
+}
+
+bool DeferredTestScene::OnSceneRenderLightPass()
+{
+	//Done
+	return true;
+}
+
+bool DeferredTestScene::OnSceneRenderPostProcessPass()
+{
+	//Done
+	return true;
+}
+
+bool DeferredTestScene::OnSceneRenderDebugPass()
+{
+	//Done
+	return true;
+}
+
+bool DeferredTestScene::OnSceneRenderUIPass()
+{
+	//Done
+	return true;
+}
+
+bool DeferredTestScene::OnSceneRenderDebugUIPass()
+{
 	//Done
 	return true;
 }

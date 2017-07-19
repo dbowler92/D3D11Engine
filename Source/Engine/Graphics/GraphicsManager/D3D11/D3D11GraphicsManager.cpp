@@ -1,5 +1,8 @@
 #include "D3D11GraphicsManager.h"
 
+//Talks to the scene manager for rendering events
+#include <Gameplay/SceneManager/SceneManager.h>
+
 using namespace EngineAPI::Graphics::Platform;
 
 bool D3D11GraphicsManager::InitSubsystem(EngineAPI::OS::OSWindow* osWindow)
@@ -45,6 +48,35 @@ bool D3D11GraphicsManager::OnResize(EngineAPI::OS::OSWindow* osWindow)
 	//Resize the swapchain
 	if (!swapchain.OnResize(&device, osWindow))
 		return false;
+
+	//Done
+	return true;
+}
+
+bool D3D11GraphicsManager::OnRender()
+{
+	//Get the scene manager
+	EngineAPI::Gameplay::SceneManager* sm = EngineAPI::Gameplay::SceneManager::GetInstance();
+	assert(sm);
+
+	//Pre render - eg: Shadows and the like
+	assert(sm->OnPreRender());
+
+	//Clear everything ready for new frame
+	assert(OnBeginRender());
+
+	//Rendering passes. TODO: GraphicsManager will need functions to
+	//set itself up for these passes before informing the scene
+	//to render
+	assert(sm->OnRenderGeometryPass());
+	assert(sm->OnRenderLightPass());
+	assert(sm->OnRenderPostProcessPass());
+	assert(sm->OnRenderDebugPass());
+	assert(sm->OnRenderUIPass());
+	assert(sm->OnRenderDebugUIPass());
+
+	//Present the backbuffer to the user
+	assert(OnEndRender());
 
 	//Done
 	return true;

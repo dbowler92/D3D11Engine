@@ -34,10 +34,10 @@ public:
 	void InitCube(EngineAPI::Graphics::GraphicsDevice* device, 
 		CXMMATRIX& cubeWorld,
 		std::string diffuseTex, bool isPNG,
+		float specPower, float specIntensity,
 		std::string debugName);
 
 	void Update(float dt);
-	void Render(EngineAPI::Graphics::GraphicsDevice* device);
 	void RenderToGBuffer(EngineAPI::Graphics::GraphicsDevice* device);
 
 public:
@@ -47,7 +47,7 @@ public:
 protected:
 	//World matrix
 	XMMATRIX world;
-
+	
 	//Graphics data
 	EngineAPI::Graphics::VertexBuffer texCubeVB;
 
@@ -61,4 +61,8 @@ protected:
 	EngineAPI::Graphics::BlendState bs;
 	EngineAPI::Graphics::DepthStencilState dss;
 	EngineAPI::Graphics::RasterizerState rss;
+
+	//CBuffers
+	EngineAPI::Graphics::ConstantBuffer vsCBPerObject; //World matrix
+	EngineAPI::Graphics::ConstantBuffer psCBPerObject; //Material data
 };

@@ -19,6 +19,12 @@ bool D3D11ConstantBuffer::InitConstantBuffer(EngineAPI::Graphics::GraphicsDevice
 	std::string debugName)
 {
 	//Error checking
+	if (constantBufferSizeBytes < 16)
+	{
+		EngineAPI::Debug::DebugLog::PrintErrorMessage("D3D11ConstantBuffer::InitConstantBuffer(): Constant buffer must be 16 bytes minimum - concider adding padding");
+		return false;
+	}
+
 	if (initialData == nullptr && usage == RESOURCE_USAGE_IMMUTABLE)
 	{
 		EngineAPI::Debug::DebugLog::PrintErrorMessage("D3D11ConstantBuffer::InitConstantBuffer(): Immutable buffer created without any initial data");
@@ -80,4 +86,9 @@ bool D3D11ConstantBuffer::InitConstantBuffer(EngineAPI::Graphics::GraphicsDevice
 void D3D11ConstantBuffer::BindConstantBufferToVertexShaderStage(EngineAPI::Graphics::GraphicsDevice* device, UINT bufferSlot)
 {
 	device->GetD3D11ImmediateContext()->VSSetConstantBuffers(bufferSlot, 1, &buffer);
+}
+
+void D3D11ConstantBuffer::BindConstantBufferToPixelShaderStage(EngineAPI::Graphics::GraphicsDevice* device, UINT bufferSlot)
+{
+	device->GetD3D11ImmediateContext()->PSSetConstantBuffers(bufferSlot, 1, &buffer);
 }

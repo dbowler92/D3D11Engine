@@ -9,14 +9,11 @@
 //Parent class
 #include <Graphics/CommonResource/CommonResource.h>
 
-//DDS Texture loading in to an ID3D11* resource
-#include <3rdParty/DDSTextureLoader/DDSTextureLoader.h>
-
 namespace EngineAPI
 {
 	namespace Graphics
 	{
-		namespace Platform
+		namespace Platform 
 		{
 			class D3D11TextureResource : public EngineAPI::Graphics::CommonResource
 			{

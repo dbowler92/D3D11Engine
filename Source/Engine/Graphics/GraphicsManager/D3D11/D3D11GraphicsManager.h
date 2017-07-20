@@ -79,11 +79,6 @@ namespace EngineAPI
 				//getting the scene manager to render. 
 				bool OnRender();
 
-				//Called when we are begining rendering & finishing rendering by the 
-				//main game loop
-				bool OnBeginRender();
-				bool OnEndRender();
-
 			protected:
 				//D3D11 resources
 				EngineAPI::Graphics::GraphicsDevice device;
@@ -93,6 +88,13 @@ namespace EngineAPI
 				//Cache the OS window width
 				uint32_t windowWidth = 0;
 				uint32_t windowHeight = 0;
+
+			protected:
+				//Readys the engine for the start of the frame
+				bool OnBeginRender();
+
+				//Presents the backbuffer
+				bool OnEndRender();
 			};
 		};
 	};

@@ -228,6 +228,14 @@ void D3D11GraphicsDevice::PSSetShader(EngineAPI::Graphics::PixelShader* ps)
 		GetD3D11ImmediateContext()->PSSetShader(nullptr, nullptr, 0);
 }
 
+void D3D11GraphicsDevice::PSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot)
+{
+	if (cBuffer)
+		cBuffer->BindConstantBufferToPixelShaderStage((EngineAPI::Graphics::GraphicsDevice*)this, bufferSlot);
+	else
+		GetD3D11ImmediateContext()->PSSetConstantBuffers(bufferSlot, 1, nullptr);
+}
+
 void D3D11GraphicsDevice::PSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot)
 {
 	if (shaderResource)

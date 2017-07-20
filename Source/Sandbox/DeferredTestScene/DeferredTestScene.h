@@ -61,12 +61,12 @@ private:
 	EngineAPI::Rendering::RenderTargetSet renderTargetSet;
 
 	//CBuffer (WVP)
-	EngineAPI::Graphics::ConstantBuffer constantBuffer;
+	EngineAPI::Graphics::ConstantBuffer camerConstantBuffer;
 
 	//Cube
 	TestCube cube;
 
 private:
-	void InitCBuffer();
+	void InitCameraCBuffer();
 	void InitRenderTargets();
 };

@@ -104,6 +104,7 @@ namespace EngineAPI
 
 				//PS
 				void PSSetShader(EngineAPI::Graphics::PixelShader* ps);
+				void PSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot);
 				void PSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot);
 				void PSSetSamplerState(EngineAPI::Graphics::SamplerState* samplerState, UINT bindingSlot);
 

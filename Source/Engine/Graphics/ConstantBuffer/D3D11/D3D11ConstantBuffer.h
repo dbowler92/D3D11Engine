@@ -34,6 +34,7 @@ namespace EngineAPI
 
 				//Binds the constant buffer to the pipeline
 				void BindConstantBufferToVertexShaderStage(EngineAPI::Graphics::GraphicsDevice* device, UINT bufferSlot);
+				void BindConstantBufferToPixelShaderStage(EngineAPI::Graphics::GraphicsDevice* device, UINT bufferSlot);
 
 			public:
 				//Gets the cbuffer size in bytes

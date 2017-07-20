@@ -4,7 +4,7 @@
 //#include <string>
 
 //File loaders
-#include <3rdParty/DDSTextureLoader/DDSTextureLoader.h>
+#include <3rdParty/DXTK/DDSTextureLoader.h>
 #include <3rdParty/LodePNG/lodepng.h>
 
 //SRV for auto mip map generation

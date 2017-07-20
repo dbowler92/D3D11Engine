@@ -28,6 +28,7 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	mainCamera.SetDebugName("SponzaScene_MainCamera");
 	mainCamera.InitCameraViewProperties(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(XMFLOAT3(0.0f, 0.0f, -1.0f)), XMFLOAT3(0.0f, 1.0f, 0.0f));
 	mainCamera.InitCameraPerspectiveProjectionProperties(45.0f, (screenW / screenH), 0.1f, 100.0f);
+	mainCamera.RebuildView();
 
 	//Init cube
 	XMMATRIX cubeWorld = XMMatrixTranslation(0.f, 0.f, -5.0f);
@@ -35,10 +36,11 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	cube.InitCube(device,
 		cubeWorld,
 		std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"), true,
+		64.0f, 0.75f,
 		std::string("TestCube"));
 
-	//Init CBuffer
-	InitCBuffer();
+	//Init camera CBuffer
+	InitCameraCBuffer();
 
 	//Init Render Targets
 	InitRenderTargets();
@@ -47,21 +49,21 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	return true;
 }
 
-void DeferredTestScene::InitCBuffer()
+void DeferredTestScene::InitCameraCBuffer()
 {
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
-	XMMATRIX wvp = (cube.GetWorld() * mainCamera.GetView()) * mainCamera.GetProj();
-	wvp = XMMatrixTranspose(wvp);
-	XMFLOAT4X4 wvp4x4;
-	XMStoreFloat4x4(&wvp4x4, wvp);
-
-	assert(constantBuffer.InitConstantBuffer(device,
-		sizeof(XMFLOAT4X4), &wvp4x4,
+	XMFLOAT4X4 viewAndProj[3];
+	XMStoreFloat4x4(&viewAndProj[0], XMMatrixIdentity());
+	XMStoreFloat4x4(&viewAndProj[1], XMMatrixIdentity());
+	XMStoreFloat4x4(&viewAndProj[2], XMMatrixIdentity());
+		
+	assert(camerConstantBuffer.InitConstantBuffer(device,
+		sizeof(XMFLOAT4X4) * 3, &viewAndProj,
 		RESOURCE_USAGE_DYNAMIC, RESOURCE_CPU_ACCESS_WRITE_BIT,
 		RESOURCE_BIND_CONSTANT_BUFFER_BIT,
-		std::string("DeferredTestScene_CB")));
+		std::string("DeferredTestScene_CameraCB")));
 }
 
 void DeferredTestScene::InitRenderTargets()
@@ -106,7 +108,7 @@ bool DeferredTestScene::OnSceneBecomeDeactive()
 
 	//Shutdown
 	mainCamera.Shutdown();
-	constantBuffer.Shutdown();
+	camerConstantBuffer.Shutdown();
 	cube.Shutdown();
 
 	renderTarget.Shutdown();
@@ -202,19 +204,20 @@ bool DeferredTestScene::OnSceneUpdate(float dt)
 	//Rebuild view matrix
 	mainCamera.RebuildView();
 
-	//Update CBuffer
-	//
-	//New WVP
-	XMMATRIX wvp = (cube.GetWorld() * mainCamera.GetView()) * mainCamera.GetProj();
-	wvp = XMMatrixTranspose(wvp);
-	XMFLOAT4X4 wvp4x4;
-	XMStoreFloat4x4(&wvp4x4, wvp);
+	//Update camera CBuffer
+	XMFLOAT4X4 viewAndProj[3];
+	XMStoreFloat4x4(&viewAndProj[0], XMMatrixTranspose(mainCamera.GetView()));
+	XMStoreFloat4x4(&viewAndProj[1], XMMatrixTranspose(mainCamera.GetProj()));
+	XMStoreFloat4x4(&viewAndProj[2], XMMatrixTranspose(mainCamera.GetViewProj()));
 
 	MappedResourceData mrd;
-	bool didMap = constantBuffer.MapResource(device, 0, RESOURCE_MAP_WRITE_DISCARD, &mrd);
+	bool didMap = camerConstantBuffer.MapResource(device, 0, RESOURCE_MAP_WRITE_DISCARD, &mrd);
 	if (didMap)
-		memcpy(mrd.MappedData, (void*)&wvp4x4, constantBuffer.GetConstantBufferSizeBytes());
-	constantBuffer.UnmapResource(device, 0);
+		memcpy(mrd.MappedData, &viewAndProj[0], camerConstantBuffer.GetConstantBufferSizeBytes());
+	camerConstantBuffer.UnmapResource(device, 0);
+
+	//Update cube
+	cube.Update(dt);
 
 	//Done
 	return true;
@@ -251,7 +254,7 @@ bool DeferredTestScene::OnSceneRenderGeometryPass()
 	//
 	//Render target set
 	//
-	renderTargetSet.ClearAllRenderTargets(Float32Colour(0.0f, 0.0f, 1.0f, 1.0f));
+	renderTargetSet.ClearAllRenderTargets(Float32Colour(0.0f, 0.0f, 0.0f, 1.0f));
 	if (renderTargetSet.DoesManageDepthStencilTexture())
 		renderTargetSet.ClearDepthStencilTexture(DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
 
@@ -265,8 +268,8 @@ bool DeferredTestScene::OnSceneRenderGeometryPass()
 		//renderTargetSet.BindAllRenderTargetsAsOutput();
 	}
 
-	//Set CBuffer
-	device->VSSetConstantBuffer(&constantBuffer, 0);
+	//Set camera CBuffer
+	device->VSSetConstantBuffer(&camerConstantBuffer, 0);
 
 	//Draw cube
 	cube.RenderToGBuffer(device);

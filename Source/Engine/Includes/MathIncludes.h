@@ -24,10 +24,12 @@ using namespace DirectX;
 //Use GLM as another option??
 //
 //GLM
-//#define GLM_FORCE_RADIANS
-//#include <glm/glm.hpp>
-//#include <glm/gtc/matrix_transform.hpp>
-//#include <glm/gtc/quaternion.hpp>
+#define GLM_FORCE_RADIANS
+#include <3rdParty/glm/glm/glm.hpp>
+#include <3rdParty/glm/glm/gtc/matrix_transform.hpp>
+#include <3rdParty/glm/glm/gtc/quaternion.hpp>
+
+using namespace glm;
 
 //
 //My own simple math library - TODO

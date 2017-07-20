@@ -301,6 +301,9 @@
     <Filter Include="Src\Graphics\DeferredRendering\LABuffer\D3D11">
       <UniqueIdentifier>{855e3c83-5c47-4ec0-b44e-1cbbee626680}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\3rdParty\DXTK">
+      <UniqueIdentifier>{6ba5e1c6-61ee-4c45-9e20-e7da0945cdf1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -727,6 +730,15 @@
     </ClInclude>
     <ClInclude Include="..\Graphics\DeferredRendering\LABuffer\LABuffer.h">
       <Filter>Src\Graphics\DeferredRendering\LABuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\DXTK\DDSTextureLoader.h">
+      <Filter>Src\3rdParty\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\DXTK\GeometricPrimitive.h">
+      <Filter>Src\3rdParty\DXTK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\DXTK\VertexTypes.h">
+      <Filter>Src\3rdParty\DXTK</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

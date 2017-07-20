@@ -13,20 +13,8 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{63d57c61-b929-482c-a107-15022b9bca00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\HLSLShaders">
-      <UniqueIdentifier>{8270ca57-fd77-48c8-aaaa-48cfb29f15f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\HLSLShaders\TestShader">
-      <UniqueIdentifier>{a8f774fb-6119-4d07-959e-04cef2eb7b44}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\HLSLShaders\TestCBufferShader">
-      <UniqueIdentifier>{b2e9b2ba-2c78-411e-bf55-12dbcb023494}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AppConfig">
       <UniqueIdentifier>{713c60f4-8c88-4d28-8933-7ad4507836e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\HLSLShaders\TestTexturedShader">
-      <UniqueIdentifier>{f31611ca-92e7-4832-b95c-26aec34c5c4e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Scenes">
       <UniqueIdentifier>{5eb1c765-11bf-4cc2-9aad-8b5444131f5a}</UniqueIdentifier>
@@ -39,6 +27,30 @@
     </Filter>
     <Filter Include="Src\TestCube">
       <UniqueIdentifier>{d115fb92-c2e9-48b2-a7b5-cd5d753f9066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\TestShaders">
+      <UniqueIdentifier>{8270ca57-fd77-48c8-aaaa-48cfb29f15f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\TestShaders\TestShader">
+      <UniqueIdentifier>{a8f774fb-6119-4d07-959e-04cef2eb7b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\TestShaders\TestCBufferShader">
+      <UniqueIdentifier>{b2e9b2ba-2c78-411e-bf55-12dbcb023494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\TestShaders\TestTexturedShader">
+      <UniqueIdentifier>{f31611ca-92e7-4832-b95c-26aec34c5c4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\HLSLShaders">
+      <UniqueIdentifier>{4a26223e-aa58-4399-8bcb-14c92ab4da32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\HLSLShaders\GeometryPass">
+      <UniqueIdentifier>{ff404dc1-efc5-4be2-ad79-9211561dc37f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\HLSLShaders\GeometryPass\G_Textured">
+      <UniqueIdentifier>{98b947a4-4e22-41e3-8cd3-0f8f2597300b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\HLSLShaders\GeometryPass\Includes">
+      <UniqueIdentifier>{1f6acaee-6aac-449a-a9dd-2b1442b86d2b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -77,22 +89,31 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestVS.hlsl">
-      <Filter>Resources\HLSLShaders\TestShader</Filter>
+      <Filter>Resources\TestShaders\TestShader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestPS.hlsl">
-      <Filter>Resources\HLSLShaders\TestShader</Filter>
+      <Filter>Resources\TestShaders\TestShader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestCBufferPS.hlsl">
-      <Filter>Resources\HLSLShaders\TestCBufferShader</Filter>
+      <Filter>Resources\TestShaders\TestCBufferShader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestCBufferVS.hlsl">
-      <Filter>Resources\HLSLShaders\TestCBufferShader</Filter>
+      <Filter>Resources\TestShaders\TestCBufferShader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestTexturedPS.hlsl">
-      <Filter>Resources\HLSLShaders\TestTexturedShader</Filter>
+      <Filter>Resources\TestShaders\TestTexturedShader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\Shaders\TestShader\TestTexturedVS.hlsl">
-      <Filter>Resources\HLSLShaders\TestTexturedShader</Filter>
+      <Filter>Resources\TestShaders\TestTexturedShader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\Shaders\GeometryPass\G_TexturedPS.hlsl">
+      <Filter>Resources\HLSLShaders\GeometryPass\G_Textured</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\Shaders\GeometryPass\G_TexturedVS.hlsl">
+      <Filter>Resources\HLSLShaders\GeometryPass\G_Textured</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\Shaders\GeometryPass\HLSLGeometryPassIncludes.hlsl">
+      <Filter>Resources\HLSLShaders\GeometryPass\Includes</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

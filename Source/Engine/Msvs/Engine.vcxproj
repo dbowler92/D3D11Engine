@@ -73,6 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\dxerr\dxerr.h" />
+    <ClInclude Include="..\3rdParty\DXTK\DDSTextureLoader.h" />
+    <ClInclude Include="..\3rdParty\DXTK\GeometricPrimitive.h" />
+    <ClInclude Include="..\3rdParty\DXTK\VertexTypes.h" />
     <ClInclude Include="..\3rdParty\LodePNG\lodepng.h" />
     <ClInclude Include="..\Components\BaseComponent\BaseComponent.h" />
     <ClInclude Include="..\Config\D3D11Config.h" />

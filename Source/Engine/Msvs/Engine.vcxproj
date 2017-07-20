@@ -39,8 +39,8 @@
     <ClCompile Include="..\Graphics\CommonResource\CommonResource.cpp" />
     <ClCompile Include="..\Graphics\CommonResource\D3D11\D3D11CommonResource.cpp" />
     <ClCompile Include="..\Graphics\ConstantBuffer\D3D11\D3D11ConstantBuffer.cpp" />
-    <ClCompile Include="..\Graphics\DeferredRendering\GBuffer\D3D11\D3D11GBuffer.cpp" />
-    <ClCompile Include="..\Graphics\DeferredRendering\LABuffer\D3D11\D3D11LABuffer.cpp" />
+    <ClCompile Include="..\Graphics\DeferredRendering\GBuffer\GBuffer.cpp" />
+    <ClCompile Include="..\Graphics\DeferredRendering\LABuffer\LABuffer.cpp" />
     <ClCompile Include="..\Graphics\DepthStencilState\D3D11\D3D11DepthStencilState.cpp" />
     <ClCompile Include="..\Graphics\DepthStencilTexture2D\D3D11\D3D11DepthStencilTexture2D.cpp" />
     <ClCompile Include="..\Graphics\DepthStencilView\D3D11\D3D11DepthStencilView.cpp" />
@@ -66,10 +66,12 @@
     <ClCompile Include="..\Main\EngineMain.cpp" />
     <ClCompile Include="..\OS\Application\Win32\Win32Application.cpp" />
     <ClCompile Include="..\OS\OSWindow\Win32\Win32OSWindow.cpp" />
+    <ClCompile Include="..\Rendering\DirectionalLight\DirectionalLight.cpp" />
     <ClCompile Include="..\Rendering\RenderTargetSet\RenderTargetSet.cpp" />
     <ClCompile Include="..\Rendering\RenderTarget\RenderTarget.cpp" />
     <ClCompile Include="..\Rendering\VirtualCamera\VirtualCamera.cpp" />
     <ClCompile Include="..\Statics\D3D11Statics\D3D11Statics.cpp" />
+    <ClCompile Include="..\Statics\GraphicsStatics\GraphicsStatics.cpp" />
     <ClCompile Include="..\Utils\GameTimer\GameTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -104,9 +106,7 @@
     <ClInclude Include="..\Graphics\CommonResource\D3D11\D3D11CommonResource.h" />
     <ClInclude Include="..\Graphics\ConstantBuffer\ConstantBuffer.h" />
     <ClInclude Include="..\Graphics\ConstantBuffer\D3D11\D3D11ConstantBuffer.h" />
-    <ClInclude Include="..\Graphics\DeferredRendering\GBuffer\D3D11\D3D11GBuffer.h" />
     <ClInclude Include="..\Graphics\DeferredRendering\GBuffer\GBuffer.h" />
-    <ClInclude Include="..\Graphics\DeferredRendering\LABuffer\D3D11\D3D11LABuffer.h" />
     <ClInclude Include="..\Graphics\DeferredRendering\LABuffer\LABuffer.h" />
     <ClInclude Include="..\Graphics\DepthStencilState\D3D11\D3D11DepthStencilState.h" />
     <ClInclude Include="..\Graphics\DepthStencilState\DepthStencilState.h" />
@@ -162,16 +162,29 @@
     <ClInclude Include="..\OS\Application\Win32\Win32Application.h" />
     <ClInclude Include="..\OS\OSWindow\OSWindow.h" />
     <ClInclude Include="..\OS\OSWindow\Win32\Win32OSWindow.h" />
+    <ClInclude Include="..\Rendering\DirectionalLight\DirectionalLight.h" />
     <ClInclude Include="..\Rendering\RenderTargetSet\RenderTargetSet.h" />
     <ClInclude Include="..\Rendering\RenderTarget\RenderTarget.h" />
     <ClInclude Include="..\Rendering\VirtualCamera\VirtualCamera.h" />
     <ClInclude Include="..\Statics\D3D11Statics\D3D11Statics.h" />
+    <ClInclude Include="..\Statics\GraphicsStatics\GraphicsStatics.h" />
     <ClInclude Include="..\Utils\GameTimer\GameTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Includes\HLSLGeometryPassIncludes.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Includes\HLSLLightPassIncludes.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_DirectionalLightPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_DirectionalLightVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -212,15 +225,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -271,6 +288,7 @@
     </Link>
     <FxCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)../Includes/Shaders/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileOutput>$(ENGINE_SHADER_ASSETS_COMPILE_OUT_DIR)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

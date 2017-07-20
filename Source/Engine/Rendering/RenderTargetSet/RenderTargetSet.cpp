@@ -267,7 +267,11 @@ void RenderTargetSet::BindAllRenderTargetsAsOutput()
 	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
 	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
 
-	device->OMSetRenderTargets(renderTargetsCount, &renderTargets[0], nullptr);
+	static EngineAPI::Rendering::RenderTarget* rtPtrs[MAX_RENDER_TARGETS_BOUND];
+	for (unsigned i = 0; i < renderTargetsCount; i++)
+		rtPtrs[i] = &renderTargets[i];
+
+	device->OMSetRenderTargets(renderTargetsCount, &rtPtrs[0], nullptr);
 }
 
 void RenderTargetSet::BindAllRenderTargetsAndDepthStencilTextureAsOutput(bool doUseReadWriteDepth)
@@ -287,7 +291,11 @@ void RenderTargetSet::BindAllRenderTargetsAndDepthStencilTextureAsOutput(bool do
 	else
 		dsv = renderTargets[0].GetDepthStencilViewReadOnly();
 
-	device->OMSetRenderTargets(renderTargetsCount, &renderTargets[0], dsv);
+	static EngineAPI::Rendering::RenderTarget* rtPtrs[MAX_RENDER_TARGETS_BOUND];
+	for (unsigned i = 0; i < renderTargetsCount; i++)
+		rtPtrs[i] = &renderTargets[i];
+
+	device->OMSetRenderTargets(renderTargetsCount, &rtPtrs[0], dsv);
 
 }
 
@@ -302,5 +310,9 @@ void RenderTargetSet::BindAllRenderTargetsAndExternalDepthStencilViewAsOutput(
 	EngineAPI::Graphics::GraphicsDevice* device = nullptr;
 	device = EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
 
-	device->OMSetRenderTargets(renderTargetsCount, &renderTargets[0], externalDSV);
+	static EngineAPI::Rendering::RenderTarget* rtPtrs[MAX_RENDER_TARGETS_BOUND];
+	for (unsigned i = 0; i < renderTargetsCount; i++)
+		rtPtrs[i] = &renderTargets[i];
+
+	device->OMSetRenderTargets(renderTargetsCount, &rtPtrs[0], externalDSV);
 }

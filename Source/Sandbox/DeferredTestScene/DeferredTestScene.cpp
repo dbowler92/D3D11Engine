@@ -42,8 +42,10 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	//Init camera CBuffer
 	InitCameraCBuffer();
 
-	//Init Render Targets
-	InitRenderTargets();
+	//Init light
+	dLight.InitDirectionalLightSource(XMFLOAT3(0.f, 0.f, 1.f), 
+		XMFLOAT3(0.4f, 0.4f, 0.4f), 1.0f, "DLight");
+	dLight.SetActiveState(true);
 
 	//Done
 	return true;
@@ -66,26 +68,6 @@ void DeferredTestScene::InitCameraCBuffer()
 		std::string("DeferredTestScene_CameraCB")));
 }
 
-void DeferredTestScene::InitRenderTargets()
-{
-	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
-	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
-	uint32_t screenW = (uint32_t)gm->GetWindowWidth();
-	uint32_t screenH = (uint32_t)gm->GetWindowHeight();
-
-	ResourceFormat fmts[3];
-	fmts[0] = RESOURCE_FORMAT_R8G8B8A8_UNORM;
-	fmts[1] = RESOURCE_FORMAT_R11G11B10_FLOAT;
-	fmts[2] = RESOURCE_FORMAT_R8G8B8A8_UNORM;
-
-	assert(renderTargetSet.InitRenderTargetSet(screenW, screenH, 3,
-		&fmts[0], true, std::string("RenderTargetSet")));
-
-	//assert(renderTargetSet.InitRenderTargetSetWithADepthStencilTexture(screenW, screenH, 3,
-	//	&fmts[0], DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT,
-	//	true, std::string("RenderTargetSet")));
-}
-
 bool DeferredTestScene::OnSceneBecomeDeactive()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("SponzaScene::OnSceneBecomeDeactive()\n");
@@ -94,8 +76,7 @@ bool DeferredTestScene::OnSceneBecomeDeactive()
 	mainCamera.Shutdown();
 	camerConstantBuffer.Shutdown();
 	cube.Shutdown();
-
-	renderTargetSet.Shutdown();
+	dLight.Shutdown();
 
 	//Done
 	return true;
@@ -125,9 +106,6 @@ bool DeferredTestScene::OnResize(uint32_t newWidth, uint32_t newHeight)
 
 	//Resize camera
 	mainCamera.InitCameraPerspectiveProjectionProperties(45.0f, screenW / screenH, 0.1f, 100.0f);
-
-	//Resize render targets
-	assert(renderTargetSet.Resize(newWidth, newHeight));
 
 	//Done
 	return true;
@@ -216,23 +194,6 @@ bool DeferredTestScene::OnSceneRenderGeometryPass()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
-	//
-	//Render target set
-	//
-	renderTargetSet.ClearAllRenderTargets(Float32Colour(0.0f, 0.0f, 0.0f, 0.0f));
-	if (renderTargetSet.DoesManageDepthStencilTexture())
-		renderTargetSet.ClearDepthStencilTexture(DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
-
-	if (renderTargetSet.DoesManageDepthStencilTexture())
-		renderTargetSet.BindAllRenderTargetsAndDepthStencilTextureAsOutput(true);
-	else
-	{
-		renderTargetSet.BindAllRenderTargetsAndExternalDepthStencilViewAsOutput(
-			gm->GetSwapchain()->GetSwapchainDepthTexture2DReadWriteView());
-
-		//renderTargetSet.BindAllRenderTargetsAsOutput();
-	}
-
 	//Set camera CBuffer
 	device->VSSetConstantBuffer(&camerConstantBuffer, 0);
 
@@ -245,6 +206,8 @@ bool DeferredTestScene::OnSceneRenderGeometryPass()
 
 bool DeferredTestScene::OnSceneRenderLightPass()
 {
+	dLight.Render();
+
 	//Done
 	return true;
 }

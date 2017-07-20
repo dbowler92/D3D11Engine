@@ -13,7 +13,7 @@ cbuffer CB_PS_PerObject : register(b2)
     //Material data
     float SpecPower;
     float SpecIntensity;
-    float _Pad0;
+    float _Pad0; 
     float _Pad1;
 };
 

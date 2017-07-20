@@ -10,11 +10,6 @@ bool D3D11VertexInputSignature::InitVertexInputSignature(EngineAPI::Graphics::Gr
 	const char* vertexShaderBytecodeWithSignature, SIZE_T shaderByteCodeSize, 
 	std::string ownerDebugName)
 {
-	assert(inputs != nullptr);
-	assert(inputsCount > 0);
-	assert(vertexShaderBytecodeWithSignature != nullptr);
-	assert(shaderByteCodeSize > 0);
-
 	//Recreate the input layout?
 	if (inputLayout)
 	{
@@ -23,24 +18,46 @@ bool D3D11VertexInputSignature::InitVertexInputSignature(EngineAPI::Graphics::Gr
 		ReleaseCOM(inputLayout);
 	}
 
+	if (inputsCount == 0)
+	{
+		SetDebugName(ownerDebugName + "_NULL_VertexInputSignature");
+
+		//May not be an error - it is possible to bind 
+		//a null VB and generate vertex data in the vertex
+		//shader, for example
+		EngineAPI::Debug::DebugLog::PrintWarningMessage("D3D11VertexInputSignature::InitVertexInputSignature() Warning: inputsCount == 0. No signature being created");
+		return true;
+	}
+
+	assert(inputs != nullptr);
+	assert(vertexShaderBytecodeWithSignature != nullptr);
+	assert(shaderByteCodeSize > 0);
+
 	//Set debug name
 	SetDebugName(ownerDebugName + "_VertexInputSignature");
 
-	//For each input, generate a D3D11_INPUT_LAYOUT_DESC
-	inputElementsArray.resize(inputsCount);
-	for (int i = 0; i < (int)inputsCount; ++i)
+	//For each input, generate a D3D11_INPUT_ELEMENT_DESC
+	if (inputsCount > 0)
 	{
-		inputElementsArray[i].SemanticName = inputs[i].SemanticName.c_str();
-		inputElementsArray[i].SemanticIndex = inputs[i].SemanticIndex;
-		inputElementsArray[i].Format = (DXGI_FORMAT)inputs[i].InputFormat; //DXGI_FORMAT* and my RESOURCE_FORMAT_* have same int values so a cast is fine for now
-		inputElementsArray[i].InputSlot = inputs[i].BufferInputSlotIndex;
-		inputElementsArray[i].AlignedByteOffset = inputs[i].AlignedByteOffset;
-		inputElementsArray[i].InputSlotClass = (D3D11_INPUT_CLASSIFICATION)inputs[i].InputType;
-		inputElementsArray[i].InstanceDataStepRate = inputs[i].InstanceDataStepRate;
+		inputElementsArray.resize(inputsCount);
+		for (int i = 0; i < (int)inputsCount; ++i)
+		{
+			inputElementsArray[i].SemanticName = inputs[i].SemanticName.c_str();
+			inputElementsArray[i].SemanticIndex = inputs[i].SemanticIndex;
+			inputElementsArray[i].Format = (DXGI_FORMAT)inputs[i].InputFormat; //DXGI_FORMAT* and my RESOURCE_FORMAT_* have same int values so a cast is fine for now
+			inputElementsArray[i].InputSlot = inputs[i].BufferInputSlotIndex;
+			inputElementsArray[i].AlignedByteOffset = inputs[i].AlignedByteOffset;
+			inputElementsArray[i].InputSlotClass = (D3D11_INPUT_CLASSIFICATION)inputs[i].InputType;
+			inputElementsArray[i].InstanceDataStepRate = inputs[i].InstanceDataStepRate;
+		}
 	}
 
 	//Create the input layout (D3D11)
-	HR_CHECK_ERROR(device->GetD3D11Device()->CreateInputLayout(inputElementsArray.data(), inputsCount,
+	D3D11_INPUT_ELEMENT_DESC* inputLayoutDescPtr = nullptr;
+	if (inputsCount > 0)
+		inputLayoutDescPtr = inputElementsArray.data();
+
+	HR_CHECK_ERROR(device->GetD3D11Device()->CreateInputLayout(inputLayoutDescPtr, inputsCount,
 		vertexShaderBytecodeWithSignature, shaderByteCodeSize, &inputLayout));
 	if (inputLayout == nullptr)
 		return false;

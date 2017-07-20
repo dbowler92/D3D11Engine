@@ -96,12 +96,17 @@ void D3D11GraphicsDevice::IASetTopology(PrimitiveTopology topology)
 	GetD3D11ImmediateContext()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)topology);
 }
 
-void D3D11GraphicsDevice::IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset)
+void D3D11GraphicsDevice::IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT bufferSlot, UINT offset)
 {
 	if (vb)
-		vb->BindVertexBufferToPipeline((EngineAPI::Graphics::GraphicsDevice*)this, offset);
+		vb->BindVertexBufferToPipeline((EngineAPI::Graphics::GraphicsDevice*)this, bufferSlot, offset);
 	else
-		GetD3D11ImmediateContext()->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
+	{
+		ID3D11Buffer* buffers = 0;
+		UINT nullStrides = 0;
+		UINT nullOffsets = 0;
+		GetD3D11ImmediateContext()->IASetVertexBuffers(bufferSlot, 1, &buffers, &nullStrides, &nullOffsets);
+	}
 }
 
 void D3D11GraphicsDevice::IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib, UINT offset)
@@ -155,20 +160,31 @@ void D3D11GraphicsDevice::OMSetRenderTarget(EngineAPI::Graphics::RenderTargetVie
 }
 
 void D3D11GraphicsDevice::OMSetRenderTargets(uint32_t renderTargetsCount,
-	EngineAPI::Rendering::RenderTarget* renderTargetsArray,
+	EngineAPI::Rendering::RenderTarget** renderTargetsArray,
 	EngineAPI::Graphics::DepthStencilView* optionalDepthStencilView)
 {
 	assert(renderTargetsCount <= MAX_RENDER_TARGETS_BOUND);
 
 	//Build D3D11 array of render targets
-	ID3D11RenderTargetView* renderTargets[MAX_RENDER_TARGETS_BOUND];
-	ZeroMemory(renderTargets, (sizeof(ID3D11RenderTargetView*) * MAX_RENDER_TARGETS_BOUND));
-	
+	static ID3D11RenderTargetView* renderTargets[MAX_RENDER_TARGETS_BOUND];
 	for (uint32_t i = 0; i < renderTargetsCount; i++)
 	{
-		EngineAPI::Graphics::RenderTargetView* rtv = renderTargetsArray[i].GetRenderTargetView();
-		assert(rtv);
-		renderTargets[i] = rtv->GetD3D11RenderTargetView();
+		if (renderTargetsArray != nullptr) //Pass null ptr with renderTargetsCount > 0 == unbind renderTargetsCount render targets from OM
+		{
+			if (renderTargetsArray[i] != nullptr) //...Can also pass an array of nullptrs -> Same effect as passing a nullptr to renderTargetsArray
+			{
+				EngineAPI::Graphics::RenderTargetView* rtv = renderTargetsArray[i]->GetRenderTargetView();
+				renderTargets[i] = rtv->GetD3D11RenderTargetView();
+			}
+			else
+				renderTargets[i] = nullptr;
+		}
+		else
+		{
+			//If we pass a nullptr for renderTargetsArray, this means we want to bind renderTargetCount
+			//null render targets (eg: Unbinding GBuffer from OM)
+			renderTargets[i] = nullptr;
+		}
 	}
 
 	//D3D11 depth stencil view
@@ -197,7 +213,10 @@ void D3D11GraphicsDevice::VSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffe
 	if (cBuffer)
 		cBuffer->BindConstantBufferToVertexShaderStage((EngineAPI::Graphics::GraphicsDevice*)this, bufferSlot);
 	else
-		GetD3D11ImmediateContext()->VSSetConstantBuffers(bufferSlot, 1, nullptr);
+	{
+		ID3D11Buffer* buffers = 0;
+		GetD3D11ImmediateContext()->VSSetConstantBuffers(bufferSlot, 1, &buffers);
+	}
 }
 
 void D3D11GraphicsDevice::VSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot)
@@ -205,7 +224,10 @@ void D3D11GraphicsDevice::VSSetShaderResource(EngineAPI::Graphics::ShaderResourc
 	if (shaderResource)
 		shaderResource->BindShaderResourceViewToVertexShader((EngineAPI::Graphics::GraphicsDevice*)this, bindingSlot);
 	else
-		GetD3D11ImmediateContext()->VSSetShaderResources(bindingSlot, 1, nullptr);
+	{
+		ID3D11ShaderResourceView* srvs = 0;
+		GetD3D11ImmediateContext()->VSSetShaderResources(bindingSlot, 1, &srvs);
+	}
 }
 
 void D3D11GraphicsDevice::VSSetSamplerState(EngineAPI::Graphics::SamplerState* samplerState, UINT bindingSlot)
@@ -213,7 +235,10 @@ void D3D11GraphicsDevice::VSSetSamplerState(EngineAPI::Graphics::SamplerState* s
 	if (samplerState)
 		samplerState->BindSamplerStateToVertexShader((EngineAPI::Graphics::GraphicsDevice*)this, bindingSlot);
 	else
-		GetD3D11ImmediateContext()->VSSetSamplers(bindingSlot, 1, nullptr);
+	{
+		ID3D11SamplerState* samplers = 0;
+		GetD3D11ImmediateContext()->VSSetSamplers(bindingSlot, 1, &samplers);
+	}
 }
 
 //
@@ -233,7 +258,10 @@ void D3D11GraphicsDevice::PSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffe
 	if (cBuffer)
 		cBuffer->BindConstantBufferToPixelShaderStage((EngineAPI::Graphics::GraphicsDevice*)this, bufferSlot);
 	else
-		GetD3D11ImmediateContext()->PSSetConstantBuffers(bufferSlot, 1, nullptr);
+	{
+		ID3D11Buffer* buffers = 0;
+		GetD3D11ImmediateContext()->PSSetConstantBuffers(bufferSlot, 1, &buffers);
+	}
 }
 
 void D3D11GraphicsDevice::PSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot)
@@ -241,7 +269,34 @@ void D3D11GraphicsDevice::PSSetShaderResource(EngineAPI::Graphics::ShaderResourc
 	if (shaderResource)
 		shaderResource->BindShaderResourceViewToPixelShader((EngineAPI::Graphics::GraphicsDevice*)this, bindingSlot);
 	else
-		GetD3D11ImmediateContext()->PSSetShaderResources(bindingSlot, 1, nullptr);
+	{
+		ID3D11ShaderResourceView* srvs = 0;
+		GetD3D11ImmediateContext()->PSSetShaderResources(bindingSlot, 1, &srvs);
+	}
+}
+
+void D3D11GraphicsDevice::PSSetShaderResources(EngineAPI::Graphics::ShaderResourceView** shaderResources, UINT count, UINT startBindingSlot)
+{
+	assert(count <= MAX_BOUND_SHADER_RESOURCE_VIEWS_PS);
+	assert(count + startBindingSlot <= MAX_BOUND_SHADER_RESOURCE_VIEWS_PS);
+
+	//Build array of SRVs - 1 per count
+	static ID3D11ShaderResourceView* shaderResourceViews[MAX_BOUND_SHADER_RESOURCE_VIEWS_PS];
+	for (unsigned i = 0; i < count; i++)
+	{
+		if (shaderResources != nullptr) //If this is NULL, we want to mass unbind SRVs from the PS
+		{
+			if (shaderResources[i] != nullptr) //Could be an array of nullptrs
+				shaderResourceViews[i] = shaderResources[i]->GetD3D11ShaderResourceView();
+			else
+				shaderResourceViews[i] = nullptr;
+		}
+		else
+			shaderResourceViews[i] = nullptr;
+	}
+
+	//Set shader resources
+	GetD3D11ImmediateContext()->PSSetShaderResources(startBindingSlot, count, &shaderResourceViews[0]);
 }
 
 void D3D11GraphicsDevice::PSSetSamplerState(EngineAPI::Graphics::SamplerState* samplerState, UINT bindingSlot)
@@ -249,7 +304,10 @@ void D3D11GraphicsDevice::PSSetSamplerState(EngineAPI::Graphics::SamplerState* s
 	if (samplerState)
 		samplerState->BindSamplerStateToPixelShader((EngineAPI::Graphics::GraphicsDevice*)this, bindingSlot);
 	else
-		GetD3D11ImmediateContext()->PSSetSamplers(bindingSlot, 1, nullptr);
+	{
+		ID3D11SamplerState* samplers = 0;
+		GetD3D11ImmediateContext()->PSSetSamplers(bindingSlot, 1, &samplers);
+	}
 }
 
 //

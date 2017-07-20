@@ -40,7 +40,7 @@ namespace EngineAPI
 
 			public:
 				//Bind this vertex buffer to the pipeline (on its own)
-				void BindVertexBufferToPipeline(EngineAPI::Graphics::GraphicsDevice* device, UINT offset = 0);
+				void BindVertexBufferToPipeline(EngineAPI::Graphics::GraphicsDevice* device, UINT bufferSlot, UINT offset);
 
 			protected: 
 				//Size of each individual vertex (stride) && number of elements

@@ -107,7 +107,7 @@ namespace EngineAPI
 
 				//Binds the swapchain backbuffer to the pipeline with supplied DSV. Pass null to bind
 				//no depth buffer. 
-				void BindSwpachainBackbufferAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,
+				void BindSwapchainBackbufferAsRenderTarget(EngineAPI::Graphics::GraphicsDevice* device,
 					EngineAPI::Graphics::DepthStencilView* depthStencilView);
 
 				//Sets the viewport for full screen rendering - this viewport matches the size of the

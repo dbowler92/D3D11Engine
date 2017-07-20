@@ -1,6 +1,9 @@
 #include "Win32Application.h"
 #include <sstream>
 
+//Statically loaded graphics resources
+#include <Statics/GraphicsStatics/GraphicsStatics.h>
+
 //Init global reference to the app. 
 EngineAPI::OS::Platform::Win32Application *g_App = NULL;
 
@@ -213,6 +216,9 @@ bool Win32Application::ShutdownEngine()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("Win32Application::ShutdownEngine()\n");
 	
+	//Shutdown statics
+	EngineAPI::Statics::GraphicsStatics::ShutdownAllGraphicsStatics();
+
 	//Shutdown subsystems - reverse order to creation
 	if (sceneManagerSubsystem)
 	{
@@ -318,8 +324,10 @@ bool Win32Application::InitEngineSubsystems()
 
 bool Win32Application::EngineDidFinishInitialisation()
 {
-	//TODO: Load static engine data now. Eg: Fonts, textures for
+	//Load static engine data now. Eg: Fonts, textures for
 	//loading screen. Shaders, etc. 
+	EngineAPI::Graphics::GraphicsDevice* device = graphicsSubsystem->GetDevice();
+	assert(EngineAPI::Statics::GraphicsStatics::InitAllGraphicsStatics(device));
 
 	//Done
 	return true;

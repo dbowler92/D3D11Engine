@@ -80,7 +80,7 @@ bool D3D11VertexBuffer::InitVertexBuffer(EngineAPI::Graphics::GraphicsDevice* de
 	return true;
 }
 
-void D3D11VertexBuffer::BindVertexBufferToPipeline(EngineAPI::Graphics::GraphicsDevice* device, UINT offset)
+void D3D11VertexBuffer::BindVertexBufferToPipeline(EngineAPI::Graphics::GraphicsDevice* device, UINT bufferSlot, UINT offset)
 {
-	device->GetD3D11ImmediateContext()->IASetVertexBuffers(0, 1, &buffer, &bufferElementSize, &offset);
+	device->GetD3D11ImmediateContext()->IASetVertexBuffers(bufferSlot, 1, &buffer, &bufferElementSize, &offset);
 }

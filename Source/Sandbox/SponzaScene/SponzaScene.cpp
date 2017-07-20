@@ -346,7 +346,7 @@ bool SponzaScene::OnSceneRenderGeometryPass()
 	device->PSSetShader(&texPS);
 
 	//Vertex (and index) buffer
-	device->IASetVertexBuffer(&texCubeVB, 0);
+	device->IASetVertexBuffer(&texCubeVB, 0, 0);
 
 	//Shader resource / cbuffers
 	device->VSSetConstantBuffer(&constantBuffer, 0);

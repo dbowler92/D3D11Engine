@@ -295,12 +295,6 @@
     <Filter Include="Src\Graphics\DeferredRendering\LABuffer">
       <UniqueIdentifier>{6b4bd073-486e-4b6c-a46c-c589b0150e34}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Graphics\DeferredRendering\GBuffer\D3D11">
-      <UniqueIdentifier>{f4c26539-c7d4-4f96-916b-25dea0130cba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Graphics\DeferredRendering\LABuffer\D3D11">
-      <UniqueIdentifier>{855e3c83-5c47-4ec0-b44e-1cbbee626680}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\3rdParty\DXTK">
       <UniqueIdentifier>{6ba5e1c6-61ee-4c45-9e20-e7da0945cdf1}</UniqueIdentifier>
     </Filter>
@@ -312,6 +306,18 @@
     </Filter>
     <Filter Include="Src\3rdParty\GeometryGenerator">
       <UniqueIdentifier>{5dc8c383-022b-47d3-9566-5d96e9c0cf17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Rendering\DirectionalLight">
+      <UniqueIdentifier>{37b9fd44-e572-46cc-8641-db2ff8286456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineAssets\Shaders\LightPass">
+      <UniqueIdentifier>{eaad7127-86b6-4e33-b336-2ee70eb2eb2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineAssets\Shaders\LightPass\DirectionalLight">
+      <UniqueIdentifier>{6832a397-7753-4431-a55e-c51e6f356d9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Statics\GraphicsStatics">
+      <UniqueIdentifier>{3dcd40d9-1107-4cd6-b9d5-9200b3b77a62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -462,14 +468,20 @@
     <ClCompile Include="..\Rendering\RenderTargetSet\RenderTargetSet.cpp">
       <Filter>Src\Rendering\RenderTargetSet</Filter>
     </ClCompile>
-    <ClCompile Include="..\Graphics\DeferredRendering\GBuffer\D3D11\D3D11GBuffer.cpp">
-      <Filter>Src\Graphics\DeferredRendering\GBuffer\D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Graphics\DeferredRendering\LABuffer\D3D11\D3D11LABuffer.cpp">
-      <Filter>Src\Graphics\DeferredRendering\LABuffer\D3D11</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdParty\GeometryGenerator\GeometryGenerator.cpp">
       <Filter>Src\3rdParty\GeometryGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\DeferredRendering\GBuffer\GBuffer.cpp">
+      <Filter>Src\Graphics\DeferredRendering\GBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\DeferredRendering\LABuffer\LABuffer.cpp">
+      <Filter>Src\Graphics\DeferredRendering\LABuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Rendering\DirectionalLight\DirectionalLight.cpp">
+      <Filter>Src\Rendering\DirectionalLight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Statics\GraphicsStatics\GraphicsStatics.cpp">
+      <Filter>Src\Statics\GraphicsStatics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -731,14 +743,8 @@
     <ClInclude Include="..\Rendering\RenderTargetSet\RenderTargetSet.h">
       <Filter>Src\Rendering\RenderTargetSet</Filter>
     </ClInclude>
-    <ClInclude Include="..\Graphics\DeferredRendering\GBuffer\D3D11\D3D11GBuffer.h">
-      <Filter>Src\Graphics\DeferredRendering\GBuffer\D3D11</Filter>
-    </ClInclude>
     <ClInclude Include="..\Graphics\DeferredRendering\GBuffer\GBuffer.h">
       <Filter>Src\Graphics\DeferredRendering\GBuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Graphics\DeferredRendering\LABuffer\D3D11\D3D11LABuffer.h">
-      <Filter>Src\Graphics\DeferredRendering\LABuffer\D3D11</Filter>
     </ClInclude>
     <ClInclude Include="..\Graphics\DeferredRendering\LABuffer\LABuffer.h">
       <Filter>Src\Graphics\DeferredRendering\LABuffer</Filter>
@@ -755,9 +761,24 @@
     <ClInclude Include="..\3rdParty\GeometryGenerator\GeometryGenerator.h">
       <Filter>Src\3rdParty\GeometryGenerator</Filter>
     </ClInclude>
+    <ClInclude Include="..\Rendering\DirectionalLight\DirectionalLight.h">
+      <Filter>Src\Rendering\DirectionalLight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Statics\GraphicsStatics\GraphicsStatics.h">
+      <Filter>Src\Statics\GraphicsStatics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Includes\HLSLGeometryPassIncludes.hlsl">
+      <Filter>EngineAssets\Shaders\Includes</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_DirectionalLightPS.hlsl">
+      <Filter>EngineAssets\Shaders\LightPass\DirectionalLight</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_DirectionalLightVS.hlsl">
+      <Filter>EngineAssets\Shaders\LightPass\DirectionalLight</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Includes\HLSLLightPassIncludes.hlsl">
       <Filter>EngineAssets\Shaders\Includes</Filter>
     </FxCompile>
   </ItemGroup>

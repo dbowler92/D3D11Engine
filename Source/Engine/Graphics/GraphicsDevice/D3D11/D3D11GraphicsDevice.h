@@ -18,6 +18,9 @@
 //Globals
 const float DEFAULT_BLEND_FACTOR[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
+//Limits
+#define MAX_BOUND_SHADER_RESOURCE_VIEWS_PS 128
+
 namespace EngineAPI
 {
 	namespace OS
@@ -79,7 +82,8 @@ namespace EngineAPI
 				//
 				//Input Assembly (IA)
 				void IASetTopology(PrimitiveTopology topology);
-				void IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT offset);
+				void IASetVertexBuffer(EngineAPI::Graphics::VertexBuffer* vb, UINT bufferSlot, UINT offset);
+				//void IASetVertexBuffers(EngineAPI::Graphics::VertexBuffer** vbs, UINT bufferCount, UINT* bufferSlots, UINT* offsets);
 				void IASetIndexBuffer(EngineAPI::Graphics::IndexBuffer* ib, UINT offset);
 
 				//Rasterizer (RS)
@@ -93,7 +97,7 @@ namespace EngineAPI
 				void OMSetRenderTarget(EngineAPI::Graphics::RenderTargetView* renderTargetView,
 					EngineAPI::Graphics::DepthStencilView* optionalDepthStencilView);
 				void OMSetRenderTargets(uint32_t renderTargetsCount,
-					EngineAPI::Rendering::RenderTarget* renderTargetsArray, 
+					EngineAPI::Rendering::RenderTarget** renderTargetsArray, 
 					EngineAPI::Graphics::DepthStencilView* optionalDepthStencilView);
 
 				//VS
@@ -106,6 +110,7 @@ namespace EngineAPI
 				void PSSetShader(EngineAPI::Graphics::PixelShader* ps);
 				void PSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot);
 				void PSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot);
+				void PSSetShaderResources(EngineAPI::Graphics::ShaderResourceView** shaderResources, UINT count, UINT startBindingSlot);
 				void PSSetSamplerState(EngineAPI::Graphics::SamplerState* samplerState, UINT bindingSlot);
 
 				//Drawing

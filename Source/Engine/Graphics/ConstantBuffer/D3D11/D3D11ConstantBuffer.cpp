@@ -25,6 +25,12 @@ bool D3D11ConstantBuffer::InitConstantBuffer(EngineAPI::Graphics::GraphicsDevice
 		return false;
 	}
 
+	if ((constantBufferSizeBytes % 16) != 0)
+	{
+		EngineAPI::Debug::DebugLog::PrintErrorMessage("D3D11ConstantBuffer::InitConstantBuffer(): Constant buffer must be 16 bytes aligned");
+		return false;
+	}
+
 	if (initialData == nullptr && usage == RESOURCE_USAGE_IMMUTABLE)
 	{
 		EngineAPI::Debug::DebugLog::PrintErrorMessage("D3D11ConstantBuffer::InitConstantBuffer(): Immutable buffer created without any initial data");

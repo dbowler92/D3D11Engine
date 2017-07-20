@@ -22,6 +22,10 @@
 #include <Graphics/GraphicsDevice/GraphicsDevice.h>
 #include <Graphics/GraphicsSwapchain/GraphicsSwapchain.h>
 
+//Deferred rendering
+#include <Graphics/DeferredRendering/GBuffer/GBuffer.h>
+#include <Graphics/DeferredRendering/LABuffer/LABuffer.h>
+
 //Forward declarations
 namespace EngineAPI
 {
@@ -84,6 +88,10 @@ namespace EngineAPI
 				EngineAPI::Graphics::GraphicsDevice device;
 				EngineAPI::Graphics::GraphicsSwapchain swapchain;
 
+				//Deferred rendering
+				EngineAPI::Graphics::DeferredRendering::GBuffer deferredGBuffer;
+				EngineAPI::Graphics::DeferredRendering::LABuffer deferredLABuffer;
+
 			protected:
 				//Cache the OS window width
 				uint32_t windowWidth = 0;
@@ -92,6 +100,15 @@ namespace EngineAPI
 			protected:
 				//Readys the engine for the start of the frame
 				bool OnBeginRender();
+
+				//Called before each pass - setsup the engine
+				//ready for each pass
+				bool OnBeginGeometryPass();
+				bool OnBeginLightPass();
+				bool OnBeginPostProcessPass();
+				bool OnBeginDebugPass();
+				bool OnBeginUIPass();
+				bool OnBeginDebugUIPass();
 
 				//Presents the backbuffer
 				bool OnEndRender();

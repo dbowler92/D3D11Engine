@@ -198,7 +198,7 @@ void TestCube::RenderToGBuffer(EngineAPI::Graphics::GraphicsDevice* device)
 	device->PSSetShader(&texPS);
 
 	//Vertex (and index) buffer
-	device->IASetVertexBuffer(&texCubeVB, 0);
+	device->IASetVertexBuffer(&texCubeVB, 0, 0);
 
 	//CBuffers
 	device->VSSetConstantBuffer(&vsCBPerObject, 1);

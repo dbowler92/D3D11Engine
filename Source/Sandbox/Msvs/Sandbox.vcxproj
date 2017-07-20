@@ -77,7 +77,7 @@
     <IntDir>$(SolutionDir)..\..\Temp\$(ProjectName)$(PlatformName)$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)$(PlatformName)$(Configuration)</TargetName>
     <LibraryPath>$(SolutionDir)..\..\Lib\$(PlatformName)$(Configuration);C:\VulkanSDK\1.0.46.0\Lib32;$(SolutionDir)..\..\Lib;C:\Program Files %28x86%29\Windows Kits\8.0\Lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\VulkanSDK\1.0.46.0\Include;C:\Program Files %28x86%29\Windows Kits\8.0\Include;$(SolutionDir)../../;$(SolutionDir)../;$(IncludePath)</IncludePath>
+    <IncludePath>C:\VulkanSDK\1.0.46.0\Include;C:\Program Files %28x86%29\Windows Kits\8.0\Include;$(SolutionDir)../../;$(SolutionDir)../;$(SolutionDir)../../../Assets/EngineAssets/Shaders/Includes/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)$(PlatformName)$(Configuration)</TargetName>
@@ -117,6 +117,7 @@
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(SHADER_ASSETS_COMPILE_OUT_DIR)%(Filename).cso</ObjectFileOutput>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../Assets/EngineAssets/Shaders/Includes/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -156,6 +157,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <FxCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../Assets/EngineAssets/Shaders/Includes/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -186,10 +190,6 @@
     <ClCompile Include="..\TestCube\TestCube.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\..\..\Assets\Shaders\GeometryPass\HLSLGeometryPassIncludes.hlsl">
-      <FileType>CppHeader</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </FxCompile>
     <ClInclude Include="..\AppConfig\AppConfig.h" />
     <ClInclude Include="..\Application\SandboxApplication.h" />
     <ClInclude Include="..\DeferredTestScene\DeferredTestScene.h" />

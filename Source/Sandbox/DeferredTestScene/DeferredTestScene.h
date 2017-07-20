@@ -57,7 +57,6 @@ private:
 	POINT lastMPos; //Last mouse position - used when rotating the camera
 
 	//Render target
-	EngineAPI::Rendering::RenderTarget renderTarget;
 	EngineAPI::Rendering::RenderTargetSet renderTargetSet;
 
 	//CBuffer (WVP)

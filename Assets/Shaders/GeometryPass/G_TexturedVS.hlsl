@@ -1,4 +1,4 @@
-#include "HLSLGeometryPassIncludes.hlsl"
+#include "../../EngineAssets/Shaders/Includes/HLSLGeometryPassIncludes.hlsl"
 
 //Constant buffer data
 cbuffer CB_Camera : register(b0)
@@ -30,11 +30,12 @@ struct VS_OUTPUT
 
 VS_OUTPUT main(VS_INPUT input)
 {   
-    float4 ws = mul(float4(input.L_Position.xyz, 1.0f), World);
-    float4 hcs = mul(ws, ViewProj);
-
+    //float4 ws = mul(float4(input.L_Position.xyz, 1.0f), World);
+    //float4 hcs = mul(ws, ViewProj);
+    float4 clipspace = LocalPositionToClipSpace(input.L_Position, World, ViewProj);
+     
     VS_OUTPUT o;
-    o.H_Positon = hcs;
+    o.H_Positon = clipspace;
     o.W_Normal = mul(input.L_Normal.xyz, (float3x3)World);
     o.Texcoord = input.Texcoord;
 

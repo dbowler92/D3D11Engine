@@ -304,6 +304,15 @@
     <Filter Include="Src\3rdParty\DXTK">
       <UniqueIdentifier>{6ba5e1c6-61ee-4c45-9e20-e7da0945cdf1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EngineAssets\Shaders">
+      <UniqueIdentifier>{68c7241f-ca62-413f-9267-cf35de9dc611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineAssets\Shaders\Includes">
+      <UniqueIdentifier>{ef38606a-e33b-4407-bf1c-c7f422268224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\3rdParty\GeometryGenerator">
+      <UniqueIdentifier>{5dc8c383-022b-47d3-9566-5d96e9c0cf17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -458,6 +467,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\DeferredRendering\LABuffer\D3D11\D3D11LABuffer.cpp">
       <Filter>Src\Graphics\DeferredRendering\LABuffer\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\GeometryGenerator\GeometryGenerator.cpp">
+      <Filter>Src\3rdParty\GeometryGenerator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -740,5 +752,13 @@
     <ClInclude Include="..\3rdParty\DXTK\VertexTypes.h">
       <Filter>Src\3rdParty\DXTK</Filter>
     </ClInclude>
+    <ClInclude Include="..\3rdParty\GeometryGenerator\GeometryGenerator.h">
+      <Filter>Src\3rdParty\GeometryGenerator</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Includes\HLSLGeometryPassIncludes.hlsl">
+      <Filter>EngineAssets\Shaders\Includes</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -26,12 +26,12 @@ bool DeferredTestScene::OnSceneBecomeActive()
 
 	//Init camera
 	mainCamera.SetDebugName("SponzaScene_MainCamera");
-	mainCamera.InitCameraViewProperties(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(XMFLOAT3(0.0f, 0.0f, -1.0f)), XMFLOAT3(0.0f, 1.0f, 0.0f));
+	mainCamera.InitCameraViewProperties(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(XMFLOAT3(0.0f, 0.0f, +1.0f)), XMFLOAT3(0.0f, 1.0f, 0.0f));
 	mainCamera.InitCameraPerspectiveProjectionProperties(45.0f, (screenW / screenH), 0.1f, 100.0f);
 	mainCamera.RebuildView();
 
 	//Init cube
-	XMMATRIX cubeWorld = XMMatrixTranslation(0.f, 0.f, -5.0f);
+	XMMATRIX cubeWorld = XMMatrixTranslation(0.f, 0.f, +5.0f);
 
 	cube.InitCube(device,
 		cubeWorld,
@@ -73,22 +73,6 @@ void DeferredTestScene::InitRenderTargets()
 	uint32_t screenW = (uint32_t)gm->GetWindowWidth();
 	uint32_t screenH = (uint32_t)gm->GetWindowHeight();
 
-	//assert(renderTarget.InitRenderTarget(screenW, screenH, RESOURCE_FORMAT_R8G8B8A8_UNORM, true, std::string("DeferredScene_TestRenderTarget")));
-	
-	//assert(renderTarget.InitMSAARenderTarget(screenW, screenH, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT,
-	//	RESOURCE_FORMAT_R8G8B8A8_UNORM, true, std::string("DeferredScene_TestRenderTarget")));
-	
-	assert(renderTarget.InitRenderTargetWithDepthStencilTexture(screenW, screenH, RESOURCE_FORMAT_R8G8B8A8_UNORM,
-		DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, true, std::string("DeferredScene_TestRenderTarget")));
-
-	//assert(renderTarget.InitMSAARenderTargetWithDepthStencilTexture(screenW, screenH, GRAPHICS_CONFIG_MSAA_SAMPLE_COUNT,
-	//	RESOURCE_FORMAT_R8G8B8A8_UNORM,
-	//	DEPTH_STENCIL_FORMAT_D24_UNORM_S8_UINT, true, std::string("DeferredScene_TestRenderTarget")));
-
-
-	//
-	//
-	//
 	ResourceFormat fmts[3];
 	fmts[0] = RESOURCE_FORMAT_R8G8B8A8_UNORM;
 	fmts[1] = RESOURCE_FORMAT_R11G11B10_FLOAT;
@@ -111,7 +95,6 @@ bool DeferredTestScene::OnSceneBecomeDeactive()
 	camerConstantBuffer.Shutdown();
 	cube.Shutdown();
 
-	renderTarget.Shutdown();
 	renderTargetSet.Shutdown();
 
 	//Done
@@ -143,8 +126,7 @@ bool DeferredTestScene::OnResize(uint32_t newWidth, uint32_t newHeight)
 	//Resize camera
 	mainCamera.InitCameraPerspectiveProjectionProperties(45.0f, screenW / screenH, 0.1f, 100.0f);
 
-	//Resize render target
-	assert(renderTarget.Resize(newWidth, newHeight));
+	//Resize render targets
 	assert(renderTargetSet.Resize(newWidth, newHeight));
 
 	//Done
@@ -234,27 +216,10 @@ bool DeferredTestScene::OnSceneRenderGeometryPass()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
-	/*
-	//Clear render target
-	renderTarget.ClearRenderTarget(Float32Colour(0.f, 0.f, 1.f, 0.f));
-	if (renderTarget.DoesManageADepthStencilTexture())
-	renderTarget.ClearDepthStencilTexture(DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
-
-	//Bind render target
-	if (renderTarget.DoesManageADepthStencilTexture())
-	renderTarget.BindRenderTargetAndDepthStencilTextureAsOutput(true);
-	else
-	{
-	//renderTarget.BindRenderTargetOnlyAsOutput();
-	renderTarget.BindRenderTargetWithExternalDepthStencilViewAsOutput(
-	gm->GetSwapchain()->GetSwapchainDepthTexture2DReadWriteView());
-	}
-	*/
-
 	//
 	//Render target set
 	//
-	renderTargetSet.ClearAllRenderTargets(Float32Colour(0.0f, 0.0f, 0.0f, 1.0f));
+	renderTargetSet.ClearAllRenderTargets(Float32Colour(0.0f, 0.0f, 0.0f, 0.0f));
 	if (renderTargetSet.DoesManageDepthStencilTexture())
 		renderTargetSet.ClearDepthStencilTexture(DEPTH_STENCIL_BUFFER_CLEAR_DEPTH_BIT | DEPTH_STENCIL_BUFFER_CLEAR_STENCIL_BIT, 1.0f, 0);
 

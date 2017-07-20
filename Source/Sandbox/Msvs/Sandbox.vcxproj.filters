@@ -49,9 +49,6 @@
     <Filter Include="Resources\HLSLShaders\GeometryPass\G_Textured">
       <UniqueIdentifier>{98b947a4-4e22-41e3-8cd3-0f8f2597300b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\HLSLShaders\GeometryPass\Includes">
-      <UniqueIdentifier>{1f6acaee-6aac-449a-a9dd-2b1442b86d2b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\SandboxMain.cpp">
@@ -111,9 +108,6 @@
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\Shaders\GeometryPass\G_TexturedVS.hlsl">
       <Filter>Resources\HLSLShaders\GeometryPass\G_Textured</Filter>
-    </FxCompile>
-    <FxCompile Include="..\..\..\Assets\Shaders\GeometryPass\HLSLGeometryPassIncludes.hlsl">
-      <Filter>Resources\HLSLShaders\GeometryPass\Includes</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

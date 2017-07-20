@@ -19,7 +19,7 @@ sampler LinearSamplerState : register(s0);
 //Texture
 Texture2D Tex : register(t0);
 
-PSOutput main(VS_OUTPUT input) : SV_Target
+PSOutput main(VS_OUTPUT input)
 {
     //Sample
     float4 texSample = Tex.Sample(LinearSamplerState, input.Texcoord);

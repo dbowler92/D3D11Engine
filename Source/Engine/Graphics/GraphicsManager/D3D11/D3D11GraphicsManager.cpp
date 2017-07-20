@@ -149,9 +149,6 @@ bool D3D11GraphicsManager::OnBeginLightPass()
 	//TODO: HDR
 	deferredLABuffer.BindLABufferForLightingPass(swapchain.GetSwapchainDepthTexture2DReadOnlyView());
 
-	//Binds the point sampler state to sample the GBuffer
-	device.PSSetSamplerState(&EngineAPI::Statics::GraphicsStatics::LightPass_PointSamplerState, 0);
-
 	//Bind the GBuffer SRVs to the pipeline:
 	//
 	//Texture2D GBuffer_Depth                : register(t0);

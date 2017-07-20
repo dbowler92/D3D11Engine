@@ -11,13 +11,15 @@ cbuffer CB_LightPass_DirectionalLightData : register(b0)
 struct VSOutput
 {
     float4 H_Position : SV_Position;
-    float2 GBufferTexcoord : TEXCOORD;
 };
 
 float4 main(VSOutput input) : SV_Target
 {
+    //Post viewport transform
+    int3 pixelToSample = int3(input.H_Position.xy, 0);
+
     //Sample GBuffer at this pixel + unpack
-    float4 diffSpecIntensitySample = GBuffer_DiffuseSpecIntensity.Sample(GBuffer_PointSampler, input.GBufferTexcoord).rgba;
+    float4 diffSpecIntensitySample = GBuffer_DiffuseSpecIntensity.Load(pixelToSample).rgba;
 
     //Diffuse
 

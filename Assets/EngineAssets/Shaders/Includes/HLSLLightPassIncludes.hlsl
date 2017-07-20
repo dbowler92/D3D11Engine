@@ -8,9 +8,6 @@
 //reference
 #include "HLSLGeometryPassIncludes.hlsl"
 
-//Point sampler for the GBuffer
-sampler GBuffer_PointSampler : register(s0);
-
 //Bind the GBuffer as shader resources during the
 //lighting pass
 Texture2D GBuffer_Depth                 : register(t0);

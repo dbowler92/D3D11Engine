@@ -17,13 +17,11 @@ static const float2 Verts[4] =
 struct VSOutput
 {
     float4 H_Position : SV_Position;
-    float2 GBufferTexcoord : TEXCOORD;
 };
 
 VSOutput main(uint vertexID : SV_VertexID)
 {
     VSOutput o;
     o.H_Position = float4(Verts[vertexID].xy, 0.0f, 1.0f);
-    o.GBufferTexcoord = o.H_Position.xy;
     return o;
 }

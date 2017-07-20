@@ -39,8 +39,6 @@ namespace EngineAPI
 			//
 			//Lighting pass:
 			//
-			static EngineAPI::Graphics::SamplerState   LightPass_PointSamplerState;
-
 			//	DirectionalLight:
 			static EngineAPI::Graphics::VertexShader   LightPass_DirectionalLight_VS;
 			static EngineAPI::Graphics::PixelShader    LightPass_DirectionalLight_PS;

@@ -197,6 +197,26 @@ bool DeferredTestScene::OnSceneUpdate(float dt)
 	//Update cube
 	cube.Update(dt);
 
+	//Debug draw?
+	shouldDebugDrawGBufferCooldownTimer += dt;
+	shouldDebugDrawGBufferPackedNormalsCooldownTimer += dt;
+	if (GetAsyncKeyState('1') & 0x8000)
+	{
+		if (shouldDebugDrawGBufferCooldownTimer >= 0.30f)
+		{
+			shouldDebugDrawGBuffer = !shouldDebugDrawGBuffer;
+			shouldDebugDrawGBufferCooldownTimer = 0.0f;
+		}
+	}
+	if (GetAsyncKeyState('2') & 0x8000)
+	{
+		if (shouldDebugDrawGBufferPackedNormalsCooldownTimer >= 0.3f)
+		{
+			shouldDebugDrawGBufferPackedNormals = !shouldDebugDrawGBufferPackedNormals;
+			shouldDebugDrawGBufferPackedNormalsCooldownTimer = 0.0f;
+		}
+	}
+
 	//Done
 	return true;
 }
@@ -262,6 +282,10 @@ bool DeferredTestScene::OnSceneRenderUIPass()
 
 bool DeferredTestScene::OnSceneRenderDebugUIPass()
 {
+	//GBuffer vis
+	if (shouldDebugDrawGBuffer)
+		EngineAPI::Debug::DebugRendering::DebugRenderGBuffersToScreen(shouldDebugDrawGBufferPackedNormals);
+
 	//Done
 	return true;
 }

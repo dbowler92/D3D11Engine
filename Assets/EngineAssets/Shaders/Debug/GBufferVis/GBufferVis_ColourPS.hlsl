@@ -12,7 +12,7 @@ struct VSOutput
 };
 
 float4 main(VSOutput input) : SV_Target
-{
+{ 
     //Surface diffuse colour
     float3 sample = GBufferTexture.Sample(GBufferSamplerState, input.Texcoord).rgb;
     return float4(sample, 0.f);

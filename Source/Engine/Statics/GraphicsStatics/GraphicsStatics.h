@@ -11,6 +11,11 @@
 //Graphics
 #include <Includes/GraphicsIncludes.h>
 
+//States (Pipeline)
+#include <Graphics/BlendState/BlendState.h>
+#include <Graphics/DepthStencilState/DepthStencilState.h>
+#include <Graphics/RasterizerState/RasterizerState.h>
+
 //Shaders
 #include <Graphics/VertexShader/VertexShader.h>
 #include <Graphics/PixelShader/PixelShader.h>
@@ -35,6 +40,13 @@ namespace EngineAPI
 			static void ShutdownAllGraphicsStatics();
 
 		public:
+			//Default pipeline states
+			static EngineAPI::Graphics::BlendState DefaultPipelineState_Blend;
+			static EngineAPI::Graphics::DepthStencilState DefaultPipelineState_DepthStencil;
+			static EngineAPI::Graphics::RasterizerState DefaultPipelineState_Rasterizer;
+
+
+		public:
 			//Engine statics
 			//
 			//Lighting pass:
@@ -53,19 +65,13 @@ namespace EngineAPI
 			//GBuffer visualization shaders
 			//
 			//
-			static EngineAPI::Graphics::VertexShader Debug_GBufferVis_Depth_VS;
+			static EngineAPI::Graphics::VertexShader Debug_GBufferVis_VS;
+
 			static EngineAPI::Graphics::PixelShader  Debug_GBufferVis_Depth_PS;
-
-			static EngineAPI::Graphics::VertexShader Debug_GBufferVis_Colour_VS;
 			static EngineAPI::Graphics::PixelShader  Debug_GBufferVis_Colour_PS;
-
-			static EngineAPI::Graphics::VertexShader Debug_GBufferVis_SpecIntensity_VS;
 			static EngineAPI::Graphics::PixelShader  Debug_GBufferVis_SpecIntensity_PS;
-
-			static EngineAPI::Graphics::VertexShader Debug_GBufferVis_Normal_VS;
-			static EngineAPI::Graphics::PixelShader  Debug_GBufferVis_Normal_PS;
-
-			static EngineAPI::Graphics::VertexShader Debug_GBufferVis_SpecPower_VS;
+			static EngineAPI::Graphics::PixelShader  Debug_GBufferVis_UnpackedNormal_PS;
+			static EngineAPI::Graphics::PixelShader  Debug_GBufferVis_PackedNormal_PS;
 			static EngineAPI::Graphics::PixelShader  Debug_GBufferVis_SpecPower_PS;
 
 			//Sampler state
@@ -73,6 +79,7 @@ namespace EngineAPI
 
 		protected:
 			//Split up init for less clutter
+			static void InitDefaultStates(EngineAPI::Graphics::GraphicsDevice* device);
 			static void InitLightPass(EngineAPI::Graphics::GraphicsDevice* device);
 			static void InitGBufferVis(EngineAPI::Graphics::GraphicsDevice* device);
 		};

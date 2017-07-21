@@ -67,6 +67,10 @@ namespace EngineAPI
 				uint32_t GetWindowWidth() { return windowWidth; };
 				uint32_t GetWindowHeight() { return windowHeight; };
 
+				//Gets the GBuffer && LABuffer - eg: For debug rendering through DebugRendering
+				EngineAPI::Graphics::DeferredRendering::GBuffer* GetGBuffer() { return &deferredGBuffer; };
+				EngineAPI::Graphics::DeferredRendering::LABuffer* GetLABuffer() { return &deferredLABuffer; };
+
 			protected:
 				D3D11GraphicsManager() {};
 				virtual ~D3D11GraphicsManager() = 0 {};

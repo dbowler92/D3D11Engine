@@ -64,6 +64,12 @@ private:
 	//Cube
 	TestCube cube;
 
+	//Debug flags
+	bool shouldDebugDrawGBuffer = false;
+	bool shouldDebugDrawGBufferPackedNormals = true;
+	float shouldDebugDrawGBufferCooldownTimer = 0.30f;
+	float shouldDebugDrawGBufferPackedNormalsCooldownTimer = 0.3f;
+
 private:
 	void InitCameraCBuffer();
 };

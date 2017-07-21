@@ -793,10 +793,25 @@
     <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\BlitPS.hlsl">
       <Filter>EngineAssets\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\GBufferVis\GBufferVis_ColourVS.hlsl">
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\GBufferVis\GBufferVis_ColourPS.hlsl">
       <Filter>EngineAssets\Shaders\Debug\GBufferVis</Filter>
     </FxCompile>
-    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\GBufferVis\GBufferVis_ColourPS.hlsl">
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\GBufferVis\GBufferVis_VS.hlsl">
+      <Filter>EngineAssets\Shaders\Debug\GBufferVis</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\GBufferVis\GBufferVis_SpecIntPS.hlsl">
+      <Filter>EngineAssets\Shaders\Debug\GBufferVis</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\GBufferVis\GBufferVis_PackedNormalPS.hlsl">
+      <Filter>EngineAssets\Shaders\Debug\GBufferVis</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\GBufferVis\GBufferVis_UnpackedNormalPS.hlsl">
+      <Filter>EngineAssets\Shaders\Debug\GBufferVis</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\GBufferVis\GBufferVis_SpecPowerPS.hlsl">
+      <Filter>EngineAssets\Shaders\Debug\GBufferVis</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\GBufferVis\GBufferVis_DepthPS.hlsl">
       <Filter>EngineAssets\Shaders\Debug\GBufferVis</Filter>
     </FxCompile>
   </ItemGroup>

@@ -61,6 +61,10 @@ namespace EngineAPI
 				//Unbinds the GBuffer (SRVs) after lighting 
 				void UnbindGBufferAfterLightPass();
 
+			public:
+				//Gets each render target in the set
+				EngineAPI::Rendering::RenderTarget* GetRenderTargetAtIndex(uint32_t idx) { return gBufferRenderTargetSet.GetRenderTargetAtIndex(idx); };
+
 			protected:
 				//Render targets
 				EngineAPI::Rendering::RenderTargetSet gBufferRenderTargetSet;

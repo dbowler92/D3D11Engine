@@ -129,6 +129,29 @@ void D3D11GraphicsDevice::RSSetState(EngineAPI::Graphics::RasterizerState* rss)
 		GetD3D11ImmediateContext()->RSSetState(nullptr);
 }
 
+void D3D11GraphicsDevice::RSSetViewport(Viewport* vp)
+{
+	if (vp == nullptr)
+	{
+		//Default VP
+		GetD3D11ImmediateContext()->RSSetViewports(0, nullptr);
+	}
+	else
+	{
+		//Custom VP
+		D3D11_VIEWPORT d3dVP = {};
+		d3dVP.TopLeftX = vp->TopLeftX;
+		d3dVP.TopLeftY = vp->TopLeftY;
+
+		d3dVP.Width = vp->Width;
+		d3dVP.Height = vp->Height;
+
+		d3dVP.MinDepth = vp->MinDepth;
+		d3dVP.MaxDepth = vp->MaxDepth;
+
+		GetD3D11ImmediateContext()->RSSetViewports(1, &d3dVP);
+	}
+}
 
 //
 //OM

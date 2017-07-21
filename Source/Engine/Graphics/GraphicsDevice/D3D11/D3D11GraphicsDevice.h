@@ -88,6 +88,7 @@ namespace EngineAPI
 
 				//Rasterizer (RS)
 				void RSSetState(EngineAPI::Graphics::RasterizerState* rss);
+				void RSSetViewport(Viewport* vp); //Pass null here to set default VP
 
 				//Ouput Merger (OM)
 				void OMSetBlendState(EngineAPI::Graphics::BlendState* bs, const float blendFactor[4] = DEFAULT_BLEND_FACTOR, UINT sampleMask = 0xFFFFFFFF);

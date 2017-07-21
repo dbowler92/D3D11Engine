@@ -706,3 +706,22 @@ enum DepthStencilClearBit
 };
 
 typedef UINT DepthStencilClearFlag;
+
+
+//Viewport structure
+struct Viewport
+{
+	Viewport()
+	{
+		//Defaults the min and max depth
+		MinDepth = 0.f;
+		MaxDepth = 1.f;
+	}
+
+	FLOAT TopLeftX;
+	FLOAT TopLeftY;
+	FLOAT Width;
+	FLOAT Height;
+	FLOAT MinDepth;
+	FLOAT MaxDepth;
+};

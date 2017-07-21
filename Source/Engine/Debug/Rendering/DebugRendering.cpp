@@ -34,6 +34,11 @@ void DebugRendering::DebugRenderGBuffersToScreen(bool showPackedNormals)
 	//Uses point sampler
 	device->PSSetSamplerState(&EngineAPI::Statics::GraphicsStatics::Debug_GBufferVis_SamplerState, 0);
 
+	//Null states
+	device->OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Blend);
+	device->OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_DepthStencil, 0);
+	device->RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);
+
 	//1) Depth
 	//
 	gbufferSRV = gm->GetSwapchain()->GetSwapchainDepthTexture2DShaderResourceView();

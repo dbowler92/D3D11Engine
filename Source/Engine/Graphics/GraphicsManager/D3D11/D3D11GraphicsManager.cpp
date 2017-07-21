@@ -131,8 +131,15 @@ bool D3D11GraphicsManager::OnBeginGeometryPass()
 	//texture - ReadWrite enabled
 	deferredGBuffer.BindGBufferForGeometryPass(swapchain.GetSwapchainDepthTexture2DReadWriteView());
 
+	//Null states
+	device.OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Blend);
+	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_DepthStencil, 0);
+	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);
+
 	//Fullscreen render
 	swapchain.SetFullResolutionViewport(&device);
+
+
 
 	//Done
 	return true;
@@ -157,6 +164,11 @@ bool D3D11GraphicsManager::OnBeginLightPass()
 	//Texture2D GBuffer_SpecPower			 : register(t3);
 	deferredGBuffer.BindGBufferForLightPass(swapchain.GetSwapchainDepthTexture2DShaderResourceView());
 
+	//Null states
+	device.OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Blend);
+	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_DepthStencil, 0);
+	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);
+
 	//Fullscreen render
 	swapchain.SetFullResolutionViewport(&device);
 
@@ -173,6 +185,11 @@ bool D3D11GraphicsManager::OnBeginPostProcessPass()
 	//
 	//No depth buffer needs to be bound for testing
 	swapchain.BindSwapchainBackbufferAsRenderTarget(&device, nullptr);
+
+	//Null states
+	device.OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Blend);
+	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_DepthStencil, 0);
+	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);
 
 	//Fullscreen render
 	swapchain.SetFullResolutionViewport(&device);
@@ -226,6 +243,11 @@ bool D3D11GraphicsManager::OnBeginDebugUIPass()
 	//
 	//No depth buffer needs to be bound for testing
 	swapchain.BindSwapchainBackbufferAsRenderTarget(&device, nullptr);
+
+	//Null states
+	device.OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Blend);
+	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_DepthStencil, 0);
+	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);
 
 	//Default to fullscreen render
 	swapchain.SetFullResolutionViewport(&device);

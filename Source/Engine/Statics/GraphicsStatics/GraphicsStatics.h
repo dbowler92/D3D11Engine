@@ -45,7 +45,6 @@ namespace EngineAPI
 			static EngineAPI::Graphics::DepthStencilState DefaultPipelineState_DepthStencil;
 			static EngineAPI::Graphics::RasterizerState DefaultPipelineState_Rasterizer;
 
-
 		public:
 			//Engine statics
 			//

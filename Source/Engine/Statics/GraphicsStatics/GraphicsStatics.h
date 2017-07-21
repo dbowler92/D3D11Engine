@@ -44,6 +44,37 @@ namespace EngineAPI
 			static EngineAPI::Graphics::PixelShader    LightPass_DirectionalLight_PS;
 			static EngineAPI::Graphics::ConstantBuffer LightPass_DirectionalLight_LightDataCB;
 
+		public:
+			//Simple blit shader
+			static EngineAPI::Graphics::VertexShader Blit_VS;
+			static EngineAPI::Graphics::PixelShader  Blit_PS;
+
+		public:
+			//GBuffer visualization shaders
+			//
+			//
+			static EngineAPI::Graphics::VertexShader Debug_GBufferVis_Depth_VS;
+			static EngineAPI::Graphics::PixelShader  Debug_GBufferVis_Depth_PS;
+
+			static EngineAPI::Graphics::VertexShader Debug_GBufferVis_Colour_VS;
+			static EngineAPI::Graphics::PixelShader  Debug_GBufferVis_Colour_PS;
+
+			static EngineAPI::Graphics::VertexShader Debug_GBufferVis_SpecIntensity_VS;
+			static EngineAPI::Graphics::PixelShader  Debug_GBufferVis_SpecIntensity_PS;
+
+			static EngineAPI::Graphics::VertexShader Debug_GBufferVis_Normal_VS;
+			static EngineAPI::Graphics::PixelShader  Debug_GBufferVis_Normal_PS;
+
+			static EngineAPI::Graphics::VertexShader Debug_GBufferVis_SpecPower_VS;
+			static EngineAPI::Graphics::PixelShader  Debug_GBufferVis_SpecPower_PS;
+
+			//Sampler state
+			static EngineAPI::Graphics::SamplerState Debug_GBufferVis_SamplerState;
+
+		protected:
+			//Split up init for less clutter
+			static void InitLightPass(EngineAPI::Graphics::GraphicsDevice* device);
+			static void InitGBufferVis(EngineAPI::Graphics::GraphicsDevice* device);
 		};
 	};
 };

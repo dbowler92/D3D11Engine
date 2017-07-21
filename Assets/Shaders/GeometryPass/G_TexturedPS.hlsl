@@ -13,8 +13,8 @@ cbuffer CB_PS_PerObject : register(b2)
     //Material data
     float SpecPower;
     float SpecIntensity;
-    float _Pad0; 
-    float _Pad1;
+    float CB_PS_PerObject_Pad0;
+    float CB_PS_PerObject_Pad1;
 };
 
 //Sampler state

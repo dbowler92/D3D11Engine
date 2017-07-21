@@ -16,12 +16,14 @@ static const float2 Verts[4] =
 //Output from the VS to the PS
 struct VSOutput
 {
-    float4 H_Position : SV_Position;
+    float4 C_Position : SV_Position;
+    float2 C_Position2D : POSITION;
 };
 
 VSOutput main(uint vertexID : SV_VertexID)
 {
     VSOutput o;
-    o.H_Position = float4(Verts[vertexID].xy, 0.0f, 1.0f);
+    o.C_Position = float4(Verts[vertexID].xy, 0.0f, 1.0f);
+    o.C_Position2D = o.C_Position.xy; //XY clip space position
     return o;
 }

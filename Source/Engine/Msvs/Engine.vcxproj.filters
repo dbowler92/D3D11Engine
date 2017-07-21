@@ -319,6 +319,12 @@
     <Filter Include="Src\Statics\GraphicsStatics">
       <UniqueIdentifier>{3dcd40d9-1107-4cd6-b9d5-9200b3b77a62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EngineAssets\Shaders\Debug">
+      <UniqueIdentifier>{d7462c2a-7275-4a15-86b6-9372a6812883}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineAssets\Shaders\Debug\GBufferVis">
+      <UniqueIdentifier>{3388b9d5-215c-4e25-b8c9-d2c0df3c6a2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -780,6 +786,18 @@
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Includes\HLSLLightPassIncludes.hlsl">
       <Filter>EngineAssets\Shaders\Includes</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\BlitVS.hlsl">
+      <Filter>EngineAssets\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\BlitPS.hlsl">
+      <Filter>EngineAssets\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\GBufferVis\GBufferVis_ColourVS.hlsl">
+      <Filter>EngineAssets\Shaders\Debug\GBufferVis</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\GBufferVis\GBufferVis_ColourPS.hlsl">
+      <Filter>EngineAssets\Shaders\Debug\GBufferVis</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

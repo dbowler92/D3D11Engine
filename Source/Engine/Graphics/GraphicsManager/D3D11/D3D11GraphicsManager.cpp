@@ -90,13 +90,13 @@ bool D3D11GraphicsManager::OnRender()
 	assert(sm->OnRenderLightPass());
 
 	assert(OnBeginPostProcessPass());
-	assert(sm->OnRenderPostProcessPass());
+	//assert(sm->OnRenderPostProcessPass());
 
 	assert(OnBeginDebugPass());
-	assert(sm->OnRenderDebugPass());
+	//assert(sm->OnRenderDebugPass());
 
 	assert(OnBeginUIPass());
-	assert(sm->OnRenderUIPass());
+	//assert(sm->OnRenderUIPass());
 
 	assert(OnBeginDebugUIPass());
 	assert(sm->OnRenderDebugUIPass());
@@ -169,11 +169,32 @@ bool D3D11GraphicsManager::OnBeginPostProcessPass()
 	//Unbind GBuffer from (lighting pass) pixel shader
 	deferredGBuffer.UnbindGBufferAfterLightPass();
 
-	//
-	//For now, blit LA Buffer in to the backbuffer
+	//Bind the swapchain (for now - may need ping-pong buffers)
 	//
 	//No depth buffer needs to be bound for testing
 	swapchain.BindSwapchainBackbufferAsRenderTarget(&device, nullptr);
+
+	//Fullscreen render
+	swapchain.SetFullResolutionViewport(&device);
+
+	//TEMP: For now, blit the results of the LA buffer in to the swapchain backbuffer
+	//
+	//
+	//Shaders:
+	device.VSSetShader(&EngineAPI::Statics::GraphicsStatics::Blit_VS);
+	device.PSSetShader(&EngineAPI::Statics::GraphicsStatics::Blit_PS);
+
+	//NULL VB and IB -> We generate the quad in the shader
+	device.IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	device.IASetVertexBuffer(nullptr, 0, 0);
+	device.IASetIndexBuffer(nullptr, 0);
+
+	//Texture to blit in slot[0]
+	assert(deferredLABuffer.GetLABufferSRV());
+	device.PSSetShaderResource(deferredLABuffer.GetLABufferSRV(), 0);
+
+	//Draw 
+	device.Draw(4, 0);
 
 	//Done
 	return true;
@@ -200,6 +221,14 @@ bool D3D11GraphicsManager::OnBeginDebugUIPass()
 {
 	//As above, render directly in to the backbuffer
 	//& over the top of other elements 2D/3D
+	//
+	//Bind the swapchain (for now - may need ping-pong buffers)
+	//
+	//No depth buffer needs to be bound for testing
+	swapchain.BindSwapchainBackbufferAsRenderTarget(&device, nullptr);
+
+	//Default to fullscreen render
+	swapchain.SetFullResolutionViewport(&device);
 
 	//Done
 	return true;

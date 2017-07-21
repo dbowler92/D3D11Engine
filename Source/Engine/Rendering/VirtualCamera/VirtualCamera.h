@@ -16,6 +16,18 @@
 //Math
 #include <Includes/MathIncludes.h>
 
+//Struct representing the data that is sent to the
+//shaders
+struct VirtualCameraGraphicsData
+{
+	XMFLOAT4X4 View;
+	XMFLOAT4X4 Proj;
+	XMFLOAT4X4 ViewProj;
+	XMFLOAT4X4 InverseView;
+	XMFLOAT3   CameraWorldPosition;
+	float	   _Pad0;
+};
+
 namespace EngineAPI
 {
 	namespace Rendering
@@ -50,6 +62,11 @@ namespace EngineAPI
 			XMMATRIX GetView() { return XMLoadFloat4x4(&view); };
 			XMMATRIX GetProj() { return XMLoadFloat4x4(&proj); };
 			XMMATRIX GetViewProj() { return GetView() * GetProj(); };
+
+			XMFLOAT3 GetPosition() { return position; };
+
+			//Calculates the inverse view matrix
+			XMMATRIX CalculateInverseViewMatrix();
 
 		protected:
 			//View and projection matricies

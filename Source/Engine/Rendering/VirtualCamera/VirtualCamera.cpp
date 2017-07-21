@@ -134,3 +134,13 @@ void VirtualCamera::RebuildView()
 	view(2, 3) = 0.0f;
 	view(3, 3) = 1.0f;
 }
+
+XMMATRIX VirtualCamera::CalculateInverseViewMatrix()
+{
+	XMMATRIX viewXM = XMLoadFloat4x4(&view);
+
+	XMVECTOR det = XMMatrixDeterminant(viewXM);
+	XMMATRIX invView = XMMatrixInverse(&det, viewXM);
+
+	return invView;
+}

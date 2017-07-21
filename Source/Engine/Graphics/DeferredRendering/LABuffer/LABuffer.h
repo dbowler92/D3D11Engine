@@ -51,6 +51,10 @@ namespace EngineAPI
 				//lights - this should be a read-only depth view
 				void BindLABufferForLightingPass(EngineAPI::Graphics::DepthStencilView* depthGBufferReadOnlyDSV);
 
+			public:
+				//Gets the SRV to the LABuffer
+				EngineAPI::Graphics::ShaderResourceView* GetLABufferSRV() { return laBufferRenderTarget.GetRenderTargetShaderResourceView(); };
+
 			protected:
 				//Render targets
 				EngineAPI::Rendering::RenderTarget laBufferRenderTarget;

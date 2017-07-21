@@ -15,6 +15,16 @@
 //
 //Engine provided CBuffers
 //
+//Camera matrices
+cbuffer CB_Camera : register(b0)
+{
+    float4x4 CameraView;
+    float4x4 CameraProj;
+    float4x4 CameraViewProj;
+    float4x4 CameraInverseView;
+    float3   CameraWorldPosition;
+    float    CB_Camera_Pad0;
+};
 
 //
 //Output from geometry pas pixel shaders - GBuffer format

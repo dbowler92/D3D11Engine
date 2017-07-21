@@ -28,7 +28,7 @@ void DirectionalLight::InitDirectionalLightSource(XMFLOAT3 dir,
 	XMStoreFloat3(&dNormalized, d);
 
 	//Cache data
-	lightData.LightDirection = XMFLOAT4(dNormalized.x, dNormalized.y, dNormalized.z, 1.0f);
+	lightData.LightDirection = XMFLOAT4(dNormalized.x, dNormalized.y, dNormalized.z, 0.0f);
 	lightData.LightColourAndIntensity = XMFLOAT4(col.x, col.y, col.z, intensity);
 
 	//Set debug name
@@ -63,8 +63,8 @@ void DirectionalLight::Render()
 	device->IASetVertexBuffer(nullptr, 0, 0);
 	device->IASetIndexBuffer(nullptr, 0);
 
-	//Bind the light data CBuffer...
-	device->PSSetConstantBuffer(&cb, 0);
+	//Bind the light data CBuffer (Slot 1)
+	device->PSSetConstantBuffer(&cb, GRAPHICS_CONFIG_LIGHT_PASS_LIGHT_DATA_CBUFFER_BINDING_SLOT);
 
 	//Draw
 	device->Draw(4, 0);

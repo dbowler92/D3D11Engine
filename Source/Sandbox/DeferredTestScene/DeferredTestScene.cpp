@@ -26,12 +26,12 @@ bool DeferredTestScene::OnSceneBecomeActive()
 
 	//Init camera
 	mainCamera.SetDebugName("SponzaScene_MainCamera");
-	mainCamera.InitCameraViewProperties(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(XMFLOAT3(0.0f, 0.0f, +1.0f)), XMFLOAT3(0.0f, 1.0f, 0.0f));
+	mainCamera.InitCameraViewProperties(XMFLOAT3(0.0f, 0.0f, -5.0f), XMFLOAT3(XMFLOAT3(0.0f, 0.0f, +1.0f)), XMFLOAT3(0.0f, 1.0f, 0.0f));
 	mainCamera.InitCameraPerspectiveProjectionProperties(45.0f, (screenW / screenH), 0.1f, 100.0f);
 	mainCamera.RebuildView();
 
 	//Init cube
-	XMMATRIX cubeWorld = XMMatrixTranslation(0.f, 0.f, +5.0f);
+	XMMATRIX cubeWorld = XMMatrixTranslation(0.f, 0.f, 0.0f);
 
 	cube.InitCube(device,
 		cubeWorld,
@@ -56,13 +56,16 @@ void DeferredTestScene::InitCameraCBuffer()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
-	XMFLOAT4X4 viewAndProj[3];
-	XMStoreFloat4x4(&viewAndProj[0], XMMatrixIdentity());
-	XMStoreFloat4x4(&viewAndProj[1], XMMatrixIdentity());
-	XMStoreFloat4x4(&viewAndProj[2], XMMatrixIdentity());
+	VirtualCameraGraphicsData camInitData;
+	XMStoreFloat4x4(&camInitData.View, XMMatrixIdentity());
+	XMStoreFloat4x4(&camInitData.Proj, XMMatrixIdentity());
+	XMStoreFloat4x4(&camInitData.ViewProj, XMMatrixIdentity());
+	XMStoreFloat4x4(&camInitData.InverseView, XMMatrixIdentity());
+	camInitData.CameraWorldPosition = XMFLOAT3(0.f, 0.f, 0.f);
+	camInitData._Pad0 = 0.f;
 		
 	assert(camerConstantBuffer.InitConstantBuffer(device,
-		sizeof(XMFLOAT4X4) * 3, &viewAndProj,
+		sizeof(VirtualCameraGraphicsData), &camInitData,
 		RESOURCE_USAGE_DYNAMIC, RESOURCE_CPU_ACCESS_WRITE_BIT,
 		RESOURCE_BIND_CONSTANT_BUFFER_BIT,
 		std::string("DeferredTestScene_CameraCB")));
@@ -170,10 +173,25 @@ bool DeferredTestScene::OnSceneUpdate(float dt)
 	XMStoreFloat4x4(&viewAndProj[1], XMMatrixTranspose(mainCamera.GetProj()));
 	XMStoreFloat4x4(&viewAndProj[2], XMMatrixTranspose(mainCamera.GetViewProj()));
 
+	VirtualCameraGraphicsData cameraUpdatedData;
+	cameraUpdatedData.View = viewAndProj[0];
+	cameraUpdatedData.Proj = viewAndProj[1];
+	cameraUpdatedData.ViewProj = viewAndProj[2];
+
+	//Inverse view matrix
+	XMMATRIX invView = mainCamera.CalculateInverseViewMatrix();
+	XMFLOAT4X4 invView4x4;
+	XMStoreFloat4x4(&invView4x4, XMMatrixTranspose(invView));
+	cameraUpdatedData.InverseView = invView4x4;
+
+	//Position
+	cameraUpdatedData.CameraWorldPosition = mainCamera.GetPosition();
+	cameraUpdatedData._Pad0 = 0.0f;
+
 	MappedResourceData mrd;
 	bool didMap = camerConstantBuffer.MapResource(device, 0, RESOURCE_MAP_WRITE_DISCARD, &mrd);
 	if (didMap)
-		memcpy(mrd.MappedData, &viewAndProj[0], camerConstantBuffer.GetConstantBufferSizeBytes());
+		memcpy(mrd.MappedData, &cameraUpdatedData, camerConstantBuffer.GetConstantBufferSizeBytes());
 	camerConstantBuffer.UnmapResource(device, 0);
 
 	//Update cube
@@ -194,8 +212,10 @@ bool DeferredTestScene::OnSceneRenderGeometryPass()
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
 
+	//TEMP: Move this over to engine when I have components, etc
+	//
 	//Set camera CBuffer
-	device->VSSetConstantBuffer(&camerConstantBuffer, 0);
+	device->VSSetConstantBuffer(&camerConstantBuffer, GRAPHICS_CONFIG_CAMERA_CBUFFER_BINDING_SLOT);
 
 	//Draw cube
 	cube.RenderToGBuffer(device);
@@ -206,6 +226,16 @@ bool DeferredTestScene::OnSceneRenderGeometryPass()
 
 bool DeferredTestScene::OnSceneRenderLightPass()
 {
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
+
+	//TEMP: This needs moving engine level -> Will do once I have
+	//camera components and the concept of a "main camera"
+	//
+	//Bind the camera data to the PS
+	device->PSSetConstantBuffer(&camerConstantBuffer, GRAPHICS_CONFIG_CAMERA_CBUFFER_BINDING_SLOT);
+
+	//DLights
 	dLight.Render();
 
 	//Done

@@ -43,7 +43,7 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	InitCameraCBuffer();
 
 	//Init light
-	dLight.InitDirectionalLightSource(XMFLOAT3(0.f, 0.f, 1.f), 
+	dLight.InitDirectionalLightSource(XMFLOAT3(1.f, 0.f, 1.f), 
 		XMFLOAT3(0.4f, 0.4f, 0.4f), 1.0f, "DLight");
 	dLight.SetActiveState(true);
 

@@ -45,6 +45,28 @@ namespace EngineAPI
 			static EngineAPI::Graphics::DepthStencilState DefaultPipelineState_DepthStencil;
 			static EngineAPI::Graphics::RasterizerState DefaultPipelineState_Rasterizer;
 
+			//Custom pipeline states
+			//
+			//Blend modes
+			//
+			//	Additive Blending - used during the lighting pass
+			static EngineAPI::Graphics::BlendState PipelineState_Blend_Additive;
+
+			//Depth Stencil modes:
+			//
+			//	Mark stencil buffer - during geometry pass, we will mark the stencil buffer for every
+			//visible fragment. We can then limit lighting to just those pixels that actually contain 
+			//some rendered geometry.
+			static EngineAPI::Graphics::DepthStencilState PipelineState_DepthStencil_DepthDefault_MarkStencilBuffer;
+			
+			//	See: PipelineState_DepthStencil_DepthDefault_MarkStencilBuffer. This DSS enables stencil testing
+			//so that pixels that have no rendered geometry are discarded. Used during lighting to prevent
+			//empty pixels from being lit (Waste of resources - especially in the case of DLights which
+			//render a full screen quad)
+			static EngineAPI::Graphics::DepthStencilState PipelineState_DepthStencil_DepthDefault_StencilTestNotEqual;
+
+			//Rasterizer modes
+
 		public:
 			//Engine statics
 			//
@@ -78,7 +100,7 @@ namespace EngineAPI
 
 		protected:
 			//Split up init for less clutter
-			static void InitDefaultStates(EngineAPI::Graphics::GraphicsDevice* device);
+			static void InitPipelineStates(EngineAPI::Graphics::GraphicsDevice* device);
 			static void InitLightPass(EngineAPI::Graphics::GraphicsDevice* device);
 			static void InitGBufferVis(EngineAPI::Graphics::GraphicsDevice* device);
 		};

@@ -131,15 +131,16 @@ bool D3D11GraphicsManager::OnBeginGeometryPass()
 	//texture - ReadWrite enabled
 	deferredGBuffer.BindGBufferForGeometryPass(swapchain.GetSwapchainDepthTexture2DReadWriteView());
 
-	//Null states
+	//Set states - For each piece of geometry, we will mark the
+	//stencil buffer with a value > 0. We can then enable the
+	//stencil test in the lighting pass to ensure that we don't
+	//attempt to light fragments that still the clear colour
 	device.OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Blend);
-	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_DepthStencil, 0);
+	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::PipelineState_DepthStencil_DepthDefault_MarkStencilBuffer, 1);
 	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);
 
 	//Fullscreen render
 	swapchain.SetFullResolutionViewport(&device);
-
-
 
 	//Done
 	return true;
@@ -164,9 +165,11 @@ bool D3D11GraphicsManager::OnBeginLightPass()
 	//Texture2D GBuffer_SpecPower			 : register(t3);
 	deferredGBuffer.BindGBufferForLightPass(swapchain.GetSwapchainDepthTexture2DShaderResourceView());
 
-	//Null states
-	device.OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Blend);
-	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_DepthStencil, 0);
+	//NSet render states -> Additive blending in to the LABuffer + stencil test is > than 0 - IE, non marked
+	//pixels from the Geometry Pass will not be lit (Eg: we can skip the pixels that remain in the cleared
+	//state)
+	device.OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::PipelineState_Blend_Additive);
+	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::PipelineState_DepthStencil_DepthDefault_StencilTestNotEqual, 0);
 	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);
 
 	//Fullscreen render
@@ -186,7 +189,7 @@ bool D3D11GraphicsManager::OnBeginPostProcessPass()
 	//No depth buffer needs to be bound for testing
 	swapchain.BindSwapchainBackbufferAsRenderTarget(&device, nullptr);
 
-	//Null states
+	//Render states
 	device.OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Blend);
 	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_DepthStencil, 0);
 	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);

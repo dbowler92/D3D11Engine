@@ -33,7 +33,9 @@ float4 main(VSOutput input) : SV_Target
         gBufferSample.Colour, gBufferSample.Normal, pixelWorldSpace);
     
     //TODO: Ambient - this is a temp hack :) 
-    c.rgb += float3(0.1f, 0.1f, 0.1f);
+    c.rgb += gBufferSample.Colour * float3(0.1f, 0.1f, 0.1f);
+    //c.rgb +=  float3(0.1f, 0.1f, 0.1f);
+
 
     //Done
     return float4(c.rgb, 0.f);

@@ -58,10 +58,6 @@ protected:
 	EngineAPI::Graphics::ShaderResourceView texSRV;
 	EngineAPI::Graphics::SamplerState defaultLinearSampler;
 
-	EngineAPI::Graphics::BlendState bs;
-	EngineAPI::Graphics::DepthStencilState dss;
-	EngineAPI::Graphics::RasterizerState rss;
-
 	//CBuffers
 	EngineAPI::Graphics::ConstantBuffer vsCBPerObject; //World matrix
 	EngineAPI::Graphics::ConstantBuffer psCBPerObject; //Material data

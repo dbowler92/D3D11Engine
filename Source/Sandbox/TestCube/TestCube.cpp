@@ -81,12 +81,9 @@ void TestCube::Shutdown()
 	textureFromFile.Shutdown();
 	texSRV.Shutdown();
 	defaultLinearSampler.Shutdown();
-	bs.Shutdown();
-	dss.Shutdown();
-	rss.Shutdown();
 
-	 vsCBPerObject.Shutdown();
-	 psCBPerObject.Shutdown();
+	vsCBPerObject.Shutdown();
+	psCBPerObject.Shutdown();
 
 	__super::Shutdown();
 }
@@ -144,16 +141,6 @@ void TestCube::InitCube(EngineAPI::Graphics::GraphicsDevice* device,
 	if (textureFromFile.DoesSupportAutoMipmapsGeneration()) 	//Generate mips?
 		assert(textureFromFile.AutoGenerateMipmaps(device, &texSRV));
 
-	//Pipeline states
-	DepthStencilPipelineStateDescription dssState = {};
-	assert(dss.InitDepthStencilState(device, &dssState, std::string("TestDSS")));
-
-	RasterizerPipelineStateDescription rssState = {};
-	assert(rss.InitRasterizerState(device, &rssState, std::string("TestRSS")));
-
-	BlendPipelineStateDescription bsDesc = {};
-	assert(bs.InitBlendState(device, &bsDesc, std::string("TestBS")));
-
 	//CBuffers
 	XMFLOAT4X4 w;
 	XMStoreFloat4x4(&w, world);
@@ -208,9 +195,7 @@ void TestCube::RenderToGBuffer(EngineAPI::Graphics::GraphicsDevice* device)
 	device->PSSetShaderResource(&texSRV, 0);
 
 	//Rendering state
-	device->RSSetState(&rss);
-	device->OMSetBlendState(&bs);
-	device->OMSetDepthStencilState(&dss, 0);
+	//
 
 	//Sampler state object
 	device->PSSetSamplerState(&defaultLinearSampler, 0);

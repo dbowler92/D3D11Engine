@@ -360,7 +360,7 @@ struct DepthStencilResultOp
 		OnStencilFail = StencilPipelineStateOp::STENCIL_OP_KEEP;
 		OnStencilPassDepthFail = StencilPipelineStateOp::STENCIL_OP_KEEP;
 		OnStencilPassDepthPass = StencilPipelineStateOp::STENCIL_OP_KEEP;
-		StencilComparisonFunction = ComparisonFunction::COMPARISON_FUNCTION_NEVER;
+		StencilComparisonFunction = ComparisonFunction::COMPARISON_FUNCTION_ALWAYS;
 	}
 
 	//Operation to perform (per face)

@@ -9,6 +9,11 @@ EngineAPI::Graphics::BlendState GraphicsStatics::DefaultPipelineState_Blend;
 EngineAPI::Graphics::DepthStencilState GraphicsStatics::DefaultPipelineState_DepthStencil;
 EngineAPI::Graphics::RasterizerState GraphicsStatics::DefaultPipelineState_Rasterizer;
 
+EngineAPI::Graphics::BlendState GraphicsStatics::PipelineState_Blend_Additive;
+
+EngineAPI::Graphics::DepthStencilState GraphicsStatics::PipelineState_DepthStencil_DepthDefault_MarkStencilBuffer;
+EngineAPI::Graphics::DepthStencilState GraphicsStatics::PipelineState_DepthStencil_DepthDefault_StencilTestNotEqual;
+
 EngineAPI::Graphics::VertexShader GraphicsStatics::LightPass_DirectionalLight_VS;
 EngineAPI::Graphics::PixelShader GraphicsStatics::LightPass_DirectionalLight_PS;
 EngineAPI::Graphics::ConstantBuffer GraphicsStatics::LightPass_DirectionalLight_LightDataCB;
@@ -30,7 +35,7 @@ bool GraphicsStatics::InitAllGraphicsStatics(EngineAPI::Graphics::GraphicsDevice
 	assert(device);
 
 	//Default pipeline states
-	GraphicsStatics::InitDefaultStates(device);
+	GraphicsStatics::InitPipelineStates(device);
 
 	//Light pass
 	GraphicsStatics::InitLightPass(device);
@@ -57,6 +62,10 @@ void GraphicsStatics::ShutdownAllGraphicsStatics()
 	DefaultPipelineState_DepthStencil.Shutdown();
 	DefaultPipelineState_Rasterizer.Shutdown();
 
+	PipelineState_Blend_Additive.Shutdown();
+	PipelineState_DepthStencil_DepthDefault_MarkStencilBuffer.Shutdown();
+	PipelineState_DepthStencil_DepthDefault_StencilTestNotEqual.Shutdown();
+
 	LightPass_DirectionalLight_VS.Shutdown();
 	LightPass_DirectionalLight_PS.Shutdown();
 	LightPass_DirectionalLight_LightDataCB.Shutdown();
@@ -74,7 +83,7 @@ void GraphicsStatics::ShutdownAllGraphicsStatics()
 	Debug_GBufferVis_SamplerState.Shutdown();
 }
 
-void GraphicsStatics::InitDefaultStates(EngineAPI::Graphics::GraphicsDevice* device)
+void GraphicsStatics::InitPipelineStates(EngineAPI::Graphics::GraphicsDevice* device)
 {
 	//Use default settings...
 	BlendPipelineStateDescription bsDesc = {};
@@ -84,6 +93,51 @@ void GraphicsStatics::InitDefaultStates(EngineAPI::Graphics::GraphicsDevice* dev
 	assert(DefaultPipelineState_Blend.InitBlendState(device, &bsDesc, "DefaultPipelineState_Blend"));
 	assert(DefaultPipelineState_DepthStencil.InitDepthStencilState(device, &dssDesc, "DefaultPipelineState_DepthStencil"));
 	assert(DefaultPipelineState_Rasterizer.InitRasterizerState(device, &rsDesc, "DefaultPipelineState_Rasterizer"));
+
+	//Additive blend
+	bsDesc = BlendPipelineStateDescription();
+	bsDesc.IndependentBlendEnable = false;
+	bsDesc.RenderTargetsBlendState[0].BlendEnabled = true;
+	bsDesc.RenderTargetsBlendState[0].BlendOp = BLEND_OP_ADD;
+	bsDesc.RenderTargetsBlendState[0].BlendAlphaOp = BLEND_OP_ADD;
+	bsDesc.RenderTargetsBlendState[0].DestinationBlend = BLEND_MODE_ONE;
+	bsDesc.RenderTargetsBlendState[0].DestinationAlphaBlend = BLEND_MODE_ONE;
+	bsDesc.RenderTargetsBlendState[0].SourceBlend = BLEND_MODE_ONE;
+	bsDesc.RenderTargetsBlendState[0].SourceAlphaBlend = BLEND_MODE_ONE;
+	bsDesc.RenderTargetsBlendState[0].RenderTargetWriteMask =
+		RENDER_TARGET_WRITE_ENABLE_RED_BIT | RENDER_TARGET_WRITE_ENABLE_GREEN_BIT |
+		RENDER_TARGET_WRITE_ENABLE_BLUE_BIT;
+	assert(PipelineState_Blend_Additive.InitBlendState(device, &bsDesc, "PipelineState_Blend_Additive"));
+
+	//Mark the stencil buffer with a value -> Used during geometry pass as a default 
+	//setting - TODO: Engine can set the stencil to a value in the range 0-128. User can set the
+	//stencil to 128-255
+	dssDesc = DepthStencilPipelineStateDescription();
+	dssDesc.StencilTestEnabled = true;
+	dssDesc.StencilReadMask = 0;
+	dssDesc.StencilWriteMask = 0xFF;
+	dssDesc.FrontFaceOp.OnStencilFail = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.OnStencilPassDepthFail = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.OnStencilPassDepthPass = STENCIL_OP_REPLACE;			//Set value
+	dssDesc.FrontFaceOp.StencilComparisonFunction = COMPARISON_FUNCTION_ALWAYS; //No stencil testing...
+	assert(PipelineState_DepthStencil_DepthDefault_MarkStencilBuffer.InitDepthStencilState(device, &dssDesc, "PipelineState_DepthStencil_DefaultDepth_MarkStencil"));
+
+	//Stencil test enabled - passes if the stencil value in the stencil buffer
+	//is not equal to the reference - Eg: Lighting pass - only pass for
+	//pixels that have some geometry data from the geometry pass
+	dssDesc = DepthStencilPipelineStateDescription();
+	dssDesc.StencilTestEnabled = true;
+	dssDesc.StencilReadMask = 0xFF;
+	dssDesc.StencilWriteMask = 0;
+	dssDesc.FrontFaceOp.OnStencilFail = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.OnStencilPassDepthFail = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.OnStencilPassDepthPass = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.StencilComparisonFunction = COMPARISON_FUNCTION_LESS; 
+	dssDesc.BackFaceOp.OnStencilFail = STENCIL_OP_KEEP;
+	dssDesc.BackFaceOp.OnStencilPassDepthFail = STENCIL_OP_KEEP;
+	dssDesc.BackFaceOp.OnStencilPassDepthPass = STENCIL_OP_KEEP;
+	dssDesc.BackFaceOp.StencilComparisonFunction = COMPARISON_FUNCTION_LESS;
+	assert(PipelineState_DepthStencil_DepthDefault_StencilTestNotEqual.InitDepthStencilState(device, &dssDesc, "PipelineState_DepthStencil_DefaultDepth_StencilTestNotEqual"));
 }
 
 void GraphicsStatics::InitLightPass(EngineAPI::Graphics::GraphicsDevice* device)

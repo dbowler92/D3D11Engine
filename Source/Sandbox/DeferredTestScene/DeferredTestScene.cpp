@@ -35,7 +35,7 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	cube.InitCube(device,
 		cubeWorld,
 		std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"), true,
-		64.0f, 0.75f,
+		128.0f, 0.75f,
 		std::string("TestCube"));
 	
 	//Init plane

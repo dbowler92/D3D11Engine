@@ -95,8 +95,8 @@ float3 LightPass_DirectionalLight(float3 lightDir,
 
     //Spec - phong
     float3 r = reflect(lightDir, surfaceNormal_W);
-    float N_Dot_R = saturate(dot(r, surfaceToEye));
-    finalColourOut += (lightColour.rgb * lightIntensity) * pow(N_Dot_R, specPower) * specIntensity;
+    float angle = saturate(dot(r, surfaceToEye));
+    finalColourOut += (lightColour.rgb * lightIntensity) * pow(angle, specPower) * specIntensity;
 
     //Return
     finalColourOut *= surfaceDiffuse;

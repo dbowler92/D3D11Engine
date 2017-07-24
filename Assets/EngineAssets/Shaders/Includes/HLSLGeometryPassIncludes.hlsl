@@ -9,8 +9,8 @@
 //
 //Defines
 //
-#define SPEC_POWER_RANGE_MIN 10.0f
-#define SPEC_POWER_RANGE_MAX 250.0f
+#define SPEC_POWER_RANGE_MIN 1.0f
+#define SPEC_POWER_RANGE_MAX 128.0f
 
 //
 //Engine provided CBuffers

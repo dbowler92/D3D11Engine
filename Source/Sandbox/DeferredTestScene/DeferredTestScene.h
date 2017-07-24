@@ -13,8 +13,9 @@
 #include <Engine/Rendering/VirtualCamera/VirtualCamera.h>
 #include <Engine/Rendering/DirectionalLight/DirectionalLight.h>
 
-//Cube we render
+//Cube + plane we render
 #include <Sandbox/TestCube/TestCube.h>
+#include <Sandbox/TestPlane/TestPlane.h>
 
 class DeferredTestScene : public EngineAPI::Gameplay::Scene
 {
@@ -63,6 +64,7 @@ private:
 
 	//Cube
 	TestCube cube;
+	TestPlane plane;
 
 	//Debug flags
 	bool shouldDebugDrawGBuffer = false;

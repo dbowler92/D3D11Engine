@@ -325,6 +325,24 @@
     <Filter Include="EngineAssets\Shaders\Debug\GBufferVis">
       <UniqueIdentifier>{3388b9d5-215c-4e25-b8c9-d2c0df3c6a2a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Graphics\GeometryShader">
+      <UniqueIdentifier>{839f5d71-d71a-4fa5-9ff5-6aa51f03bfd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\HullShader">
+      <UniqueIdentifier>{6960cfaf-d06b-4827-80ef-72e3c7dc86e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\DomainShader">
+      <UniqueIdentifier>{66e26af1-3a81-4f26-b226-6ad392bf72f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\HullShader\D3D11">
+      <UniqueIdentifier>{708dc7d3-cf62-45c8-9d99-e20c72cbc8fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\DomainShader\D3D11">
+      <UniqueIdentifier>{a761190f-0c83-41e4-9157-5b5e820738e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Graphics\GeometryShader\D3D11">
+      <UniqueIdentifier>{571a0b5f-56bd-4cb6-854e-1568a87175b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -488,6 +506,15 @@
     </ClCompile>
     <ClCompile Include="..\Statics\GraphicsStatics\GraphicsStatics.cpp">
       <Filter>Src\Statics\GraphicsStatics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\HullShader\D3D11\D3D11HullShader.cpp">
+      <Filter>Src\Graphics\HullShader\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\DomainShader\D3D11\D3D11DomainShader.cpp">
+      <Filter>Src\Graphics\DomainShader\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\GeometryShader\D3D11\D3D11GeometryShader.cpp">
+      <Filter>Src\Graphics\GeometryShader\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -772,6 +799,24 @@
     </ClInclude>
     <ClInclude Include="..\Statics\GraphicsStatics\GraphicsStatics.h">
       <Filter>Src\Statics\GraphicsStatics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\HullShader\HullShader.h">
+      <Filter>Src\Graphics\HullShader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\HullShader\D3D11\D3D11HullShader.h">
+      <Filter>Src\Graphics\HullShader\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\DomainShader\D3D11\D3D11DomainShader.h">
+      <Filter>Src\Graphics\DomainShader\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\DomainShader\DomainShader.h">
+      <Filter>Src\Graphics\DomainShader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\GeometryShader\D3D11\D3D11GeometryShader.h">
+      <Filter>Src\Graphics\GeometryShader\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Graphics\GeometryShader\GeometryShader.h">
+      <Filter>Src\Graphics\GeometryShader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

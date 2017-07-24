@@ -32,19 +32,28 @@ bool DeferredTestScene::OnSceneBecomeActive()
 
 	//Init cube
 	XMMATRIX cubeWorld = XMMatrixTranslation(0.f, 0.f, 0.0f);
-
 	cube.InitCube(device,
 		cubeWorld,
 		std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"), true,
 		64.0f, 0.75f,
 		std::string("TestCube"));
+	
+	//Init plane
+	XMMATRIX planeWorld = XMMatrixTranslation(0.0f, -1.f, 0.0f);
+	plane.InitPlane(device,
+		planeWorld,
+		5.f, 5.f, 
+		std::string(ASSETS_FOLDER"Textures/TestTextures/bricks.dds"),
+		std::string(ASSETS_FOLDER"Textures/TestTextures/bricks_nmap.dds"),
+		128.0f, 0.5f,
+		std::string("TestPlane"));
 
 	//Init camera CBuffer
 	InitCameraCBuffer();
 
 	//Init light
 	dLight.InitDirectionalLightSource(XMFLOAT3(1.f, 0.f, 1.f), 
-		XMFLOAT3(0.4f, 0.4f, 0.4f), 1.0f, "DLight");
+		XMFLOAT3(0.4f, 0.4f, 0.4f), 2.0f, "DLight");
 	dLight.SetActiveState(true);
 
 	//Done
@@ -79,6 +88,7 @@ bool DeferredTestScene::OnSceneBecomeDeactive()
 	mainCamera.Shutdown();
 	camerConstantBuffer.Shutdown();
 	cube.Shutdown();
+	plane.Shutdown();
 	dLight.Shutdown();
 
 	//Done
@@ -197,6 +207,9 @@ bool DeferredTestScene::OnSceneUpdate(float dt)
 	//Update cube
 	cube.Update(dt);
 
+	//Update plane
+	plane.Update(dt);
+
 	//Debug draw?
 	shouldDebugDrawGBufferCooldownTimer += dt;
 	shouldDebugDrawGBufferPackedNormalsCooldownTimer += dt;
@@ -239,6 +252,9 @@ bool DeferredTestScene::OnSceneRenderGeometryPass()
 
 	//Draw cube
 	cube.RenderToGBuffer(device);
+
+	//And plane
+	plane.RenderToGBuffer(device);
 
 	//Done
 	return true;

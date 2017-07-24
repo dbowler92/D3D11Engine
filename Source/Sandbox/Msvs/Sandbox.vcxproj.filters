@@ -49,6 +49,12 @@
     <Filter Include="Resources\HLSLShaders\GeometryPass\G_Textured">
       <UniqueIdentifier>{98b947a4-4e22-41e3-8cd3-0f8f2597300b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\HLSLShaders\GeometryPass\G_NormalMapping">
+      <UniqueIdentifier>{e7c0f151-02a1-4ae4-aad0-204a586ab61d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\TestPlane">
+      <UniqueIdentifier>{947a42f2-00b9-4dc8-ad73-0e17e451ad3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\SandboxMain.cpp">
@@ -66,6 +72,9 @@
     <ClCompile Include="..\TestCube\TestCube.cpp">
       <Filter>Src\TestCube</Filter>
     </ClCompile>
+    <ClCompile Include="..\TestPlane\TestPlane.cpp">
+      <Filter>Src\TestPlane</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Application\SandboxApplication.h">
@@ -82,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="..\TestCube\TestCube.h">
       <Filter>Src\TestCube</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestPlane\TestPlane.h">
+      <Filter>Src\TestPlane</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +120,12 @@
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\Shaders\GeometryPass\G_TexturedVS.hlsl">
       <Filter>Resources\HLSLShaders\GeometryPass\G_Textured</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\Shaders\GeometryPass\G_NormalMappingPS.hlsl">
+      <Filter>Resources\HLSLShaders\GeometryPass\G_NormalMapping</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\Shaders\GeometryPass\G_NormalMappingVS.hlsl">
+      <Filter>Resources\HLSLShaders\GeometryPass\G_NormalMapping</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

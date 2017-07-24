@@ -93,3 +93,17 @@ GeometryPassPackedGBufferPSOutput PackGBuffer(float3 diffuse, float3 normalW,
     //Return the filled GBuffer
     return o;
 }
+
+float3 ConvertNormalFromTangentToWorld(float3 normalMapSample, 
+    float3 normalW, float3 tangentW, float3 bitangentW)
+{
+    //Converts a normal sampled from a normal map to world space. Note:
+    //Ensure to convert the sampled normal from [0,1] range to [-1,1] range
+    //before calling this.
+    //
+    float3x3 TBN = float3x3(normalize(tangentW),
+							normalize(bitangentW),
+							normalize(normalW));
+
+    return normalize(mul(normalMapSample, TBN));
+}

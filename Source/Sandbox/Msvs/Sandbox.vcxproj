@@ -188,6 +188,7 @@
     <ClCompile Include="..\Main\SandboxMain.cpp" />
     <ClCompile Include="..\SponzaScene\SponzaScene.cpp" />
     <ClCompile Include="..\TestCube\TestCube.cpp" />
+    <ClCompile Include="..\TestPlane\TestPlane.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AppConfig\AppConfig.h" />
@@ -195,8 +196,17 @@
     <ClInclude Include="..\DeferredTestScene\DeferredTestScene.h" />
     <ClInclude Include="..\SponzaScene\SponzaScene.h" />
     <ClInclude Include="..\TestCube\TestCube.h" />
+    <ClInclude Include="..\TestPlane\TestPlane.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\..\..\Assets\Shaders\GeometryPass\G_NormalMappingPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\Shaders\GeometryPass\G_NormalMappingVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="..\..\..\Assets\Shaders\GeometryPass\G_TexturedPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>

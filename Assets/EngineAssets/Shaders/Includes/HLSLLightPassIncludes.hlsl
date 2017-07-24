@@ -88,10 +88,15 @@ float3 LightPass_DirectionalLight(float3 lightDir,
     float N_Dot_L = dot(negLightDir, surfaceNormal_W);
     finalColourOut = (lightColour.rgb * lightIntensity) * saturate(N_Dot_L);
 
-    //Spec
-    float3 h = normalize(surfaceToEye + negLightDir);
-    float N_Dot_H = saturate(dot(h, surfaceNormal_W));
-    finalColourOut += (lightColour.rgb * lightIntensity) * pow(N_Dot_H, specPower) * specIntensity;
+    //Spec - blinn phong
+    //float3 h = normalize(surfaceToEye + negLightDir);
+    //float N_Dot_H = saturate(dot(h, surfaceNormal_W));
+    //finalColourOut += (lightColour.rgb * lightIntensity) * pow(N_Dot_H, specPower) * specIntensity;
+
+    //Spec - phong
+    float3 r = reflect(lightDir, surfaceNormal_W);
+    float N_Dot_R = saturate(dot(r, surfaceToEye));
+    finalColourOut += (lightColour.rgb * lightIntensity) * pow(N_Dot_R, specPower) * specIntensity;
 
     //Return
     finalColourOut *= surfaceDiffuse;

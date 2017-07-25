@@ -12,6 +12,7 @@
 //Rendering && graphics
 #include <Engine/Rendering/VirtualCamera/VirtualCamera.h>
 #include <Engine/Rendering/DirectionalLight/DirectionalLight.h>
+#include <Engine/Rendering/PointLight/PointLight.h>
 
 //Cube + plane we render
 #include <Sandbox/TestCube/TestCube.h>
@@ -59,8 +60,9 @@ private:
 	//CBuffer (WVP)
 	EngineAPI::Graphics::ConstantBuffer camerConstantBuffer;
 
-	//Light
-	EngineAPI::Rendering::Lights::DirectionalLight dLight;
+	//Lights
+	EngineAPI::Rendering::DirectionalLight dLight;
+	EngineAPI::Rendering::PointLight pLights[3];
 
 	//Cube
 	TestCube cube;

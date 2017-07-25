@@ -108,11 +108,22 @@ namespace EngineAPI
 				//Called before each pass - setsup the engine
 				//ready for each pass
 				bool OnBeginGeometryPass();
+				bool OnEndGeometryPass();
+
 				bool OnBeginLightPass();
+				bool OnEndLightPass();
+
 				bool OnBeginPostProcessPass();
+				bool OnEndPostProcessPass();
+
 				bool OnBeginDebugPass();
+				bool OnEndDebugPass();
+
 				bool OnBeginUIPass();
+				bool OnEndUIPass();
+
 				bool OnBeginDebugUIPass();
+				bool OnEndDebugUIPass();
 
 				//Presents the backbuffer
 				bool OnEndRender();

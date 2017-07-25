@@ -18,6 +18,8 @@
 
 //Shaders
 #include <Graphics/VertexShader/VertexShader.h>
+#include <Graphics/HullShader/HullShader.h>
+#include <Graphics/DomainShader/DomainShader.h>
 #include <Graphics/PixelShader/PixelShader.h>
 
 //CBuffer
@@ -72,10 +74,21 @@ namespace EngineAPI
 			//
 			//Lighting pass:
 			//
-			//	DirectionalLight:
+			//	Directional light:
 			static EngineAPI::Graphics::VertexShader   LightPass_DirectionalLight_VS;
 			static EngineAPI::Graphics::PixelShader    LightPass_DirectionalLight_PS;
 			static EngineAPI::Graphics::ConstantBuffer LightPass_DirectionalLight_LightDataCB;
+
+			//	Point light:
+			static EngineAPI::Graphics::VertexShader   LightPass_PointLight_VS;
+			static EngineAPI::Graphics::HullShader     LightPass_PointLight_HS;
+			static EngineAPI::Graphics::DomainShader   LightPass_PointLight_DS;
+			static EngineAPI::Graphics::PixelShader    LightPass_PointLight_PS;
+			static EngineAPI::Graphics::ConstantBuffer LightPass_PointLight_LightDataCB;
+
+			//	Spot light:
+
+			//	Capsule light:
 
 		public:
 			//Simple blit shader

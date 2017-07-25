@@ -38,6 +38,8 @@ namespace EngineAPI
 		class ConstantBuffer;
 
 		class VertexShader;
+		class HullShader;
+		class DomainShader;
 		class PixelShader;
 
 		class RasterizerState;
@@ -106,6 +108,13 @@ namespace EngineAPI
 				void VSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot);
 				void VSSetShaderResource(EngineAPI::Graphics::ShaderResourceView* shaderResource, UINT bindingSlot);
 				void VSSetSamplerState(EngineAPI::Graphics::SamplerState* samplerState, UINT bindingSlot);
+
+				//HS
+				void HSSetShader(EngineAPI::Graphics::HullShader* hs);
+
+				//DS
+				void DSSetShader(EngineAPI::Graphics::DomainShader* ds);
+				void DSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot);
 
 				//PS
 				void PSSetShader(EngineAPI::Graphics::PixelShader* ps);

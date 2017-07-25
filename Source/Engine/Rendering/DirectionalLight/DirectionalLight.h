@@ -24,37 +24,34 @@ namespace EngineAPI
 {
 	namespace Rendering
 	{
-		namespace Lights
+		class DirectionalLight : public EngineAPI::Core::CoreObject
 		{
-			class DirectionalLight : public EngineAPI::Core::CoreObject
-			{
-			public:
-				DirectionalLight() {};
-				~DirectionalLight() {};
+		public:
+			DirectionalLight() {};
+			~DirectionalLight() {};
 
-				//Override the shutdown function
-				void Shutdown() override;
+			//Override the shutdown function
+			void Shutdown() override;
 
-				//Inits the directional light with initial data
-				void InitDirectionalLightSource(XMFLOAT3 dir, 
-					XMFLOAT3 col, float intensity, 
-					std::string debugName = "");
+			//Inits the directional light with initial data
+			void InitDirectionalLightSource(XMFLOAT3 dir, 
+				XMFLOAT3 col, float intensity, 
+				std::string debugName = "");
 
-				//Set active state of light - renders only when
-				//true
-				void SetActiveState(bool state) { isActive = state; };
+			//Set active state of light - renders only when
+			//true
+			void SetActiveState(bool state) { isActive = state; };
 
-				//Renders the directional light source during the 
-				//lighting pass
-				void Render();
+			//Renders the directional light source during the 
+			//lighting pass
+			void Render();
 
-			protected:
-				//Light data
-				DirectionalLightGraphicsData lightData;
+		protected:
+			//Light data
+			DirectionalLightGraphicsData lightData;
 
-				//Is light active?
-				bool isActive = false;
-			};
+			//Is light active?
+			bool isActive = false;
 		};
 	};
 };

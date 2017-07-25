@@ -94,6 +94,11 @@ void D3D11ConstantBuffer::BindConstantBufferToVertexShaderStage(EngineAPI::Graph
 	device->GetD3D11ImmediateContext()->VSSetConstantBuffers(bufferSlot, 1, &buffer);
 }
 
+void D3D11ConstantBuffer::BindConstantBufferToDomainShaderStage(EngineAPI::Graphics::GraphicsDevice* device, UINT bufferSlot)
+{
+	device->GetD3D11ImmediateContext()->DSSetConstantBuffers(bufferSlot, 1, &buffer);
+}
+
 void D3D11ConstantBuffer::BindConstantBufferToPixelShaderStage(EngineAPI::Graphics::GraphicsDevice* device, UINT bufferSlot)
 {
 	device->GetD3D11ImmediateContext()->PSSetConstantBuffers(bufferSlot, 1, &buffer);

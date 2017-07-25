@@ -85,21 +85,27 @@ bool D3D11GraphicsManager::OnRender()
 	//to render
 	assert(OnBeginGeometryPass());
 	assert(sm->OnRenderGeometryPass());
+	assert(OnEndGeometryPass());
 
 	assert(OnBeginLightPass());
 	assert(sm->OnRenderLightPass());
+	assert(OnEndLightPass());
 
 	assert(OnBeginPostProcessPass());
-	//assert(sm->OnRenderPostProcessPass());
+	assert(sm->OnRenderPostProcessPass());
+	assert(OnEndPostProcessPass());
 
 	assert(OnBeginDebugPass());
-	//assert(sm->OnRenderDebugPass());
+	assert(sm->OnRenderDebugPass());
+	assert(OnEndDebugPass());
 
 	assert(OnBeginUIPass());
-	//assert(sm->OnRenderUIPass());
+	assert(sm->OnRenderUIPass());
+	assert(OnEndUIPass());
 
 	assert(OnBeginDebugUIPass());
 	assert(sm->OnRenderDebugUIPass());
+	assert(OnEndDebugUIPass());
 
 	//Present the backbuffer to the user
 	assert(OnEndRender());
@@ -146,11 +152,17 @@ bool D3D11GraphicsManager::OnBeginGeometryPass()
 	return true;
 }
 
-bool D3D11GraphicsManager::OnBeginLightPass()
+bool D3D11GraphicsManager::OnEndGeometryPass()
 {
-	//Unbind GBuffer
+	//Unbind GBuffer from OM
 	deferredGBuffer.UnbindGBufferAfterGeometryPass();
 
+	//Done
+	return true;
+}
+
+bool D3D11GraphicsManager::OnBeginLightPass()
+{
 	//Bind LA Buffer with swapchain read-only depth - we want depth testing (read)
 	//but also reading from within the lighting PS
 	//
@@ -179,11 +191,25 @@ bool D3D11GraphicsManager::OnBeginLightPass()
 	return true;
 }
 
-bool D3D11GraphicsManager::OnBeginPostProcessPass()
+bool D3D11GraphicsManager::OnEndLightPass()
 {
 	//Unbind GBuffer from (lighting pass) pixel shader
 	deferredGBuffer.UnbindGBufferAfterLightPass();
 
+	//Unbind LABuffer from OM???
+
+	//Reset shaders - we may have HS and DS active
+	device.VSSetShader(nullptr);
+	device.HSSetShader(nullptr);
+	device.DSSetShader(nullptr);
+	device.PSSetShader(nullptr);
+
+	//Done
+	return true;
+}
+
+bool D3D11GraphicsManager::OnBeginPostProcessPass()
+{
 	//Bind the swapchain (for now - may need ping-pong buffers)
 	//
 	//No depth buffer needs to be bound for testing
@@ -220,10 +246,22 @@ bool D3D11GraphicsManager::OnBeginPostProcessPass()
 	return true;
 }
 
+bool D3D11GraphicsManager::OnEndPostProcessPass()
+{
+	//Done
+	return true;
+}
+
 bool D3D11GraphicsManager::OnBeginDebugPass()
 {
 	//Render directly in to the backbuffer
 
+	//Done
+	return true;
+}
+
+bool D3D11GraphicsManager::OnEndDebugPass()
+{
 	//Done
 	return true;
 }
@@ -233,6 +271,12 @@ bool D3D11GraphicsManager::OnBeginUIPass()
 	//Render directly in to the backbuffer over the top of
 	//scene elements (depth test off)
 
+	//Done
+	return true;
+}
+
+bool D3D11GraphicsManager::OnEndUIPass()
+{
 	//Done
 	return true;
 }
@@ -258,6 +302,13 @@ bool D3D11GraphicsManager::OnBeginDebugUIPass()
 	//Done
 	return true;
 }
+
+bool D3D11GraphicsManager::OnEndDebugUIPass()
+{
+	//Done
+	return true;
+}
+
 
 bool D3D11GraphicsManager::OnEndRender()
 {

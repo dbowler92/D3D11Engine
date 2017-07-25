@@ -2,6 +2,7 @@
 
 //Needs to know the size of light data to create a CBuffer for
 #include <Rendering/DirectionalLight/DirectionalLight.h>
+#include <Rendering/PointLight/PointLight.h>
 
 using namespace EngineAPI::Statics;
 
@@ -17,6 +18,12 @@ EngineAPI::Graphics::DepthStencilState GraphicsStatics::PipelineState_DepthStenc
 EngineAPI::Graphics::VertexShader GraphicsStatics::LightPass_DirectionalLight_VS;
 EngineAPI::Graphics::PixelShader GraphicsStatics::LightPass_DirectionalLight_PS;
 EngineAPI::Graphics::ConstantBuffer GraphicsStatics::LightPass_DirectionalLight_LightDataCB;
+
+EngineAPI::Graphics::VertexShader   GraphicsStatics::LightPass_PointLight_VS;
+EngineAPI::Graphics::HullShader     GraphicsStatics::LightPass_PointLight_HS;
+EngineAPI::Graphics::DomainShader   GraphicsStatics::LightPass_PointLight_DS;
+EngineAPI::Graphics::PixelShader    GraphicsStatics::LightPass_PointLight_PS;
+EngineAPI::Graphics::ConstantBuffer GraphicsStatics::LightPass_PointLight_LightDataCB;
 
 EngineAPI::Graphics::VertexShader GraphicsStatics::Blit_VS;
 EngineAPI::Graphics::PixelShader  GraphicsStatics::Blit_PS;
@@ -69,6 +76,12 @@ void GraphicsStatics::ShutdownAllGraphicsStatics()
 	LightPass_DirectionalLight_VS.Shutdown();
 	LightPass_DirectionalLight_PS.Shutdown();
 	LightPass_DirectionalLight_LightDataCB.Shutdown();
+
+	LightPass_PointLight_VS.Shutdown();
+	LightPass_PointLight_HS.Shutdown();
+	LightPass_PointLight_DS.Shutdown();
+	LightPass_PointLight_PS.Shutdown();
+	LightPass_PointLight_LightDataCB.Shutdown();
 
 	Blit_VS.Shutdown();
 	Blit_PS.Shutdown();
@@ -158,7 +171,30 @@ void GraphicsStatics::InitLightPass(EngineAPI::Graphics::GraphicsDevice* device)
 		sizeof(DirectionalLightGraphicsData), nullptr,
 		RESOURCE_USAGE_DYNAMIC, RESOURCE_CPU_ACCESS_WRITE_BIT,
 		RESOURCE_BIND_CONSTANT_BUFFER_BIT,
-		"LightPass_DirectionalLight_LightDataCB"));
+		"LightPass_DirectionalLight_SharedLightDataCB"));
+
+	//	Point light:
+	assert(LightPass_PointLight_VS.InitCompiledVertexShaderFromFile(device,
+		ENGINE_SHADER_COMPILED_ASSETS_FOLDER"L_PointLightVS.cso",
+		nullptr, 0, "LightPass_PointLight_VS"));
+
+	assert(LightPass_PointLight_HS.InitCompiledHullShaderFromFile(device,
+		ENGINE_SHADER_COMPILED_ASSETS_FOLDER"L_PointLightHS.cso",
+		"LightPass_PointLight_HS"));
+
+	assert(LightPass_PointLight_DS.InitCompiledDomainShaderFromFile(device,
+		ENGINE_SHADER_COMPILED_ASSETS_FOLDER"L_PointLightDS.cso",
+		"LightPass_PointLight_DS"));
+
+	assert(LightPass_PointLight_PS.InitCompiledPixelShaderFromFile(device,
+		ENGINE_SHADER_COMPILED_ASSETS_FOLDER"L_PointLightPS.cso",
+		"LightPass_PointLight_PS"));
+
+	assert(LightPass_PointLight_LightDataCB.InitConstantBuffer(device,
+		sizeof(PointLightGraphicsData), nullptr,
+		RESOURCE_USAGE_DYNAMIC, RESOURCE_CPU_ACCESS_WRITE_BIT,
+		RESOURCE_BIND_CONSTANT_BUFFER_BIT,
+		"LightPass_PointLight_SharedLightDataCB"));
 }
 
 void GraphicsStatics::InitGBufferVis(EngineAPI::Graphics::GraphicsDevice* device)

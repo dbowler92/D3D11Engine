@@ -343,6 +343,12 @@
     <Filter Include="Src\Graphics\GeometryShader\D3D11">
       <UniqueIdentifier>{571a0b5f-56bd-4cb6-854e-1568a87175b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EngineAssets\Shaders\LightPass\PointLight">
+      <UniqueIdentifier>{cf17ae5c-615e-409b-ba6a-0b96162a7d32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Rendering\PointLight">
+      <UniqueIdentifier>{7343c6ec-b5df-4497-a47c-5c6c7c9d8131}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -515,6 +521,9 @@
     </ClCompile>
     <ClCompile Include="..\Graphics\GeometryShader\D3D11\D3D11GeometryShader.cpp">
       <Filter>Src\Graphics\GeometryShader\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Rendering\PointLight\PointLight.cpp">
+      <Filter>Src\Rendering\PointLight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -818,6 +827,9 @@
     <ClInclude Include="..\Graphics\GeometryShader\GeometryShader.h">
       <Filter>Src\Graphics\GeometryShader</Filter>
     </ClInclude>
+    <ClInclude Include="..\Rendering\PointLight\PointLight.h">
+      <Filter>Src\Rendering\PointLight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Includes\HLSLGeometryPassIncludes.hlsl">
@@ -858,6 +870,18 @@
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\GBufferVis\GBufferVis_DepthPS.hlsl">
       <Filter>EngineAssets\Shaders\Debug\GBufferVis</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_PointLightVS.hlsl">
+      <Filter>EngineAssets\Shaders\LightPass\PointLight</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_PointLightHS.hlsl">
+      <Filter>EngineAssets\Shaders\LightPass\PointLight</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_PointLightDS.hlsl">
+      <Filter>EngineAssets\Shaders\LightPass\PointLight</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_PointLightPS.hlsl">
+      <Filter>EngineAssets\Shaders\LightPass\PointLight</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

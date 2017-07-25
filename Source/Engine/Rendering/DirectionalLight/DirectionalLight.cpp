@@ -6,7 +6,7 @@
 //Uses some of the static engine resources
 #include <Statics/GraphicsStatics/GraphicsStatics.h>
 
-using namespace EngineAPI::Rendering::Lights;
+using namespace EngineAPI::Rendering;
 
 void DirectionalLight::Shutdown()
 {

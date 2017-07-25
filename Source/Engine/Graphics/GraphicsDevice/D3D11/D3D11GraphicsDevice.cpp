@@ -9,6 +9,8 @@
 #include <Graphics/ConstantBuffer/ConstantBuffer.h>
 
 #include <Graphics/VertexShader/VertexShader.h>
+#include <Graphics/HullShader/HullShader.h>
+#include <Graphics/DomainShader/DomainShader.h>
 #include <Graphics/PixelShader/PixelShader.h>
 
 #include <Graphics/RasterizerState/RasterizerState.h>
@@ -261,6 +263,41 @@ void D3D11GraphicsDevice::VSSetSamplerState(EngineAPI::Graphics::SamplerState* s
 	{
 		ID3D11SamplerState* samplers = 0;
 		GetD3D11ImmediateContext()->VSSetSamplers(bindingSlot, 1, &samplers);
+	}
+}
+
+//
+//HS
+//
+
+void D3D11GraphicsDevice::HSSetShader(EngineAPI::Graphics::HullShader* hs)
+{
+	if (hs)
+		hs->BindHullShaderToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);
+	else
+		GetD3D11ImmediateContext()->HSSetShader(nullptr, nullptr, 0);
+}
+
+//
+//DS
+//
+
+void D3D11GraphicsDevice::DSSetShader(EngineAPI::Graphics::DomainShader* ds)
+{
+	if (ds)
+		ds->BindDomainShaderToPipeline((EngineAPI::Graphics::GraphicsDevice*)this);
+	else
+		GetD3D11ImmediateContext()->DSSetShader(nullptr, nullptr, 0);
+}
+
+void D3D11GraphicsDevice::DSSetConstantBuffer(EngineAPI::Graphics::ConstantBuffer* cBuffer, UINT bufferSlot)
+{
+	if (cBuffer)
+		cBuffer->BindConstantBufferToDomainShaderStage((EngineAPI::Graphics::GraphicsDevice*)this, bufferSlot);
+	else
+	{
+		ID3D11Buffer* buffers = 0;
+		GetD3D11ImmediateContext()->DSSetConstantBuffers(bufferSlot, 1, &buffers);
 	}
 }
 

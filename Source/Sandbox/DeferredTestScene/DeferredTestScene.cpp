@@ -51,10 +51,33 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	//Init camera CBuffer
 	InitCameraCBuffer();
 
-	//Init light
+	//Init d light
 	dLight.InitDirectionalLightSource(XMFLOAT3(1.f, 0.f, 1.f), 
-		XMFLOAT3(0.4f, 0.4f, 0.4f), 2.0f, "DLight");
+		XMFLOAT3(0.4f, 0.4f, 0.4f), 1.0f, "DLight");
 	dLight.SetActiveState(true);
+
+	//Init p lights
+	XMFLOAT3 pLightPositions[3] =
+	{
+		XMFLOAT3(-2.0f, 0.0f, 0.0f),
+		XMFLOAT3(+2.0f, 0.0f, 0.0f),
+		XMFLOAT3(0.0f, +2.0f, 0.0f)
+	};
+
+	XMFLOAT3 pLightColours[3] =
+	{
+		XMFLOAT3(0.6f, 0.0f, 0.0f),
+		XMFLOAT3(0.0f, 0.6f, 0.0f),
+		XMFLOAT3(0.0f, 0.0f, 0.6f),
+	};
+
+	for (int i = 0; i < 3; i++)
+	{
+		pLights[i].InitPointLightSource(pLightPositions[i], 3.f, 
+			pLightColours[i], 1.f,
+			std::string("PLight_") + std::to_string(i));
+		pLights[i].SetActiveState(true);
+	}
 
 	//Done
 	return true;
@@ -90,6 +113,9 @@ bool DeferredTestScene::OnSceneBecomeDeactive()
 	cube.Shutdown();
 	plane.Shutdown();
 	dLight.Shutdown();
+
+	for (int i = 0; i < 3; i++)
+		pLights[i].Shutdown();
 
 	//Done
 	return true;
@@ -273,6 +299,10 @@ bool DeferredTestScene::OnSceneRenderLightPass()
 
 	//DLights
 	dLight.Render();
+
+	//PLights
+	for (int i = 0; i < 3; i++)
+		pLights[i].Render(&mainCamera); 
 
 	//Done
 	return true;

@@ -45,7 +45,7 @@ void PointLight::Render(EngineAPI::Rendering::VirtualCamera* mainCamera)
 	assert(device);
 
 	//Calculate light world * view * projection matrix
-	XMMATRIX lightWorld = XMMatrixScaling(lightData.LightRange / 2.f, lightData.LightRange / 2.f, lightData.LightRange / 2.f) * 
+	XMMATRIX lightWorld = XMMatrixScaling(lightData.LightRange, lightData.LightRange, lightData.LightRange) * 
 		XMMatrixTranslation(lightData.LightPosition.x, lightData.LightPosition.y, lightData.LightPosition.z);
 	XMMATRIX lightWorldViewProj = lightWorld * mainCamera->GetView() * mainCamera->GetProj();
 	XMStoreFloat4x4(&lightData.LightWorldViewProjection, XMMatrixTranspose(lightWorldViewProj));

@@ -150,7 +150,8 @@ float3 LightPass_PointLight(float3 lightPos, float lightRange,
     finalColourOut += (lightColour.rgb * lightIntensity) * pow(angle, specPower) * specIntensity;
 #endif
 
-    //Attenuation - TODO: Better attenuation function
+    //Attenuation - TODO: Better attenuation function + move the 1.0f/lightRange back to the
+    //CPU
     float distToLightNormalized = 1.0f - saturate(surfToLightDistance * (1.0f / lightRange));
     float attenuation = distToLightNormalized * distToLightNormalized;
 

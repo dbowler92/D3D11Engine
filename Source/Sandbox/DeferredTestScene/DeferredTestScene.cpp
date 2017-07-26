@@ -34,7 +34,8 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	XMMATRIX cubeWorld = XMMatrixTranslation(0.f, 0.f, 0.0f);
 	cube.InitCube(device,
 		cubeWorld,
-		std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"), true,
+		//std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"), true,
+		std::string(ASSETS_FOLDER"Textures/TestTextures/White_512.png"), true,
 		128.0f, 0.75f,
 		std::string("TestCube"));
 	

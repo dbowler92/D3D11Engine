@@ -75,16 +75,19 @@ namespace EngineAPI
 			//Lighting pass:
 			//
 			//	Directional light:
-			static EngineAPI::Graphics::VertexShader   LightPass_DirectionalLight_VS;
-			static EngineAPI::Graphics::PixelShader    LightPass_DirectionalLight_PS;
-			static EngineAPI::Graphics::ConstantBuffer LightPass_DirectionalLight_LightDataCB;
+			static EngineAPI::Graphics::VertexShader      LightPass_DirectionalLight_VS;
+			static EngineAPI::Graphics::PixelShader       LightPass_DirectionalLight_PS;
+			static EngineAPI::Graphics::ConstantBuffer	  LightPass_DirectionalLight_LightDataCB;
+			static EngineAPI::Graphics::DepthStencilState LightPass_DirectionalLight_DSS;
 
 			//	Point light:
-			static EngineAPI::Graphics::VertexShader   LightPass_PointLight_VS;
-			static EngineAPI::Graphics::HullShader     LightPass_PointLight_HS;
-			static EngineAPI::Graphics::DomainShader   LightPass_PointLight_DS;
-			static EngineAPI::Graphics::PixelShader    LightPass_PointLight_PS;
-			static EngineAPI::Graphics::ConstantBuffer LightPass_PointLight_LightDataCB;
+			static EngineAPI::Graphics::VertexShader	  LightPass_PointLight_VS;
+			static EngineAPI::Graphics::HullShader		  LightPass_PointLight_HS;
+			static EngineAPI::Graphics::DomainShader	  LightPass_PointLight_DS;
+			static EngineAPI::Graphics::PixelShader		  LightPass_PointLight_PS;
+			static EngineAPI::Graphics::ConstantBuffer	  LightPass_PointLight_LightDataCB;
+			static EngineAPI::Graphics::DepthStencilState LightPass_PointLight_DSS;
+			static EngineAPI::Graphics::RasterizerState   LightPass_PointLight_RZS;
 
 			//	Spot light:
 

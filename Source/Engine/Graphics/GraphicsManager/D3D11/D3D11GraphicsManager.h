@@ -38,6 +38,15 @@ namespace EngineAPI
 	};
 };
 
+//Enum which represents which lights to render
+enum LightPassMode
+{
+	LIGHT_PASS_DIRECTIONAL_LIGHTS,
+	LIGHT_PASS_POINT_LIGHTS,
+	LIGHT_PASS_SPOT_LIGHTS,
+	LIGHT_PASS_CAPSULE_LIGHTS,
+};
+
 namespace EngineAPI
 {
 	namespace Graphics
@@ -111,6 +120,10 @@ namespace EngineAPI
 				bool OnEndGeometryPass();
 
 				bool OnBeginLightPass();
+				bool OnBeginLightPass_DirectionalLights();
+				bool OnBeginLightPass_PointLights();
+				bool OnBeginLightPass_SpotLights();
+				bool OnBeginLightPass_CapsuleLights();
 				bool OnEndLightPass();
 
 				bool OnBeginPostProcessPass();

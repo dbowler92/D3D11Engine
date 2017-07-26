@@ -61,7 +61,7 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	{
 		XMFLOAT3(-2.0f, 0.0f, 0.0f),
 		XMFLOAT3(+2.0f, 0.0f, 0.0f),
-		XMFLOAT3(0.0f, +2.0f, 0.0f)
+		XMFLOAT3(0.0f, 0.0f, -2.0f)
 	};
 
 	XMFLOAT3 pLightColours[3] =
@@ -286,7 +286,7 @@ bool DeferredTestScene::OnSceneRenderGeometryPass()
 	return true;
 }
 
-bool DeferredTestScene::OnSceneRenderLightPass()
+bool DeferredTestScene::OnSceneRenderLightPass(LightPassMode mode)
 {
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
@@ -298,11 +298,15 @@ bool DeferredTestScene::OnSceneRenderLightPass()
 	device->PSSetConstantBuffer(&camerConstantBuffer, GRAPHICS_CONFIG_CAMERA_CBUFFER_BINDING_SLOT);
 
 	//DLights
-	dLight.Render();
+	if (mode == LIGHT_PASS_DIRECTIONAL_LIGHTS)
+		dLight.Render();
 
 	//PLights
-	for (int i = 0; i < 3; i++)
-		pLights[i].Render(&mainCamera); 
+	if (mode == LIGHT_PASS_POINT_LIGHTS)
+	{
+		for (int i = 0; i < 3; i++)
+			pLights[i].Render(&mainCamera);
+	}
 
 	//Done
 	return true;

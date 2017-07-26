@@ -51,7 +51,7 @@ public:
 
 	bool OnScenePreRender() override;
 	bool OnSceneRenderGeometryPass() override;
-	bool OnSceneRenderLightPass() override;
+	bool OnSceneRenderLightPass(LightPassMode mode) override;
 	bool OnSceneRenderPostProcessPass() override;
 	bool OnSceneRenderDebugPass()  override;
 	bool OnSceneRenderUIPass() override;

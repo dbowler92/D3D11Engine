@@ -116,10 +116,10 @@ bool SceneManager::OnRenderGeometryPass()
 
 }
 
-bool SceneManager::OnRenderLightPass()
+bool SceneManager::OnRenderLightPass(LightPassMode mode)
 {
 	if (currentScene)
-		return currentScene->OnSceneRenderLightPass();
+		return currentScene->OnSceneRenderLightPass(mode);
 
 	return false;
 

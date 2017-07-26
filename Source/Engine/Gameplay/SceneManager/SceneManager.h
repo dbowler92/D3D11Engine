@@ -97,7 +97,7 @@ namespace EngineAPI
 
 			bool OnPreRender();
 			bool OnRenderGeometryPass();
-			bool OnRenderLightPass();
+			bool OnRenderLightPass(LightPassMode mode);
 			bool OnRenderPostProcessPass();
 			bool OnRenderDebugPass();
 			bool OnRenderUIPass();

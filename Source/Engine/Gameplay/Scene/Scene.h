@@ -53,7 +53,7 @@ namespace EngineAPI
 
 			virtual bool OnScenePreRender() = 0;
 			virtual bool OnSceneRenderGeometryPass() = 0;
-			virtual bool OnSceneRenderLightPass() = 0;
+			virtual bool OnSceneRenderLightPass(LightPassMode mode) = 0;
 			virtual bool OnSceneRenderPostProcessPass() = 0;
 			virtual bool OnSceneRenderDebugPass() = 0;
 			virtual bool OnSceneRenderUIPass() = 0;

@@ -18,12 +18,15 @@ EngineAPI::Graphics::DepthStencilState GraphicsStatics::PipelineState_DepthStenc
 EngineAPI::Graphics::VertexShader GraphicsStatics::LightPass_DirectionalLight_VS;
 EngineAPI::Graphics::PixelShader GraphicsStatics::LightPass_DirectionalLight_PS;
 EngineAPI::Graphics::ConstantBuffer GraphicsStatics::LightPass_DirectionalLight_LightDataCB;
+EngineAPI::Graphics::DepthStencilState GraphicsStatics::LightPass_DirectionalLight_DSS;
 
 EngineAPI::Graphics::VertexShader   GraphicsStatics::LightPass_PointLight_VS;
 EngineAPI::Graphics::HullShader     GraphicsStatics::LightPass_PointLight_HS;
 EngineAPI::Graphics::DomainShader   GraphicsStatics::LightPass_PointLight_DS;
 EngineAPI::Graphics::PixelShader    GraphicsStatics::LightPass_PointLight_PS;
 EngineAPI::Graphics::ConstantBuffer GraphicsStatics::LightPass_PointLight_LightDataCB;
+EngineAPI::Graphics::DepthStencilState GraphicsStatics::LightPass_PointLight_DSS;
+EngineAPI::Graphics::RasterizerState   GraphicsStatics::LightPass_PointLight_RZS;
 
 EngineAPI::Graphics::VertexShader GraphicsStatics::Blit_VS;
 EngineAPI::Graphics::PixelShader  GraphicsStatics::Blit_PS;
@@ -76,12 +79,15 @@ void GraphicsStatics::ShutdownAllGraphicsStatics()
 	LightPass_DirectionalLight_VS.Shutdown();
 	LightPass_DirectionalLight_PS.Shutdown();
 	LightPass_DirectionalLight_LightDataCB.Shutdown();
+	LightPass_DirectionalLight_DSS.Shutdown();
 
 	LightPass_PointLight_VS.Shutdown();
 	LightPass_PointLight_HS.Shutdown();
 	LightPass_PointLight_DS.Shutdown();
 	LightPass_PointLight_PS.Shutdown();
 	LightPass_PointLight_LightDataCB.Shutdown();
+	LightPass_PointLight_DSS.Shutdown();
+	LightPass_PointLight_RZS.Shutdown();
 
 	Blit_VS.Shutdown();
 	Blit_PS.Shutdown();
@@ -173,6 +179,22 @@ void GraphicsStatics::InitLightPass(EngineAPI::Graphics::GraphicsDevice* device)
 		RESOURCE_BIND_CONSTANT_BUFFER_BIT,
 		"LightPass_DirectionalLight_SharedLightDataCB"));
 
+	DepthStencilPipelineStateDescription dssDesc = {};
+	dssDesc.DepthTestEnabled = false;
+	dssDesc.DepthWriteMask = DEPTH_TEXTURE_WRITE_MASK_ZERO;
+	dssDesc.StencilTestEnabled = true;
+	dssDesc.StencilReadMask = 0xFF;
+	dssDesc.StencilWriteMask = 0;
+	dssDesc.FrontFaceOp.OnStencilFail = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.OnStencilPassDepthFail = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.OnStencilPassDepthPass = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.StencilComparisonFunction = COMPARISON_FUNCTION_NOT_EQUAL;
+	dssDesc.BackFaceOp.OnStencilFail = STENCIL_OP_KEEP;
+	dssDesc.BackFaceOp.OnStencilPassDepthFail = STENCIL_OP_KEEP;
+	dssDesc.BackFaceOp.OnStencilPassDepthPass = STENCIL_OP_KEEP;
+	dssDesc.BackFaceOp.StencilComparisonFunction = COMPARISON_FUNCTION_NOT_EQUAL;
+	assert(LightPass_DirectionalLight_DSS.InitDepthStencilState(device, &dssDesc, "LightPass_DirectionalLight_DepthStencilState"));
+
 	//	Point light:
 	assert(LightPass_PointLight_VS.InitCompiledVertexShaderFromFile(device,
 		ENGINE_SHADER_COMPILED_ASSETS_FOLDER"L_PointLightVS.cso",
@@ -195,6 +217,28 @@ void GraphicsStatics::InitLightPass(EngineAPI::Graphics::GraphicsDevice* device)
 		RESOURCE_USAGE_DYNAMIC, RESOURCE_CPU_ACCESS_WRITE_BIT,
 		RESOURCE_BIND_CONSTANT_BUFFER_BIT,
 		"LightPass_PointLight_SharedLightDataCB"));
+
+	dssDesc = DepthStencilPipelineStateDescription();
+	dssDesc.DepthTestEnabled = true;
+	dssDesc.DepthWriteMask = DEPTH_TEXTURE_WRITE_MASK_ZERO;
+	dssDesc.DepthTestFunction = COMPARISON_FUNCTION_GREATER_EQUAL;
+	dssDesc.StencilTestEnabled = true;
+	dssDesc.StencilReadMask = 0xFF;
+	dssDesc.StencilWriteMask = 0;
+	dssDesc.FrontFaceOp.OnStencilFail = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.OnStencilPassDepthFail = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.OnStencilPassDepthPass = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.StencilComparisonFunction = COMPARISON_FUNCTION_NOT_EQUAL;
+	dssDesc.BackFaceOp.OnStencilFail = STENCIL_OP_KEEP;
+	dssDesc.BackFaceOp.OnStencilPassDepthFail = STENCIL_OP_KEEP;
+	dssDesc.BackFaceOp.OnStencilPassDepthPass = STENCIL_OP_KEEP;
+	dssDesc.BackFaceOp.StencilComparisonFunction = COMPARISON_FUNCTION_NOT_EQUAL;
+	assert(LightPass_PointLight_DSS.InitDepthStencilState(device, &dssDesc, "LightPass_PointLight_DepthStencilState"));
+
+	RasterizerPipelineStateDescription rsDesc = {};
+	rsDesc.FillMode = POLYGON_FILL_SOLID;
+	rsDesc.FaceCullingMode = POLYGON_FACE_CULL_FRONT;
+	assert(LightPass_PointLight_RZS.InitRasterizerState(device, &rsDesc, "LightPass_PointLight_RasterizerState"));
 }
 
 void GraphicsStatics::InitGBufferVis(EngineAPI::Graphics::GraphicsDevice* device)

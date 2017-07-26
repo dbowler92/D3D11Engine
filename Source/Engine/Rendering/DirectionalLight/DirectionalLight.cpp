@@ -54,15 +54,6 @@ void DirectionalLight::Render()
 
 	//Render the light source during the lighting pass
 	//
-	//Shaders:
-	device->VSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_DirectionalLight_VS);
-	device->PSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_DirectionalLight_PS);
-
-	//NULL VB and IB -> We generate the quad in the shader
-	device->IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	device->IASetVertexBuffer(nullptr, 0, 0);
-	device->IASetIndexBuffer(nullptr, 0);
-
 	//Bind the light data CBuffer (Slot 1)
 	device->PSSetConstantBuffer(&cb, GRAPHICS_CONFIG_LIGHT_PASS_LIGHT_DATA_CBUFFER_BINDING_SLOT);
 

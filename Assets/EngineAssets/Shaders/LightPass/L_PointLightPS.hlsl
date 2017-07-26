@@ -21,6 +21,20 @@ struct DSOutput
 
 float4 main(DSOutput input) : SV_Target
 {
+     //Sample GBuffer at this pixel + unpack. Note: input.H_Position has
+    //undergone the viewport transform so represents the pixel we wish to
+    //sample the GBuffer for (via Load())
+    UnpackedGBufferSampleData gBufferSample = UnpackGBuffer(int2(input.V_Position.xy));
+
+    //World space position
+    float3 pixelWorldSpace = ReconstructWorldSpacePosition(input.C_Position2D, gBufferSample.LinearDepth);
+
+    //Handle point lighting
+    float3 c = LightPass_PointLight(LightPosition, LightRange,
+        float3(LightColourAndIntensity.xyz), LightColourAndIntensity.w,
+        gBufferSample.SpecularIntensity, gBufferSample.SpecularPower,
+        gBufferSample.Colour, gBufferSample.Normal, pixelWorldSpace);
+
     //TEMP
-    return float4(0.0f, 0.0f, 1.f, 1.f);
+    return float4(c.rgb, 1.f);
 }

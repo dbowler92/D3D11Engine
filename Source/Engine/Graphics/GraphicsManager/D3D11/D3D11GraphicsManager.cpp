@@ -88,7 +88,19 @@ bool D3D11GraphicsManager::OnRender()
 	assert(OnEndGeometryPass());
 
 	assert(OnBeginLightPass());
-	assert(sm->OnRenderLightPass());
+
+	assert(OnBeginLightPass_DirectionalLights());
+	assert(sm->OnRenderLightPass(LIGHT_PASS_DIRECTIONAL_LIGHTS));
+
+	assert(OnBeginLightPass_PointLights());
+	assert(sm->OnRenderLightPass(LIGHT_PASS_POINT_LIGHTS));
+
+	assert(OnBeginLightPass_SpotLights());
+	assert(sm->OnRenderLightPass(LIGHT_PASS_SPOT_LIGHTS));
+
+	assert(OnBeginLightPass_CapsuleLights());
+	assert(sm->OnRenderLightPass(LIGHT_PASS_CAPSULE_LIGHTS));
+
 	assert(OnEndLightPass());
 
 	assert(OnBeginPostProcessPass());
@@ -177,16 +189,77 @@ bool D3D11GraphicsManager::OnBeginLightPass()
 	//Texture2D GBuffer_SpecPower			 : register(t3);
 	deferredGBuffer.BindGBufferForLightPass(swapchain.GetSwapchainDepthTexture2DShaderResourceView());
 
-	//NSet render states -> Additive blending in to the LABuffer + stencil test is > than 0 - IE, non marked
-	//pixels from the Geometry Pass will not be lit (Eg: we can skip the pixels that remain in the cleared
-	//state)
+	//Set render states -> Additive blending in to the LABuffer
 	device.OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::PipelineState_Blend_Additive);
-	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::PipelineState_DepthStencil_DepthDefault_StencilTestNotEqual, 0);
-	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);
-
+	
 	//Fullscreen render
 	swapchain.SetFullResolutionViewport(&device);
 
+	//Done
+	return true;
+}
+
+bool D3D11GraphicsManager::OnBeginLightPass_DirectionalLights()
+{
+	//Depth stencil state - Lit geometry is marked in the stencil buffer with a non zero value. Therefore, ensure
+	//that the pixel shader for the DLight will only execute for these pixels/fragments. 
+	//
+	//Also disable depth test && writes.
+	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::LightPass_DirectionalLight_DSS, 0);
+
+	//Default rasterizer state
+	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);
+
+	//Shaders:
+	device.VSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_DirectionalLight_VS);
+	device.PSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_DirectionalLight_PS);
+
+	//NULL VB and IB -> We generate the quad in the shader
+	device.IASetTopology(PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	device.IASetVertexBuffer(nullptr, 0, 0);
+	device.IASetIndexBuffer(nullptr, 0);
+
+	//Done
+	return true;
+}
+
+bool D3D11GraphicsManager::OnBeginLightPass_PointLights()
+{
+	//For point lights, we will enable front face culling so that, when the camera
+	//is inside the point light volume, the sphere representing the light will not
+	//be (backface) culled 
+	//
+	//As directional lights, we also enable stencil testing to ensure that only marked
+	//fragments (in the stencil buffer) actually get lit!
+	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_DSS, 0);
+	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_RZS);
+	//device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_DepthStencil, 0);
+	//device.RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);
+
+	//Shaders:
+	device.VSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_VS);
+	device.HSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_HS);
+	device.DSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_DS);
+	device.PSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_PS);
+
+	//NULL VB and IB. We will generate the data in the tessellator. Note: we are drawing
+	//2 patches. Each patch has 1 control point
+	device.IASetTopology(PRIMITIVE_TOPOLOGY_1_CONTROL_POINT_PATCHLIST);
+	device.IASetVertexBuffer(nullptr, 0, 0);
+	device.IASetIndexBuffer(nullptr, 0);
+
+	//Done
+	return true;
+}
+
+bool D3D11GraphicsManager::OnBeginLightPass_SpotLights()
+{
+	//Done
+	return true;
+}
+
+bool D3D11GraphicsManager::OnBeginLightPass_CapsuleLights()
+{
 	//Done
 	return true;
 }

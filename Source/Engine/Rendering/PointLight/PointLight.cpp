@@ -45,9 +45,10 @@ void PointLight::Render(EngineAPI::Rendering::VirtualCamera* mainCamera)
 	assert(device);
 
 	//Calculate light world * view * projection matrix
-	XMMATRIX lightWorld = XMMatrixTranslation(lightData.LightPosition.x, lightData.LightPosition.y, lightData.LightPosition.z);
+	XMMATRIX lightWorld = XMMatrixScaling(lightData.LightRange, lightData.LightRange, lightData.LightRange) * 
+		XMMatrixTranslation(lightData.LightPosition.x, lightData.LightPosition.y, lightData.LightPosition.z);
 	XMMATRIX lightWorldViewProj = lightWorld * mainCamera->GetView() * mainCamera->GetProj();
-	XMStoreFloat4x4(&lightData.LightWorldViewProjection, lightWorldViewProj);
+	XMStoreFloat4x4(&lightData.LightWorldViewProjection, XMMatrixTranspose(lightWorldViewProj));
 
 	//Write data to the shared pointlight data cbuffer
 	EngineAPI::Graphics::ConstantBuffer& cb = EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_LightDataCB;
@@ -59,18 +60,6 @@ void PointLight::Render(EngineAPI::Rendering::VirtualCamera* mainCamera)
 
 	//Render the light source during the lighting pass
 	//
-	//Shaders:
-	device->VSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_VS);
-	device->HSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_HS);
-	device->DSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_DS);
-	device->PSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_PS);
-
-	//NULL VB and IB. We will generate the data in the tessellator. Note: we are drawing
-	//2 patches. Each patch has 1 control point
-	device->IASetTopology(PRIMITIVE_TOPOLOGY_1_CONTROL_POINT_PATCHLIST);
-	device->IASetVertexBuffer(nullptr, 0, 0);
-	device->IASetIndexBuffer(nullptr, 0);
-
 	//Bind the light data CBuffer (Slot 1)
 	device->DSSetConstantBuffer(&cb, GRAPHICS_CONFIG_LIGHT_PASS_LIGHT_DATA_CBUFFER_BINDING_SLOT);
 	device->PSSetConstantBuffer(&cb, GRAPHICS_CONFIG_LIGHT_PASS_LIGHT_DATA_CBUFFER_BINDING_SLOT);

@@ -102,3 +102,12 @@ float3 LightPass_DirectionalLight(float3 lightDir,
     finalColourOut *= surfaceDiffuse;
     return finalColourOut;
 }
+
+
+float3 LightPass_PointLight(float3 lightPos, float lightRange,
+    float3 lightColour, float lightIntensity,
+    float specIntensity, float specPower, float3 surfaceDiffuse,
+    float3 surfaceNormal_W, float3 surfacePositionW)
+{
+    return lightColour;
+}

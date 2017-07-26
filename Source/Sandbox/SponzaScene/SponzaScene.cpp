@@ -367,7 +367,7 @@ bool SponzaScene::OnSceneRenderGeometryPass()
 	return true;
 }
 
-bool SponzaScene::OnSceneRenderLightPass()
+bool SponzaScene::OnSceneRenderLightPass(LightPassMode mode)
 {
 	//Done
 	return true;

@@ -18,7 +18,6 @@ struct DSOutput
     float2 C_Position2D : TEXCOORD0;
 };
 
-
 float4 main(DSOutput input) : SV_Target
 {
      //Sample GBuffer at this pixel + unpack. Note: input.H_Position has

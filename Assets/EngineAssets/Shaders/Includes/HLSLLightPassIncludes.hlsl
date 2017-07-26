@@ -9,6 +9,13 @@
 //we will use to generate linear depth
 #include "HLSLGeometryPassIncludes.hlsl"
 
+//Defines
+//
+//Do we use blinn (half vector) or phong (reflect vector)?
+#define DIRECTIONAL_LIGHT_USE_BLINN 0
+#define POINT_LIGHT_USE_BLINN 0
+#define SPOT_LIGHT_USE_BLINN 1
+
 //Bind the GBuffer as shader resources during the
 //lighting pass
 Texture2D GBuffer_Depth                 : register(t0);
@@ -84,19 +91,22 @@ float3 LightPass_DirectionalLight(float3 lightDir,
     float3 surfaceToEye = normalize(CameraWorldPosition - surfacePositionW);
 
     //Diffuse
-    float3 negLightDir = normalize(-lightDir);
+    lightDir = normalize(lightDir);
+    float3 negLightDir = -lightDir;
     float N_Dot_L = dot(negLightDir, surfaceNormal_W);
     finalColourOut = (lightColour.rgb * lightIntensity) * saturate(N_Dot_L);
 
+#if DIRECTIONAL_LIGHT_USE_BLINN == 1
     //Spec - blinn phong
-    //float3 h = normalize(surfaceToEye + negLightDir);
-    //float N_Dot_H = saturate(dot(h, surfaceNormal_W));
-    //finalColourOut += (lightColour.rgb * lightIntensity) * pow(N_Dot_H, specPower) * specIntensity;
-
+    float3 h = normalize(surfaceToEye + negLightDir);
+    float N_Dot_H = saturate(dot(h, surfaceNormal_W));
+    finalColourOut += (lightColour.rgb * lightIntensity) * pow(N_Dot_H, specPower) * specIntensity;
+#else  
     //Spec - phong
     float3 r = reflect(lightDir, surfaceNormal_W);
     float angle = saturate(dot(r, surfaceToEye));
     finalColourOut += (lightColour.rgb * lightIntensity) * pow(angle, specPower) * specIntensity;
+#endif
 
     //Return
     finalColourOut *= surfaceDiffuse;
@@ -109,5 +119,42 @@ float3 LightPass_PointLight(float3 lightPos, float lightRange,
     float specIntensity, float specPower, float3 surfaceDiffuse,
     float3 surfaceNormal_W, float3 surfacePositionW)
 {
-    return lightColour;
+    float3 finalColourOut = float3(0.f, 0.f, 0.f);
+ 
+    //Calculate a vector from the surface (A) to the 
+    //middle of the light (B) => B-A
+    //
+    //Also calculate the length of this vector -> Used
+    //to attenuate later
+    float3 surfToLight = lightPos - surfacePositionW;
+    float surfToLightDistance = length(surfToLight);
+    surfToLight /= surfToLightDistance;
+
+    //Vector from the surface (A) to the camera position (B)
+    //B-A
+    float3 surfToEye = normalize(CameraWorldPosition - surfacePositionW);
+
+    //Diffuse
+    float N_Dot_L = saturate(dot(surfToLight, surfaceNormal_W));
+    finalColourOut = (lightColour.rgb * lightIntensity) * N_Dot_L;
+
+#if POINT_LIGHT_USE_BLINN == 1
+    //Spec - Blinn
+    float3 h = normalize(surfToEye + surfToLight);
+    float N_Dot_H = saturate(dot(h, surfaceNormal_W));
+    finalColourOut += (lightColour.rgb * lightIntensity) * pow(N_Dot_H, specPower) * specIntensity;
+#else 
+    //Spec - Phong
+    float3 r = reflect(-surfToLight, surfaceNormal_W);
+    float angle = saturate(dot(r, surfToEye));
+    finalColourOut += (lightColour.rgb * lightIntensity) * pow(angle, specPower) * specIntensity;
+#endif
+
+    //Attenuation - TODO: Better attenuation function
+    float distToLightNormalized = 1.0f - saturate(surfToLightDistance * (1.0f / lightRange));
+    float attenuation = distToLightNormalized * distToLightNormalized;
+
+    //Done
+    finalColourOut *= surfaceDiffuse * attenuation;
+    return finalColourOut;
 }

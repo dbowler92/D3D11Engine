@@ -1,6 +1,12 @@
 //Lighting pass (and geometry pass) includes
 #include "../Includes/HLSLLightPassIncludes.hlsl"
 
+//Defines
+//
+//How much to scale the point light sphere by in
+//local space
+#define POINT_LIGHT_SCALE_FACTOR 1.2f
+
 cbuffer CB_LightPass_PointLightData : register(b1)
 {
     float3 LightPosition;
@@ -42,6 +48,10 @@ DSOutput main(ConstantHSOut cInput, float2 uv : SV_DomainLocation,
     //Position on half sphere in clipspace
     float3 normDir = normalize(float3(clipSpacePos.xy, maxLen - 1.0f) * quad[0].HemiPosition);
     float4 posL = float4(normDir.xyz, 1.f);
+
+    //Scale the local space light up a bit -> Volume may
+    //not suround the actual volume of the light perfectly
+    posL.xyz *= POINT_LIGHT_SCALE_FACTOR;
 
     //Local to clip space
     float4 posC = mul(posL, LightWorldViewProjection);

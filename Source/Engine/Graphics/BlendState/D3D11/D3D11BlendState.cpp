@@ -59,16 +59,16 @@ void D3D11BlendState::FilloutD3D11BlendDesc(BlendPipelineStateDescription* state
 
 	for (int i = 0; i < MAX_RENDER_TARGETS_THAT_CAN_BE_BOUND; ++i)
 	{
-		bsDesc.RenderTarget[0].BlendEnable = state->RenderTargetsBlendState[i].BlendEnabled;
+		bsDesc.RenderTarget[i].BlendEnable = state->RenderTargetsBlendState[i].BlendEnabled;
 
-		bsDesc.RenderTarget[0].SrcBlend  = (D3D11_BLEND)state->RenderTargetsBlendState[i].SourceBlend;
-		bsDesc.RenderTarget[0].DestBlend = (D3D11_BLEND)state->RenderTargetsBlendState[i].DestinationBlend;
-		bsDesc.RenderTarget[0].BlendOp   = (D3D11_BLEND_OP)state->RenderTargetsBlendState[i].BlendOp;
+		bsDesc.RenderTarget[i].SrcBlend  = (D3D11_BLEND)state->RenderTargetsBlendState[i].SourceBlend;
+		bsDesc.RenderTarget[i].DestBlend = (D3D11_BLEND)state->RenderTargetsBlendState[i].DestinationBlend;
+		bsDesc.RenderTarget[i].BlendOp   = (D3D11_BLEND_OP)state->RenderTargetsBlendState[i].BlendOp;
 
-		bsDesc.RenderTarget[0].SrcBlendAlpha  = (D3D11_BLEND)state->RenderTargetsBlendState[i].SourceAlphaBlend;
-		bsDesc.RenderTarget[0].DestBlendAlpha = (D3D11_BLEND)state->RenderTargetsBlendState[i].DestinationAlphaBlend;
-		bsDesc.RenderTarget[0].BlendOpAlpha   = (D3D11_BLEND_OP)state->RenderTargetsBlendState[i].BlendAlphaOp;
+		bsDesc.RenderTarget[i].SrcBlendAlpha  = (D3D11_BLEND)state->RenderTargetsBlendState[i].SourceAlphaBlend;
+		bsDesc.RenderTarget[i].DestBlendAlpha = (D3D11_BLEND)state->RenderTargetsBlendState[i].DestinationAlphaBlend;
+		bsDesc.RenderTarget[i].BlendOpAlpha   = (D3D11_BLEND_OP)state->RenderTargetsBlendState[i].BlendAlphaOp;
 
-		bsDesc.RenderTarget[0].RenderTargetWriteMask = state->RenderTargetsBlendState[i].RenderTargetWriteMask;
+		bsDesc.RenderTarget[i].RenderTargetWriteMask = state->RenderTargetsBlendState[i].RenderTargetWriteMask;
 	}
 }

@@ -15,6 +15,14 @@
 
 namespace EngineAPI
 {
+	namespace Rendering
+	{
+		class PointLight;
+	};
+};
+
+namespace EngineAPI
+{
 	namespace Debug
 	{
 		class DebugRendering
@@ -26,6 +34,9 @@ namespace EngineAPI
 			//whats stored in the GBuffer [0-1]. If false, we will vis the unpacked normals
 			//in the range [-1,1]
 			static void DebugRenderGBuffersToScreen(bool showPackedNormals = true);
+
+			//Debug renders a point light
+			static void DebugRenderPointLight(EngineAPI::Rendering::PointLight* pointLight);
 		};
 	};
 };

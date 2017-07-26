@@ -62,7 +62,7 @@ private:
 
 	//Lights
 	EngineAPI::Rendering::DirectionalLight dLight;
-	EngineAPI::Rendering::PointLight pLights[3];
+	EngineAPI::Rendering::PointLight pLights[5];
 
 	//Cube
 	TestCube cube;

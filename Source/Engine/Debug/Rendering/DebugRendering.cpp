@@ -3,6 +3,9 @@
 //Uses some of the engine static data - eg: Shaders
 #include <Statics/GraphicsStatics/GraphicsStatics.h>
 
+//Needs access to the lights data in order to debug render
+#include <Rendering/PointLight/PointLight.h>
+
 using namespace EngineAPI::Debug;
 
 void DebugRendering::DebugRenderGBuffersToScreen(bool showPackedNormals)
@@ -92,4 +95,9 @@ void DebugRendering::DebugRenderGBuffersToScreen(bool showPackedNormals)
 	//Cleanup
 	device->RSSetViewport(nullptr);
 	device->PSSetShaderResource(nullptr, 0);
+}
+
+void DebugRendering::DebugRenderPointLight(EngineAPI::Rendering::PointLight* pointLight)
+{
+	//TODO
 }

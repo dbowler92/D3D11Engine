@@ -42,7 +42,7 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	XMMATRIX planeWorld = XMMatrixTranslation(0.0f, -1.f, 0.0f);
 	plane.InitPlane(device,
 		planeWorld,
-		5.f, 5.f, 
+		10.f, 10.f, 
 		std::string(ASSETS_FOLDER"Textures/TestTextures/bricks.dds"),
 		std::string(ASSETS_FOLDER"Textures/TestTextures/bricks_nmap.dds"),
 		128.0f, 0.5f,
@@ -57,24 +57,28 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	dLight.SetActiveState(true);
 
 	//Init p lights
-	XMFLOAT3 pLightPositions[3] =
+	XMFLOAT3 pLightPositions[5] =
 	{
 		XMFLOAT3(-2.0f, 0.0f, 0.0f),
 		XMFLOAT3(+2.0f, 0.0f, 0.0f),
-		XMFLOAT3(0.0f, 0.0f, -2.0f)
+		XMFLOAT3(0.0f, 0.0f, -2.0f),
+		XMFLOAT3(0.0f, 0.0f, +2.0f),
+		XMFLOAT3(0.0f, 2.0f, 0.0f)
 	};
 
-	XMFLOAT3 pLightColours[3] =
+	XMFLOAT3 pLightColours[5] =
 	{
 		XMFLOAT3(0.6f, 0.0f, 0.0f),
 		XMFLOAT3(0.0f, 0.6f, 0.0f),
 		XMFLOAT3(0.0f, 0.0f, 0.6f),
+		XMFLOAT3(0.0f, 0.6f, 0.6f),
+		XMFLOAT3(0.6f, 0.6f, 0.0f)
 	};
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		pLights[i].InitPointLightSource(pLightPositions[i], 3.f, 
-			pLightColours[i], 1.f,
+			pLightColours[i], 3.f,
 			std::string("PLight_") + std::to_string(i));
 		pLights[i].SetActiveState(true);
 	}
@@ -114,7 +118,7 @@ bool DeferredTestScene::OnSceneBecomeDeactive()
 	plane.Shutdown();
 	dLight.Shutdown();
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 5; i++)
 		pLights[i].Shutdown();
 
 	//Done
@@ -298,13 +302,15 @@ bool DeferredTestScene::OnSceneRenderLightPass(LightPassMode mode)
 	device->PSSetConstantBuffer(&camerConstantBuffer, GRAPHICS_CONFIG_CAMERA_CBUFFER_BINDING_SLOT);
 
 	//DLights
-	if (mode == LIGHT_PASS_DIRECTIONAL_LIGHTS)
-		dLight.Render();
+	//if (mode == LIGHT_PASS_DIRECTIONAL_LIGHTS)
+	//	dLight.Render();
 
 	//PLights
 	if (mode == LIGHT_PASS_POINT_LIGHTS)
 	{
-		for (int i = 0; i < 3; i++)
+		//pLights[2].Render(&mainCamera);
+
+		for (int i = 0; i < 5; i++)
 			pLights[i].Render(&mainCamera);
 	}
 
@@ -320,6 +326,8 @@ bool DeferredTestScene::OnSceneRenderPostProcessPass()
 
 bool DeferredTestScene::OnSceneRenderDebugPass()
 {
+	//Debug Render lights
+
 	//Done
 	return true;
 }

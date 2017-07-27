@@ -34,6 +34,6 @@ float4 main(DSOutput input) : SV_Target
         gBufferSample.SpecularIntensity, gBufferSample.SpecularPower,
         gBufferSample.Colour, gBufferSample.Normal, pixelWorldSpace);
 
-    //TEMP
+    //Done
     return float4(c.rgb, 1.f);
 }

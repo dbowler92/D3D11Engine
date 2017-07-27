@@ -73,6 +73,7 @@
     <ClCompile Include="..\Rendering\PointLight\PointLight.cpp" />
     <ClCompile Include="..\Rendering\RenderTargetSet\RenderTargetSet.cpp" />
     <ClCompile Include="..\Rendering\RenderTarget\RenderTarget.cpp" />
+    <ClCompile Include="..\Rendering\SpotLight\SpotLight.cpp" />
     <ClCompile Include="..\Rendering\VirtualCamera\VirtualCamera.cpp" />
     <ClCompile Include="..\Statics\D3D11Statics\D3D11Statics.cpp" />
     <ClCompile Include="..\Statics\GraphicsStatics\GraphicsStatics.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="..\Rendering\PointLight\PointLight.h" />
     <ClInclude Include="..\Rendering\RenderTargetSet\RenderTargetSet.h" />
     <ClInclude Include="..\Rendering\RenderTarget\RenderTarget.h" />
+    <ClInclude Include="..\Rendering\SpotLight\SpotLight.h" />
     <ClInclude Include="..\Rendering\VirtualCamera\VirtualCamera.h" />
     <ClInclude Include="..\Statics\D3D11Statics\D3D11Statics.h" />
     <ClInclude Include="..\Statics\GraphicsStatics\GraphicsStatics.h" />
@@ -246,6 +248,22 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_PointLightVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_SpotLightDS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_SpotLightHS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_SpotLightPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_SpotLightVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>

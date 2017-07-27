@@ -90,6 +90,13 @@ namespace EngineAPI
 			static EngineAPI::Graphics::RasterizerState   LightPass_PointLight_RZS;
 
 			//	Spot light:
+			static EngineAPI::Graphics::VertexShader	  LightPass_SpotLight_VS;
+			static EngineAPI::Graphics::HullShader		  LightPass_SpotLight_HS;
+			static EngineAPI::Graphics::DomainShader	  LightPass_SpotLight_DS;
+			static EngineAPI::Graphics::PixelShader		  LightPass_SpotLight_PS;
+			static EngineAPI::Graphics::ConstantBuffer	  LightPass_SpotLight_LightDataCB;
+			static EngineAPI::Graphics::DepthStencilState LightPass_SpotLight_DSS;
+			static EngineAPI::Graphics::RasterizerState   LightPass_SpotLight_RZS;
 
 			//	Capsule light:
 

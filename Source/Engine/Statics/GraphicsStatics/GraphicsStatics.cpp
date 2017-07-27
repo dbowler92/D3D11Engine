@@ -3,6 +3,7 @@
 //Needs to know the size of light data to create a CBuffer for
 #include <Rendering/DirectionalLight/DirectionalLight.h>
 #include <Rendering/PointLight/PointLight.h>
+#include <Rendering/SpotLight/SpotLight.h>
 
 using namespace EngineAPI::Statics;
 
@@ -27,6 +28,14 @@ EngineAPI::Graphics::PixelShader    GraphicsStatics::LightPass_PointLight_PS;
 EngineAPI::Graphics::ConstantBuffer GraphicsStatics::LightPass_PointLight_LightDataCB;
 EngineAPI::Graphics::DepthStencilState GraphicsStatics::LightPass_PointLight_DSS;
 EngineAPI::Graphics::RasterizerState   GraphicsStatics::LightPass_PointLight_RZS;
+
+EngineAPI::Graphics::VertexShader	   GraphicsStatics::LightPass_SpotLight_VS;
+EngineAPI::Graphics::HullShader		   GraphicsStatics::LightPass_SpotLight_HS;
+EngineAPI::Graphics::DomainShader	   GraphicsStatics::LightPass_SpotLight_DS;
+EngineAPI::Graphics::PixelShader	   GraphicsStatics::LightPass_SpotLight_PS;
+EngineAPI::Graphics::ConstantBuffer	   GraphicsStatics::LightPass_SpotLight_LightDataCB;
+EngineAPI::Graphics::DepthStencilState GraphicsStatics::LightPass_SpotLight_DSS;
+EngineAPI::Graphics::RasterizerState   GraphicsStatics::LightPass_SpotLight_RZS;
 
 EngineAPI::Graphics::VertexShader GraphicsStatics::Blit_VS;
 EngineAPI::Graphics::PixelShader  GraphicsStatics::Blit_PS;
@@ -88,6 +97,14 @@ void GraphicsStatics::ShutdownAllGraphicsStatics()
 	LightPass_PointLight_LightDataCB.Shutdown();
 	LightPass_PointLight_DSS.Shutdown();
 	LightPass_PointLight_RZS.Shutdown();
+
+	LightPass_SpotLight_VS.Shutdown();
+	LightPass_SpotLight_HS.Shutdown();
+	LightPass_SpotLight_DS.Shutdown();
+	LightPass_SpotLight_PS.Shutdown();
+	LightPass_SpotLight_LightDataCB.Shutdown();
+	LightPass_SpotLight_DSS.Shutdown();
+	LightPass_SpotLight_RZS.Shutdown();
 
 	Blit_VS.Shutdown();
 	Blit_PS.Shutdown();
@@ -239,6 +256,29 @@ void GraphicsStatics::InitLightPass(EngineAPI::Graphics::GraphicsDevice* device)
 	rsDesc.FillMode = POLYGON_FILL_SOLID;
 	rsDesc.FaceCullingMode = POLYGON_FACE_CULL_FRONT;
 	assert(LightPass_PointLight_RZS.InitRasterizerState(device, &rsDesc, "LightPass_PointLight_RasterizerState"));
+
+	//	Spot Light:
+	assert(LightPass_SpotLight_VS.InitCompiledVertexShaderFromFile(device,
+		ENGINE_SHADER_COMPILED_ASSETS_FOLDER"L_SpotLightVS.cso",
+		nullptr, 0, "LightPass_SpotLight_VS"));
+
+	assert(LightPass_SpotLight_HS.InitCompiledHullShaderFromFile(device,
+		ENGINE_SHADER_COMPILED_ASSETS_FOLDER"L_SpotLightHS.cso",
+		"LightPass_SpotLight_HS"));
+
+	assert(LightPass_SpotLight_DS.InitCompiledDomainShaderFromFile(device,
+		ENGINE_SHADER_COMPILED_ASSETS_FOLDER"L_SpotLightDS.cso",
+		"LightPass_SpotLight_DS"));
+
+	assert(LightPass_SpotLight_PS.InitCompiledPixelShaderFromFile(device,
+		ENGINE_SHADER_COMPILED_ASSETS_FOLDER"L_SpotLightPS.cso",
+		"LightPass_SpotLight_PS"));
+
+	assert(LightPass_SpotLight_LightDataCB.InitConstantBuffer(device,
+		sizeof(SpotLightGraphicsData), nullptr,
+		RESOURCE_USAGE_DYNAMIC, RESOURCE_CPU_ACCESS_WRITE_BIT,
+		RESOURCE_BIND_CONSTANT_BUFFER_BIT,
+		"LightPass_SpotLight_SharedLightDataCB"));
 }
 
 void GraphicsStatics::InitGBufferVis(EngineAPI::Graphics::GraphicsDevice* device)

@@ -13,6 +13,7 @@
 #include <Engine/Rendering/VirtualCamera/VirtualCamera.h>
 #include <Engine/Rendering/DirectionalLight/DirectionalLight.h>
 #include <Engine/Rendering/PointLight/PointLight.h>
+#include <Engine/Rendering/SpotLight/SpotLight.h>
 
 //Cube + plane we render
 #include <Sandbox/TestCube/TestCube.h>
@@ -63,6 +64,7 @@ private:
 	//Lights
 	EngineAPI::Rendering::DirectionalLight dLight;
 	EngineAPI::Rendering::PointLight pLights[5];
+	EngineAPI::Rendering::SpotLight sLight;
 
 	//Cube
 	TestCube cube;

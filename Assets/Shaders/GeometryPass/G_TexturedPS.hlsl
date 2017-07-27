@@ -11,7 +11,7 @@ struct VS_OUTPUT
 cbuffer CB_PS_PerObject : register(b2)
 {
     //Material data
-    float SpecPower;
+    float SpecPowerUnorm;
     float SpecIntensity;
     float CB_PS_PerObject_Pad0;
     float CB_PS_PerObject_Pad1;
@@ -30,5 +30,5 @@ GeometryPassPackedGBufferPSOutput main(VS_OUTPUT input)
 
     //Pack Gbuffer and return 
     return PackGBuffer(texSample.rgb, normalize(input.W_Normal),
-        SpecIntensity, SpecPower);
+        SpecIntensity, SpecPowerUnorm);
 }

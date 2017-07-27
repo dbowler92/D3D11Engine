@@ -35,8 +35,9 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	cube.InitCube(device,
 		cubeWorld,
 		//std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"), true,
-		std::string(ASSETS_FOLDER"Textures/TestTextures/White_512.png"), true,
-		128.0f, 0.75f,
+		//std::string(ASSETS_FOLDER"Textures/TestTextures/White_512.png"), true,
+		std::string(ASSETS_FOLDER"Textures/TestTextures/Black_512.png"), true,
+		1.f, 1.0f,
 		std::string("TestCube"));
 	
 	//Init plane
@@ -46,7 +47,7 @@ bool DeferredTestScene::OnSceneBecomeActive()
 		10.f, 10.f, 
 		std::string(ASSETS_FOLDER"Textures/TestTextures/bricks.dds"),
 		std::string(ASSETS_FOLDER"Textures/TestTextures/bricks_nmap.dds"),
-		128.0f, 0.5f,
+		1.0f, 0.5f,
 		std::string("TestPlane"));
 
 	//Init camera CBuffer
@@ -83,6 +84,11 @@ bool DeferredTestScene::OnSceneBecomeActive()
 			std::string("PLight_") + std::to_string(i));
 		pLights[i].SetActiveState(true);
 	}
+
+	//Slight
+	sLight.InitSpotLightSource(XMFLOAT3(0.f, 3.f, 0.f), 4.f, XMFLOAT3(0.f, -1.f, 0.f), 45.f,
+		XMFLOAT3(0.6f, 0.6f, 0.f), 3.f, std::string("SLight"));
+	sLight.SetActiveState(true);
 
 	//Done
 	return true;
@@ -303,17 +309,21 @@ bool DeferredTestScene::OnSceneRenderLightPass(LightPassMode mode)
 	device->PSSetConstantBuffer(&camerConstantBuffer, GRAPHICS_CONFIG_CAMERA_CBUFFER_BINDING_SLOT);
 
 	//DLights
-	//if (mode == LIGHT_PASS_DIRECTIONAL_LIGHTS)
-	//	dLight.Render();
+	if (mode == LIGHT_PASS_DIRECTIONAL_LIGHTS)
+		dLight.Render();
 
 	//PLights
-	if (mode == LIGHT_PASS_POINT_LIGHTS)
-	{
+	//if (mode == LIGHT_PASS_POINT_LIGHTS)
+	//{
 		//pLights[2].Render(&mainCamera);
 
-		for (int i = 0; i < 5; i++)
-			pLights[i].Render(&mainCamera);
-	}
+	//	for (int i = 0; i < 5; i++)
+	//		pLights[i].Render(&mainCamera);
+	//}
+
+	//Slights
+	if (mode == LIGHT_PASS_SPOT_LIGHTS)
+		sLight.Render(&mainCamera);
 
 	//Done
 	return true;

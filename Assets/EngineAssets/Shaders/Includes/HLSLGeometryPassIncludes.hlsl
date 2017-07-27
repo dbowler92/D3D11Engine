@@ -9,8 +9,8 @@
 //
 //Defines
 //
-#define SPEC_POWER_RANGE_MIN 1.0f
-#define SPEC_POWER_RANGE_MAX 128.0f
+#define SPEC_POWER_RANGE_MIN 0.0f
+#define SPEC_POWER_RANGE_MAX 255.0f
 
 //
 //Engine provided CBuffers
@@ -76,19 +76,16 @@ float3 LocalNormalToWorldSpace(float3 localNormal, float3x3 world)
 //
 
 GeometryPassPackedGBufferPSOutput PackGBuffer(float3 diffuse, float3 normalW,
-	float specularIntensity, float specPower)
+	float specularIntensity, float specPowerUnorm)
 {
     //Packs the GBuffer to be returned from the 
     //geometry pass pixel shaders
     //
-    //Normalize specular power [0.0f,1.0f]
-    float specPowerNormalized = max(0.0001, (specPower - SPEC_POWER_RANGE_MIN) / SPEC_POWER_RANGE_MAX);
-
     //Fill GBuffer for this pixel.
     GeometryPassPackedGBufferPSOutput o;
     o.ColourSpecInt = float4(diffuse.rgb, specularIntensity);
     o.NormalW = float4((normalW.xyz * 0.5f + 0.5f), 0.0f); //[0-1] range (.w ignored) -> Assumes normal has been normalized prior to calling function
-    o.SpecPower = float4(specPowerNormalized, 0.0f, 0.0f, 0.0f);
+    o.SpecPower = float4(specPowerUnorm, 0.0f, 0.0f, 0.0f);
 
     //Return the filled GBuffer
     return o;
@@ -105,5 +102,5 @@ float3 ConvertNormalFromTangentToWorld(float3 normalMapSample,
 							normalize(bitangentW),
 							normalize(normalW));
 
-    return normalize(mul(normalMapSample, TBN));
+    return normalize(mul(normalMapSample, TBN)); 
 }

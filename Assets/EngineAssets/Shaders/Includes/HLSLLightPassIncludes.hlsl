@@ -12,8 +12,8 @@
 //Defines
 //
 //Do we use blinn (half vector) or phong (reflect vector)?
-#define DIRECTIONAL_LIGHT_USE_BLINN 0
-#define POINT_LIGHT_USE_BLINN 0
+#define DIRECTIONAL_LIGHT_USE_BLINN 1
+#define POINT_LIGHT_USE_BLINN 1
 #define SPOT_LIGHT_USE_BLINN 1
 
 //Bind the GBuffer as shader resources during the
@@ -51,7 +51,7 @@ UnpackedGBufferSampleData UnpackGBuffer(int2 postViewportTransformPixelLocation)
     o.Normal = normalize((o.Normal * 2.0f - 1.0f)); //Convert from [0,1] to [-1,1]
    
     o.SpecularPower = GBuffer_SpecPower.Load(sampleLoc).r;
-    o.SpecularPower = (SPEC_POWER_RANGE_MIN + SPEC_POWER_RANGE_MAX) * o.SpecularPower;
+    o.SpecularPower = (SPEC_POWER_RANGE_MIN + ((SPEC_POWER_RANGE_MAX - SPEC_POWER_RANGE_MIN) * o.SpecularPower));
 
     //Linear depth
     float depthSample = GBuffer_Depth.Load(sampleLoc).r;
@@ -94,22 +94,32 @@ float3 LightPass_DirectionalLight(float3 lightDir,
     lightDir = normalize(lightDir);
     float3 negLightDir = -lightDir;
     float N_Dot_L = dot(negLightDir, surfaceNormal_W);
-    finalColourOut = (lightColour.rgb * lightIntensity) * saturate(N_Dot_L);
+    float3 diffuse = (lightColour.rgb * lightIntensity) * saturate(N_Dot_L);
 
 #if DIRECTIONAL_LIGHT_USE_BLINN == 1
     //Spec - blinn phong
-    float3 h = normalize(surfaceToEye + negLightDir);
-    float N_Dot_H = saturate(dot(h, surfaceNormal_W));
-    finalColourOut += (lightColour.rgb * lightIntensity) * pow(N_Dot_H, specPower) * specIntensity;
+    float3 specular = float3(0.f, 0.f, 0.f);
+    
+    if (N_Dot_L > 0.0f)
+    {
+        float3 h = normalize(surfaceToEye + negLightDir);
+        float N_Dot_H = saturate(dot(h, surfaceNormal_W));
+        specular = (lightColour.rgb * lightIntensity) * pow(N_Dot_H, specPower) * specIntensity;
+    }
 #else  
     //Spec - phong
-    float3 r = reflect(lightDir, surfaceNormal_W);
-    float angle = saturate(dot(r, surfaceToEye));
-    finalColourOut += (lightColour.rgb * lightIntensity) * pow(angle, specPower) * specIntensity;
+    float3 specular = float3(0.f, 0.f, 0.f);
+    
+    if (N_Dot_L > 0.0f)
+    {
+        float3 r = reflect(lightDir, surfaceNormal_W);
+        float angle = saturate(dot(r, surfaceToEye));
+        specular = (lightColour.rgb * lightIntensity) * pow(angle, (int) specPower) * specIntensity;
+    }
 #endif
 
     //Return
-    finalColourOut *= surfaceDiffuse;
+    finalColourOut = (surfaceDiffuse * diffuse) + specular;
     return finalColourOut;
 }
 
@@ -135,19 +145,29 @@ float3 LightPass_PointLight(float3 lightPos, float lightRange,
     float3 surfToEye = normalize(CameraWorldPosition - surfacePositionW);
 
     //Diffuse
-    float N_Dot_L = saturate(dot(surfToLight, surfaceNormal_W));
-    finalColourOut = (lightColour.rgb * lightIntensity) * N_Dot_L;
+    float N_Dot_L = dot(surfToLight, surfaceNormal_W);
+    float3 diffuse = (lightColour.rgb * lightIntensity) * saturate(N_Dot_L);
 
 #if POINT_LIGHT_USE_BLINN == 1
     //Spec - Blinn
-    float3 h = normalize(surfToEye + surfToLight);
-    float N_Dot_H = saturate(dot(h, surfaceNormal_W));
-    finalColourOut += (lightColour.rgb * lightIntensity) * pow(N_Dot_H, specPower) * specIntensity;
+    float3 specular = float3(0.f, 0.f, 0.f);
+    
+    if (N_Dot_L > 0.0f)
+    {
+        float3 h = normalize(surfToEye + surfToLight);
+        float N_Dot_H = saturate(dot(h, surfaceNormal_W));
+        specular = (lightColour.rgb * lightIntensity) * pow(N_Dot_H, specPower) * specIntensity;
+    }
 #else 
     //Spec - Phong
-    float3 r = reflect(-surfToLight, surfaceNormal_W);
-    float angle = saturate(dot(r, surfToEye));
-    finalColourOut += (lightColour.rgb * lightIntensity) * pow(angle, specPower) * specIntensity;
+    float3 specular = float3(0.f, 0.f, 0.f);
+    
+    if (N_Dot_L > 0.0f)
+    {
+        float3 r = reflect(-surfToLight, surfaceNormal_W);
+        float angle = saturate(dot(r, surfToEye));
+        specular = (lightColour.rgb * lightIntensity) * pow(angle, specPower) * specIntensity;
+    }
 #endif
 
     //Attenuation - TODO: Better attenuation function + move the 1.0f/lightRange back to the
@@ -156,6 +176,6 @@ float3 LightPass_PointLight(float3 lightPos, float lightRange,
     float attenuation = distToLightNormalized * distToLightNormalized;
 
     //Done
-    finalColourOut *= surfaceDiffuse * attenuation;
+    finalColourOut = ((surfaceDiffuse * diffuse) + specular) * attenuation;
     return finalColourOut;
 }

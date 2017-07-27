@@ -254,6 +254,23 @@ bool D3D11GraphicsManager::OnBeginLightPass_PointLights()
 
 bool D3D11GraphicsManager::OnBeginLightPass_SpotLights()
 {
+	//device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_DSS, 0);
+	//device.RSSetState(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_RZS);
+	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_DepthStencil, 0);
+	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);
+
+	//Shaders:
+	device.VSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_VS);
+	device.HSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_HS);
+	device.DSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_DS);
+	device.PSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_PS);
+
+	//NULL VB and IB. We will generate the data in the tessellator. Note: we are drawing
+	//2 patches. Each patch has 1 control point
+	device.IASetTopology(PRIMITIVE_TOPOLOGY_1_CONTROL_POINT_PATCHLIST);
+	device.IASetVertexBuffer(nullptr, 0, 0);
+	device.IASetIndexBuffer(nullptr, 0);
+
 	//Done
 	return true;
 }

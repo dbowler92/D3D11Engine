@@ -86,7 +86,7 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	}
 
 	//Slight
-	sLight.InitSpotLightSource(XMFLOAT3(0.f, 3.f, 0.f), 4.f, XMFLOAT3(0.f, -1.f, 0.f), 25.f,
+	sLight.InitSpotLightSource(XMFLOAT3(0.f, 3.f, 0.f), 4.f, XMFLOAT3(0.f, -1.f, 0.f), 45.f,
 		XMFLOAT3(0.6f, 0.6f, 0.f), 3.f, std::string("SLight"));
 	sLight.SetActiveState(true);
 

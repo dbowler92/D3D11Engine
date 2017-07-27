@@ -1,6 +1,9 @@
 //Lighting pass (and geometry pass) includes
 #include "../Includes/HLSLLightPassIncludes.hlsl"
 
+//Consts
+static const float PI = 3.14159265f;
+
 //Defines
 //
 //How much to scale the point light sphere by in
@@ -46,42 +49,33 @@ DSOutput main(ConstantHSOut cInput, float2 uv : SV_DomainLocation,
     //
     float halfAngle = LightAngle * 0.5f;
 
-    //Range of 1 in local space - scaled later
-    float3 lsDirection = float3(0.f, -1.f, 0.f);
+    //Range and direction
+    float3 lsDirection = float3(0.f, 0.f, +1.f);
     float lsHeight = 1.f;
 
     //Calculate the radius of our cone in LS
     float lsRadius = lsHeight * tan(radians(halfAngle));
 
-    //Calc slant vector and height to work out
-    //base radius (pythagoras)
-    //
-    //Slant vector -> rotate the lsDirection by halfAngle
-    //float x = lsDirection.x * cos(halfAngle) - lsDirection.y * sin(halfAngle);
-    //float y = lsDirection.x * sin(halfAngle) + lsDirection.y * cos(halfAngle);
-    //float3 lsSlantVec = float3(x, y, 0.f);
-    //float lsSlantHeight = length(lsSlantVec);
-    //float baseRadius = sqrt((lsSlantHeight * lsSlantHeight) - (lsHeight * lsHeight));
-
     //Transform quad verts From [0,1] to [-1, 1]
     float2 clipSpacePos = uv.xy * 2.0f - 1.0f;
 
     //Flip uv.y so that 0 is at the top, 1 at the bottom
-    uv.y = (1.f - uv.y);
+    //uv.y = (1.f - uv.y);
 
     //Wrap quad around the cone - generates a local space cone
-    float x = ((lsHeight - uv.x) / lsHeight) * lsRadius * cos(radians(halfAngle));
-    float y = uv.y * lsHeight;
-    float z = ((lsHeight - uv.y) / lsHeight) * lsRadius * sin(radians(halfAngle));
+    float x = lsHeight - uv.y / lsHeight * lsRadius * cos((uv.x * (2.0f * PI)));
+    float y = lsHeight - uv.y / lsHeight * lsRadius * sin((uv.x * (2.0f * PI)));
+    float z = uv.y * lsHeight;
 
     //To clip space from local space
-    float4 posC = mul(float4(x, y, z, 1.f), LightWorldViewProjection);
-
+    float4 posL = float4(x, y, z, 1.f);
+    float4 posC = mul(posL, LightWorldViewProjection);
+     
     //Output
     DSOutput o;
     o.C_Position = posC;
     //o.C_Position = float4(clipSpacePos.xy, 1.f, 1.f);
     o.C_Position2D = o.C_Position.xy / o.C_Position.w;
-    o.Data = float4(lsRadius, 0.f, 0.f, 1.f);
+    o.Data = float4(LightColourAndIntensity.rgb, 1.f);
     return o;
 }

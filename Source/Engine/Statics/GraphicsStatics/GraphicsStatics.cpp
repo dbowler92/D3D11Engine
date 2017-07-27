@@ -7,6 +7,10 @@
 
 using namespace EngineAPI::Statics;
 
+EngineAPI::Graphics::BlendState GraphicsStatics::PipelineState_Blend_Debug;
+EngineAPI::Graphics::DepthStencilState GraphicsStatics::PipelineState_DepthStencil_Debug;
+EngineAPI::Graphics::RasterizerState GraphicsStatics::PipelineState_Rasterizer_Debug;
+
 EngineAPI::Graphics::BlendState GraphicsStatics::DefaultPipelineState_Blend;
 EngineAPI::Graphics::DepthStencilState GraphicsStatics::DefaultPipelineState_DepthStencil;
 EngineAPI::Graphics::RasterizerState GraphicsStatics::DefaultPipelineState_Rasterizer;
@@ -53,6 +57,9 @@ bool GraphicsStatics::InitAllGraphicsStatics(EngineAPI::Graphics::GraphicsDevice
 {
 	assert(device);
 
+	//Debug
+	GraphicsStatics::InitDebugPipelineStates(device);
+
 	//Default pipeline states
 	GraphicsStatics::InitPipelineStates(device);
 
@@ -77,6 +84,10 @@ bool GraphicsStatics::InitAllGraphicsStatics(EngineAPI::Graphics::GraphicsDevice
 
 void GraphicsStatics::ShutdownAllGraphicsStatics()
 {
+	PipelineState_Blend_Debug.Shutdown();
+	PipelineState_DepthStencil_Debug.Shutdown();
+	PipelineState_Rasterizer_Debug.Shutdown();
+
 	DefaultPipelineState_Blend.Shutdown();
 	DefaultPipelineState_DepthStencil.Shutdown();
 	DefaultPipelineState_Rasterizer.Shutdown();
@@ -117,6 +128,23 @@ void GraphicsStatics::ShutdownAllGraphicsStatics()
 	Debug_GBufferVis_PackedNormal_PS.Shutdown();
 	Debug_GBufferVis_SpecPower_PS.Shutdown();
 	Debug_GBufferVis_SamplerState.Shutdown();
+}
+
+void GraphicsStatics::InitDebugPipelineStates(EngineAPI::Graphics::GraphicsDevice* device)
+{
+	BlendPipelineStateDescription bsDesc = {};
+	DepthStencilPipelineStateDescription dssDesc = {};
+	RasterizerPipelineStateDescription rsDesc = {};
+
+	assert(PipelineState_Blend_Debug.InitBlendState(device, &bsDesc, "PipelineState_Blend_Debug"));
+	
+	dssDesc.DepthTestEnabled = false;
+	dssDesc.StencilTestEnabled = false;
+	assert(PipelineState_DepthStencil_Debug.InitDepthStencilState(device, &dssDesc, "PipelineState_DepthStencil_Debug"));
+	
+	rsDesc.FillMode = POLYGON_FILL_SOLID;
+	rsDesc.WindingOrder = POLYGON_WINDING_ORDER_FRONT_CLOCKWISE;
+	assert(PipelineState_Rasterizer_Debug.InitRasterizerState(device, &rsDesc, "PipelineState_Rasterizer_Debug"));
 }
 
 void GraphicsStatics::InitPipelineStates(EngineAPI::Graphics::GraphicsDevice* device)

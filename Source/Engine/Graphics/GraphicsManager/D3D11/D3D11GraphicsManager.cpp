@@ -256,8 +256,9 @@ bool D3D11GraphicsManager::OnBeginLightPass_SpotLights()
 {
 	//device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_DSS, 0);
 	//device.RSSetState(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_RZS);
-	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_DepthStencil, 0);
-	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::DefaultPipelineState_Rasterizer);
+	device.OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::PipelineState_Blend_Debug);
+	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::PipelineState_DepthStencil_Debug, 0);
+	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::PipelineState_Rasterizer_Debug);
 
 	//Shaders:
 	device.VSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_VS);

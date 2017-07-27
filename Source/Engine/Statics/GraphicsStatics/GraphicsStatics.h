@@ -42,6 +42,11 @@ namespace EngineAPI
 			static void ShutdownAllGraphicsStatics();
 
 		public:
+			//Debug pipeline states
+			static EngineAPI::Graphics::BlendState PipelineState_Blend_Debug;
+			static EngineAPI::Graphics::DepthStencilState PipelineState_DepthStencil_Debug;
+			static EngineAPI::Graphics::RasterizerState PipelineState_Rasterizer_Debug;
+
 			//Default pipeline states
 			static EngineAPI::Graphics::BlendState DefaultPipelineState_Blend;
 			static EngineAPI::Graphics::DepthStencilState DefaultPipelineState_DepthStencil;
@@ -123,6 +128,7 @@ namespace EngineAPI
 
 		protected:
 			//Split up init for less clutter
+			static void InitDebugPipelineStates(EngineAPI::Graphics::GraphicsDevice* device);
 			static void InitPipelineStates(EngineAPI::Graphics::GraphicsDevice* device);
 			static void InitLightPass(EngineAPI::Graphics::GraphicsDevice* device);
 			static void InitGBufferVis(EngineAPI::Graphics::GraphicsDevice* device);

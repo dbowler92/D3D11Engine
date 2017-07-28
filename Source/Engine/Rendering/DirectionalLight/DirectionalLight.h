@@ -34,7 +34,7 @@ namespace EngineAPI
 			void Shutdown() override;
 
 			//Inits the directional light with initial data
-			void InitDirectionalLightSource(XMFLOAT3 dir, 
+			void InitDirectionalLightSource(XMFLOAT3 rotationTransformRollPitchYawDegrees,
 				XMFLOAT3 col, float intensity, 
 				std::string debugName = "");
 
@@ -49,6 +49,9 @@ namespace EngineAPI
 		protected:
 			//Light data
 			DirectionalLightGraphicsData lightData;
+
+			//Rotational transform for this light
+			XMFLOAT3 lightRotationRollPitchYawDegrees;
 
 			//Is light active?
 			bool isActive = false;

@@ -26,22 +26,22 @@ bool DeferredTestScene::OnSceneBecomeActive()
 
 	//Init camera
 	mainCamera.SetDebugName("SponzaScene_MainCamera");
-	mainCamera.InitCameraViewProperties(XMFLOAT3(0.0f, 0.0f, -5.0f), XMFLOAT3(XMFLOAT3(0.0f, 0.0f, +1.0f)), XMFLOAT3(0.0f, 1.0f, 0.0f));
+	mainCamera.InitCameraViewProperties(XMFLOAT3(0.0f, 2.0f, -5.0f), XMFLOAT3(XMFLOAT3(0.0f, 0.0f, +1.0f)), XMFLOAT3(0.0f, 1.0f, 0.0f));
 	mainCamera.InitCameraPerspectiveProjectionProperties(45.0f, (screenW / screenH), 0.1f, 100.0f);
 	mainCamera.RebuildView();
 
 	//Init cube
-	XMMATRIX cubeWorld = XMMatrixTranslation(0.f, 0.f, 0.0f);
+	XMMATRIX cubeWorld = XMMatrixTranslation(0.f, 1.f, 0.0f);
 	cube.InitCube(device,
 		cubeWorld,
 		//std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"), true,
-		//std::string(ASSETS_FOLDER"Textures/TestTextures/White_512.png"), true,
-		std::string(ASSETS_FOLDER"Textures/TestTextures/Black_512.png"), true,
+		std::string(ASSETS_FOLDER"Textures/TestTextures/White_512.png"), true,
+		//std::string(ASSETS_FOLDER"Textures/TestTextures/Black_512.png"), true,
 		1.f, 1.0f,
 		std::string("TestCube"));
 	
 	//Init plane
-	XMMATRIX planeWorld = XMMatrixTranslation(0.0f, -1.f, 0.0f);
+	XMMATRIX planeWorld = XMMatrixTranslation(0.0f, 0.0f, 0.0f);
 	plane.InitPlane(device,
 		planeWorld,
 		10.f, 10.f, 
@@ -54,7 +54,7 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	InitCameraCBuffer();
 
 	//Init d light
-	dLight.InitDirectionalLightSource(XMFLOAT3(1.f, 0.f, 1.f), 
+	dLight.InitDirectionalLightSource(XMFLOAT3(10.0f, 90.0f, 0.0f), 
 		XMFLOAT3(0.4f, 0.4f, 0.4f), 1.0f, "DLight");
 	dLight.SetActiveState(true);
 
@@ -86,7 +86,7 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	}
 
 	//Slight
-	sLight.InitSpotLightSource(XMFLOAT3(0.f, 3.f, 0.f), 4.f, XMFLOAT3(0.f, -1.f, 0.f), 45.f,
+	sLight.InitSpotLightSource(XMFLOAT3(0.f, 3.f, 0.f), 2.f, XMFLOAT3(90.0f, 0.0f, 0.0f), 45.f,
 		XMFLOAT3(0.6f, 0.6f, 0.f), 3.f, std::string("SLight"));
 	sLight.SetActiveState(true);
 
@@ -322,8 +322,8 @@ bool DeferredTestScene::OnSceneRenderLightPass(LightPassMode mode)
 	//}
 
 	//Slights
-	if (mode == LIGHT_PASS_SPOT_LIGHTS)
-		sLight.Render(&mainCamera);
+	//if (mode == LIGHT_PASS_SPOT_LIGHTS)
+	//	sLight.Render(&mainCamera);
 
 	//Done
 	return true;

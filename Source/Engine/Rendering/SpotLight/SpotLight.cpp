@@ -11,6 +11,11 @@
 
 using namespace EngineAPI::Rendering;
 
+//local space direction of the cone generated in the DS + the 
+//world forward vector. null rotational transform on this
+//light == this vector for the direction!
+const XMFLOAT4 CONE_FORWARD_VECTOR4 = XMFLOAT4(0.0f, 0.0f, +1.0f, 0.0f);
+
 void SpotLight::Shutdown()
 {
 	//Shutdown self
@@ -21,15 +26,24 @@ void SpotLight::Shutdown()
 }
 
 void SpotLight::InitSpotLightSource(XMFLOAT3 position, float range,
-	XMFLOAT3 dir, float angle,
+	XMFLOAT3 rotationTransformRollPitchYawDegrees, float angle,
 	XMFLOAT3 col, float intensity,
 	std::string debugName)
 {
+	//Cache rotation
+	lightRotationRollPitchYawDegrees = rotationTransformRollPitchYawDegrees;
+
+	//Calculate direction from rotation
+	XMVECTOR dir = XMLoadFloat4(&CONE_FORWARD_VECTOR4);
+	XMMATRIX dirRot = XMMatrixRotationRollPitchYaw(XMConvertToRadians(lightRotationRollPitchYawDegrees.x),
+		XMConvertToRadians(lightRotationRollPitchYawDegrees.y),
+		XMConvertToRadians(lightRotationRollPitchYawDegrees.z));
+	dir = XMVector4Transform(dir, dirRot);
+
 	//Normalize direction
-	XMVECTOR d = XMLoadFloat3(&dir);
-	d = XMVector3Normalize(d);
+	dir = XMVector3Normalize(dir);
 	XMFLOAT3 dNormalized;
-	XMStoreFloat3(&dNormalized, d);
+	XMStoreFloat3(&dNormalized, dir);
 
 	//Cache data
 	lightData.LightPosition = position;
@@ -53,10 +67,19 @@ void SpotLight::Render(EngineAPI::Rendering::VirtualCamera* mainCamera)
 		EngineAPI::Graphics::GraphicsManager::GetInstance()->GetDevice();
 	assert(device);
 
+	//Light world matrix - Note: For rotation, the local space cone we 
+	//generate in the domain shader is pointing in the +Z axis
+	XMVECTOR coneForward = XMVectorSet(0.f, 0.f, 1.f, 0.f);
+	XMVECTOR lightDir = XMLoadFloat3(&lightData.LightDirection);
+	XMVECTOR coneRight = XMVector3Cross(coneForward, lightDir);
+
+	XMMATRIX lightRotation = XMMatrixRotationRollPitchYaw(XMConvertToRadians(lightRotationRollPitchYawDegrees.x),
+		XMConvertToRadians(lightRotationRollPitchYawDegrees.y),
+		XMConvertToRadians(lightRotationRollPitchYawDegrees.z));
+	XMMATRIX lightTranslation = XMMatrixTranslation(lightData.LightPosition.x, lightData.LightPosition.y, lightData.LightPosition.z);
+	XMMATRIX lightWorld = lightRotation * lightTranslation;
+
 	//Calculate light world * view * projection matrix
-	//XMMATRIX lightWorld = XMMatrixScaling(lightData.LightRange, lightData.LightRange, lightData.LightRange) * 
-	//	XMMatrixTranslation(lightData.LightPosition.x, lightData.LightPosition.y, lightData.LightPosition.z);
-	XMMATRIX lightWorld = XMMatrixIdentity(); //TEMP
 	XMMATRIX lightWorldViewProj = lightWorld * mainCamera->GetView() * mainCamera->GetProj();
 	XMStoreFloat4x4(&lightData.LightWorldViewProjection, XMMatrixTranspose(lightWorldViewProj));
 	  

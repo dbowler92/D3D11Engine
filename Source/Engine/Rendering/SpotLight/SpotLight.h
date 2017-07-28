@@ -46,7 +46,7 @@ namespace EngineAPI
 
 			//Inits the spot light with initial data
 			void InitSpotLightSource(XMFLOAT3 position, float range, 
-				XMFLOAT3 dir, float angle,
+				XMFLOAT3 rotationTransformRollPitchYawDegrees, float angle,
 				XMFLOAT3 col, float intensity,
 				std::string debugName = "");
 
@@ -61,6 +61,9 @@ namespace EngineAPI
 		protected:
 			//Light data
 			SpotLightGraphicsData lightData;
+
+			//Rotation info
+			XMFLOAT3 lightRotationRollPitchYawDegrees;
 
 			//Is light active?
 			bool isActive = false;

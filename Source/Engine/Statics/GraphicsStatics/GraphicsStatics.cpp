@@ -142,8 +142,9 @@ void GraphicsStatics::InitDebugPipelineStates(EngineAPI::Graphics::GraphicsDevic
 	dssDesc.StencilTestEnabled = false;
 	assert(PipelineState_DepthStencil_Debug.InitDepthStencilState(device, &dssDesc, "PipelineState_DepthStencil_Debug"));
 	
-	rsDesc.FillMode = POLYGON_FILL_SOLID;
+	rsDesc.FillMode = POLYGON_FILL_WIREFRAME;
 	rsDesc.WindingOrder = POLYGON_WINDING_ORDER_FRONT_CLOCKWISE;
+	rsDesc.FaceCullingMode = POLYGON_FACE_CULL_NONE;
 	assert(PipelineState_Rasterizer_Debug.InitRasterizerState(device, &rsDesc, "PipelineState_Rasterizer_Debug"));
 }
 

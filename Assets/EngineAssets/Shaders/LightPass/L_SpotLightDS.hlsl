@@ -6,9 +6,10 @@ static const float PI = 3.14159265f;
 
 //Defines
 //
-//How much to scale the point light sphere by in
-//local space
-#define POINT_LIGHT_SCALE_FACTOR 1.2f
+//How much to scale the spot light cone by in
+//local space - the volume doesn't 100% encapsulate
+//the actual light source, hence the mini hack!
+#define SPOT_LIGHT_SCALE_FACTOR 1.2f
 
 cbuffer CB_LightPass_SpotLightData : register(b1)
 {
@@ -49,23 +50,23 @@ DSOutput main(ConstantHSOut cInput, float2 uv : SV_DomainLocation,
     //
     float halfAngle = LightAngle * 0.5f;
 
-    //Range and direction
-    float3 lsDirection = float3(0.f, 0.f, +1.f);
-    float lsHeight = 1.f;
-
+    //Height of the cone is the range
+    float lsHeight = LightRange * SPOT_LIGHT_SCALE_FACTOR;
+    
     //Calculate the radius of our cone in LS
     float lsRadius = lsHeight * tan(radians(halfAngle));
 
     //Transform quad verts From [0,1] to [-1, 1]
     float2 clipSpacePos = uv.xy * 2.0f - 1.0f;
 
-    //Flip uv.y so that 0 is at the top, 1 at the bottom
-    //uv.y = (1.f - uv.y);
-
     //Wrap quad around the cone - generates a local space cone
-    float x = lsHeight - uv.y / lsHeight * lsRadius * cos((uv.x * (2.0f * PI)));
-    float y = lsHeight - uv.y / lsHeight * lsRadius * sin((uv.x * (2.0f * PI)));
-    float z = uv.y * lsHeight;
+    float yRatio = uv.y * lsHeight;
+    float xAngleRadians = uv.x * (2.0f * PI);
+
+    float x = ((lsHeight - yRatio) / lsHeight) * lsRadius * cos(xAngleRadians);
+    float y = ((lsHeight - yRatio) / lsHeight) * lsRadius * sin(xAngleRadians);
+    float z = yRatio - lsHeight;
+    z *= -1.f; //Flip ls direction -> LS cone should be pointing in the +Z axis
 
     //To clip space from local space
     float4 posL = float4(x, y, z, 1.f);

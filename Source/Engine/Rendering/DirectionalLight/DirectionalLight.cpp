@@ -8,6 +8,10 @@
 
 using namespace EngineAPI::Rendering;
 
+//World space forward vector - 0 rotations will generate a vector
+//in this direction
+const XMFLOAT4 DIRECTIONAL_LIGHT_FORWARD_VECTOR4 = XMFLOAT4(0.0f, 0.0f, +1.0f, 0.0f);
+
 void DirectionalLight::Shutdown()
 {
 	//Shutdown self
@@ -17,15 +21,24 @@ void DirectionalLight::Shutdown()
 	__super::Shutdown();
 }
 
-void DirectionalLight::InitDirectionalLightSource(XMFLOAT3 dir,
+void DirectionalLight::InitDirectionalLightSource(XMFLOAT3 rotationTransformRollPitchYawDegrees,
 	XMFLOAT3 col, float intensity,
 	std::string debugName)
 {
+	//Cache rotation
+	lightRotationRollPitchYawDegrees = rotationTransformRollPitchYawDegrees;
+
+	//Calculate direction from rotation
+	XMVECTOR dir = XMLoadFloat4(&DIRECTIONAL_LIGHT_FORWARD_VECTOR4);
+	XMMATRIX dirRot = XMMatrixRotationRollPitchYaw(XMConvertToRadians(lightRotationRollPitchYawDegrees.x),
+		XMConvertToRadians(lightRotationRollPitchYawDegrees.y),
+		XMConvertToRadians(lightRotationRollPitchYawDegrees.z));
+	dir = XMVector4Transform(dir, dirRot);
+
 	//Normalize direction
-	XMVECTOR d = XMLoadFloat3(&dir);
-	d = XMVector3Normalize(d);
+	dir = XMVector3Normalize(dir);
 	XMFLOAT3 dNormalized;
-	XMStoreFloat3(&dNormalized, d);
+	XMStoreFloat3(&dNormalized, dir);
 
 	//Cache data
 	lightData.LightDirection = XMFLOAT4(dNormalized.x, dNormalized.y, dNormalized.z, 0.0f);

@@ -101,3 +101,8 @@ void DebugRendering::DebugRenderPointLight(EngineAPI::Rendering::PointLight* poi
 {
 	//TODO
 }
+
+void DebugRendering::DebugRenderSpotLight(EngineAPI::Rendering::SpotLight* spotLight)
+{
+	//TODO
+}

@@ -18,6 +18,7 @@ namespace EngineAPI
 	namespace Rendering
 	{
 		class PointLight;
+		class SpotLight;
 	};
 };
 
@@ -35,8 +36,10 @@ namespace EngineAPI
 			//in the range [-1,1]
 			static void DebugRenderGBuffersToScreen(bool showPackedNormals = true);
 
-			//Debug renders a point light
+			//Debug renders a point light and spot light
 			static void DebugRenderPointLight(EngineAPI::Rendering::PointLight* pointLight);
+			static void DebugRenderSpotLight(EngineAPI::Rendering::SpotLight* spotLight);
+
 		};
 	};
 };

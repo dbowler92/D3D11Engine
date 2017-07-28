@@ -355,6 +355,9 @@
     <Filter Include="Src\Rendering\SpotLight">
       <UniqueIdentifier>{4b48c230-2299-4844-87c3-87aef12dbe74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\3rdParty\AntTweakBar">
+      <UniqueIdentifier>{5ac92540-5384-4aff-b79b-8827f129c182}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -841,6 +844,9 @@
     </ClInclude>
     <ClInclude Include="..\Rendering\SpotLight\SpotLight.h">
       <Filter>Src\Rendering\SpotLight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\AntTweakBar\AntTweakBar.h">
+      <Filter>Src\3rdParty\AntTweakBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

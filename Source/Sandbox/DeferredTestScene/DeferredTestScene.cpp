@@ -3,6 +3,8 @@
 //Subsystems
 #include <Engine/Graphics/GraphicsManager/GraphicsManager.h>
 
+#include <Engine/3rdParty/AntTweakBar/AntTweakBar.h>
+
 bool DeferredTestScene::OnAddToSceneManagerList()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("SponzaScene::OnAddToSceneManagerList()\n");
@@ -89,7 +91,7 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	sLight.InitSpotLightSource(XMFLOAT3(0.f, 3.f, 0.f), 2.f, XMFLOAT3(90.0f, 0.0f, 0.0f), 45.f,
 		XMFLOAT3(0.6f, 0.6f, 0.f), 3.f, std::string("SLight"));
 	sLight.SetActiveState(true);
-
+	
 	//Done
 	return true;
 }

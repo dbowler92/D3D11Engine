@@ -80,6 +80,7 @@
     <ClCompile Include="..\Utils\GameTimer\GameTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\3rdParty\AntTweakBar\AntTweakBar.h" />
     <ClInclude Include="..\3rdParty\dxerr\dxerr.h" />
     <ClInclude Include="..\3rdParty\DXTK\DDSTextureLoader.h" />
     <ClInclude Include="..\3rdParty\DXTK\GeometricPrimitive.h" />

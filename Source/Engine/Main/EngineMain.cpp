@@ -28,6 +28,12 @@
 
 #endif
 
+//
+//Libs - Other
+//
+#pragma comment (lib, "AntTweakBar.lib")
+//#pragma comment (lib, "AntTweakBar64.lib")
+
 #ifdef ENGINE_CONFIG_PLATFORM_WIN32
 void ShowConsoleW32()
 {

@@ -25,6 +25,7 @@
     <ClCompile Include="..\Components\BaseComponent\BaseComponent.cpp" />
     <ClCompile Include="..\Core\CoreObject\CoreObject.cpp" />
     <ClCompile Include="..\Core\CoreSubsystem\CoreSubsystem.cpp" />
+    <ClCompile Include="..\Debug\ATBManager\ATBManager.cpp" />
     <ClCompile Include="..\Debug\Log\DebugLog.cpp" />
     <ClCompile Include="..\Debug\Rendering\DebugRendering.cpp" />
     <ClCompile Include="..\Gameplay\GameObject\GameObject.cpp" />
@@ -80,7 +81,7 @@
     <ClCompile Include="..\Utils\GameTimer\GameTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\3rdParty\AntTweakBar\AntTweakBar.h" />
+    <ClInclude Include="..\3rdParty\AntTweakBar\include\AntTweakBar.h" />
     <ClInclude Include="..\3rdParty\dxerr\dxerr.h" />
     <ClInclude Include="..\3rdParty\DXTK\DDSTextureLoader.h" />
     <ClInclude Include="..\3rdParty\DXTK\GeometricPrimitive.h" />
@@ -94,6 +95,7 @@
     <ClInclude Include="..\Config\Win32Config.h" />
     <ClInclude Include="..\Core\CoreObject\CoreObject.h" />
     <ClInclude Include="..\Core\CoreSubsystem\CoreSubsystem.h" />
+    <ClInclude Include="..\Debug\ATBManager\ATBManager.h" />
     <ClInclude Include="..\Debug\Log\DebugLog.h" />
     <ClInclude Include="..\Debug\Rendering\DebugRendering.h" />
     <ClInclude Include="..\Gameplay\GameObject\GameObject.h" />

@@ -3,7 +3,7 @@
 //Subsystems
 #include <Engine/Graphics/GraphicsManager/GraphicsManager.h>
 
-#include <Engine/3rdParty/AntTweakBar/AntTweakBar.h>
+#include <Engine/3rdParty/AntTweakBar/Include/AntTweakBar.h>
 
 bool DeferredTestScene::OnAddToSceneManagerList()
 {
@@ -92,6 +92,8 @@ bool DeferredTestScene::OnSceneBecomeActive()
 		XMFLOAT3(0.6f, 0.6f, 0.f), 3.f, std::string("SLight"));
 	sLight.SetActiveState(true);
 	
+	TwBar* b = TwNewBar("Hello world");
+
 	//Done
 	return true;
 }
@@ -252,7 +254,17 @@ bool DeferredTestScene::OnSceneUpdate(float dt)
 	//Debug draw?
 	shouldDebugDrawGBufferCooldownTimer += dt;
 	shouldDebugDrawGBufferPackedNormalsCooldownTimer += dt;
+	atbBarsToggleCooldownTimer += dt;
 	if (GetAsyncKeyState('1') & 0x8000)
+	{
+		if (atbBarsToggleCooldownTimer >= 0.3f)
+		{
+			EngineAPI::Debug::ATBManager::SetATBActiveFlag(!EngineAPI::Debug::ATBManager::GetATBActiveFlag());
+			atbBarsToggleCooldownTimer = 0.0f;
+		}
+	}
+
+	if (GetAsyncKeyState('2') & 0x8000)
 	{
 		if (shouldDebugDrawGBufferCooldownTimer >= 0.30f)
 		{
@@ -260,7 +272,8 @@ bool DeferredTestScene::OnSceneUpdate(float dt)
 			shouldDebugDrawGBufferCooldownTimer = 0.0f;
 		}
 	}
-	if (GetAsyncKeyState('2') & 0x8000)
+
+	if (GetAsyncKeyState('3') & 0x8000)
 	{
 		if (shouldDebugDrawGBufferPackedNormalsCooldownTimer >= 0.3f)
 		{

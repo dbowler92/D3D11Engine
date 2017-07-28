@@ -358,6 +358,12 @@
     <Filter Include="Src\3rdParty\AntTweakBar">
       <UniqueIdentifier>{5ac92540-5384-4aff-b79b-8827f129c182}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\3rdParty\AntTweakBar\Include">
+      <UniqueIdentifier>{bf8eb032-da2e-41c5-85e0-96ff76a4adaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Debug\ATBManager">
+      <UniqueIdentifier>{2153bec4-74c7-410b-abf5-bd2ea9eea4d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -536,6 +542,9 @@
     </ClCompile>
     <ClCompile Include="..\Rendering\SpotLight\SpotLight.cpp">
       <Filter>Src\Rendering\SpotLight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Debug\ATBManager\ATBManager.cpp">
+      <Filter>Src\Debug\ATBManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -845,8 +854,11 @@
     <ClInclude Include="..\Rendering\SpotLight\SpotLight.h">
       <Filter>Src\Rendering\SpotLight</Filter>
     </ClInclude>
-    <ClInclude Include="..\3rdParty\AntTweakBar\AntTweakBar.h">
-      <Filter>Src\3rdParty\AntTweakBar</Filter>
+    <ClInclude Include="..\3rdParty\AntTweakBar\include\AntTweakBar.h">
+      <Filter>Src\3rdParty\AntTweakBar\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Debug\ATBManager\ATBManager.h">
+      <Filter>Src\Debug\ATBManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

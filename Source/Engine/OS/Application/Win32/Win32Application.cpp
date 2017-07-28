@@ -4,6 +4,9 @@
 //Statically loaded graphics resources
 #include <Statics/GraphicsStatics/GraphicsStatics.h>
 
+//Inits ATB
+#include <Debug/ATBManager/ATBManager.h>
+
 //Init global reference to the app. 
 EngineAPI::OS::Platform::Win32Application *g_App = NULL;
 
@@ -30,142 +33,146 @@ Win32Application::Win32Application()
 
 LRESULT Win32Application::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	switch (msg)
+	//Send message to ATB. if ATB doesn't handle it, we will do so
+	if (EngineAPI::Debug::ATBManager::UpdateATB_Win32(hwnd, msg, wParam, lParam) == false)
 	{
-		// WM_ACTIVATE is sent when the window is activated or deactivated.  
-		// We pause the game when the window is deactivated and unpause it 
-		// when it becomes active.  
-	case WM_ACTIVATE:
-		if (LOWORD(wParam) == WA_INACTIVE)
+		switch (msg)
 		{
-			appPaused = true;
-			mainGameLoopTimer.Stop();
-		}
-		else
-		{
-			appPaused = false;
-			mainGameLoopTimer.Start();
-		}
-		return 0;
+			// WM_ACTIVATE is sent when the window is activated or deactivated.  
+			// We pause the game when the window is deactivated and unpause it 
+			// when it becomes active.  
+		case WM_ACTIVATE:
+			if (LOWORD(wParam) == WA_INACTIVE)
+			{
+				appPaused = true;
+				mainGameLoopTimer.Stop();
+			}
+			else
+			{
+				appPaused = false;
+				mainGameLoopTimer.Start();
+			}
+			return 0;
 
-		// WM_SIZE is sent when the user resizes the window.  
-	case WM_SIZE:
-	{
-		//Update size of window
-		windowWidth = LOWORD(lParam);
-		windowHeight = HIWORD(lParam);
+			// WM_SIZE is sent when the user resizes the window.  
+		case WM_SIZE:
+		{
+			//Update size of window
+			windowWidth = LOWORD(lParam);
+			windowHeight = HIWORD(lParam);
 
-		if (wParam == SIZE_MINIMIZED)
-		{
-			appPaused = true;
-			minimized = true;
-			maximized = false;
-		}
-		else if (wParam == SIZE_MAXIMIZED)
-		{
-			appPaused = false;
-			minimized = false;
-			maximized = true;
-			assert(OnResize() == true);
-		}
-		else if (wParam == SIZE_RESTORED)
-		{
-
-			// Restoring from minimized state?
-			if (minimized)
+			if (wParam == SIZE_MINIMIZED)
+			{
+				appPaused = true;
+				minimized = true;
+				maximized = false;
+			}
+			else if (wParam == SIZE_MAXIMIZED)
 			{
 				appPaused = false;
 				minimized = false;
+				maximized = true;
 				assert(OnResize() == true);
 			}
-
-			// Restoring from maximized state?
-			else if (maximized)
+			else if (wParam == SIZE_RESTORED)
 			{
-				appPaused = false;
-				maximized = false;
-				assert(OnResize() == true);
+
+				// Restoring from minimized state?
+				if (minimized)
+				{
+					appPaused = false;
+					minimized = false;
+					assert(OnResize() == true);
+				}
+
+				// Restoring from maximized state?
+				else if (maximized)
+				{
+					appPaused = false;
+					maximized = false;
+					assert(OnResize() == true);
+				}
+				else if (resizing)
+				{
+					// If user is dragging the resize bars, we do not resize 
+					// the buffers here because as the user continuously 
+					// drags the resize bars, a stream of WM_SIZE messages are
+					// sent to the window, and it would be pointless (and slow)
+					// to resize for each WM_SIZE message received from dragging
+					// the resize bars.  So instead, we reset after the user is 
+					// done resizing the window and releases the resize bars, which 
+					// sends a WM_EXITSIZEMOVE message.
+				}
+				else // API call such as SetWindowPos or mSwapChain->SetFullscreenState.
+				{
+					assert(OnResize() == true);
+				}
 			}
-			else if (resizing)
-			{
-				// If user is dragging the resize bars, we do not resize 
-				// the buffers here because as the user continuously 
-				// drags the resize bars, a stream of WM_SIZE messages are
-				// sent to the window, and it would be pointless (and slow)
-				// to resize for each WM_SIZE message received from dragging
-				// the resize bars.  So instead, we reset after the user is 
-				// done resizing the window and releases the resize bars, which 
-				// sends a WM_EXITSIZEMOVE message.
-			}
-			else // API call such as SetWindowPos or mSwapChain->SetFullscreenState.
-			{
-				assert(OnResize() == true);
-			}
-		}
-		return 0;
-	}
-		// WM_EXITSIZEMOVE is sent when the user grabs the resize bars.
-	case WM_ENTERSIZEMOVE:
-		appPaused = true;
-		resizing = true;
-		mainGameLoopTimer.Stop();
-		return 0;
-
-		// WM_EXITSIZEMOVE is sent when the user releases the resize bars.
-		// Here we reset everything based on the new window dimensions.
-	case WM_EXITSIZEMOVE:
-		appPaused = false;
-		resizing = false;
-		mainGameLoopTimer.Start();
-		assert(OnResize() == true);
-		return 0;
-
-		// WM_DESTROY is sent when the window is being destroyed.
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		return 0;
-
-		// The WM_MENUCHAR message is sent when a menu is active and the user presses 
-		// a key that does not correspond to any mnemonic or accelerator key. 
-	case WM_MENUCHAR:
-		// Don't beep when we alt-enter.
-		return MAKELRESULT(0, MNC_CLOSE);
-
-		// Catch this message so to prevent the window from becoming too small.
-	case WM_GETMINMAXINFO:
-		((MINMAXINFO*)lParam)->ptMinTrackSize.x = 200;
-		((MINMAXINFO*)lParam)->ptMinTrackSize.y = 200;
-		return 0;
-
-		//TEMP: Until I have a proper input system implemented, we will
-		//have to catch these messages and pass them on the current scene
-		//in order to rotate the debug / fly camera. 
-	case WM_MOUSEMOVE:
-		OnMouseMove(wParam, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-		return 0;
-
-	case WM_LBUTTONDOWN:
-	case WM_MBUTTONDOWN:
-	case WM_RBUTTONDOWN:
-		OnMouseDown(wParam, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-		return 0;
-
-	case WM_LBUTTONUP:
-	case WM_MBUTTONUP:
-	case WM_RBUTTONUP:
-		OnMouseUp(wParam, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-		return 0;
-
-	case WM_CHAR:
-		//Quit the application using the Escape Key - Will be taken
-		//out in release build. 
-		if (wParam == VK_ESCAPE)
-		{
-			//Post the quit message. 
-			PostQuitMessage(0);
 			return 0;
 		}
-	}//End switch(msg) {...}
+		// WM_EXITSIZEMOVE is sent when the user grabs the resize bars.
+		case WM_ENTERSIZEMOVE:
+			appPaused = true;
+			resizing = true;
+			mainGameLoopTimer.Stop();
+			return 0;
+
+			// WM_EXITSIZEMOVE is sent when the user releases the resize bars.
+			// Here we reset everything based on the new window dimensions.
+		case WM_EXITSIZEMOVE:
+			appPaused = false;
+			resizing = false;
+			mainGameLoopTimer.Start();
+			assert(OnResize() == true);
+			return 0;
+
+			// WM_DESTROY is sent when the window is being destroyed.
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			return 0;
+
+			// The WM_MENUCHAR message is sent when a menu is active and the user presses 
+			// a key that does not correspond to any mnemonic or accelerator key. 
+		case WM_MENUCHAR:
+			// Don't beep when we alt-enter.
+			return MAKELRESULT(0, MNC_CLOSE);
+
+			// Catch this message so to prevent the window from becoming too small.
+		case WM_GETMINMAXINFO:
+			((MINMAXINFO*)lParam)->ptMinTrackSize.x = 200;
+			((MINMAXINFO*)lParam)->ptMinTrackSize.y = 200;
+			return 0;
+
+			//TEMP: Until I have a proper input system implemented, we will
+			//have to catch these messages and pass them on the current scene
+			//in order to rotate the debug / fly camera. 
+		case WM_MOUSEMOVE:
+			OnMouseMove(wParam, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			return 0;
+
+		case WM_LBUTTONDOWN:
+		case WM_MBUTTONDOWN:
+		case WM_RBUTTONDOWN:
+			OnMouseDown(wParam, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			return 0;
+
+		case WM_LBUTTONUP:
+		case WM_MBUTTONUP:
+		case WM_RBUTTONUP:
+			OnMouseUp(wParam, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			return 0;
+
+		case WM_CHAR:
+			//Quit the application using the Escape Key - Will be taken
+			//out in release build. 
+			if (wParam == VK_ESCAPE)
+			{
+				//Post the quit message. 
+				PostQuitMessage(0);
+				return 0;
+			}
+		}//End switch(msg) {...}
+	}//if (UpdateATB())
 
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
@@ -216,7 +223,7 @@ bool Win32Application::ShutdownEngine()
 {
 	EngineAPI::Debug::DebugLog::PrintInfoMessage("Win32Application::ShutdownEngine()\n");
 	
-	//Shutdown statics
+	//Shutdown engine statics
 	EngineAPI::Statics::GraphicsStatics::ShutdownAllGraphicsStatics();
 
 	//Shutdown subsystems - reverse order to creation
@@ -227,6 +234,10 @@ bool Win32Application::ShutdownEngine()
 		EngineAPI::Gameplay::SceneManager::DestroyInstance();
 	}
 
+	//Shutdown ATB before shutting down the graphics
+	//subsystem
+	assert(EngineAPI::Debug::ATBManager::ShutdownATB());
+	
 	if (graphicsSubsystem)
 	{
 		graphicsSubsystem->ShutdownSubsystem();
@@ -312,6 +323,10 @@ bool Win32Application::InitEngineSubsystems()
 	if (!graphicsSubsystem->InitSubsystem(&osWindow))
 		return false;
 
+	//Init ATB (AntTweakBar) - TODO: Backbuffer dimentions and not window????
+	assert(EngineAPI::Debug::ATBManager::InitATB(graphicsSubsystem->GetDevice(), 
+		osWindow.GetWindowWidth(), osWindow.GetWindowHeight()));
+
 	//Scene manager (last)
 	sceneManagerSubsystem = EngineAPI::Gameplay::SceneManager::GetInstance();
 	if (!sceneManagerSubsystem->InitSubsystem())
@@ -352,6 +367,9 @@ bool Win32Application::OnResize()
 		if (!graphicsSubsystem->OnResize(&osWindow))
 			return false;
 	}
+
+	//ATB resize - TODO: Backbuffer dimentions and not window????
+	assert(EngineAPI::Debug::ATBManager::OnResizeATB(osWindow.GetWindowWidth(), osWindow.GetWindowHeight()));
 
 	//Tell other subsystems of the resize event
 	if (sceneManagerSubsystem)

@@ -73,7 +73,8 @@ private:
 	//Debug flags
 	bool shouldDebugDrawGBuffer = false;
 	bool shouldDebugDrawGBufferPackedNormals = true;
-	float shouldDebugDrawGBufferCooldownTimer = 0.30f;
+	float atbBarsToggleCooldownTimer = 0.3f;
+	float shouldDebugDrawGBufferCooldownTimer = 0.3f;
 	float shouldDebugDrawGBufferPackedNormalsCooldownTimer = 0.3f;
 
 private:

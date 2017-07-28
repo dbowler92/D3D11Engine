@@ -119,6 +119,9 @@ bool D3D11GraphicsManager::OnRender()
 	assert(sm->OnRenderDebugUIPass());
 	assert(OnEndDebugUIPass());
 
+	//Render AntTweakBars
+	assert(EngineAPI::Debug::ATBManager::RenderATB());
+
 	//Present the backbuffer to the user
 	assert(OnEndRender());
 

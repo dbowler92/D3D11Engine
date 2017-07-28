@@ -8,3 +8,6 @@
 
 #include <Debug/Log/DebugLog.h>
 #include <Debug/Rendering/DebugRendering.h>
+
+//ATB
+#include <Debug/ATBManager/ATBManager.h>

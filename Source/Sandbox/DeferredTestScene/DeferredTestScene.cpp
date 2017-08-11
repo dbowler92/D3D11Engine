@@ -7,7 +7,7 @@
 
 bool DeferredTestScene::OnAddToSceneManagerList()
 {
-	EngineAPI::Debug::DebugLog::PrintInfoMessage("SponzaScene::OnAddToSceneManagerList()\n");
+	EngineAPI::Debug::DebugLog::PrintInfoMessage("DeferredTestScene::OnAddToSceneManagerList()\n");
 
 	//Init last mouse position
 	lastMPos.x = 0;
@@ -19,7 +19,9 @@ bool DeferredTestScene::OnAddToSceneManagerList()
 
 bool DeferredTestScene::OnSceneBecomeActive()
 {
-	EngineAPI::Debug::DebugLog::PrintInfoMessage("SponzaScene::OnSceneBecomeActive()\n");
+	EngineAPI::Debug::ATBManager::SetATBActiveFlag(false);
+
+	EngineAPI::Debug::DebugLog::PrintInfoMessage("DeferredTestScene::OnSceneBecomeActive()\n");
 
 	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
 	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
@@ -88,8 +90,9 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	}
 
 	//Slight
-	sLight.InitSpotLightSource(XMFLOAT3(0.f, 3.f, 0.f), 2.f, XMFLOAT3(90.0f, 0.0f, 0.0f), 45.f,
-		XMFLOAT3(0.6f, 0.6f, 0.f), 3.f, std::string("SLight"));
+	sLight.InitSpotLightSource(XMFLOAT3(0.f, 1.f, -2.f), 4.f, XMFLOAT3(0.0f, 0.0f, 0.0f), 
+		22.5f, 10.0f,
+		XMFLOAT3(0.6f, 0.6f, 0.f), 5.f, std::string("SLight"));
 	sLight.SetActiveState(true);
 	
 	TwBar* b = TwNewBar("Hello world");
@@ -120,7 +123,7 @@ void DeferredTestScene::InitCameraCBuffer()
 
 bool DeferredTestScene::OnSceneBecomeDeactive()
 {
-	EngineAPI::Debug::DebugLog::PrintInfoMessage("SponzaScene::OnSceneBecomeDeactive()\n");
+	EngineAPI::Debug::DebugLog::PrintInfoMessage("DeferredTestScene::OnSceneBecomeDeactive()\n");
 
 	//Shutdown
 	mainCamera.Shutdown();
@@ -138,7 +141,7 @@ bool DeferredTestScene::OnSceneBecomeDeactive()
 
 bool DeferredTestScene::OnRemoveFromSceneManagerList()
 {
-	EngineAPI::Debug::DebugLog::PrintInfoMessage("SponzaScene::OnRemoveFromSceneManagerList()\n");
+	EngineAPI::Debug::DebugLog::PrintInfoMessage("DeferredTestScene::OnRemoveFromSceneManagerList()\n");
 
 	//Done
 	return true;
@@ -255,6 +258,8 @@ bool DeferredTestScene::OnSceneUpdate(float dt)
 	shouldDebugDrawGBufferCooldownTimer += dt;
 	shouldDebugDrawGBufferPackedNormalsCooldownTimer += dt;
 	atbBarsToggleCooldownTimer += dt;
+	shouldDebugDrawLightsCooldownTimer += dt;
+
 	if (GetAsyncKeyState('1') & 0x8000)
 	{
 		if (atbBarsToggleCooldownTimer >= 0.3f)
@@ -280,6 +285,40 @@ bool DeferredTestScene::OnSceneUpdate(float dt)
 			shouldDebugDrawGBufferPackedNormals = !shouldDebugDrawGBufferPackedNormals;
 			shouldDebugDrawGBufferPackedNormalsCooldownTimer = 0.0f;
 		}
+	}
+
+	if (GetAsyncKeyState('4') & 0x8000)
+	{
+		if (shouldDebugDrawLightsCooldownTimer >= 0.3f)
+		{
+			shouldDebugDrawLights = !shouldDebugDrawLights;
+			shouldDebugDrawLightsCooldownTimer = 0.0f;
+		}
+	}
+
+
+
+	if (GetAsyncKeyState('L') & 0x8000)
+		sLight.SetInnerAngle(sLight.GetInnerAngle() + 5.0f * dt);
+	if (GetAsyncKeyState('K') & 0x8000)
+		sLight.SetInnerAngle(sLight.GetInnerAngle() - 5.0f * dt);
+
+	if (GetAsyncKeyState('P') & 0x8000)
+		sLight.SetOuterAngle(sLight.GetOuterAngle() + 5.0f * dt);
+	if (GetAsyncKeyState('O') & 0x8000)
+		sLight.SetOuterAngle(sLight.GetOuterAngle() - 5.0f * dt);
+
+	if (GetAsyncKeyState('H') & 0x8000)
+	{
+		float z = sLight.GetPosition().z;
+		z += 2.0f * dt;
+		sLight.SetPosition(sLight.GetPosition().x, sLight.GetPosition().y, z);
+	}
+	if (GetAsyncKeyState('B') & 0x8000)
+	{
+		float z = sLight.GetPosition().z;
+		z -= 2.0f * dt;
+		sLight.SetPosition(sLight.GetPosition().x, sLight.GetPosition().y, z);
 	}
 
 	//Done
@@ -337,8 +376,8 @@ bool DeferredTestScene::OnSceneRenderLightPass(LightPassMode mode)
 	//}
 
 	//Slights
-	//if (mode == LIGHT_PASS_SPOT_LIGHTS)
-	//	sLight.Render(&mainCamera);
+	if (mode == LIGHT_PASS_SPOT_LIGHTS)
+		sLight.Render(&mainCamera);
 
 	//Done
 	return true;
@@ -352,8 +391,14 @@ bool DeferredTestScene::OnSceneRenderPostProcessPass()
 
 bool DeferredTestScene::OnSceneRenderDebugPass()
 {
-	//Debug Render lights
+	if (shouldDebugDrawLights)
+	{
+		//Debug Render lights
+		//for (int i = 0; i < 5; i++)
+		//	EngineAPI::Debug::DebugRendering::DebugRenderPointLight(&pLights[i], &mainCamera);
 
+		EngineAPI::Debug::DebugRendering::DebugRenderSpotLight(&sLight, &mainCamera);
+	}
 	//Done
 	return true;
 }

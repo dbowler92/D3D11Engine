@@ -17,6 +17,8 @@ namespace EngineAPI
 {
 	namespace Rendering
 	{
+		class VirtualCamera;
+
 		class PointLight;
 		class SpotLight;
 	};
@@ -37,8 +39,8 @@ namespace EngineAPI
 			static void DebugRenderGBuffersToScreen(bool showPackedNormals = true);
 
 			//Debug renders a point light and spot light
-			static void DebugRenderPointLight(EngineAPI::Rendering::PointLight* pointLight);
-			static void DebugRenderSpotLight(EngineAPI::Rendering::SpotLight* spotLight);
+			static void DebugRenderPointLight(EngineAPI::Rendering::PointLight* pointLight, EngineAPI::Rendering::VirtualCamera* mainCamera);
+			static void DebugRenderSpotLight(EngineAPI::Rendering::SpotLight* spotLight, EngineAPI::Rendering::VirtualCamera* mainCamera);
 
 		};
 	};

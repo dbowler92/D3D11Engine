@@ -179,3 +179,53 @@ float3 LightPass_PointLight(float3 lightPos, float lightRange,
     finalColourOut = ((surfaceDiffuse * diffuse) + specular) * attenuation;
     return finalColourOut;
 }
+
+float3 LightPass_SpotLight(float3 lightPos, float3 lightDirection,
+    float lightRange, 
+    float lightOuterAngle, float lightInnerAngle,
+    float3 lightColour, float lightIntensity,
+    float specIntensity, float specPower, float3 surfaceDiffuse,
+    float3 surfaceNormal_W, float3 surfacePositionW)
+{
+    float3 finalColourOut = float3(0.f, 0.f, 0.f);
+
+    //Vector: Surface (A) to light source (B) == B-A
+    float3 surfToLight = lightPos - surfacePositionW;
+    float surfToLightLen = length(surfToLight);
+    surfToLight /= surfToLightLen; //Normalize.
+
+    //Vector: Surface (A) to the camera (B) == B-A
+    float3 surfToCamera = normalize(CameraWorldPosition - surfacePositionW);
+
+    //Diffuse
+    float N_Dot_L = dot(surfToLight, surfaceNormal_W);
+    float3 diffuse = (lightColour.rgb * lightIntensity) * saturate(N_Dot_L);
+
+#if SPOT_LIGHT_USE_BLINN == 1
+    //Spec - Blinn
+    float3 specular = float3(0.f, 0.f, 0.f);
+
+
+#else
+    //Spec - Phong
+    float3 specular = float3(0.f, 0.f, 0.f);
+
+
+#endif
+
+    //Distance Attenutation
+    float distToLightNormalized = 1.0f - saturate(surfToLightLen * (1.0f / lightRange));
+    float attenuation = distToLightNormalized * distToLightNormalized;
+    
+    //Cone attenuation
+    float cosOuter = cos(radians(lightOuterAngle));
+    float cosInner = cos(radians(lightInnerAngle));
+    
+    float cosAng = dot(normalize(-lightDirection), surfToLight);
+    float coneAtt = saturate((cosAng - cosOuter) / (cosInner - cosOuter));
+    coneAtt *= coneAtt;
+
+    //Done
+    finalColourOut = ((surfaceDiffuse * diffuse) + specular) * attenuation * coneAtt;
+    return finalColourOut;
+}

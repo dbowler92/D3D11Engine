@@ -26,7 +26,8 @@ void SpotLight::Shutdown()
 }
 
 void SpotLight::InitSpotLightSource(XMFLOAT3 position, float range,
-	XMFLOAT3 rotationTransformRollPitchYawDegrees, float angle,
+	XMFLOAT3 rotationTransformRollPitchYawDegrees,
+	float lightOuterAngleDeg, float lightInnerAngleDeg,
 	XMFLOAT3 col, float intensity,
 	std::string debugName)
 {
@@ -50,8 +51,9 @@ void SpotLight::InitSpotLightSource(XMFLOAT3 position, float range,
 	lightData.LightRange = range;
 	lightData.LightColourAndIntensity = XMFLOAT4(col.x, col.y, col.z, intensity);
 	lightData.LightDirection = dNormalized;
-	lightData.LightAngle = angle;
-
+	lightData.LightOuterAngle = lightOuterAngleDeg;
+	lightData.LightInnerAngle = lightInnerAngleDeg;
+	
 	//Set debug name
 	SetDebugName(debugName);
 }

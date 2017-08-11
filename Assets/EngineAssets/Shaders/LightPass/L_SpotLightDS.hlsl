@@ -11,13 +11,22 @@ static const float PI = 3.14159265f;
 //the actual light source, hence the mini hack!
 #define SPOT_LIGHT_SCALE_FACTOR 1.2f
 
+//Base verts are offset along the +z axis.
+#define BASE_Z_OFFSET 0.1f;
+
 cbuffer CB_LightPass_SpotLightData : register(b1)
 {
-    float3 LightPosition;
-    float LightRange;
-    float3 LightDirection;
-    float LightAngle;
-    float4 LightColourAndIntensity;
+    float3   LightPosition;
+    float    LightRange;
+
+    float3   LightDirection;
+    float    LightOuterAngle; //note: Degress
+
+    float    LightInnerAngle; //note: Degrees
+    float3   __PadF3;
+
+    float4   LightColourAndIntensity;
+
     float4x4 LightWorldViewProjection;
 };
 
@@ -38,7 +47,6 @@ struct DSOutput
 {
     float4 C_Position : SV_Position; //Required + will undergo viewport transform
     float2 C_Position2D : TEXCOORD0; //Clip pos for world space reconstruction
-    float4 Data : COLOUR;
 };
 
 [domain("quad")]
@@ -48,10 +56,10 @@ DSOutput main(ConstantHSOut cInput, float2 uv : SV_DomainLocation,
     //
     //Cone
     //
-    float halfAngle = LightAngle * 0.5f;
+    float halfAngle = LightOuterAngle;
 
     //Height of the cone is the range
-    float lsHeight = LightRange * SPOT_LIGHT_SCALE_FACTOR;
+    float lsHeight = LightRange;
     
     //Calculate the radius of our cone in LS
     float lsRadius = lsHeight * tan(radians(halfAngle));
@@ -68,8 +76,23 @@ DSOutput main(ConstantHSOut cInput, float2 uv : SV_DomainLocation,
     float z = yRatio - lsHeight;
     z *= -1.f; //Flip ls direction -> LS cone should be pointing in the +Z axis
 
+    //Base of cone.
+    float baseFactor = (float) (int) (uv.y + 0.99f); //1 if uv.y != 0.0f. 0  if uv.y == 0.0f;
+
+    float xBase = 0.0f; 
+    float yBase = 0.0f;
+    float zBase = z + BASE_Z_OFFSET;
+
+    x = lerp(xBase, x, baseFactor);
+    y = lerp(yBase, y, baseFactor);
+    z = lerp(zBase, z, baseFactor);
+
+    //Scale the cone
+    float3 local = float3(x, y, z);
+    local *= SPOT_LIGHT_SCALE_FACTOR;
+
     //To clip space from local space
-    float4 posL = float4(x, y, z, 1.f);
+    float4 posL = float4(local, 1.f);
     float4 posC = mul(posL, LightWorldViewProjection);
      
     //Output
@@ -77,6 +100,5 @@ DSOutput main(ConstantHSOut cInput, float2 uv : SV_DomainLocation,
     o.C_Position = posC;
     //o.C_Position = float4(clipSpacePos.xy, 1.f, 1.f);
     o.C_Position2D = o.C_Position.xy / o.C_Position.w;
-    o.Data = float4(LightColourAndIntensity.rgb, 1.f);
     return o;
 }

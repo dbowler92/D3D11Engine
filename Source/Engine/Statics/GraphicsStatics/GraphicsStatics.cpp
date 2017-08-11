@@ -7,10 +7,6 @@
 
 using namespace EngineAPI::Statics;
 
-EngineAPI::Graphics::BlendState GraphicsStatics::PipelineState_Blend_Debug;
-EngineAPI::Graphics::DepthStencilState GraphicsStatics::PipelineState_DepthStencil_Debug;
-EngineAPI::Graphics::RasterizerState GraphicsStatics::PipelineState_Rasterizer_Debug;
-
 EngineAPI::Graphics::BlendState GraphicsStatics::DefaultPipelineState_Blend;
 EngineAPI::Graphics::DepthStencilState GraphicsStatics::DefaultPipelineState_DepthStencil;
 EngineAPI::Graphics::RasterizerState GraphicsStatics::DefaultPipelineState_Rasterizer;
@@ -53,12 +49,16 @@ EngineAPI::Graphics::PixelShader  GraphicsStatics::Debug_GBufferVis_PackedNormal
 EngineAPI::Graphics::PixelShader  GraphicsStatics::Debug_GBufferVis_SpecPower_PS;
 EngineAPI::Graphics::SamplerState GraphicsStatics::Debug_GBufferVis_SamplerState;
 
+EngineAPI::Graphics::BlendState GraphicsStatics::LightVisualisation_BlendState;
+EngineAPI::Graphics::DepthStencilState GraphicsStatics::LightVisualisation_DepthStencilState;
+EngineAPI::Graphics::RasterizerState GraphicsStatics::LightVisualisation_RasterizerState;
+EngineAPI::Graphics::PixelShader GraphicsStatics::LightVisualisation_PointLight_PS;
+EngineAPI::Graphics::PixelShader GraphicsStatics::LightVisualisation_SpotLight_PS;
+
+
 bool GraphicsStatics::InitAllGraphicsStatics(EngineAPI::Graphics::GraphicsDevice* device)
 {
 	assert(device);
-
-	//Debug
-	GraphicsStatics::InitDebugPipelineStates(device);
 
 	//Default pipeline states
 	GraphicsStatics::InitPipelineStates(device);
@@ -67,7 +67,9 @@ bool GraphicsStatics::InitAllGraphicsStatics(EngineAPI::Graphics::GraphicsDevice
 	GraphicsStatics::InitLightPass(device);
 
 	//Debug
+	GraphicsStatics::InitDebugPipelineStates(device);
 	GraphicsStatics::InitGBufferVis(device);
+	GraphicsStatics::InitLightVisualisationStatesAndShaders(device);
 
 	//Blit shader
 	assert(Blit_VS.InitCompiledVertexShaderFromFile(device,
@@ -83,11 +85,7 @@ bool GraphicsStatics::InitAllGraphicsStatics(EngineAPI::Graphics::GraphicsDevice
 }
 
 void GraphicsStatics::ShutdownAllGraphicsStatics()
-{
-	PipelineState_Blend_Debug.Shutdown();
-	PipelineState_DepthStencil_Debug.Shutdown();
-	PipelineState_Rasterizer_Debug.Shutdown();
-
+{	
 	DefaultPipelineState_Blend.Shutdown();
 	DefaultPipelineState_DepthStencil.Shutdown();
 	DefaultPipelineState_Rasterizer.Shutdown();
@@ -128,25 +126,16 @@ void GraphicsStatics::ShutdownAllGraphicsStatics()
 	Debug_GBufferVis_PackedNormal_PS.Shutdown();
 	Debug_GBufferVis_SpecPower_PS.Shutdown();
 	Debug_GBufferVis_SamplerState.Shutdown();
+
+	LightVisualisation_BlendState.Shutdown();
+	LightVisualisation_DepthStencilState.Shutdown();
+	LightVisualisation_RasterizerState.Shutdown();
+	LightVisualisation_PointLight_PS.Shutdown();
+	LightVisualisation_SpotLight_PS.Shutdown();
 }
 
 void GraphicsStatics::InitDebugPipelineStates(EngineAPI::Graphics::GraphicsDevice* device)
-{
-	BlendPipelineStateDescription bsDesc = {};
-	DepthStencilPipelineStateDescription dssDesc = {};
-	RasterizerPipelineStateDescription rsDesc = {};
-
-	assert(PipelineState_Blend_Debug.InitBlendState(device, &bsDesc, "PipelineState_Blend_Debug"));
-	
-	dssDesc.DepthTestEnabled = false;
-	dssDesc.StencilTestEnabled = false;
-	assert(PipelineState_DepthStencil_Debug.InitDepthStencilState(device, &dssDesc, "PipelineState_DepthStencil_Debug"));
-	
-	rsDesc.FillMode = POLYGON_FILL_WIREFRAME;
-	rsDesc.WindingOrder = POLYGON_WINDING_ORDER_FRONT_CLOCKWISE;
-	rsDesc.FaceCullingMode = POLYGON_FACE_CULL_NONE;
-	assert(PipelineState_Rasterizer_Debug.InitRasterizerState(device, &rsDesc, "PipelineState_Rasterizer_Debug"));
-}
+{}
 
 void GraphicsStatics::InitPipelineStates(EngineAPI::Graphics::GraphicsDevice* device)
 {
@@ -308,6 +297,28 @@ void GraphicsStatics::InitLightPass(EngineAPI::Graphics::GraphicsDevice* device)
 		RESOURCE_USAGE_DYNAMIC, RESOURCE_CPU_ACCESS_WRITE_BIT,
 		RESOURCE_BIND_CONSTANT_BUFFER_BIT,
 		"LightPass_SpotLight_SharedLightDataCB"));
+
+	dssDesc = DepthStencilPipelineStateDescription();
+	dssDesc.DepthTestEnabled = true;
+	dssDesc.DepthWriteMask = DEPTH_TEXTURE_WRITE_MASK_ZERO;
+	dssDesc.DepthTestFunction = COMPARISON_FUNCTION_GREATER_EQUAL;
+	dssDesc.StencilTestEnabled = true;
+	dssDesc.StencilReadMask = 0xFF;
+	dssDesc.StencilWriteMask = 0;
+	dssDesc.FrontFaceOp.OnStencilFail = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.OnStencilPassDepthFail = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.OnStencilPassDepthPass = STENCIL_OP_KEEP;
+	dssDesc.FrontFaceOp.StencilComparisonFunction = COMPARISON_FUNCTION_NOT_EQUAL;
+	dssDesc.BackFaceOp.OnStencilFail = STENCIL_OP_KEEP;
+	dssDesc.BackFaceOp.OnStencilPassDepthFail = STENCIL_OP_KEEP;
+	dssDesc.BackFaceOp.OnStencilPassDepthPass = STENCIL_OP_KEEP;
+	dssDesc.BackFaceOp.StencilComparisonFunction = COMPARISON_FUNCTION_NOT_EQUAL;
+	assert(LightPass_SpotLight_DSS.InitDepthStencilState(device, &dssDesc, "LightPass_SpotLight_DepthStencilState"));
+	
+	rsDesc = RasterizerPipelineStateDescription();
+	rsDesc.FillMode = POLYGON_FILL_SOLID;
+	rsDesc.FaceCullingMode = POLYGON_FACE_CULL_FRONT;
+	assert(LightPass_SpotLight_RZS.InitRasterizerState(device, &rsDesc, "LightPass_SpotLight_RasterizerState"));
 }
 
 void GraphicsStatics::InitGBufferVis(EngineAPI::Graphics::GraphicsDevice* device)
@@ -332,4 +343,32 @@ void GraphicsStatics::InitGBufferVis(EngineAPI::Graphics::GraphicsDevice* device
 	ssDesc.AddressModeW = TEXTURE_ADDRESS_CLAMP;
 	ssDesc.FilterMode = TEXTURE_FILTER_MIN_MAG_MIP_POINT;
 	assert(Debug_GBufferVis_SamplerState.InitSamplerState(device, &ssDesc, "Debug_GBufferVis_SamplerState"));
+}
+
+void GraphicsStatics::InitLightVisualisationStatesAndShaders(EngineAPI::Graphics::GraphicsDevice* device)
+{
+	BlendPipelineStateDescription bsDesc = {};
+	DepthStencilPipelineStateDescription dssDesc = {};
+	RasterizerPipelineStateDescription rsDesc = {};
+
+	assert(LightVisualisation_BlendState.InitBlendState(device, &bsDesc, "LightVisualisation_Blend"));
+
+	dssDesc.DepthTestEnabled = true;
+	dssDesc.DepthTestFunction = COMPARISON_FUNCTION_LESS_EQUAL; 
+	dssDesc.DepthWriteMask = DEPTH_TEXTURE_WRITE_MASK_ZERO;
+	dssDesc.StencilTestEnabled = false;
+	assert(LightVisualisation_DepthStencilState.InitDepthStencilState(device, &dssDesc, "LightVisualisation_DepthStencil"));
+
+	rsDesc.FillMode = POLYGON_FILL_WIREFRAME;
+	rsDesc.WindingOrder = POLYGON_WINDING_ORDER_FRONT_CLOCKWISE;
+	rsDesc.FaceCullingMode = POLYGON_FACE_CULL_NONE;
+	assert(LightVisualisation_RasterizerState.InitRasterizerState(device, &rsDesc, "LightVisualisation_Rasterizer"));
+
+	assert(LightVisualisation_PointLight_PS.InitCompiledPixelShaderFromFile(device,
+		ENGINE_SHADER_COMPILED_ASSETS_FOLDER"D_PointLightVisualisationPS.cso",
+		"LightVisualisation_PointLight_PS"));
+
+	assert(LightVisualisation_SpotLight_PS.InitCompiledPixelShaderFromFile(device,
+		ENGINE_SHADER_COMPILED_ASSETS_FOLDER"D_SpotLightVisualisationPS.cso",
+		"LightVisualisation_SpotLight_PS"));
 }

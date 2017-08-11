@@ -364,6 +364,9 @@
     <Filter Include="Src\Debug\ATBManager">
       <UniqueIdentifier>{2153bec4-74c7-410b-abf5-bd2ea9eea4d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EngineAssets\Shaders\Debug\LightVisualisation">
+      <UniqueIdentifier>{67bc75a5-e721-4d9f-b7a2-ec6845d0570e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main\EngineMain.cpp">
@@ -924,6 +927,12 @@
     </FxCompile>
     <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\LightPass\L_SpotLightVS.hlsl">
       <Filter>EngineAssets\Shaders\LightPass\SpotLights</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\LightVisualisation\D_SpotLightVisualisationPS.hlsl">
+      <Filter>EngineAssets\Shaders\Debug\LightVisualisation</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\..\Assets\EngineAssets\Shaders\Debug\LightVisualisation\D_PointLightVisualisationPS.hlsl">
+      <Filter>EngineAssets\Shaders\Debug\LightVisualisation</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

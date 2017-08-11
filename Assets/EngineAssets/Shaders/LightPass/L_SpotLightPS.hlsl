@@ -7,9 +7,15 @@ cbuffer CB_LightPass_SpotLightData : register(b1)
 {
     float3 LightPosition;
     float  LightRange;
+
     float3 LightDirection;
-    float  LightAngle;
+    float  LightOuterAngle;
+
+    float  LightInnerAngle;
+    float3 __PadF3;
+
     float4 LightColourAndIntensity;
+
     float4x4 LightWorldViewProjection;
 };
 
@@ -18,7 +24,6 @@ struct DSOutput
 {
     float4 V_Position   : SV_Position;  //Undergone viewport transform - sample GBuffer
     float2 C_Position2D : TEXCOORD0;
-    float4 Data : COLOUR; //TEMP
 };
 
 float4 main(DSOutput input) : SV_Target
@@ -27,16 +32,18 @@ float4 main(DSOutput input) : SV_Target
     //undergone the viewport transform so represents the pixel we wish to
     //sample the GBuffer for (via Load())
     UnpackedGBufferSampleData gBufferSample = UnpackGBuffer(int2(input.V_Position.xy));
-
+     
     //World space position
     float3 pixelWorldSpace = ReconstructWorldSpacePosition(input.C_Position2D, gBufferSample.LinearDepth);
 
     //Handle spot lighting
-    //float3 c = LightPass_PointLight(LightPosition, LightRange,
-    //   float3(LightColourAndIntensity.xyz), LightColourAndIntensity.w,
-    //    gBufferSample.SpecularIntensity, gBufferSample.SpecularPower,
-    //    gBufferSample.Colour, gBufferSample.Normal, pixelWorldSpace);
+    float3 c = LightPass_SpotLight(LightPosition, LightDirection, 
+        LightRange, LightOuterAngle, LightInnerAngle,
+        float3(LightColourAndIntensity.xyz), LightColourAndIntensity.w,
+        gBufferSample.SpecularIntensity, gBufferSample.SpecularPower,
+        gBufferSample.Colour, gBufferSample.Normal, pixelWorldSpace);
 
-    //TEMP
-    return float4(input.Data.rgba);
+    //Done
+    //return float4(LightColourAndIntensity.rgb, 1.0f);
+    return float4(c.rgb, 1.0f);
 }

@@ -257,11 +257,8 @@ bool D3D11GraphicsManager::OnBeginLightPass_PointLights()
 
 bool D3D11GraphicsManager::OnBeginLightPass_SpotLights()
 {
-	//device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_DSS, 0);
-	//device.RSSetState(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_RZS);
-	device.OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::PipelineState_Blend_Debug);
-	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::PipelineState_DepthStencil_Debug, 0);
-	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::PipelineState_Rasterizer_Debug);
+	device.OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_DSS, 0);
+	device.RSSetState(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_RZS);
 
 	//Shaders:
 	device.VSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_VS);
@@ -348,7 +345,9 @@ bool D3D11GraphicsManager::OnEndPostProcessPass()
 
 bool D3D11GraphicsManager::OnBeginDebugPass()
 {
-	//Render directly in to the backbuffer
+	//Render directly in to the backbuffer - bind read-only depth buffer
+	//for depth testing if desired
+	swapchain.BindSwapchainBackbufferAsRenderTarget(&device, false);
 
 	//Done
 	return true;

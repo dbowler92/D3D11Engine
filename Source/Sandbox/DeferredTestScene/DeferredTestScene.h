@@ -73,9 +73,12 @@ private:
 	//Debug flags
 	bool shouldDebugDrawGBuffer = false;
 	bool shouldDebugDrawGBufferPackedNormals = true;
+	bool shouldDebugDrawLights = false;
+
 	float atbBarsToggleCooldownTimer = 0.3f;
 	float shouldDebugDrawGBufferCooldownTimer = 0.3f;
 	float shouldDebugDrawGBufferPackedNormalsCooldownTimer = 0.3f;
+	float shouldDebugDrawLightsCooldownTimer = 0.3f;
 
 private:
 	void InitCameraCBuffer();

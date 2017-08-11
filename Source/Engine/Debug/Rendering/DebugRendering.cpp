@@ -5,6 +5,7 @@
 
 //Needs access to the lights data in order to debug render
 #include <Rendering/PointLight/PointLight.h>
+#include <Rendering/SpotLight/SpotLight.h>
 
 using namespace EngineAPI::Debug;
 
@@ -97,12 +98,78 @@ void DebugRendering::DebugRenderGBuffersToScreen(bool showPackedNormals)
 	device->PSSetShaderResource(nullptr, 0);
 }
 
-void DebugRendering::DebugRenderPointLight(EngineAPI::Rendering::PointLight* pointLight)
+void DebugRendering::DebugRenderPointLight(EngineAPI::Rendering::PointLight* pointLight, 
+	EngineAPI::Rendering::VirtualCamera* mainCamera)
 {
-	//TODO
+	//Device and manager
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
+
+	assert(pointLight);
+	assert(mainCamera);
+	assert(device);
+
+	//Set state
+	device->OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::LightVisualisation_DepthStencilState, 0);
+	device->OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::LightVisualisation_BlendState);
+	device->RSSetState(&EngineAPI::Statics::GraphicsStatics::LightVisualisation_RasterizerState);
+
+	//Shaders - not, can reuse the VS, HS, DS from the lighting pass - Simple 
+	//output colour PS (the colour of the light)
+	device->VSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_VS);
+	device->HSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_HS);
+	device->DSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_PointLight_DS);
+	device->PSSetShader(&EngineAPI::Statics::GraphicsStatics::LightVisualisation_PointLight_PS);
+
+	//IA state
+	device->IASetTopology(PRIMITIVE_TOPOLOGY_1_CONTROL_POINT_PATCHLIST);
+	device->IASetVertexBuffer(nullptr, 0, 0);
+	device->IASetIndexBuffer(nullptr, 0);
+
+	//Render the spot light
+	pointLight->Render(mainCamera);
+
+	//Reset shaders
+	device->VSSetShader(nullptr);
+	device->HSSetShader(nullptr);
+	device->DSSetShader(nullptr);
+	device->PSSetShader(nullptr);
 }
 
-void DebugRendering::DebugRenderSpotLight(EngineAPI::Rendering::SpotLight* spotLight)
+void DebugRendering::DebugRenderSpotLight(EngineAPI::Rendering::SpotLight* spotLight, 
+	EngineAPI::Rendering::VirtualCamera* mainCamera)
 {
-	//TODO
+	//Device and manager
+	EngineAPI::Graphics::GraphicsManager* gm = EngineAPI::Graphics::GraphicsManager::GetInstance();
+	EngineAPI::Graphics::GraphicsDevice* device = gm->GetDevice();
+
+	assert(spotLight);
+	assert(mainCamera);
+	assert(device);
+
+	//Set state
+	device->OMSetDepthStencilState(&EngineAPI::Statics::GraphicsStatics::LightVisualisation_DepthStencilState, 0);
+	device->OMSetBlendState(&EngineAPI::Statics::GraphicsStatics::LightVisualisation_BlendState);
+	device->RSSetState(&EngineAPI::Statics::GraphicsStatics::LightVisualisation_RasterizerState);
+	
+	//Shaders - not, can reuse the VS, HS, DS from the lighting pass - Simple 
+	//output colour PS (the colour of the light)
+	device->VSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_VS);
+	device->HSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_HS);
+	device->DSSetShader(&EngineAPI::Statics::GraphicsStatics::LightPass_SpotLight_DS);
+	device->PSSetShader(&EngineAPI::Statics::GraphicsStatics::LightVisualisation_SpotLight_PS);
+
+	//IA state
+	device->IASetTopology(PRIMITIVE_TOPOLOGY_1_CONTROL_POINT_PATCHLIST);
+	device->IASetVertexBuffer(nullptr, 0, 0);
+	device->IASetIndexBuffer(nullptr, 0);
+
+	//Render the spot light
+	spotLight->Render(mainCamera);
+
+	//Reset shaders
+	device->VSSetShader(nullptr);
+	device->HSSetShader(nullptr);
+	device->DSSetShader(nullptr);
+	device->PSSetShader(nullptr);
 }

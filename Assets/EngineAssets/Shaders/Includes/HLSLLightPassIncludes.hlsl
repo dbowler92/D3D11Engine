@@ -205,11 +205,23 @@ float3 LightPass_SpotLight(float3 lightPos, float3 lightDirection,
     //Spec - Blinn
     float3 specular = float3(0.f, 0.f, 0.f);
 
+    if (N_Dot_L > 0.0f)
+    {
+        float3 h = normalize(surfToCamera + surfToLight);
+        float N_Dot_H = saturate(dot(h, surfaceNormal_W));
+        specular = (lightColour.rgb * lightIntensity) * pow(N_Dot_H, specPower) * specIntensity;
+    }
 
 #else
     //Spec - Phong
     float3 specular = float3(0.f, 0.f, 0.f);
 
+    if (N_Dot_L > 0.0f)
+    {
+        float3 r = reflect(-surfToLight, surfaceNormal_W);
+        float angle = saturate(dot(r, surfToCamera));
+        specular = (lightColour.rgb * lightIntensity) * pow(angle, specPower) * specIntensity;
+    }
 
 #endif
 

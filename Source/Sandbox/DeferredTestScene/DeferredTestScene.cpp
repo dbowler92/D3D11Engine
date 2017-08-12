@@ -35,11 +35,11 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	mainCamera.RebuildView();
 
 	//Init cube
-	XMMATRIX cubeWorld = XMMatrixTranslation(0.f, 1.f, 0.0f);
+	XMMATRIX cubeWorld = XMMatrixTranslation(0.f, 0.5f, 0.0f);
 	cube.InitCube(device,
 		cubeWorld,
-		//std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"), true,
-		std::string(ASSETS_FOLDER"Textures/TestTextures/White_512.png"), true,
+		std::string(ASSETS_FOLDER"Sponza/textures/sponza_curtain_blue_diff.png"), true,
+		//std::string(ASSETS_FOLDER"Textures/TestTextures/White_512.png"), true,
 		//std::string(ASSETS_FOLDER"Textures/TestTextures/Black_512.png"), true,
 		1.f, 1.0f,
 		std::string("TestCube"));
@@ -48,7 +48,7 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	XMMATRIX planeWorld = XMMatrixTranslation(0.0f, 0.0f, 0.0f);
 	plane.InitPlane(device,
 		planeWorld,
-		10.f, 10.f, 
+		5.f, 5.f, 
 		std::string(ASSETS_FOLDER"Textures/TestTextures/bricks.dds"),
 		std::string(ASSETS_FOLDER"Textures/TestTextures/bricks_nmap.dds"),
 		1.0f, 0.5f,
@@ -65,11 +65,11 @@ bool DeferredTestScene::OnSceneBecomeActive()
 	//Init p lights
 	XMFLOAT3 pLightPositions[5] =
 	{
-		XMFLOAT3(-2.0f, 0.0f, 0.0f),
-		XMFLOAT3(+2.0f, 0.0f, 0.0f),
-		XMFLOAT3(0.0f, 0.0f, -2.0f),
-		XMFLOAT3(0.0f, 0.0f, +2.0f),
-		XMFLOAT3(0.0f, 2.0f, 0.0f)
+		XMFLOAT3(-1.0f, 0.5f, 0.0f),
+		XMFLOAT3(+1.0f, 0.5f, 0.0f),
+		XMFLOAT3(0.0f, 0.5f, -1.0f),
+		XMFLOAT3(0.0f, 0.5f, +1.0f),
+		XMFLOAT3(0.0f, 1.5f, 0.0f)
 	};
 
 	XMFLOAT3 pLightColours[5] =
@@ -83,14 +83,14 @@ bool DeferredTestScene::OnSceneBecomeActive()
 
 	for (int i = 0; i < 5; i++)
 	{
-		pLights[i].InitPointLightSource(pLightPositions[i], 3.f, 
+		pLights[i].InitPointLightSource(pLightPositions[i], 1.f, 
 			pLightColours[i], 3.f,
 			std::string("PLight_") + std::to_string(i));
 		pLights[i].SetActiveState(true);
 	}
 
 	//Slight
-	sLight.InitSpotLightSource(XMFLOAT3(0.f, 1.f, -2.f), 4.f, XMFLOAT3(0.0f, 0.0f, 0.0f), 
+	sLight.InitSpotLightSource(XMFLOAT3(0.f, 0.5f, -2.f), 4.f, XMFLOAT3(0.0f, 0.0f, 0.0f), 
 		22.5f, 10.0f,
 		XMFLOAT3(0.6f, 0.6f, 0.f), 5.f, std::string("SLight"));
 	sLight.SetActiveState(true);
@@ -367,13 +367,13 @@ bool DeferredTestScene::OnSceneRenderLightPass(LightPassMode mode)
 		dLight.Render();
 
 	//PLights
-	//if (mode == LIGHT_PASS_POINT_LIGHTS)
-	//{
+	if (mode == LIGHT_PASS_POINT_LIGHTS)
+	{
 		//pLights[2].Render(&mainCamera);
 
-	//	for (int i = 0; i < 5; i++)
-	//		pLights[i].Render(&mainCamera);
-	//}
+		for (int i = 0; i < 5; i++)
+			pLights[i].Render(&mainCamera);
+	}
 
 	//Slights
 	if (mode == LIGHT_PASS_SPOT_LIGHTS)

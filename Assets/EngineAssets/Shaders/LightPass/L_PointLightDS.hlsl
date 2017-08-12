@@ -48,7 +48,7 @@ DSOutput main(ConstantHSOut cInput, float2 uv : SV_DomainLocation,
     //Position on half sphere in clipspace
     float3 normDir = normalize(float3(clipSpacePos.xy, maxLen - 1.0f) * quad[0].HemiPosition);
     float4 posL = float4(normDir.xyz, 1.f);
-
+    
     //Scale the local space light up a bit -> Volume may
     //not suround the actual volume of the light perfectly
     posL.xyz *= POINT_LIGHT_SCALE_FACTOR;

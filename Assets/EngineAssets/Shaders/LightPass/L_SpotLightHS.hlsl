@@ -16,7 +16,7 @@ ConstantHSOut CHSMain()
     o.Edges[3] = TESS_FACTOR;
 
     o.Inside[0] = TESS_FACTOR;
-    o.Inside[1] = TESS_FACTOR;
+    o.Inside[1] = TESS_FACTOR; /// 2.0f;
 
     return o;
 }
@@ -40,10 +40,6 @@ struct HSOutput
 [patchconstantfunc("CHSMain")]
 HSOutput main(uint patchID : SV_PrimitiveID)
 {
-    //Simple function which is called per patch. We will
-    //draw a point light wtih 2 control points. This function 
-    //will return a single patch for both sides of the sphere (thus, we
-    //have 2 half spheres). 
     HSOutput o;
     o.HemiPosition = HemiDir[patchID];
     return o;
